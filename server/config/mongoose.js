@@ -6,6 +6,6 @@ module.exports = function(config) {
 
 	db.on('error', console.error.bind(console, 'connection error...'));
 	db.once('open', function callback() {
-		console.log('ng2-mean db opened');
+		console.log('learndb opened');
 	});
 }

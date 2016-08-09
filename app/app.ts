@@ -12,11 +12,12 @@ import {Forgetpwd} from './components/forgetpwd/forgetpwd';
 @Component({
 	selector: 'my-app',
 	templateUrl: './app.html',
-	directives: [RouterOutlet]
+	directives: [RouterOutlet,ROUTER_DIRECTIVES]
 })
 @RouteConfig([
 	new Route({ path: '/login', component: Login, name: 'Login', useAsDefault:true }),
 	new Route({ path: '/dashboard', component: Dashboard, name: 'Dashboard' }),
+	new Route({ path: '/home/...', component: Home, name: 'Home' }),
 	new Route({ path: '/signup', component: Signup, name: 'SignUp' }),
 	new Route({ path: '/forgetpwd', component: Forgetpwd, name: 'Forgetpwd' })
 ])

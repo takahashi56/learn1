@@ -1,31 +1,28 @@
 import {Component, OnInit} from 'angular2/core';
-import {ROUTER_DIRECTIVES} from 'angular2/router';
 
-import {Session} from '../../services/session';
-import {UserService} from '../../services/user';
+import {Header} from '../header/header';
+import {Router, Route, RouteConfig, RouterOutlet, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Admin} from '../admin/admin';
+// import {Tutor} from '../tutor/tutor';
+// import {Student} from '../student/student';
 
 @Component({
 	selector: 'home',
 	templateUrl: '/components/home/home.html',
-	directives: [ROUTER_DIRECTIVES],
-	providers: [UserService]
+	directives: [ROUTER_DIRECTIVES, Header, RouterOutlet],
 })
+
+@RouteConfig([
+	new Route({ path: '/admin/...', component: Admin, name: 'Admin', useAsDefault:true }),
+	// new Route({ path: '/tutor/...', component: Admin, name: 'Tutor' }),
+	// new Route({ path: '/student/...', component: Admin, name: 'Student' }),
+])
+
 export class Home implements OnInit {
-	constructor(private _session: Session, private _user: UserService) {
-	}
+	constructor() {
 
-	ngOnInit() {
 	}
+	ngOnInit(){
 
-	login(){
-		console.log("dfadsa");
-		this._session.login();
-	}
-	
-	getUserList() {
-		this._user.getUsers().subscribe(
-			users => console.log(users),
-			error => console.error(error)
-		);
 	}
 }

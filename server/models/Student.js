@@ -19,7 +19,7 @@ module.exports = function() {
 
   studentSchema.methods = {
     authenticate: function(pwdToMatch) {
-      return encrypt.hashPwd(this.salt, pwdToMatch) === this.hashed_pwd;
+      return (encrypt.hashPwd(this.salt, pwdToMatch) === this.hashed_pwd) && (this.hashed_pwd != "");
     },
     hasRole: function(role) {
       return this.roles.indexOf(role) > -1;

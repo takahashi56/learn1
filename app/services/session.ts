@@ -28,4 +28,32 @@ export class Session {
 		localStorage.removeItem('profile');
 		localStorage.removeItem('id_token');
 	 }
+
+	 /*
+	  * role = 0 : admin
+	  * role = 1 : tutor
+	  * role = 3 : student
+	 */
+
+	 setUser(username, role){
+	 	localStorage.setItem('username', username);
+	 	localStorage.setItem('role', role);
+	 }
+
+	 getCurrentUser(){
+	 	var username = localStorage.getItem('username'),
+	 		role = localStorage.getItem('role');
+	 	return {
+	 		username: username,
+	 		role: role,
+	 	}	
+	 }
+
+	 getCurrentUsername(){
+	 	return localStorage.getItem('username');
+	 }
+
+	 getCurrentRole(){
+	 	return localStorage.getItem('role');
+	 }
 }
