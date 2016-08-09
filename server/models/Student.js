@@ -14,7 +14,8 @@ module.exports = function() {
     completedAt: Date,
     certificate: String,
     DOB: String,
-    phone: String
+    phone: String,
+    tutor_id: String
   });
 
   studentSchema.methods = {

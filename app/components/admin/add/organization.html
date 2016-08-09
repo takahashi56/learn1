@@ -8,35 +8,39 @@
             
             <div class="panel-body">
                 <div class=" form">
-                    <form class="cmxform form-horizontal tasi-form" id="commentForm" method="get" action="#" novalidate="novalidate">
+                    <form class="cmxform form-horizontal tasi-form" [ngFormModel]="OrganizeForm" (submit)="AddOrgs(OrganizeForm.value)">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <div class="form-group">
-                                        <div class="col-lg-2">
-                                            <div class="m-l-10 m-r-10">
-                                                <label for="fname" class="control-label text-left text-page">First Name</label>
+                                    <div class="form-group" >
+                                        <div class=""  [ngClass]="{ 'has-error' : !firstname.valid && submitAttempt }">
+                                            <div class="col-lg-2">
+                                                <div class="m-l-10 m-r-10">
+                                                    <label for="fname" class="control-label text-left text-page" >First Name</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="m-l-10 m-r-10">
+                                                <input class=" form-control" id="fname" name="name" type="text"   placeholder="Some text value..." ngControl="firstname">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="m-l-10 m-r-10">
-                                            <input class=" form-control" id="fname" name="name" type="text" required="" aria-required="true" placeholder="Some text value...">
+                                        <div class=""  [ngClass]="{ 'has-error' : !firstname.valid && submitAttempt }">
+                                            <div class="col-lg-2">
+                                                <div class="m-l-10 m-r-10">
+                                                    <label for="lname" class="control-label text-left text-page">Last Name</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <div class="m-l-10 m-r-10">
-                                                <label for="lname" class="control-label text-left text-page">Last Name</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="m-l-10 m-r-10">
-                                            <input class=" form-control" id="lname" name="name" type="text" required="" aria-required="true" placeholder="Some text value...">
+                                            <div class="col-lg-4" [ngClass]="{ 'has-error' : !lastname.valid && submitAttempt }">
+                                                <div class="m-l-10 m-r-10">
+                                                <input class=" form-control" id="lname" name="name" type="text"   placeholder="Some text value..." ngControl="lastname">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" [ngClass]="{ 'has-error' : !email.valid && submitAttempt }">
                                 <div class="col-lg-2">
                                     <div class="m-l-10 m-r-10">
                                         <label for="email" class="control-label text-left text-page">Email</label>
@@ -44,11 +48,11 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="email" name="name" type="text" required="" aria-required="true" placeholder="Some text value...">
+                                        <input class=" form-control" id="email" name="name" type="text"   placeholder="Some text value..." ngControl="email">
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" [ngClass]="{ 'has-error' : !password.valid && submitAttempt }">
                                 <div class="col-lg-2">
                                     <div class="m-l-10 m-r-10">
                                         <label for="password" class="control-label text-left text-page">Password</label>
@@ -56,7 +60,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="password" name="name" type="password" required="" aria-required="true" placeholder="" value="fdafda5665">
+                                        <input class=" form-control" id="password" name="name" type="password"   placeholder="" value="fdafda5665" ngControl="password">
                                     </div>
                                 </div>
                             </div>
@@ -68,11 +72,11 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="phone" name="name" type="text" required="" aria-required="true" placeholder="Some text value...">
+                                        <input class=" form-control" id="phone" name="name" type="text"   placeholder="Some text value..." ngControl="phone">
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" [ngClass]="{ 'has-error' : !organization.valid && submitAttempt }">
                                 <div class="col-lg-2">
                                     <div class="m-l-10 m-r-10">
                                         <label for="Organization" class="control-label text-left text-page">Organization</label>
@@ -80,7 +84,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="Organization" name="Organization" type="text" required="" aria-required="true" placeholder="Some text value...">
+                                        <input class=" form-control" id="Organization" name="Organization" type="text"   placeholder="Some text value..." ngControl="organization">
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +96,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="department" name="department" type="text" required="" aria-required="true" placeholder="Some text value...">
+                                        <input class=" form-control" id="department" name="department" type="text"   placeholder="Some text value..." ngControl="department">
                                     </div>
                                 </div>
                             </div>
@@ -106,10 +110,10 @@
                             <div class="m-l-5 m-r-5">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <input type="submit" name="submit-btn" value="Cancel" class="btn btn-primary m-b-10 w-sm">
+                                        <input type="button" (click)="cancel()" value="Cancel" class="btn btn-primary m-b-10 w-sm">
                                     </div>
                                     <div class="col-xs-8 text-right">
-                                        <input type="submit" name="submit-btn" value="Add Account" class="btn btn-primary m-b-10 w-sm m-l-15">
+                                        <input type="submit" value="Add Account" class="btn btn-primary m-b-10 w-sm m-l-15">
                                     </div>
                                 </div>
                             </div>

@@ -2,8 +2,8 @@ var admincourse = require('../controllers/admincourse'),
 	auth = require('../config/auth');
 
 module.exports = function(app) {
-	app.get('/api/admin/courses', auth.authCheck, function(req, res) {
-		res.send(admincourse.getAllCourse());
+	app.get('/api/admin/courses', function(req, res) {
+		admincourse.getAllCourse(req, res);
 	});
 
 	app.post('/api/admin/course', function(req, res) {

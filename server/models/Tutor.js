@@ -4,14 +4,16 @@ var mongoose = require('mongoose'),
 
 module.exports = function() {
   var tutorSchema = mongoose.Schema({
-    firstName: {type: String, required: '{PATH} is required!'},
-    lastName: {type: String, required: '{PATH} is required!'},
-    username: {type: String, required: '{PATH} is required!', unique: true},
+    firstname: {type: String, required: '{PATH} is required!'},
+    lastname: {type: String, required: '{PATH} is required!'},
     salt: {type: String, required: '{PATH} is required!'},
     hashed_pwd: {type: String, required: '{PATH} is required!'},
-    roles: [String],
     organization: String,
     department: String, 
+    phone: String,
+    email: {type: String, required: '{PATH} is required!', unique: true},
+    created_at: Date,
+    updated_at: Date,
   });
 
   tutorSchema.methods = {

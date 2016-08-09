@@ -35,6 +35,14 @@ export class Session {
 	  * role = 3 : student
 	 */
 
+	 setItem(item, data){
+	 	localStorage.setItem(item, data);
+	 }
+
+	 getItem(item){
+	 	return localStorage.getItem(item);
+	 }
+
 	 setUser(username, role){
 	 	localStorage.setItem('username', username);
 	 	localStorage.setItem('role', role);

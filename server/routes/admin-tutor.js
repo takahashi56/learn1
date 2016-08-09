@@ -2,18 +2,18 @@ var admintutor = require('../controllers/admintutor');
 
 module.exports = function(app) {
 	app.get('/api/admin/tutors', function(req, res) {
-		res.send(admintutor.getAllTutors());
+		admintutor.getAllTutors(req, res);
 	});
 
 	app.post('/api/admin/tutor', function(req, res) {
-		res.send(admintutor.addTutor());
+		admintutor.addTutor(req, res);
 	});
 
 	app.put('/api/admin/tutor', function(req, res) {
-		res.send(admintutor.editTutor());
+		admintutor.editTutor(req, res);
 	});
 
 	app.delete('/api/admin/tutor', function(req, res) {
-		res.send(admintutor.deleteTutor());
+		admintutor.deleteTutor(req, res);
 	});
 }

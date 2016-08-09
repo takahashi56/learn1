@@ -26,58 +26,20 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tr>
+                        <tr *ngFor="let course of courseList">
                             <td>
                                 <label class="cr-styled">
                                     <input type="checkbox">
                                     <i class="fa"></i>
                                 </label>
                             </td>
-                            <td><strong>Fire Saftey</strong></td>
-                            <td><strong>6</strong></td>
-                            <td><strong>45</strong></td>
-                            <td><strong>102</strong></td>
-                            <td class="text-right"><a href="#" class="btn w-xs btn-sm btn-primary" [routerLink]="['AdminEditCourse']">Edit</a></td>
+                            <td><strong>{{course.title}}</strong></td>
+                            <td><strong>{{course.lesson}}</strong></td>
+                            <td><strong>{{course.video}}</strong></td>
+                            <td><strong>{{course.student}}</strong></td>
+                            <td class="text-right"><a href="#" class="btn w-xs btn-sm btn-primary" [routerLink]="['AdminEditCourse', {course_id: course._id}]">Edit</a></td>
                         </tr>
-                        <tr>
-                            <td>
-                                <label class="cr-styled">
-                                    <input type="checkbox">
-                                    <i class="fa"></i>
-                                </label>
-                            </td>
-                            <td><strong>Fire Saftey</strong></td>
-                            <td><strong>6</strong></td>
-                            <td><strong>45</strong></td>
-                            <td><strong>102</strong></td>
-                            <td class="text-right"><a href="#" class="btn w-xs btn-sm btn-primary">Edit</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="cr-styled">
-                                    <input type="checkbox">
-                                    <i class="fa"></i>
-                                </label>
-                            </td>
-                            <td><strong>Fire Saftey</strong></td>
-                            <td><strong>6</strong></td>
-                            <td><strong>45</strong></td>
-                            <td><strong>102</strong></td>
-                            <td class="text-right"><a href="#" class="btn w-xs btn-sm btn-primary">Edit</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="cr-styled">
-                                    <input type="checkbox">
-                                    <i class="fa"></i>
-                                </label>
-                            </td>
-                            <td><strong>Fire Saftey</strong></td>
-                            <td><strong>6</strong></td>
-                            <td><strong>45</strong></td>
-                            <td><strong>102</strong></td>
-                            <td class="text-right"><a href="#" class="btn w-xs btn-sm btn-primary">Edit</a></td>
-                        </tr>
+                        
                     </table>
                 </div>
             </div>
@@ -100,87 +62,22 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tr>
+                        <tr *ngFor="let org of orgList">
                             <td>
                                 <label class="cr-styled">
                                     <input type="checkbox">
                                     <i class="fa"></i>
                                 </label>
                             </td>
-                            <td><strong>School 1</strong></td>
-                            <td><strong>Janet</strong></td>
-                            <td><strong>Smith</strong></td>
-                            <td><strong>01234</strong></td>
-                            <td><strong>js@domain.com</strong></td>
-                            <td><strong>23</strong></td>
-                            <td><strong>31/12/16</strong></td>
-                            <td class="text-right"><a href="#" class="btn w-xs btn-sm btn-primary" [routerLink]="['AdminEditOrganization']">Edit</a></td>
+                            <td><strong>{{org.organization}}</strong></td>
+                            <td><strong>{{org.firstname}}</strong></td>
+                            <td><strong>{{org.lastname}}</strong></td>
+                            <td><strong>{{org.phone}}</strong></td>
+                            <td><strong>{{org.email}}</strong></td>
+                            <td><strong>{{org.student}}</strong></td>
+                            <td><strong>{{org.lastlogon.toString().slice(0,10)}}</strong></td>
+                            <td class="text-right"><a class="btn w-xs btn-sm btn-primary" (click)="gotoEdit(org)">Edit</a></td>
                         </tr>
-                        <tr>
-                            <td>
-                                <label class="cr-styled">
-                                    <input type="checkbox">
-                                    <i class="fa"></i>
-                                </label>
-                            </td>
-                            <td><strong>School 1</strong></td>
-                            <td><strong>Janet</strong></td>
-                            <td><strong>Smith</strong></td>
-                            <td><strong>01234</strong></td>
-                            <td><strong>js@domain.com</strong></td>
-                            <td><strong>23</strong></td>
-                            <td><strong>31/12/16</strong></td>
-                            <td class="text-right"><a href="#" class="btn w-xs btn-sm btn-primary">Edit</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="cr-styled">
-                                    <input type="checkbox">
-                                    <i class="fa"></i>
-                                </label>
-                            </td>
-                            <td><strong>School 1</strong></td>
-                            <td><strong>Janet</strong></td>
-                            <td><strong>Smith</strong></td>
-                            <td><strong>01234</strong></td>
-                            <td><strong>js@domain.com</strong></td>
-                            <td><strong>23</strong></td>
-                            <td><strong>31/12/16</strong></td>
-                            <td class="text-right"><a href="#" class="btn w-xs btn-sm btn-primary">Edit</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="cr-styled">
-                                    <input type="checkbox">
-                                    <i class="fa"></i>
-                                </label>
-                            </td>
-                            <td><strong>School 1</strong></td>
-                            <td><strong>Janet</strong></td>
-                            <td><strong>Smith</strong></td>
-                            <td><strong>01234</strong></td>
-                            <td><strong>js@domain.com</strong></td>
-                            <td><strong>23</strong></td>
-                            <td><strong>31/12/16</strong></td>
-                            <td class="text-right"><a href="#" class="btn w-xs btn-sm btn-primary">Edit</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="cr-styled">
-                                    <input type="checkbox">
-                                    <i class="fa"></i>
-                                </label>
-                            </td>
-                            <td><strong>School 1</strong></td>
-                            <td><strong>Janet</strong></td>
-                            <td><strong>Smith</strong></td>
-                            <td><strong>01234</strong></td>
-                            <td><strong>js@domain.com</strong></td>
-                            <td><strong>23</strong></td>
-                            <td><strong>31/12/16</strong></td>
-                            <td class="text-right"><a href="#" class="btn w-xs btn-sm btn-primary">Edit</a></td>
-                        </tr>
-                        
                     </table>
                 </div>
             </div>

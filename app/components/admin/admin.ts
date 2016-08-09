@@ -9,10 +9,13 @@ import {EditLesson} from './edit/lesson';
 import {EditCourse} from './edit/course';
 import {EditOrganization} from './edit/organization';
 
+
+
 @Component({
 	selector: 'admin',
 	templateUrl: '/components/admin/admin.html',
-	directives: [ROUTER_DIRECTIVES, RouterOutlet],
+	directives: [ROUTER_DIRECTIVES, RouterOutlet]
+
 })
 
 @RouteConfig([

@@ -3,6 +3,7 @@ import {Component, OnInit} from 'angular2/core';
 import {Header} from '../header/header';
 import {Router, Route, RouteConfig, RouterOutlet, ROUTER_DIRECTIVES} from 'angular2/router';
 import {Admin} from '../admin/admin';
+import {Session} from '../../services/session';
 // import {Tutor} from '../tutor/tutor';
 // import {Student} from '../student/student';
 
@@ -19,10 +20,13 @@ import {Admin} from '../admin/admin';
 ])
 
 export class Home implements OnInit {
-	constructor() {
+	constructor(private _router: Router, private _session: Session) {
 
 	}
 	ngOnInit(){
-
+		console.log(this._session.getCurrentRole())
+		if(this._session.getCurrentRole() != '0'){
+			this._router.navigateByUrl('login');
+		}
 	}
 }

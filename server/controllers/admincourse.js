@@ -6,17 +6,17 @@ var mongoose = require('mongoose'),
 	encrypt = require('../utilities/encryption');
 
 exports.getAllCourse = function(req, res) {
-	if(!req.admin) {
-		res.status(404);
-		res.send({error: 'Admin is not logged in, and can\'t access that data.'});
-	} else {
-		Course.find({}).exec(function(err, collection) {
+	// if(!req.admin) {
+	// 	res.status(404);
+	// 	res.send({error: 'Admin is not logged in, and can\'t access that data.'});
+	// } else {
+		Course.find({}, function(err, collection) {
 			if(err) {
 				res.send({error: err});
 			}
 			res.send(collection);
 		});
-	}
+	// }
 }
 
 exports.addCourse = function(req, res) {

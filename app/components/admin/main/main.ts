@@ -1,20 +1,38 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {Session} from '../../../services/session';
-import {ROUTER_DIRECTIVES} from 'angular2/router';
+import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
+import {AdminService} from '../../../services/admin';
 
 @Component({
 	selector: 'admin-main',
 	templateUrl: '/components/admin/main/main.html',
-	providers: [Session],
-	directives: [ROUTER_DIRECTIVES]
+	providers: [Session, AdminService],
+	directives: [ROUTER_DIRECTIVES],
 })
-export class Main {
-	constructor(private _session: Session) {
+export class Main{
+
+	courseList: any = [];
+	orgList: any = [];
+
+	constructor(private _session: Session, private _adminService: AdminService, private _router: Router) {
 		console.log('in the constructor');
+		this.courseList = this._adminService.getAllCourses(); 
+		this._adminService.getAllOrgs().subscribe((res)=>{
+			this.orgList = res;	
+		})
+	}
+
+	gotoEdit(org: any){
+		this._session.setItem('org', JSON.stringify(org));
+		this._router.navigate(['AdminEditOrganization']);
+	}
+
+	ngOnInit(){
+		
 	}
 
 	doLogin(form: any) {
-		// this._session.login(form.username, form.password);
+		
 	}
 }

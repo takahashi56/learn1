@@ -26,7 +26,7 @@ export class Login {
 		this.text = "";
 
 		this.username = new Control('', Validators.required);
-		this.password = new Control('', Validators.compose([Validators.required, Validators.minLength(8)]))
+		this.password = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
 
 		this.LoginForm = builder.group({
 			username: this.username,
