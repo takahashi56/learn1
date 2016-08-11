@@ -14,11 +14,22 @@ export class AdminService {
 
 	constructor(private _http: Http) {}
 
-	getAllCourses(){
-		var data = [{title: "safety", lesson: "5", video: "10", student: "20"},
-					{title: "safety", lesson: "5", video: "10", student: "20"}];
-		return data;
-		// return this._http.get(this.baseUrl + "courses", HEADER).map(res => res.json());
+	getAllCourses(){		
+		return this._http.get(this.baseUrl + "courses", HEADER).map((res) =>{ 
+			return res.json();
+		});
+	}
+
+	getEditCourses(id: string){		
+		return this._http.post(this.baseUrl + "courses/edit", JSON.stringify({"id": id}),HEADER).map((res) =>{ 
+			return res.json();
+		});
+	}
+
+	getAllContents(){		
+		return this._http.get(this.baseUrl + "courses/contents", HEADER).map((res) =>{ 
+			return res.json();
+		});
 	}
 
 	getAllOrgs(){
@@ -44,5 +55,23 @@ export class AdminService {
 			.map((res) => {		
 				return res.json();
 			})	
+	}
+
+	addCourse(data, flag){
+		if(!flag){
+
+			console.log("add")
+			return this._http.post(this.baseUrl + "course", JSON.stringify(data), HEADER)
+				.map((res) => {
+				return res.json();
+			})
+		}else{
+
+			console.log("edit")
+			return this._http.put(this.baseUrl + "course", JSON.stringify(data), HEADER)
+				.map((res) => {
+				return res.json();
+			})
+		}
 	}
 }

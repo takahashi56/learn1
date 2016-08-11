@@ -12,7 +12,7 @@
         <div class="tab-content">
             <div class="tab-pane active" id="courses">
                 <div class="text-right m-b-30">
-                    <a href="#" class="btn btn-primary w-sm" [routerLink]="['AdminAddCourse']">Add Course</a>
+                    <a class="btn btn-primary w-sm" (click)="gotoAddCourse()" >Add Course</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table text-page">
@@ -37,7 +37,7 @@
                             <td><strong>{{course.lesson}}</strong></td>
                             <td><strong>{{course.video}}</strong></td>
                             <td><strong>{{course.student}}</strong></td>
-                            <td class="text-right"><a href="#" class="btn w-xs btn-sm btn-primary" [routerLink]="['AdminEditCourse', {course_id: course._id}]">Edit</a></td>
+                            <td class="text-right"><a  class="btn w-xs btn-sm btn-primary" (click)="editCourse(course)">Edit</a></td>
                         </tr>
                         
                     </table>
@@ -45,7 +45,7 @@
             </div>
             <div class="tab-pane" id="organization">
                 <div class="text-right m-b-30">
-                    <a href="#" class="btn btn-primary w-sm" [routerLink]="['AdminAddOrganization']">Add Organization</a>
+                    <a  class="btn btn-primary w-sm" [routerLink]="['AdminAddOrganization']">Add Organization</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table text-page">

@@ -10,16 +10,32 @@ import {AdminService} from '../../../services/admin';
 	providers: [Session, AdminService],
 	directives: [ROUTER_DIRECTIVES],
 })
-export class Main{
+export class Main implements OnInit {
 
 	courseList: any = [];
 	orgList: any = [];
+	coursesData: any = [];
+	lessonsData: any = [];
+	contentsData: any = [];
+
 
 	constructor(private _session: Session, private _adminService: AdminService, private _router: Router) {
 		console.log('in the constructor');
-		this.courseList = this._adminService.getAllCourses(); 
+
+		
+
 		this._adminService.getAllOrgs().subscribe((res)=>{
 			this.orgList = res;	
+		})
+	}
+
+	editCourse(course: any){
+		var lessons = [];
+		console.log(course.course_id);
+		this._adminService.getEditCourses(course.course_id).subscribe((res) => {
+			this._session.setItem('editORadd', JSON.stringify({flag: true}));
+			this._session.setItem('Course', JSON.stringify(res));
+			this._router.navigate(['AdminAddCourse']);
 		})
 	}
 
@@ -29,7 +45,22 @@ export class Main{
 	}
 
 	ngOnInit(){
-		
+		this._adminService.getAllCourses().subscribe((res) => {  
+			this.courseList = res;
+		});
+	}
+
+	gotoAddCourse(){
+		var data = {
+			course_id: Date.now(),
+			coursetitle: '',
+			coursedescription: '',
+			lesson: [],
+		}
+		this._session.setItem('editORadd', JSON.stringify({flag: false}));
+		this._session.setItem('Course', JSON.stringify(data));
+
+		this._router.navigate(['AdminAddCourse']);
 	}
 
 	doLogin(form: any) {

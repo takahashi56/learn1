@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 module.exports = function() {
 	var lessonSchema = mongoose.Schema({
 		name: String,
+		description: String,
 		course_id: String,
 		contentIds: String,	
 	});

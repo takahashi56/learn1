@@ -6,23 +6,23 @@ module.exports = function(app) {
 		admincourse.getAllCourse(req, res);
 	});
 
-	app.post('/api/admin/course', function(req, res) {
-		res.send(admincourse.addCourse());
+	app.post('/api/admin/courses/edit', function(req, res) {
+		admincourse.getEditCourses(req, res);
 	});
 
-	app.post('/api/admin/lesson', function(req, res) {
-		res.send(admincourse.addLesson());
+	app.get('/api/admin/courses/contents', function(req, res) {
+		admincourse.getAllContent(req, res);
+	});
+
+	app.post('/api/admin/course', function(req, res) {
+		admincourse.addCourse(req, res);
 	});
 
 	app.put('/api/admin/course', function(req, res) {
-		res.send(admincourse.editCourse());
-	});
-
-	app.put('/api/admin/lesson', function(req, res) {
-		res.send(admincourse.editLesson());
+		admincourse.updateCourse(req, res);
 	});
 
 	app.delete('/api/admin/course', function(req, res) {
-		res.send(admincourse.deleteCourse());
+		admincourse.deleteCourse(req, res);
 	});
 }

@@ -16,38 +16,54 @@ exports.login = function(req, res) {
 
 	Admin.findOne({email: email}, function(err, user){
 		if(user == null){ 
-			return console.error(err);			
-		}	
-		if(user.authenticate(pwd)){
-			action = 1;
-			data.action = "admin-course";
-			data.role = 0;
-			data.success = true;
-			res.send(data);
-		}else{
-			res.send(data)
-		}
-	});
-
-	setTimeout(function(){
-		if(action != 1){
 			Tutor.findOne({email: email}, function(err, tutor){
 				if(tutor == null) {
 					res.send(data);
 					return console.error(err);				
-				}
-				if(tutor.authenticate(pwd)){
-					action = 2;
-					data.action = "tutor-course";
-					data.role = 1;
-					data.success = true;
-					return res.send(data);
 				}else{
-					res.send(data);
-				}
+					if(tutor.authenticate(pwd)){
+						action = 2;
+						data.action = "tutor-course";
+						data.role = 1;
+						data.success = true;
+						return res.send(data);
+					}else{
+						res.send(data);
+					}
+				}	
 			})	
-		}	
-	}, 2000);
+		}else{	
+			if(user.authenticate(pwd)){
+				action = 1;
+				data.action = "admin-course";
+				data.role = 0;
+				data.success = true;
+				return res.send(data);
+			}else{
+				return res.send(data)
+			}
+		}
+	});
+
+	// setTimeout(function(){
+	// 	if(action != 1){
+	// 		Tutor.findOne({email: email}, function(err, tutor){
+	// 			if(tutor == null) {
+	// 				res.send(data);
+	// 				return console.error(err);				
+	// 			}
+	// 			if(tutor.authenticate(pwd)){
+	// 				action = 2;
+	// 				data.action = "tutor-course";
+	// 				data.role = 1;
+	// 				data.success = true;
+	// 				return res.send(data);
+	// 			}else{
+	// 				res.send(data);
+	// 			}
+	// 		})	
+	// 	}	
+	// }, 2000);
 	
 }
 
