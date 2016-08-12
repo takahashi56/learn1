@@ -4,7 +4,7 @@ import {Header} from '../header/header';
 import {Router, Route, RouteConfig, RouterOutlet, ROUTER_DIRECTIVES} from 'angular2/router';
 import {Admin} from '../admin/admin';
 import {Session} from '../../services/session';
-// import {Tutor} from '../tutor/tutor';
+import {Tutor} from '../tutor/tutor';
 // import {Student} from '../student/student';
 
 @Component({
@@ -14,8 +14,8 @@ import {Session} from '../../services/session';
 })
 
 @RouteConfig([
-	new Route({ path: '/admin/...', component: Admin, name: 'Admin', useAsDefault:true }),
-	// new Route({ path: '/tutor/...', component: Admin, name: 'Tutor' }),
+	new Route({ path: '/admin/...', component: Admin, name: 'Admin' }),
+	new Route({ path: '/tutor/...', component: Tutor, name: 'Tutor' , useAsDefault:true}),
 	// new Route({ path: '/student/...', component: Admin, name: 'Student' }),
 ])
 
@@ -25,8 +25,25 @@ export class Home implements OnInit {
 	}
 	ngOnInit(){
 		console.log(this._session.getCurrentRole())
-		if(this._session.getCurrentRole() != '0'){
-			this._router.navigateByUrl('login');
-		}
+
+		var role = this._session.getCurrentRole(),
+			url = this._session.getItem('homeUrl');
+
+		// switch(role){
+		// 	case 0:
+		// 		if(!url.includes('admin')){ url = '/login'}
+		// 		break;
+		// 	case 1:
+		// 		if(!url.includes('tutor')) { url = '/login'}
+		// 		break;
+		// 	case 2:
+		// 		if(!url.includes('student')) { url = '/login'}
+		// 		break;
+		// 	default:
+		// 		url = '/login'
+		// 		break;
+		// }
+		// console.log(url);
+		this._router.navigateByUrl(url);
 	}
 }

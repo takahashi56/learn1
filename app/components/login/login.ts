@@ -47,8 +47,9 @@ export class Login {
 					console.log(res);
 					if(res.success){
 						this._session.setUser(data.username, res.role)
-						// this._router.navigateByUrl(res.action);				
-						this._router.navigateByUrl("home");
+						this._session.setItem('homeUrl', res.action);
+						this._router.navigateByUrl(res.action);				
+						// this._router.navigate(res.action);
 					}else{
 						this.authFailure = true;
 					}					

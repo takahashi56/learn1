@@ -23,7 +23,7 @@ exports.login = function(req, res) {
 				}else{
 					if(tutor.authenticate(pwd)){
 						action = 2;
-						data.action = "tutor-course";
+						data.action = "/home/tutor/main";
 						data.role = 1;
 						data.success = true;
 						return res.send(data);
@@ -35,7 +35,7 @@ exports.login = function(req, res) {
 		}else{	
 			if(user.authenticate(pwd)){
 				action = 1;
-				data.action = "admin-course";
+				data.action = "/home/admin/main";
 				data.role = 0;
 				data.success = true;
 				return res.send(data);
