@@ -5,7 +5,7 @@ import {Router, Route, RouteConfig, RouterOutlet, ROUTER_DIRECTIVES} from 'angul
 import {Home} from './components/home/home';
 import {Login} from './components/login/login';
 import {Dashboard} from './components/dashboard/dashboard';
-import {Signup} from './components/signup/signup';
+import {SignUp} from './components/signup/signup';
 import {Forgetpwd} from './components/forgetpwd/forgetpwd';
 
 
@@ -18,7 +18,7 @@ import {Forgetpwd} from './components/forgetpwd/forgetpwd';
 	new Route({ path: '/login', component: Login, name: 'Login', useAsDefault:true }),
 	new Route({ path: '/dashboard', component: Dashboard, name: 'Dashboard' }),
 	new Route({ path: '/home/...', component: Home, name: 'Home' }),
-	new Route({ path: '/signup', component: Signup, name: 'SignUp' }),
+	new Route({ path: '/signup', component: SignUp, name: 'SignUp' }),
 	new Route({ path: '/forgetpwd', component: Forgetpwd, name: 'Forgetpwd' })
 ])
 export class AppComponent{

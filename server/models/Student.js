@@ -9,9 +9,6 @@ module.exports = function() {
     username: {type: String, required: '{PATH} is required!', unique: true},
     hashed_pwd: {type: String, required: '{PATH} is required!'},
     roles: [String],
-    isCompleted: Boolean,
-    completedAt: Date,
-    certificate: String,
     DOB: String,
     phone: String,
     tutor_id: String

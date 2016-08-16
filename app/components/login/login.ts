@@ -37,7 +37,7 @@ export class Login {
 	doLogin(form: any) {
 		this.authFailure = false;
 		this.submitAttempt = true;
-		if(this.LoginForm.valid){		
+		if (this.LoginForm.valid) {		
 			var data = {
 				username: form.username,
 				password: form.password
@@ -45,11 +45,11 @@ export class Login {
 			this._authService.Login(data)
 				.subscribe((res) => {
 					console.log(res);
-					if(res.success){
+					if (res.success) {
 						this._session.setUser(data.username, res.role)
 						this._session.setItem('homeUrl', res.action);
-						this._router.navigateByUrl(res.action);				
-						// this._router.navigate(res.action);
+						// this._router.navigateByUrl(res.action);	
+						this._router.navigateByUrl("/home/student/main");				
 					}else{
 						this.authFailure = true;
 					}					

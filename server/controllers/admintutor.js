@@ -44,8 +44,11 @@ exports.addTutor = function(req, res) {
 	tutor["created_at"] = new Date();
 
 	Tutor.create(tutor, function(err, tutor){
-		if(err) return console.error(err);
-		res.send({success: true});
+		if(err) {
+			res.send(err);
+		}else{
+			res.send({success: true});	
+		}		
 	})	
 
 }

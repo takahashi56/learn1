@@ -37,10 +37,10 @@
                                     <i class="fa"></i>
                                 </label>
                             </td>
-                            <td  [routerLink]="['DetailTutorStudent']"><strong>{{student.firstName}}</strong></td>
-                            <td  [routerLink]="['DetailTutorStudent']"><strong>{{student.lastName}}</strong></td>
+                            <td (click)="gotoStudentDetail(student)" ><strong>{{student.firstName}}</strong></td>
+                            <td  (click)="gotoStudentDetail(student)" ><strong>{{student.lastName}}</strong></td>
                             <td><strong>{{student.DOB}}</strong></td>
-                            <td  [routerLink]="['DetailTutorStudent']"><strong>{{student.username}}</strong></td>
+                            <td  (click)="gotoStudentDetail(student)" ><strong>{{student.username}}</strong></td>
                             <td><strong>{{student.hashed_pwd}}</strong></td>
                             <td><strong>other</strong></td>
                             <td class="text-right"><a  class="btn w-xs btn-sm btn-primary" (click)="editStudent(student)">Edit</a></td>
@@ -60,33 +60,11 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tr [routerLink]="['DetailTutorCourse']">
-                            <td><strong>Healthy</strong></td>
-                            <td class=""><strong>45</strong></td>
+                        <tr *ngFor="let course of courseList">
+                            <td (click)="gotoDetail(course)"><strong>{{course.coursetitle}}</strong></td>
+                            <td [routerLink]="['DetailTutorCourse']"><strong>{{course.enrolled}}</strong></td>
                             <td class="">123</td>
-                            <td class="text-right"><a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-student">Assign Student</a></td>
-                            
-                        </tr>
-                        <tr>
-                            <td><strong>Healthy</strong></td>
-                            <td class=""><strong>45</strong></td>
-                            <td class="">123</td>
-                            <td class="text-right"><a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-student">Assign Student</a></td>
-                            
-                        </tr>
-                        <tr>
-                            <td><strong>Healthy</strong></td>
-                            <td class=""><strong>45</strong></td>
-                            <td class="">123</td>
-                            <td class="text-right"><a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-student">Assign Student</a></td>
-                            
-                        </tr>
-                        <tr>
-                            <td><strong>Healthy</strong></td>
-                            <td class=""><strong>45</strong></td>
-                            <td class="">123</td>
-                            <td class="text-right"><a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-student">Assign Student</a></td>
-                            
+                            <td class="text-right"><a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-student" (click)="beforeAssignStudent(course)">Assign Student</a></td>
                         </tr>
                     </table>
                 </div>
@@ -115,18 +93,16 @@
            </div> 
 
            <div class="modal-footer">
-				<div class="row"> 
+			         	<div class="row"> 
                    <div class="col-md-12"> 
-                       <select class="course-select">
-							<option>Course 1</option>
-							<option>Course 2</option>
-							<option>Course 3</option>
-						</select>
+                      <select class="course-select" (change)="onSelectCourse($event.target.value)">
+                        <option *ngFor="let course of courseList" [value]="course">{{course.coursetitle}}</option>
+                      </select>
                    </div> 
                </div> 
 
                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button> 
-               <button type="button" class="btn btn-primary">Assign</button> 
+               <button type="button" class="btn btn-primary"(click)="courseAssign()">Assign</button> 
            </div> 
        </div> 
    </div>
@@ -153,16 +129,14 @@
                 <div class="modal-footer">
 					<div class="row"> 
                         <div class="col-md-12"> 
-                            <select class="course-select">
-								<option>Student 1</option>
-								<option>Student 2</option>
-								<option>Student 3</option>
-							</select>
+                            <select class="course-select" (change)="onSelectStudent($event.target.value)">
+                            <option *ngFor="let student of studentList" [ngValue]="student">{{student.firstname+ " " + student.lastname}}</option>
+              							</select>
                         </div> 
                     </div> 
 				
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button> 
-                    <button type="button" class="btn btn-primary">Assign</button> 
+                    <button type="button" class="btn btn-primary" (click)="studentAssign()">Assign</button> 
                 </div> 
             </div> 
         </div>

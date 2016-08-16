@@ -5,7 +5,7 @@ import {Router, Route, RouteConfig, RouterOutlet, ROUTER_DIRECTIVES} from 'angul
 import {Admin} from '../admin/admin';
 import {Session} from '../../services/session';
 import {Tutor} from '../tutor/tutor';
-// import {Student} from '../student/student';
+import {Student} from '../student/student';
 
 @Component({
 	selector: 'home',
@@ -16,7 +16,7 @@ import {Tutor} from '../tutor/tutor';
 @RouteConfig([
 	new Route({ path: '/admin/...', component: Admin, name: 'Admin' }),
 	new Route({ path: '/tutor/...', component: Tutor, name: 'Tutor' , useAsDefault:true}),
-	// new Route({ path: '/student/...', component: Admin, name: 'Student' }),
+	new Route({ path: '/student/...', component: Student, name: 'Student' }),
 ])
 
 export class Home implements OnInit {

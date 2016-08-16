@@ -27,6 +27,7 @@ export class TutorMain implements OnInit {
 
 		this._tutorService.getAllCourses().subscribe((res)=>{
 			this.courseList = res;	
+			console.log(res);
 		});
 	}
 
@@ -41,7 +42,11 @@ export class TutorMain implements OnInit {
 	ngOnInit(){
 	}
 
-	
+	gotoStudentDetail(student: any){
+		this._session.setItem('TutorStudent', JSON.stringify(student));
+		this._router.navigate(['DetailTutorStudent']);
+	}
+
 	gotoAddStudent(){
 		var data = {
 			student_id: Date.now(),
@@ -58,6 +63,26 @@ export class TutorMain implements OnInit {
 		this._session.setItem('TutorStudent', JSON.stringify(data));
 
 		this._router.navigate(['AddTutorStudent']);
+	}
+
+	beforeAssignStudent(course){
+		this._session.setItem('AssignCourse', course)
+	}
+
+	onSelectCourse(value){
+		console.log(value);
+	}
+
+	onSelectStudent(value){
+		console.log(value);
+	}
+
+	studentAssign(){
+		
+	}
+
+	courseAssign(){
+
 	}
 
 	importAddStudent(){
