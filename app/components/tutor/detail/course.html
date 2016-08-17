@@ -1,6 +1,6 @@
 <section class="m-t-20 m-b-30">
     <div class="container">
-        <h2 class="text-page m-b-30"><strong>Fire Safety</strong></h2>
+        <h2 class="text-page m-b-30"><strong>{{getCourseName()}}</strong></h2>
         <ul class="nav nav-tabs nav-justified">
             <li class="">
                 <a href="#profile" data-toggle="tab" aria-expanded="false"><strong class="text-page">Profile</strong></a>
@@ -28,7 +28,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="m-l-10 m-r-10">
-                                            <input class=" form-control" id="fname" name="name" type="text" required="" aria-required="true" placeholder="Course Name" value="Fire Safety">
+                                            <input class=" form-control" id="fname" name="name" readonly="" type="text" placeholder="Course Name" [value]="course.coursetitle">
                                             </div>
                                         </div>
                                         <div class="col-lg-2">
@@ -38,7 +38,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="m-l-10 m-r-10">
-				<textarea class="page-color text-page form-control" id="cdescription" name="cdescription" type="text" required="" aria-required="true" value="A course regarding fire safety in the work place.">A course regarding fire safety in the work place.</textarea>
+				<textarea class="page-color text-page form-control" id="cdescription" name="cdescription" type="text" readonly="">{{course.coursedescription}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -54,7 +54,7 @@
                             <div class="m-l-5 m-r-5">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <input type="submit" name="submit-btn" value="Back" class="btn btn-primary m-b-10 w-sm">
+                                        <input type="button" (click)="gotoTutorMain()" value="Back" class="btn btn-primary m-b-10 w-sm">
                                     </div>
                                 </div>
                             </div>
@@ -74,37 +74,14 @@
                                 <th class="text-center">Certificate</th>
                             </tr>
                         </thead>
-                        <tr>
-                            <td><strong>John Doe</strong></td>
-                            <td class="text-center"><strong>Yes</strong></td>
-                            <td class="text-center"><strong>98%</strong></td>
-                            <td class="text-center"><strong>16:40 31/3/2016</strong></td>
+                        <tr *ngFor="let student of studentList">
+                            <td><strong>{{student.firstName + " " + student.lastName}}</strong></td>
+                            <td class="text-center"><strong>{{student.isCompleted: "Yes":"No"}}</strong></td>
+                            <td class="text-center"><strong>{{student.score}}%</strong></td>
+                            <td class="text-center"><strong>{{student.completedAt}}</strong></td>
                             <td class="text-center"><a href="#"><strong class="text-page">View</strong></a></td>
                             
-                        </tr>
-                        <tr>
-                            <td><strong>Racheal Smith</strong></td>
-                            <td class="text-center"><strong>Yes</strong></td>
-                            <td class="text-center"><strong>98%</strong></td>
-                            <td class="text-center"><strong>16:40 31/3/2016</strong></td>
-                            <td class="text-center"><a href="#"><strong class="text-page">View</strong></a></td>
-                            
-                        </tr>
-                        <tr>
-                            <td><strong>James Brown</strong></td>
-                            <td class="text-center"><strong>Yes</strong></td>
-                            <td class="text-center"><strong>98%</strong></td>
-                            <td class="text-center"><strong>16:40 31/3/2016</strong></td>
-                            <td class="text-center"><a href="#"><strong class="text-page">View</strong></a></td>
-                            
-                        </tr>
-                        <tr>
-                            <td><strong>Roger Moore</strong></td>
-                            <td class="text-center"><strong>Not yet</strong></td>
-                            <td class="text-center"><strong></strong></td>
-                            <td class="text-center"><strong></strong></td>
-                            <td class="text-center"><a href="#"><strong class="text-page"></strong></a></td>
-                        </tr>
+                        </tr>                        
                     </table>
                 </div>
                             <div class="white-space m-t-30 m-b-30">
@@ -117,7 +94,7 @@
                             <div class="m-l-0 m-r-0">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <input type="submit" name="submit-btn" value="Back" class="btn btn-primary m-b-10 w-sm">
+                                        <input type="submit" (click)="gotoTutorMain()" value="Back" class="btn btn-primary m-b-10 w-sm">
                                     </div>
                                 </div>
                             </div>

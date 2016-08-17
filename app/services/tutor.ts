@@ -1,6 +1,8 @@
 import {Injectable} from 'angular2/core';
 import 'rxjs/add/operator/map';
 import {Http, Headers} from 'angular2/http';
+import {Observable} from 'rxjs/Rx';
+
 
 const HEADER = {
   headers: new Headers({
@@ -12,9 +14,13 @@ const HEADER = {
 export class TutorService {
 	private baseUrl: string = "/api/tutor/";
 
-	constructor(private _http: Http) {}
+	constructor (private _http: Http) {
+		// this.progress$ = Observable.create(observer => {
+		// 	this.progressObserver = observer
+		// }).share();
+	}
 
-	getAllCourses(){		
+	getAllCourses() {		
 		return this._http.get(this.baseUrl + "courses", HEADER).map((res) =>{ 
 			return res.json();
 		});
@@ -39,5 +45,33 @@ export class TutorService {
 			})
 		}
 		
+	}
+
+	setAssignStudentsWithCourse(id, ids){
+		var data = {
+			course_id: id,
+			ids: ids
+		}
+		return this._http.post(this.baseUrl + "setstudentbycourse", JSON.stringify(data), HEADER).map((res) => { 
+			return res.json();
+		});
+	}
+
+	makeFileRequest(files){
+		console.log(files);
+	}
+
+	getCoursesByStudentId(id){
+		var data = {student_id: id};
+		return this._http.post(this.baseUrl + "getCoursesByStudentId", JSON.stringify(data), HEADER).map((res)=>{
+			return res.json();
+		})
+	}
+
+	getStudentsByCourseId(id){
+		var data = {course_id: id};
+		return this._http.post(this.baseUrl + "getStudentsByCourseId", JSON.stringify(data), HEADER).map((res)=>{
+			return res.json();
+		})	
 	}
 }

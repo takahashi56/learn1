@@ -13,7 +13,8 @@
             <div class="tab-pane active" id="students">
                 <div class="text-right m-b-30">
                     <a  class="btn btn-primary w-sm m-r-5" (click)="gotoAddStudent()" >Add Student</a>
-                    <a  class="btn btn-primary w-sm m-r-5">Import Students</a>
+                    <a class="btn btn-primary w-sm m-r-5" onClick="$('#file-uploader').click()">Import Students</a>
+                    <input type="file" id="file-uploader" (change)="importAddStudent($event)" style="display: none;"/>
                     <a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-course">Assign Course</a>
                 </div>
                 <div class="table-responsive">
@@ -33,14 +34,14 @@
                         <tr *ngFor="let student of studentList">
                             <td>
                                 <label class="cr-styled">
-                                    <input type="checkbox">
+                                    <input type="checkbox" [(ngModel)]="student.isSelected">
                                     <i class="fa"></i>
                                 </label>
                             </td>
-                            <td (click)="gotoStudentDetail(student)" ><strong>{{student.firstName}}</strong></td>
-                            <td  (click)="gotoStudentDetail(student)" ><strong>{{student.lastName}}</strong></td>
+                            <td (click)="gotoStudentDetail(student)" style="cursor: pointer;" ><strong>{{student.firstName}}</strong></td>
+                            <td  (click)="gotoStudentDetail(student)" style="cursor: pointer;" ><strong>{{student.lastName}}</strong></td>
                             <td><strong>{{student.DOB}}</strong></td>
-                            <td  (click)="gotoStudentDetail(student)" ><strong>{{student.username}}</strong></td>
+                            <td  (click)="gotoStudentDetail(student)" style="cursor: pointer;" ><strong>{{student.username}}</strong></td>
                             <td><strong>{{student.hashed_pwd}}</strong></td>
                             <td><strong>other</strong></td>
                             <td class="text-right"><a  class="btn w-xs btn-sm btn-primary" (click)="editStudent(student)">Edit</a></td>
@@ -61,9 +62,9 @@
                             </tr>
                         </thead>
                         <tr *ngFor="let course of courseList">
-                            <td (click)="gotoDetail(course)"><strong>{{course.coursetitle}}</strong></td>
-                            <td [routerLink]="['DetailTutorCourse']"><strong>{{course.enrolled}}</strong></td>
-                            <td class="">123</td>
+                            <td (click)="gotoDetail(course)" style="cursor: pointer;" ><strong>{{course.coursetitle}}</strong></td>
+                            <td (click)="gotoDetail(course)" style="cursor: pointer;" > <strong>{{course.enrolled}}</strong></td>
+                            <td class="" >123</td>
                             <td class="text-right"><a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-student" (click)="beforeAssignStudent(course)">Assign Student</a></td>
                         </tr>
                     </table>
@@ -96,13 +97,13 @@
 			         	<div class="row"> 
                    <div class="col-md-12"> 
                       <select class="course-select" (change)="onSelectCourse($event.target.value)">
-                        <option *ngFor="let course of courseList" [value]="course">{{course.coursetitle}}</option>
+                        <option *ngFor="let course of courseList" [value]="course.course_id">{{course.coursetitle}}</option>
                       </select>
                    </div> 
                </div> 
 
                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button> 
-               <button type="button" class="btn btn-primary"(click)="courseAssign()">Assign</button> 
+               <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="courseAssign()">Assign</button> 
            </div> 
        </div> 
    </div>
@@ -130,13 +131,13 @@
 					<div class="row"> 
                         <div class="col-md-12"> 
                             <select class="course-select" (change)="onSelectStudent($event.target.value)">
-                            <option *ngFor="let student of studentList" [ngValue]="student">{{student.firstname+ " " + student.lastname}}</option>
+                            <option *ngFor="let student of studentList" [ngValue]="student">{{student.firstName+ " " + student.lastName}}</option>
               							</select>
                         </div> 
                     </div> 
 				
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button> 
-                    <button type="button" class="btn btn-primary" (click)="studentAssign()">Assign</button> 
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="studentAssign()">Assign</button> 
                 </div> 
             </div> 
         </div>

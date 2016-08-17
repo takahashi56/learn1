@@ -144,38 +144,14 @@
                                 <th class="text-center">Certificate</th>
                             </tr>
                         </thead>
-                        <tr>
-                            <td><strong>Health and Safety</strong></td>
-                            <td class="text-center"><strong>Yes</strong></td>
-                            <td class="text-center"><strong>98%</strong></td>
-                            <td class="text-center"><strong>16:40 31/3/2016</strong></td>
+                        <tr *ngFor="let course of courseList">
+                            <td><strong>{{course.coursetitle}}</strong></td>
+                            <td class="text-center"><strong>{{course.isCompleted}}</strong></td>
+                            <td class="text-center"><strong>{{course.score}}%</strong></td>
+                            <td class="text-center"><strong>{{course.completedAt}}</strong></td>
                             <td class="text-center"><a href="#"><strong class="text-page">View</strong></a></td>
                             
-                        </tr>
-                        <tr>
-                            <td><strong>Health and Safety</strong></td>
-                            <td class="text-center"><strong>Yes</strong></td>
-                            <td class="text-center"><strong>98%</strong></td>
-                            <td class="text-center"><strong>16:40 31/3/2016</strong></td>
-                            <td class="text-center"><a href="#"><strong class="text-page">View</strong></a></td>
-                            
-                        </tr>
-                        <tr>
-                            <td><strong>Health and Safety</strong></td>
-                            <td class="text-center"><strong>Yes</strong></td>
-                            <td class="text-center"><strong>98%</strong></td>
-                            <td class="text-center"><strong>16:40 31/3/2016</strong></td>
-                            <td class="text-center"><a href="#"><strong class="text-page">View</strong></a></td>
-                            
-                        </tr>
-                        <tr>
-                            <td><strong>Health and Safety</strong></td>
-                            <td class="text-center"><strong>Yes</strong></td>
-                            <td class="text-center"><strong>98%</strong></td>
-                            <td class="text-center"><strong>16:40 31/3/2016</strong></td>
-                            <td class="text-center"><a href="#"><strong class="text-page">View</strong></a></td>
-                            
-                        </tr>
+                        </tr>                        
                     </table>
                 </div>
                             <div class="white-space m-t-30 m-b-30">
@@ -188,7 +164,7 @@
                             <div class="m-l-0 m-r-0">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <input type="submit" name="submit-btn" value="Back" class="btn btn-primary m-b-10 w-sm">
+                                        <input type="submit" (click)="cancel()" value="Back" class="btn btn-primary m-b-10 w-sm">
                                     </div>
                                 </div>
                             </div>

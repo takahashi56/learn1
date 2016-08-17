@@ -23,17 +23,20 @@ export class DetailTutorStudent {
 	verifiedpassword: Control;
 	phone: Control;
 	dob: Control;
+	courseList: any;
 	submitAttempt: boolean = false;
 
-	getUserFullName(){
-		return this.titleCase(this.student.firstname) + this.titleCase(this.student.lastname);
-	}
-
+	
 	constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
 		this.student = JSON.parse(this._session.getItem('TutorStudent'));	
 		this.allStudentData = JSON.parse(this._session.getItem('TutorAllStudent'));
 		console.log(this.allStudentData);
+		var id = this.student.student_id;
+		console.log("student id" + id);
 
+		this._tutorService.getCoursesByStudentId(id).subscribe((res)=>{
+			this.courseList = res;
+		})
 
 		this.firstname = new Control(this.student.firstName, Validators.required);
 		this.lastname = new Control(this.student.lastName, Validators.required);
@@ -52,6 +55,10 @@ export class DetailTutorStudent {
 			password: this.password,
 			verifiedpassword: this.verifiedpassword
 		})
+	}
+
+	getUserFullName(){
+		return this.titleCase(this.student.firstName) + " "+ this.titleCase(this.student.lastName);
 	}
 
 	cancel(){

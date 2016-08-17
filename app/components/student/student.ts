@@ -3,9 +3,10 @@ import {Component, OnInit} from 'angular2/core';
 import {Router, Route, RouteConfig, RouterOutlet, ROUTER_DIRECTIVES} from 'angular2/router';
 import {StudentMain} from './main/main';
 import {StudentLesson} from './lesson/student';
-import {StudentText} from './questiontext/student';
-import {StudentChoice} from './questionchoice/student';
+import {QuestionText} from './questiontext/student';
+import {QuestionChoice} from './questionchoice/student';
 import {StudentVideo} from './video/student';
+import {SelectedContent} from './selected/student';
 
 @Component({
 	selector: 'student',
@@ -16,8 +17,9 @@ import {StudentVideo} from './video/student';
 @RouteConfig([
 	new Route({ path: '/main', component: StudentMain, name: 'StudentCourse', useAsDefault:true }),
 	new Route({ path: '/lesson', component: StudentLesson,  name: 'StudentLesson'}),
-	new Route({ path: '/text', component: StudentText, name: 'StudentText' }),
-	new Route({ path: '/choice', component: StudentChoice, name: 'StudentChoice' }),
+	new Route({ path: '/selected', component: SelectedContent,  name: 'SelectedContent'}),
+	new Route({ path: '/text', component: QuestionText, name: 'QuestionText' }),
+	new Route({ path: '/choice', component: QuestionChoice, name: 'QuestionChoice' }),
 	new Route({ path: '/video', component: StudentVideo, name: 'StudentVideo' }),
 ])
 

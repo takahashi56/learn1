@@ -46,6 +46,10 @@ export class TutorMain implements OnInit {
 		this._session.setItem('TutorStudent', JSON.stringify(student));
 		this._router.navigate(['DetailTutorStudent']);
 	}
+	gotoDetail(course: any){
+		this._session.setItem('TutorCourse', JSON.stringify(course));
+		this._router.navigate(['DetailTutorCourse']);
+	}
 
 	gotoAddStudent(){
 		var data = {
@@ -70,23 +74,54 @@ export class TutorMain implements OnInit {
 	}
 
 	onSelectCourse(value){
-		console.log(value);
+		this._session.setItem('SelectCourseWithId', value)
 	}
 
 	onSelectStudent(value){
-		console.log(value);
+		this._session.setItem('SelectStudentWithId', value)
 	}
 
 	studentAssign(){
-		
+		var id = this._session.getItem('SelectStudentWithId');
+		if(!id) return false;
+
+		let selectedId = this._session.getItem('AssignCourse');
+		if(!selectedId) return false;
+
+		let ids = [];
+		ids.push(selectedId);
+
+		this._tutorService.setAssignStudentsWithCourse(id,ids).subscribe((res)=>{
+			console.log(res);
+		});;
 	}
 
 	courseAssign(){
+		var id = this._session.getItem('SelectCourseWithId');
+		if(!id) return false;
+
+		let selectedId = this.studentList.filter((x)=>x.isSelected);
+		if(selectedId.length == 0) return false;
+		
+		let ids = [];
+		selectedId.forEach(function(select){
+			ids.push(select.student_id);
+		});
+
+		this._tutorService.setAssignStudentsWithCourse(id,ids).subscribe((res)=>{
+			console.log(res);
+		});
 
 	}
 
-	importAddStudent(){
+	importAddStudent(e){
+		console.log(e);
+		 var files = e.srcElement.files;
+	    console.log(files);    
 
+	  	// this._tutorService.makeFileRequest(files).subscribe((res)=>{
+	  	// 	console.log('sent');
+	  	// })
 	}
 
 	assignCourseToStudent(){

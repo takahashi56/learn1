@@ -15,8 +15,8 @@ import {Student} from '../student/student';
 
 @RouteConfig([
 	new Route({ path: '/admin/...', component: Admin, name: 'Admin' }),
-	new Route({ path: '/tutor/...', component: Tutor, name: 'Tutor' , useAsDefault:true}),
-	new Route({ path: '/student/...', component: Student, name: 'Student' }),
+	new Route({ path: '/tutor/...', component: Tutor, name: 'Tutor' }),
+	new Route({ path: '/student/...', component: Student, name: 'Student', useAsDefault:true }),
 ])
 
 export class Home implements OnInit {
@@ -31,19 +31,20 @@ export class Home implements OnInit {
 
 		// switch(role){
 		// 	case 0:
-		// 		if(!url.includes('admin')){ url = '/login'}
+		// 		// if(!url.includes('admin')){ url = '/login'}
 		// 		break;
 		// 	case 1:
-		// 		if(!url.includes('tutor')) { url = '/login'}
+		// 		// if(!url.includes('tutor')) { url = '/login'}
 		// 		break;
 		// 	case 2:
-		// 		if(!url.includes('student')) { url = '/login'}
+		// 		// if(!url.includes('student')) { url = '/login'}
+				
 		// 		break;
 		// 	default:
 		// 		url = '/login'
 		// 		break;
 		// }
-		// console.log(url);
+		console.log(url);
 		this._router.navigateByUrl(url);
 	}
 }

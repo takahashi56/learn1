@@ -22,7 +22,16 @@ module.exports = function(app) {
 		tutorstudent.editStudent(req, res);
 	});
 
-	app.delete('/api/tutor/student', function(req, res) {
-		res.send(tutorstudent.deleteStudent(req, res));
+	app.post('/api/tutor/setstudentbycourse', function(req, res) {
+		console.log(req.body);
+		tutorstudent.setStudentByCourse(req, res);
 	});
+
+	app.post('/api/tutor/getCoursesByStudentId', function(req, res) {
+		tutorstudent.getCoursesByStudentId(req, res);
+	});	
+
+	app.post('/api/tutor/getStudentsByCourseId', function(req, res) {
+		tutorstudent.getStudentsByCourseId(req, res);
+	});	
 }

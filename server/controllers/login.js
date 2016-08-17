@@ -78,9 +78,10 @@ exports.studentLogin = function(req, res) {
 			return console.error(error);
 		}
 		if(student.authenticate(pwd)){
-			data.action = "student-course";
+			data.action = "/home/student/main";
 			data.role = 2;
 			data.success = true;
+			data.id = student._id;
 			res.send(data)	
 		}else{
 			res.send(data);

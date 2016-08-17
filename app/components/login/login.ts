@@ -48,8 +48,10 @@ export class Login {
 					if (res.success) {
 						this._session.setUser(data.username, res.role)
 						this._session.setItem('homeUrl', res.action);
-						// this._router.navigateByUrl(res.action);	
-						this._router.navigateByUrl("/home/student/main");				
+						if(res.role == 2){
+							this._session.setItem('MainStudentId', res.id);
+						}
+						this._router.navigate(['Home'])
 					}else{
 						this.authFailure = true;
 					}					

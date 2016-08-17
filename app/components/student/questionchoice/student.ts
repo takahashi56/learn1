@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
 import {Session} from '../../../services/session';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
@@ -10,18 +10,35 @@ import {StudentService} from '../../../services/student';
 	providers: [Session, StudentService],
 	directives: [ROUTER_DIRECTIVES],
 })
-export class StudentChoice implements OnInit {
+export class QuestionChoice implements OnInit {
 
 	courseList: any = [];
+	answerNumber: number = 0;
 
+	@Input() content: any;
+	@Input() lessonname: string;
+	@Input() index: number;
+
+	@Output() gotoNextContent=new EventEmitter();
+	@Output() gotoPreviousContent=new EventEmitter();
+	
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
-
-		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 
 	}
 
 	ngOnInit(){
 
 	}	
+
+	gotoNext(){
+		if(this.answerNumber == 0) return false;
+
+		
+		this.gotoNextContent.emit({});
+	}
+
+	gotoPrevious(){
+		this.gotoPreviousContent.emit({});	
+	}
 }
 

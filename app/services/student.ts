@@ -10,8 +10,37 @@ const HEADER = {
 
 @Injectable()
 export class StudentService {
-	private baseUrl: string = "/api/tutor/";
+	private baseUrl: string = "/api/student/";
 
 	constructor(private _http: Http) {}
 
+	getCourseListById(id){
+		var data = {
+			student_id: id,
+		}
+		return this._http.post(this.baseUrl + "getcourselist", JSON.stringify(data), HEADER).map((res)=>res.json());
+	}
+
+	getStudentInfo(id){
+		var data = {
+			student_id: id,
+		}
+		return this._http.post(this.baseUrl + "getstudentinfo", JSON.stringify(data), HEADER).map((res)=>res.json());
+	}
+
+	getLessonListById(id, student_id){
+		var data = {
+			course_id: id,
+			student_id: student_id,
+		}
+		return this._http.post(this.baseUrl + "getlessonlist", JSON.stringify(data), HEADER).map((res)=>res.json());
+	}
+
+	getContentsByLessonId(lesson_id){
+		var data = {
+			lesson_id: lesson_id
+		};
+
+		return this._http.post(this.baseUrl + 'getcontentslist', JSON.stringify(data), HEADER).map((res)=>res.json());
+	}
 }

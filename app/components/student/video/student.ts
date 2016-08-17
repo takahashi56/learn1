@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
 import {Session} from '../../../services/session';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
@@ -6,22 +6,36 @@ import {StudentService} from '../../../services/student';
 
 @Component({
 	selector: 'student-video',
-	templateUrl: '/components/tutor/video/student.html',
+	templateUrl: '/components/student/video/student.html',
 	providers: [Session, StudentService],
 	directives: [ROUTER_DIRECTIVES],
 })
 export class StudentVideo {
 
-	courseList: any = [];
+	@Input() content: any;
+	@Input() lessonname: string;
+	@Input() index: number;
+	@Input() total: number;
+	
+	@Output() gotoNextContent=new EventEmitter();
+	@Output() gotoPreviousContent=new EventEmitter();
 
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
-
-		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 
 	}
 
 	gotoNext(){
-		this._router.navigate(['StudentChoice']);
+		this.gotoNextContent.emit({});
+	}
+	gotoPrevious(){
+		this.gotoPreviousContent.emit({});	
+	}
+	getEmbedUrl(){
+		let videoNumber = this.content.videoEmbedCode.replace(/\D/g, '');
+		return 'https://player.vimeo.com/video/' + videoNumber;
+	}
+	getIndex(){
+		return this.index + 1;
 	}
 }
 
