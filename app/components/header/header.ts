@@ -14,11 +14,11 @@ import {AuthService} from '../../services/authentication';
 export class Header {
 	username: string = "";
 
-	constructor(private _session: Session) {
+	constructor(private _session: Session, private router:Router) {
 		this.username = _session.getCurrentUsername();
 	}
 
 	doLogout(){
-
+		this.router.navigate(['Login'])
 	}
 }

@@ -40,19 +40,23 @@ export class SelectedContent implements OnInit {
 
 
 	gotoNextContent(event){		
-		this.index += 1;
-		if(this.index > this.contents.length){
+		console.log(this.contents.length);
+		console.log(this.index);
+		if((this.index + 1) > this.contents.length){
 			return this.gotoResultPage();			
 		}else{			
+			this.index += 1;
 			this.currentContent = this.contents[this.index];	
 		}		
 	}
 
 	gotoPreviousContent(event){
 		console.log(this.index);
-		this.index -= 1;
-		if(this.index < 0) return false;
+		
+		if((this.index - 1) < 0) return false;
+
 		console.log(this.index);
+		this.index -= 1;
 		this.currentContent = this.contents[this.index];
 	}
 

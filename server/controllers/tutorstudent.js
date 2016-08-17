@@ -100,7 +100,7 @@ exports.setStudentByCourse = function(req, res){
 		Take.find({student_id: id}, function(err, takes){
 			if(err) return console.log(err);
 
-			let confirm = takes.filter((x)=> x.course_id == course_id);
+			var confirm = takes.filter((x)=> x.course_id == course_id);
 
 			console.log(confirm);
 			
