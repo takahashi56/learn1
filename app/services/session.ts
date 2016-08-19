@@ -43,9 +43,16 @@ export class Session {
 	 	return localStorage.getItem(item);
 	 }
 
-	 setUser(username, role){
+	 setUser(username, role, id){
+	 	console.log(id);
 	 	localStorage.setItem('username', username);
 	 	localStorage.setItem('role', role);
+	 	localStorage.setItem('id', id);
+	 }
+
+	 getCurrentId(){
+	 	return localStorage.getItem('id');
+	 	
 	 }
 
 	 getCurrentUser(){

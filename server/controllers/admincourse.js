@@ -15,23 +15,24 @@ exports.getAllCourse = function(req, res) {
 		var main_data = [];
 		collection.forEach(function (course) {
 			console.log(course);
-			console.log(course.id);
-			Lesson.find({course_id: course.id}, function(err, lessons){
+			console.log(course._id);
+			Lesson.find({course_id: course._id}, function(err, lessons){
 				if (err) return console.error(err);
-
-				Take.count({course_id: course.id}, function(err, student_count){
+				console.log('============lessons====================');
+				console.log(lessons);
+				Take.count({course_id: course._id}, function(err, student_count){
 					if (err) return console.error(err);
 
 					var video_count = 0, i = 0;
 					lessons.forEach(function (lesson) {
-						Content.count({lesson_id: lesson.id, videoOrQuestion: true}, function(err, content_count){
+						Content.count({lesson_id: lesson._id, videoOrQuestion: true}, function(err, content_count){
 							if (err) return console.error(err);
 							i++;
 							video_count += content_count;
 							
 							if(i == lessons.length){
 								var data = {
-									course_id: course.id,
+									course_id: course._id,
 									title: course.name,
 									lesson: i,
 									video: video_count,
@@ -151,92 +152,158 @@ exports.updateCourse = function(req, res) {
 			description: data.coursedescription
 		},
 		lessonList = data.lesson;
+	console.log("data");
+	console.log(data);	
+	console.log('courseData');
+	console.log(courseData);
+	console.log("lessonList");
+	console.log(lessonList);
+
 	Course.update({_id: courseData._id}, courseData, function(err, course){
 		if (err) return console.error(err);
 
-		lessonList.forEach(function(lesson){
-			console.log('lesson iterate data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-			console.log(lesson);
-			console.log('lesson iterate data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+		Lesson.remove({course_id: courseData._id}, function(err){
+			if (err) throw err;
 
-			var lessonData = {				
-				name: lesson.lessonname,
-				description: lesson.lessondescription,
-				course_id: course._id
-			}
-			var reg = new RegExp('^[0-9]+$');
-			if(reg.test(lesson.lesson_id)){
-				console.log("create$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-				Lesson.create(lessonData, function(err, less1){
-					if (err) return console.error(err);
-					
-					console.log(lesson.content);
-					
-					lesson.content.forEach(function(content){
-						var contentData = {
-							videoOrQuestion: content.videoOrQuestion,
-						    videoLabel: content.videoLabel,
-						    videoEmbedCode: content.videoEmbedCode,
-						    singleOrMulti: content.singleOrMulti,
-						    question: content.question,
-						    answerA: content.answerA,
-						    answerB: content.answerB,
-						    answerC: content.answerC,
-						    trueNumber: content.trueNumber,
-						    answer_text: '',
-						    lesson_id: less1.id, 
-						}
-						console.log("#################################")
-						console.log(contentData)
-						Content.create(contentData, function(err, cont){
-							if (err) return console.error(err);
+			lessonList.forEach(function(lesson){
+				var lessonData = {				
+					name: lesson.lessonname,
+					description: lesson.lessondescription,
+					course_id: courseData._id
+				}
+				var reg = new RegExp('^[0-9]+$');
+				if(reg.test(lesson.lesson_id.toString()) == false){
+					lessonData["_id"] = lesson.lesson_id;				
+				}
 
-							console.log("(((((((((((sucess)))))))))))))))))))");
-							console.log(cont)
-						})
-					})
-				})
-			}else{
-				Lesson.update({_id: lesson.lesson_id}, lessonData, function(err, less){
-					if (err) return console.error(err);
+				Lesson.create(lessonData, function(err, less){
+					if(err) return console.error(err);
 
-					console.log("@@@@@@@@@@@@   update start    @@@@@@@@@@@@@@@@@@@@")
-					lesson.content.forEach(function(content){
-						var contentData = {
-							videoOrQuestion: content.videoOrQuestion,
-						    videoLabel: content.videoLabel,
-						    videoEmbedCode: content.videoEmbedCode,
-						    singleOrMulti: content.singleOrMulti,
-						    question: content.question,
-						    answerA: content.answerA,
-						    answerB: content.answerB,
-						    answerC: content.answerC,
-						    trueNumber: content.trueNumber,
-						    answer_text: '',
-						    lesson_id: less.id, 
-						}
+					Content.remove({lesson_id: lesson.lesson_id}).exec();
 
-						console.log(contentData);
 
-						if(reg.test(content._content_id)){
-							Content.create(contentData, function(err, content){
-								if (err) return console.error(err);				
+						lesson.content.forEach(function(content){
+							var contentData = {															
+								videoOrQuestion: content.videoOrQuestion,
+							    videoLabel: content.videoLabel,
+							    videoEmbedCode: content.videoEmbedCode,
+							    singleOrMulti: content.singleOrMulti,
+							    question: content.question,
+							    answerA: content.answerA,
+							    answerB: content.answerB,
+							    answerC: content.answerC,
+							    trueNumber: content.trueNumber,
+							    answer_text: '',
+							    lesson_id: less.id, 
+							}
 
-								console.log("!!!!!!!!!!!!!!!!!!!!!!! create !!!!!!!!!!!!!!!!!!")					
-							})
-						}else{
-							Content.update({_id: content._content_id},contentData, function(err, cont){
+							if(!content._content_id){
+								contentData["_id"] = content._id;
+							}
+							Content.create(contentData, function(err, cont){
 								if (err) return console.error(err);
 
-								console.log("!!!!!!!!!!!!!!!!!!!!!!! update !!!!!!!!!!!!!!!!")
+								console.log("(((((((((((sucess)))))))))))))))))))");
+								console.log(cont)
 							})
-						}
-					})					
+						})
+											
 				})
-			}	
+			})
 		})
-	})
-	res.send({success: true});
+
+		// lessonList.forEach(function(lesson){
+		// 	var lessonData = {				
+		// 		name: lesson.lessonname,
+		// 		description: lesson.lessondescription,
+		// 		course_id: courseData._id
+		// 	}
+
+		// 	console.log('==================course iterate=====================');
+		// 	console.log(lessonList.length);
+		// 	var reg = new RegExp('^[0-9]+$');
+		// 	if(reg.test(lesson.lesson_id)){
+
+		// 		console.log("create$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		// 		Lesson.create(lessonData, function(err, less1){
+		// 			if (err) return console.error(err);
+					
+		// 			console.log(lesson.content);
+					
+		// 			lesson.content.forEach(function(content){
+		// 				var contentData = {
+		// 					videoOrQuestion: content.videoOrQuestion,
+		// 				    videoLabel: content.videoLabel,
+		// 				    videoEmbedCode: content.videoEmbedCode,
+		// 				    singleOrMulti: content.singleOrMulti,
+		// 				    question: content.question,
+		// 				    answerA: content.answerA,
+		// 				    answerB: content.answerB,
+		// 				    answerC: content.answerC,
+		// 				    trueNumber: content.trueNumber,
+		// 				    answer_text: '',
+		// 				    lesson_id: less1.id, 
+		// 				}
+		// 				Content.create(contentData, function(err, cont){
+		// 					if (err) return console.error(err);
+
+		// 					console.log("(((((((((((sucess)))))))))))))))))))");
+		// 					console.log(cont)
+		// 				})
+		// 			})
+		// 		})
+		// 	}else{
+		// 		Lesson.findOne({_id: lesson.lesson_id}, function(err, less){
+		// 			if (err) return console.error(err);
+
+		// 			less.name = lesson.lessonname;
+		// 			less.description = lesson.lessondescription;
+		// 			less.course_id = courseData._id;
+
+		// 			console.log('==================find less===================');
+		// 			console.log(less);
+
+		// 			less.save(function(err){
+		// 				if(err) throw err;
+					
+		// 				lesson.content.forEach(function(content){
+		// 					var contentData = {
+		// 						videoOrQuestion: content.videoOrQuestion,
+		// 					    videoLabel: content.videoLabel,
+		// 					    videoEmbedCode: content.videoEmbedCode,
+		// 					    singleOrMulti: content.singleOrMulti,
+		// 					    question: content.question,
+		// 					    answerA: content.answerA,
+		// 					    answerB: content.answerB,
+		// 					    answerC: content.answerC,
+		// 					    trueNumber: content.trueNumber,
+		// 					    answer_text: '',
+		// 					    lesson_id: less._id, 
+		// 					}
+
+		// 					console.log(contentData);
+
+		// 					if(content._content_id){
+		// 						Content.create(contentData, function(err, content){
+		// 							if (err) return console.error(err);				
+
+		// 							console.log("!!!!!!!!!!!!!!!!!!!!!!! create !!!!!!!!!!!!!!!!!!")					
+		// 						})
+		// 					}else{
+		// 						contentData["_id"] = content._id;
+		// 						Content.update({_id: content._id},contentData, function(err, cont){
+		// 							if (err) return console.error(err);
+
+		// 							console.log("!!!!!!!!!!!!!!!!!!!!!!! update !!!!!!!!!!!!!!!!")
+		// 						})
+		// 					}
+		// 				})
+		// 			})						
+		// 		})
+		// 	}	
+		// })
+		res.send({success: true});
+	})	
 }
 
 exports.deleteCourse = function(req, res) {

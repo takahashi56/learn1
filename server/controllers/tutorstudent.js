@@ -4,11 +4,15 @@ var mongoose = require('mongoose'),
 	Student = mongoose.model('Student'),
 	Course = mongoose.model('Course'),
 	Take = mongoose.model('Take'),
-	encrypt = require('../utilities/encryption');
+	encrypt = require('../utilities/encryption'),
+	csv = require('fast-csv');
 
 
 exports.getAllStudents = function(req, res) {
-  	Student.find({}, function(err, students){
+	var data = req.body, tutor_id = data.tutor_id;
+	console.log(tutor_id);
+
+  	Student.find({tutor_id: tutor_id}, function(err, students){
   		if(err) return console.error(err)
   		var students_copy = [];
 
@@ -21,6 +25,7 @@ exports.getAllStudents = function(req, res) {
   				DOB: student.DOB,
   				hashed_pwd: student.hashed_pwd,
   				isSelected: false,
+  				tutor_id: tutor_id,
   			};
   			students_copy.push(s);
   		});
@@ -30,26 +35,38 @@ exports.getAllStudents = function(req, res) {
 }
 
 exports.getAllCourses = function(req, res) {
+	var tutor_id = req.body.tutor_id;
+
   	Course.find({}, function(err, courses){
   		if(err) return console.error(err)
 
   		var main_data = [];
   		courses.forEach(function (course) {
   			Take.find({course_id: course.id}, function(err, takes){
-				if(err) return console.error(err)
+  				if(err) return console.error(err)
 
-				var data = {
-					course_id: course._id,
-					coursetitle: course.name,
-					enrolled: takes.length,
-					coursedescription: course.description
-				}
+  				var count = 0, i=0;
+  				takes.forEach(function(take){
+  					Student.findOne({_id: take.student_id, tutor_id: tutor_id}, function(err, student){
+  						if(err) return console.error(err);
+  						i++
+  						if(student != null) count++;
 
-				main_data.push(data);
+  						if(i == takes.length){
+  							var data = {
+								course_id: course._id,
+								coursetitle: course.name,
+								enrolled: count,
+								coursedescription: course.description
+							}
+							main_data.push(data);
 
-				if(main_data.length == courses.length){
-					res.send(main_data);
-				}
+							if(main_data.length == courses.length){
+								res.send(main_data);
+							}
+  						}
+  					})
+  				})				
 			})
   		});
   		
@@ -69,7 +86,61 @@ exports.addStudent = function(req, res) {
 }
 
 exports.addStudentCSV = function(req, res) {
-  res.send({data: "add Tutor"});
+  	var students = req.body.result, tutor_id=req.body.tutor_id, count=false;
+  	console.log(students);
+
+  	students.forEach(function (studentcsv) {
+  		csv.fromString(studentcsv[0], {header: true})
+  			.on("data", function(data){
+  				var student = {
+  					firstName: data[0],
+  					lastName: data[1],
+  					DOB: data[2],
+  					username: data[4],
+  					hashed_pwd: data[5],
+  					tutor_id: tutor_id,
+  				}
+
+  				Student.find({}, function(err, sCollection){
+  					if(err) throw err;
+
+  					i = 0;
+  					sCollection.forEach(function (s) {
+  						if(s.username.includes(data[4])) i++;
+  					});
+  					if(i != 0) student.username = data[4] + i;
+  					Student.create(student, function(err, std){
+  						if(err) return console.log(err);
+  						count=true;
+  						// res.send({success: true});
+  					})
+  				})
+  			})
+  	});
+  	// console.log(count)
+  	// console.log(students.length)
+  	// if(count){
+  	// 	Student.find({}, function(err, stds){
+	  // 		if(err) return console.error(err)
+	  // 		var students_copy = [];
+
+	  // 		stds.forEach(function (st) {
+	  // 			var s = {
+	  // 				student_id: st._id,
+	  // 				username: st.username,
+	  // 				firstName: st.firstName,
+	  // 				lastName: st.lastName,
+	  // 				DOB: st.DOB,
+	  // 				hashed_pwd: st.hashed_pwd,
+	  // 				isSelected: false,
+	  // 			};
+	  // 			students_copy.push(s);
+	  // 		});
+
+	  // 		res.send(students_copy);
+	  // 	})
+  	// }
+  	res.send({success: true});
 }
 
 exports.editStudent = function(req, res) {
@@ -122,10 +193,11 @@ exports.setStudentByCourse = function(req, res){
 			}
 		})
 	})
+	res.send({success: true});
 }
 
 exports.getCoursesByStudentId = function(req, res){
-	var id = req.body.student_id;
+	var id = req.body.student_id, tutor_id = req.body.tutor_id;
 
 	Take.find({student_id: id}, function(err, takes){
 		if(err) return console.log(err);
@@ -152,29 +224,62 @@ exports.getCoursesByStudentId = function(req, res){
 }
 
 exports.getStudentsByCourseId = function(req, res){
-	var id = req.body.course_id;
+	var id = req.body.course_id, tutor_id = req.body.tutor_id;
+	console.log(id);
+
+	// Take.find({course_id: id}, function(err, takes){
+	// 	if(err) return console.log(err);
+	// 	var courses = [];
+
+	// 	takes.forEach(function(take){
+	// 		Student.findOne({_id: take.student_id, tutor_id: tutor_id}, function(err, student){
+	// 			if(err) return console.error(err);
+
+	// 			if(student != null){
+	// 				var data = {
+	// 					firstName: student.firstName,
+	// 					lastName: student.lastName,
+	// 					isCompleted: take.isCompleted,
+	// 					score: take.score,
+	// 					completedAt: take.completedAt,
+	// 					certificate: take.certificate,
+	// 				}
+	// 				courses.push(data);
+	
+	// 				if(courses.length == takes.length){
+	// 					res.send(courses);
+	// 				}
+	// 			}
+	// 		})
+	// 	})
+	// })	
+
 
 	Take.find({course_id: id}, function(err, takes){
-		if(err) return console.log(err);
+		if(err) return console.error(err)
 		var courses = [];
-
+			
+		var count = 0, i=0;
 		takes.forEach(function(take){
-			Student.findOne({_id: take.student_id}, function(err, student){
+			Student.findOne({_id: take.student_id, tutor_id: tutor_id}, function(err, student){
+				if(err) return console.error(err);
+				i++;
 
-				var data = {
-					firstName: student.firstName,
-					lastName: student.lastName,
-					isCompleted: take.isCompleted,
-					score: take.score,
-					completedAt: take.completedAt,
-					certificate: take.certificate,
+				if(student != null){
+					var data = {
+						firstName: student.firstName,
+						lastName: student.lastName,
+						isCompleted: take.isCompleted,
+						score: take.score,
+						completedAt: take.completedAt,
+						certificate: take.certificate,
+					}			
+					courses.push(data);		
 				}
-				courses.push(data);
-
-				if(courses.length == takes.length){
+				if(i == takes.length){
 					res.send(courses);
 				}
 			})
-		})
-	})	
+		})				
+	})
 }

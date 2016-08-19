@@ -21,7 +21,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="fname" name="name" type="text" ngControl="firstname"  placeholder="Some text value..." (blur)="getValue(StudentForm.value)">
+                                                <input class=" form-control" id="fname" name="name" type="text" ngControl="firstname"  placeholder="student's first name" (blur)="getValue(StudentForm.value)">
                                                 </div>
                                             </div>
                                         </div> 
@@ -33,7 +33,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="lname" name="name" type="text" ngControl="lastname"  placeholder="Some text value..." (blur)="getValue(StudentForm.value)">
+                                                <input class=" form-control" id="lname" name="name" type="text" ngControl="lastname"  placeholder="student's last name" (blur)="getValue(StudentForm.value)">
                                                 </div>
                                             </div>
                                         </div> 
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username"  placeholder="Some text value..." readonly >
+                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username"  placeholder="student's user id" readonly >
                                     </div>
                                 </div>
                             </div>
@@ -61,10 +61,12 @@
                                     </div>
                                     <div class="col-lg-10">
                                         <div class="m-l-10 m-r-10">
-                                            <input class=" form-control" id="password" name="name" type="password" ngControl="password"  placeholder="">
+                                            <input class=" form-control" id="password" name="name" type="text" ngControl="password"  placeholder="">
                                         </div>
                                     </div>
                                 </div>
+                                <br/>
+                                <br/>
                                 <div [ngClass]="{ 'has-error' : !matchedPassword(StudentForm.value) && submitAttempt }">
                                     <div class="col-lg-2">
                                         <div class="m-l-10 m-r-10">
@@ -73,7 +75,7 @@
                                     </div>
                                     <div class="col-lg-10">
                                         <div class="m-l-10 m-r-10">
-                                            <input class=" form-control" id="password" name="name" type="password" ngControl="verifiedpassword"  placeholder="">
+                                            <input class=" form-control" id="text" name="name" type="text" ngControl="verifiedpassword"  placeholder="">
                                         </div>
                                     </div>
                                 </div>    
@@ -86,7 +88,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="dob" name="name" type="text" ngControl="dob"  placeholder="Some text value...">
+                                        <input class=" form-control" id="dob" name="name" type="date"  ngControl="dob"  placeholder="student's date of birth">
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +100,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="dob" name="name" type="number" ngControl="phone"  placeholder="Some text value...">
+                                        <input class=" form-control" id="dob" name="name" type="text" ngControl="phone" maxlength="20" size="20" placeholder="student's phone number" (keyup)="onKey($event)" >
                                     </div>
                                 </div>
                             </div>

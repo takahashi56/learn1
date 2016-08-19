@@ -20,14 +20,14 @@ export class TutorService {
 		// }).share();
 	}
 
-	getAllCourses() {		
-		return this._http.get(this.baseUrl + "courses", HEADER).map((res) =>{ 
+	getAllCourses(data) {		
+		return this._http.post(this.baseUrl + "courses",JSON.stringify(data),  HEADER).map((res) =>{ 
 			return res.json();
 		});
 	}
 
-	getAllStudents(){
-		return this._http.get(this.baseUrl + "students", HEADER).map((res) =>{ 
+	getAllStudents(data){
+		return this._http.post(this.baseUrl + "students",JSON.stringify(data),  HEADER).map((res) =>{ 
 			return res.json();
 		});
 	}
@@ -47,6 +47,13 @@ export class TutorService {
 		
 	}
 
+	addStudentCSV(data){
+		return this._http.post(this.baseUrl + 'studentcsv', JSON.stringify(data), HEADER)
+			.map((res)=>{
+				return res.json();
+			})
+	}
+
 	setAssignStudentsWithCourse(id, ids){
 		var data = {
 			course_id: id,
@@ -61,15 +68,21 @@ export class TutorService {
 		console.log(files);
 	}
 
-	getCoursesByStudentId(id){
-		var data = {student_id: id};
+	getCoursesByStudentId(id, tutor_id){
+		var data = {
+			student_id: id,
+			tutor_id: tutor_id
+		};
 		return this._http.post(this.baseUrl + "getCoursesByStudentId", JSON.stringify(data), HEADER).map((res)=>{
 			return res.json();
 		})
 	}
 
-	getStudentsByCourseId(id){
-		var data = {course_id: id};
+	getStudentsByCourseId(id , tutor_id){
+		var data = {
+				course_id: id,
+				tutor_id: tutor_id
+			};
 		return this._http.post(this.baseUrl + "getStudentsByCourseId", JSON.stringify(data), HEADER).map((res)=>{
 			return res.json();
 		})	

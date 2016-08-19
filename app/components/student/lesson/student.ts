@@ -64,6 +64,8 @@ export class StudentLesson  {
 		this._studentService.getContentsByLessonId(lesson.lesson_id).subscribe((res) => {
 			this._session.setItem('SelectedContents', JSON.stringify(res));			
 		});
+
+		this._session.setItem('SelectedLessonById', JSON.stringify(lesson));
 		
 		this._session.setItem('SelectedLessonIndex', i);
 		this._session.setItem('TotalLesson', this.lessonList.length);

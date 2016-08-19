@@ -17,6 +17,12 @@ export class StudentMain implements OnInit {
 	studentId: string;
 
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
+		// var student_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
+		
+		// if(student_id == '' || parseInt(role) != 2){
+		// 	this._router.navigateByUrl('/login');
+		// }
+
 
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 		this.studentId = this._session.getItem('MainStudentId');
@@ -26,9 +32,9 @@ export class StudentMain implements OnInit {
 			console.log(res);
 		})
 
-		// this._studentService.getStudentInfo(this.studentId).subscribe((res)=>{
-		// 	this.studentInfo = res;
-		// })
+		this._studentService.getStudentInfo(this.studentId).subscribe((res)=>{
+			this.studentInfo = res;
+		})
 	}
 
 	ngOnInit(){

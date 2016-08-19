@@ -52,7 +52,7 @@ export class AddLesson {
 			this.handleData(form);	
 
 			let data = [{
-				_content_id: Date.now(),
+				_content_id: (Date.now()).toString(),
 				videoOrQuestion: true,
 				videoLabel: '',
 				videoEmbedCode: '',
@@ -65,7 +65,7 @@ export class AddLesson {
 			}];
 
 			let data1 = {
-				lesson_id: Date.now(),
+				lesson_id: (Date.now()).toString(),
 				lessonname: '',
 				lessondescription: '',
 				content: data

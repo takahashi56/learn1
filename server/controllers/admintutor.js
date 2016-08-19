@@ -47,7 +47,8 @@ exports.addTutor = function(req, res) {
 		if(err) {
 			res.send(err);
 		}else{
-			res.send({success: true});	
+			var data = {action: "success", text: "", role: 1, success: true, _id: tutor._id};
+			res.send(data);	
 		}		
 	})	
 

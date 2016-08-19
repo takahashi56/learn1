@@ -46,7 +46,7 @@ export class Login {
 				.subscribe((res) => {
 					console.log(res);
 					if (res.success) {
-						this._session.setUser(data.username, res.role)
+						this._session.setUser(data.username, res.role, res._id)
 						this._session.setItem('homeUrl', res.action);
 						if(res.role == 2){
 							this._session.setItem('MainStudentId', res.id);

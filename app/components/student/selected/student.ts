@@ -27,6 +27,8 @@ export class SelectedContent implements OnInit {
 
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
 		this.contents = JSON.parse(this._session.getItem('SelectedContents'));
+		this.currentLesson = JSON.parse(this._session.getItem('SelectedLessonById'));
+		
 		this.currentContent = this.contents[0];
 		this.index = 0;
 		this.lessonindex = this._session.getItem('SelectedLessonIndex');

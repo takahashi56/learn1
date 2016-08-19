@@ -76,7 +76,7 @@
                         </thead>
                         <tr *ngFor="let student of studentList">
                             <td><strong>{{student.firstName + " " + student.lastName}}</strong></td>
-                            <td class="text-center"><strong>{{student.isCompleted: "Yes":"No"}}</strong></td>
+                            <td class="text-center"><strong>{{getComplete(student.isCompleted)}}</strong></td>
                             <td class="text-center"><strong>{{student.score}}%</strong></td>
                             <td class="text-center"><strong>{{student.completedAt}}</strong></td>
                             <td class="text-center"><a href="#"><strong class="text-page">View</strong></a></td>

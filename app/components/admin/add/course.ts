@@ -64,7 +64,7 @@ export class AddCourse {
 		} 
 
 		var data = [{
-			_content_id: Date.now(),
+			_content_id: (Date.now()).toString(),
 			videoOrQuestion: true,
 			videoLabel: '',
 			videoEmbedCode: '',
@@ -77,7 +77,7 @@ export class AddCourse {
 		}];
 
 		var data1 = {
-			lesson_id: Date.now(),
+			lesson_id: (Date.now()).toString(),
 			lessonname: '',
 			lessondescription: '',
 			content: data

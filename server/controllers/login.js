@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 exports.login = function(req, res) {
 	var email = req.body.username,
 		pwd = req.body.password,
-		data = {action: "not-found", text: "", role: NaN, success: false},
+		data = {action: "not-found", text: "", role: NaN, success: false, _id: ''},
 		action = 0;
 
 	data.text = "This email is not valid. Please try again.";
@@ -23,6 +23,7 @@ exports.login = function(req, res) {
 				}else{
 					if(tutor.authenticate(pwd)){
 						action = 2;
+						data._id = tutor._id;
 						data.action = "/home/tutor/main";
 						data.role = 1;
 						data.success = true;
@@ -70,7 +71,7 @@ exports.login = function(req, res) {
 exports.studentLogin = function(req, res) {
 	var userid = req.body.username,
 		pwd = req.body.password,
-		data = {action: "not-found", text: "This id is not valid. Please try again.", role: NaN, success: false};
+		data = {action: "not-found", text: "This id is not valid. Please try again.", role: NaN, success: false, _id: ""};
 
 	Student.findOne({username: userid}, function(err, student){
 		if(student == null){
@@ -79,6 +80,7 @@ exports.studentLogin = function(req, res) {
 		}
 		if(student.authenticate(pwd)){
 			data.action = "/home/student/main";
+			data._id = student._id;
 			data.role = 2;
 			data.success = true;
 			data.id = student._id;

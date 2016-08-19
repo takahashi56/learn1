@@ -13,7 +13,7 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {    
+  "dependencies": {
     "angular2": "^2.0.0-beta.12",
     "angular2-jwt": "0.1.12",
     "body-parser": "^1.15.0",
@@ -24,11 +24,14 @@
     "express": "^4.13.4",
     "express-jwt": "^3.3.0",
     "express-session": "^1.13.0",
+    "fast-csv": "^2.1.0",
     "jade": "^1.11.0",
     "moment": "^2.12.0",
     "mongoose": "^4.4.7",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "primeng": "^1.0.0-beta.12",
+    "primeui": "^4.1.14",
     "reflect-metadata": "0.1.2",
     "rxjs": "^5.0.0-beta.4",
     "systemjs": "^0.19.24",

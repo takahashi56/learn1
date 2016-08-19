@@ -2,11 +2,11 @@ var tutorstudent = require('../controllers/tutorstudent');
 
 
 module.exports = function(app) {
-	app.get('/api/tutor/students', function(req, res) {
+	app.post('/api/tutor/students', function(req, res) {
 		tutorstudent.getAllStudents(req, res);
 	});
 
-	app.get('/api/tutor/courses', function(req, res) {
+	app.post('/api/tutor/courses', function(req, res) {
 		tutorstudent.getAllCourses(req, res);
 	});
 

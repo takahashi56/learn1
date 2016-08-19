@@ -20,9 +20,12 @@ export class Main implements OnInit {
 
 
 	constructor(private _session: Session, private _adminService: AdminService, private _router: Router) {
-		console.log('in the constructor');
-
+		var admin_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
 		
+		if(admin_id == '' || parseInt(role) != 0){
+			this._router.navigate(['Login']);
+		}
+
 
 		this._adminService.getAllOrgs().subscribe((res)=>{
 			this.orgList = res;	

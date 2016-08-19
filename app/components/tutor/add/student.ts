@@ -49,6 +49,15 @@ export class AddTutorStudent {
 			password: this.password,
 			verifiedpassword: this.verifiedpassword
 		})
+		this.generatePassword()
+	}
+
+
+	generatePassword(){
+		var pwd = this.randomString();
+
+		(<Control>this.StudentForm.controls['password']).updateValue(pwd);	
+		(<Control>this.StudentForm.controls['verifiedpassword']).updateValue(pwd);	
 	}
 
 	cancel(){
@@ -95,7 +104,7 @@ export class AddTutorStudent {
 				isCompleted: false,
 				completedAt: '',
 				certificate: '',
-				tutor_id:''
+				tutor_id:this._session.getCurrentId()
 			};
 			var flag = JSON.parse(this._session.getItem('editORadd'))
 			if(flag.flag) data["_id"] = this.student._id;
@@ -110,4 +119,18 @@ export class AddTutorStudent {
 				})
 		}
 	}
+	onKey(event: any){
+		var value = event.target.value;
+		value = value.replace(/\D/g,'');
+		(<Control>this.StudentForm.controls['phone']).updateValue(value);
+	}
+
+	private randomString() :string {
+		var length = 8, 
+			chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    var result = '';
+	    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+	    return result;
+	}
+
 }

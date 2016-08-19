@@ -32,7 +32,8 @@ export class LessonContent implements OnInit{
 	}
 
 	ngOnInit(){
-		this._content_id = this.content._content_id;
+		this._content_id = this.content._content_id ? this.content._content_id : this.content._id;
+
 		this.videoOrQuestion = this.content.videoOrQuestion;
 		this.singleOrMulti = this.content.singleOrMulti;
 		this.videoLabel = new Control(this.content.videoLabel,Validators.required); 
@@ -63,7 +64,14 @@ export class LessonContent implements OnInit{
 		if(original.length == 1) return false;
 
 		original = original.filter(function( obj ) {
-		    return obj._content_id !== id;
+			console.log(obj);
+			
+			if(obj._content_id){
+				return obj._content_id !== id;	
+			}else{
+				return obj._id !== id;
+			}
+		    
 		});
 		this._session.setItem('Content', JSON.stringify(original));
 		this.manageContent.emit(original);
@@ -111,7 +119,7 @@ export class LessonContent implements OnInit{
 
 			var data = this.content;
 			original.forEach(function(obj){
-				if(obj._content_id == data._content_id){
+				if((obj._content_id == data._content_id) || (obj._id == data._content_id)){
 					original_copy.push(data)
 				}else{
 					original_copy.push(obj)
@@ -163,7 +171,7 @@ export class LessonContent implements OnInit{
 			var data = this.content;
 
 			var new_data = {
-				_content_id: Date.now(),
+				_content_id: (Date.now()).toString(),
 				videoOrQuestion: flag,
 				videoLabel: '',
 				videoEmbedCode: '',
@@ -177,7 +185,7 @@ export class LessonContent implements OnInit{
 			original_copy = [];
 
 			original.forEach(function(obj){
-				if(obj._content_id == data._content_id){
+				if((obj._content_id == data._content_id) || (obj._id == data._content_id)){
 					original_copy.push(data)
 					original_copy.push(new_data);
 				}else{

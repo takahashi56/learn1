@@ -16,16 +16,27 @@ export class TutorMain implements OnInit {
 	courseList: any = [];
 
 	constructor(private _session: Session, private _tutorService: TutorService, private _router: Router) {
+		var tutor_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
+		
+		// console.log(tutor_id);
+		// console.log(role);
+
+		// if(tutor_id == '' || parseInt(role) != 1){
+		// 	console.log('aaaaaaaa');
+		// 	this._router.navigateByUrl('/login');
+		// }
+
+
 
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 
 
-		this._tutorService.getAllStudents().subscribe((res)=>{
+		this._tutorService.getAllStudents({tutor_id: tutor_id}).subscribe((res)=>{
 			this.studentList = res;	
 			this._session.setItem('TutorAllStudent', JSON.stringify(res))
 		});
 
-		this._tutorService.getAllCourses().subscribe((res)=>{
+		this._tutorService.getAllCourses({tutor_id: tutor_id}).subscribe((res)=>{
 			this.courseList = res;	
 			console.log(res);
 		});
@@ -114,14 +125,27 @@ export class TutorMain implements OnInit {
 
 	}
 
-	importAddStudent(e){
-		console.log(e);
-		 var files = e.srcElement.files;
-	    console.log(files);    
+	importAddStudent($event: any) {
+	    var self = this;
+	    var file:File = $event.target.files[0];
+	    var myReader:FileReader = new FileReader();
+	    myReader.readAsText(file);
+	    var resultSet = [];
+	  	 myReader.onloadend = function(e){
+	      // you can perform an action with data read here
+	      // as an example i am just splitting strings by spaces
+	      var columns = myReader.result.split(/\r\n|\r|\n/g);
+	      for (var i = 0; i < columns.length; i++) {
+	          resultSet.push(columns[i].split(' '));
+	      }
+	      self._tutorService.addStudentCSV({result:resultSet, tutor_id: self._session.getCurrentId()}).subscribe((res)=>{
+	 			location.reload()
+	 		// 	self.studentList = res;	
+				// self._session.setItem('TutorAllStudent', JSON.stringify(res))
+	 		})
+	 	}
 
-	  	// this._tutorService.makeFileRequest(files).subscribe((res)=>{
-	  	// 	console.log('sent');
-	  	// })
+	    
 	}
 
 	assignCourseToStudent(){

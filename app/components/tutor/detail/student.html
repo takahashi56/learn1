@@ -16,7 +16,7 @@
                 </h3>              
                 <hr class="m-b-30">     
                 <div class=" form">
-                    <form class="cmxform form-horizontal tasi-form"  [ngFormModel]="StudentForm" (submit)="AddStudent(StudentForm.value)">
+                    <form class="cmxform form-horizontal tasi-form"  [ngFormModel]="StudentDetailForm" (submit)="AddStudent(StudentDetailForm.value)">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12">
@@ -29,7 +29,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="fname" name="name" type="text" ngControl="firstname"  placeholder="Some text value..." (blur)="getValue(StudentForm.value)">
+                                                <input class=" form-control" id="fname" name="name" type="text" ngControl="firstname"  placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
                                                 </div>
                                             </div>
                                         </div> 
@@ -41,7 +41,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="lname" name="name" type="text" ngControl="lastname"  placeholder="Some text value..." (blur)="getValue(StudentForm.value)">
+                                                <input class=" form-control" id="lname" name="name" type="text" ngControl="lastname"  placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
                                                 </div>
                                             </div>
                                         </div> 
@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div [ngClass]="{ 'has-error' : !matchedPassword(StudentForm.value) && submitAttempt }">
+                                <div [ngClass]="{ 'has-error' : !matchedPassword(StudentDetailForm.value) && submitAttempt }">
                                     <div class="col-lg-2">
                                         <div class="m-l-10 m-r-10">
                                             <label for="password" class="control-label text-left text-page">Verify Password</label>
@@ -146,7 +146,7 @@
                         </thead>
                         <tr *ngFor="let course of courseList">
                             <td><strong>{{course.coursetitle}}</strong></td>
-                            <td class="text-center"><strong>{{course.isCompleted}}</strong></td>
+                            <td class="text-center"><strong>{{getCompletedStatus(course.isCompleted)}}</strong></td>
                             <td class="text-center"><strong>{{course.score}}%</strong></td>
                             <td class="text-center"><strong>{{course.completedAt}}</strong></td>
                             <td class="text-center"><a href="#"><strong class="text-page">View</strong></a></td>

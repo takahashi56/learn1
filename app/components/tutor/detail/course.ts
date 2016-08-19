@@ -6,8 +6,8 @@ import {TutorService} from '../../../services/tutor';
 
 @Component({
 	selector: 'tutor-detail-course',
-	templateUrl: '/components/tutor/detail/student.html',
-	providers: [Session],
+	templateUrl: '/components/tutor/detail/course.html',
+	providers: [Session, TutorService],
 	directives: [ROUTER_DIRECTIVES]
 })
 export class DetailTutorCourse {
@@ -17,9 +17,9 @@ export class DetailTutorCourse {
 
 
 	constructor(private _session: Session, private _tutorService: TutorService,  private _router: Router) {
-		this.course = this._session.getItem('TutorCourse');
-
-		this._tutorService.getStudentsByCourseId(this.course.course_id).subscribe((res)=>{
+		this.course = JSON.parse(this._session.getItem('TutorCourse'));
+		
+		this._tutorService.getStudentsByCourseId(this.course.course_id, this._session.getCurrentId()).subscribe((res)=>{
 			this.studentList = res;
 		})
 	}
@@ -34,6 +34,10 @@ export class DetailTutorCourse {
 	}
 	getCourseName(){
 		return this.titleCase(this.course.coursetitle);
+	}
+
+	getComplete(flag){
+		return flag? 'Yes' : 'No';
 	}
 
 	private titleCase(str: string) : string {

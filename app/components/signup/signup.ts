@@ -61,7 +61,7 @@ export class SignUp {
 				.subscribe((res) => {
 					console.log(res);
 					if(res.success){
-						this._session.setUser(data.email, res.role)
+						this._session.setUser(data.email, res.role, res._id)
 						this._session.setItem('homeUrl', res.action);
 						this._router.navigateByUrl('/home/tutor/main');
 					}
