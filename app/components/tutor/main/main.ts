@@ -3,6 +3,7 @@ import {Session} from '../../../services/session';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
 import {TutorService} from '../../../services/tutor';
+import {Location} from 'angular2/platform/common';
 
 @Component({
 	selector: 'tutor-main',
@@ -14,9 +15,11 @@ export class TutorMain implements OnInit {
 
 	studentList: any = [];
 	courseList: any = [];
+	tutor_id: string;
 
-	constructor(private _session: Session, private _tutorService: TutorService, private _router: Router) {
-		var tutor_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
+	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router) {
+		this.tutor_id = this._session.getCurrentId()
+		var role=this._session.getCurrentRole();
 		
 		// console.log(tutor_id);
 		// console.log(role);
@@ -31,15 +34,17 @@ export class TutorMain implements OnInit {
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 
 
-		this._tutorService.getAllStudents({tutor_id: tutor_id}).subscribe((res)=>{
+		this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
 			this.studentList = res;	
 			this._session.setItem('TutorAllStudent', JSON.stringify(res))
 		});
 
-		this._tutorService.getAllCourses({tutor_id: tutor_id}).subscribe((res)=>{
+		this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
 			this.courseList = res;	
 			console.log(res);
 		});
+
+		console.log(this._location.path())
 	}
 
 	editStudent(student: any){
@@ -104,6 +109,17 @@ export class TutorMain implements OnInit {
 
 		this._tutorService.setAssignStudentsWithCourse(id,ids).subscribe((res)=>{
 			console.log(res);
+			this._router.navigateByUrl('/home/tutor/main');
+			this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
+				this.studentList = res;	
+				this._session.setItem('TutorAllStudent', JSON.stringify(res))
+			});
+
+			this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
+				this.courseList = res;	
+				console.log(res);
+			});
+			
 		});;
 	}
 
@@ -120,7 +136,20 @@ export class TutorMain implements OnInit {
 		});
 
 		this._tutorService.setAssignStudentsWithCourse(id,ids).subscribe((res)=>{
+
 			console.log(res);
+
+			this._router.navigateByUrl('/home/tutor/main');
+
+			this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
+				this.studentList = res;	
+				this._session.setItem('TutorAllStudent', JSON.stringify(res))
+			});
+
+			this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
+				this.courseList = res;	
+				console.log(res);
+			});
 		});
 
 	}
@@ -139,9 +168,15 @@ export class TutorMain implements OnInit {
 	          resultSet.push(columns[i].split(' '));
 	      }
 	      self._tutorService.addStudentCSV({result:resultSet, tutor_id: self._session.getCurrentId()}).subscribe((res)=>{
-	 			location.reload()
-	 		// 	self.studentList = res;	
-				// self._session.setItem('TutorAllStudent', JSON.stringify(res))
+	 				this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
+						this.studentList = res;	
+						this._session.setItem('TutorAllStudent', JSON.stringify(res))
+					});
+
+					this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
+						this.courseList = res;	
+						console.log(res);
+					});
 	 		})
 	 	}
 

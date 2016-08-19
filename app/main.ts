@@ -2,7 +2,7 @@ import {provide} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
 import {HTTP_PROVIDERS, Http} from 'angular2/http';
 import {ROUTER_PROVIDERS} from 'angular2/router';
-import {PathLocationStrategy, LocationStrategy, HashLocationStrategy} from 'angular2/platform/common';
+import {Location,PathLocationStrategy, LocationStrategy, HashLocationStrategy} from 'angular2/platform/common';
 import {AppComponent} from './app';
 import {Session} from './services/session';
 import {AppConfig} from './services/config';

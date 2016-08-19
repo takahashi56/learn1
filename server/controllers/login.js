@@ -76,7 +76,7 @@ exports.studentLogin = function(req, res) {
 	Student.findOne({username: userid}, function(err, student){
 		if(student == null){
 			res.send(data);
-			return console.error(error);
+			return console.error(err);
 		}
 		if(student.authenticate(pwd)){
 			data.action = "/home/student/main";

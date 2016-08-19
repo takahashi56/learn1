@@ -26,7 +26,9 @@ export class StudentMain implements OnInit {
 
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 		this.studentId = this._session.getItem('MainStudentId');
+	}
 
+	ngOnInit(){
 		this._studentService.getCourseListById(this.studentId).subscribe((res)=>{
 			this.courseList = res;
 			console.log(res);
@@ -35,10 +37,6 @@ export class StudentMain implements OnInit {
 		this._studentService.getStudentInfo(this.studentId).subscribe((res)=>{
 			this.studentInfo = res;
 		})
-	}
-
-	ngOnInit(){
-
 	}	
 
 	gotoLessonList(course){

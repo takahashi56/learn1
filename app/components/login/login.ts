@@ -56,8 +56,6 @@ export class Login {
 						this.authFailure = true;
 					}					
 				});				
-		}		
-		// this._session.setUser("Admin", 0);
-		// this._router.navigateByUrl("home");				
+		}			
 	}
 }

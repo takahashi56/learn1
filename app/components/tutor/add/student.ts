@@ -69,7 +69,7 @@ export class AddTutorStudent {
 
 		var firstname = form.firstname, 
 			lastname = form.lastname,
-			username = firstname.charAt(0) + lastname,
+			username = firstname.charAt(0).toLowerCase() + lastname.toLowerCase(),
 			i = 0;
 
 		this.allStudentData.forEach(function(student){

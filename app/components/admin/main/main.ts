@@ -20,13 +20,11 @@ export class Main implements OnInit {
 
 
 	constructor(private _session: Session, private _adminService: AdminService, private _router: Router) {
-		var admin_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
+		// var admin_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
 		
-		if(admin_id == '' || parseInt(role) != 0){
-			this._router.navigate(['Login']);
-		}
-
-
+		// if(admin_id == '' || parseInt(role) != 0){
+		// 	this._router.navigate(['Login']);
+		// }
 		this._adminService.getAllOrgs().subscribe((res)=>{
 			this.orgList = res;	
 		})
@@ -44,7 +42,7 @@ export class Main implements OnInit {
 
 	gotoEdit(org: any){
 		this._session.setItem('org', JSON.stringify(org));
-		this._router.navigate(['AdminEditOrganization']);
+		// this._router.navigate(['AdminEditOrganization']);
 	}
 
 	ngOnInit(){
@@ -63,7 +61,7 @@ export class Main implements OnInit {
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 		this._session.setItem('Course', JSON.stringify(data));
 
-		this._router.navigate(['AdminAddCourse']);
+		// this._router.navigate(['AdminAddCourse']);
 	}
 
 	doLogin(form: any) {
