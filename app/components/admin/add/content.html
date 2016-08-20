@@ -100,7 +100,7 @@
                                                 <input class="form-control alert alert-page text-page answerA" role="alert" ngControl="answerA" value="" (blur)="blurChange(contentForm.value)">
                                             </div>
                                             <label class="cr-styled">
-                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="1" (click)="trueNumber = 1">
+                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="1" (click)="choiceAnswer(1)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 1">
                                                 <i class="fa"></i> 
                                             </label>
                                         </div>
@@ -118,7 +118,7 @@
                                                 <input class="form-control alert alert-page text-page answerB" role="alert" value="" ngControl="answerB" (blur)="blurChange(contentForm.value)">
                                             </div>
                                             <label class="cr-styled">
-                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="2" (click)="trueNumber = 2">
+                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="2" (click)="choiceAnswer(2)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 2">
                                                 <i class="fa"></i> 
                                             </label>
                                         </div>
@@ -136,7 +136,7 @@
                                                 <input class="form-control alert alert-page text-page answerC" role="alert" value="" ngControl="answerC" (blur)="blurChange(contentForm.value)">
                                             </div>    
                                             <label class="cr-styled" >
-                                                <input type="radio"  name="choosenAnswer" class="multipleChoiceAnswer" required value="3" (click)="trueNumber = 3">
+                                                <input type="radio"  name="choosenAnswer" class="multipleChoiceAnswer" required value="3" (click)="choiceAnswer(3)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 3">
                                                 <i class="fa"></i> 
                                             </label>
                                         </div>

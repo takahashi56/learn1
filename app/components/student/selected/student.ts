@@ -42,20 +42,29 @@ export class SelectedContent implements OnInit {
 
 
 	gotoNextContent(event){		
+		console.log("this.contents")
+		console.log(this.contents);
+		console.log("this.contents.length");
 		console.log(this.contents.length);
-		console.log(this.index);
-		if((this.index + 1) > this.contents.length){
+
+		console.log("current Index " + this.index);
+		if((this.index + 1) >= this.contents.length){
 			return this.gotoResultPage();			
 		}else{			
 			this.index += 1;
+			console.log(this.index);
 			this.currentContent = this.contents[this.index];	
+			console.log(this.currentContent);
 		}		
 	}
 
 	gotoPreviousContent(event){
 		console.log(this.index);
 		
-		if((this.index - 1) < 0) return false;
+		if((this.index - 1) < 0){
+			this._router.navigate(['StudentLesson']);
+			return false;
+		}
 
 		console.log(this.index);
 		this.index -= 1;
@@ -63,7 +72,7 @@ export class SelectedContent implements OnInit {
 	}
 
 	gotoResultPage(){
-
+		this._router.navigate(['LessonResult'])
 	}
 
 

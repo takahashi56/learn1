@@ -32,18 +32,16 @@ export class TutorMain implements OnInit {
 
 
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
-
-
+		this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
+			this.courseList = res;	
+			console.log(res);
+		});
 		this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
 			this.studentList = res;	
 			this._session.setItem('TutorAllStudent', JSON.stringify(res))
 		});
 
-		this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
-			this.courseList = res;	
-			console.log(res);
-		});
-
+		
 		console.log(this._location.path())
 	}
 

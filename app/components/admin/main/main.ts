@@ -42,7 +42,7 @@ export class Main implements OnInit {
 
 	gotoEdit(org: any){
 		this._session.setItem('org', JSON.stringify(org));
-		// this._router.navigate(['AdminEditOrganization']);
+		this._router.navigate(['AdminEditOrganization']);
 	}
 
 	ngOnInit(){
@@ -61,7 +61,7 @@ export class Main implements OnInit {
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 		this._session.setItem('Course', JSON.stringify(data));
 
-		// this._router.navigate(['AdminAddCourse']);
+		this._router.navigate(['AdminAddCourse']);
 	}
 
 	doLogin(form: any) {

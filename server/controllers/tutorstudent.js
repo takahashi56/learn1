@@ -36,38 +36,54 @@ exports.getAllStudents = function(req, res) {
 
 exports.getAllCourses = function(req, res) {
 	var tutor_id = req.body.tutor_id;
-
+	console.log("tutor id" + tutor_id);
   	Course.find({}, function(err, courses){
   		if(err) return console.error(err)
 
   		var main_data = [];
   		courses.forEach(function (course) {
-  			Take.find({course_id: course.id}, function(err, takes){
-  				if(err) return console.error(err)
+  			var data = {
+					course_id: course._id,
+					coursetitle: course.name,
+					enrolled: 0,
+					coursedescription: course.description
+				}
 
-  				var count = 0, i=0;
-  				takes.forEach(function(take){
-  					Student.findOne({_id: take.student_id, tutor_id: tutor_id}, function(err, student){
-  						if(err) return console.error(err);
-  						i++
-  						if(student != null) count++;
+			main_data.push(data);
 
-  						if(i == takes.length){
-  							var data = {
-								course_id: course._id,
-								coursetitle: course.name,
-								enrolled: count,
-								coursedescription: course.description
-							}
-							main_data.push(data);
+			if(main_data.length == courses.length){
+				res.send(main_data);
+			}	
+  	// 		Take.find({course_id: course.id}, function(err, takes){
+  	// 			if(err) return console.error(err)
+  				
+  	// 			var count = 0, i=0;
+  	// 			takes.forEach(function(take){
+  	// 				Student.findOne({_id: take.student_id, tutor_id: tutor_id}, function(err, student){
+  	// 					if(err) return console.error(err);
+  						
+  	// 					i++;
+  	// 					console.log(i);
+  	// 					console.log(takes.length);
+  	// 					if(student != null) count++;
 
-							if(main_data.length == courses.length){
-								res.send(main_data);
-							}
-  						}
-  					})
-  				})				
-			})
+  	// 					if(i == takes.length){
+  	// 						console.log(course);
+  	// 						var data = {
+			// 					course_id: course._id,
+			// 					coursetitle: course.name,
+			// 					enrolled: count,
+			// 					coursedescription: course.description
+			// 				}
+			// 				main_data.push(data);
+
+			// 				if(main_data.length == courses.length){
+			// 					res.send(main_data);
+			// 				}
+  	// 					}
+  	// 				})
+  	// 			})				
+			// })
   		});
   		
   	})
@@ -202,20 +218,24 @@ exports.getCoursesByStudentId = function(req, res){
 	Take.find({student_id: id}, function(err, takes){
 		if(err) return console.log(err);
 		var courses = [];
-
+		var count = 0, i=0;
 		takes.forEach(function(take){
 			Course.findOne({_id: take.course_id}, function(err, course){
+				if(err) return console.error(err);
+				
+				i++;
 
-				var data = {
-					coursetitle: course.name,
-					isCompleted: take.isCompleted,
-					score: take.score,
-					completedAt: take.completedAt,
-					certificate: take.certificate,
+				if(course != null){
+					var data = {
+						coursetitle: course.name,
+						isCompleted: take.isCompleted,
+						score: take.score,
+						completedAt: take.completedAt,
+						certificate: take.certificate,
+					}			
+					courses.push(data);		
 				}
-				courses.push(data);
-
-				if(courses.length == takes.length){
+				if(i == takes.length){
 					res.send(courses);
 				}
 			})

@@ -11,25 +11,28 @@ var mongoose = require('mongoose'),
 exports.getCourseList = function(req, res) {
   var student_id = req.body.student_id,
       courses = [];
-
+  var i = 0;
+  
   Take.find({student_id: student_id}, function(err, takes){
     
     takes.forEach(function (take) {
       Course.findOne({_id: take.course_id}, function(err, course){
         if(err) return console.error(err);
 
-        console.log(course)
-        var data = {
-          course_id: course._id,
-          coursetitle: course.name,
-          coursedescription: course.description,
-          score: take.score,
-          isCompleted: take.isCompleted,
-          completedAt: take.completedAt,
-        }
-        courses.push(data);
+        i++;
+        if(course != null){
+          var data = {
+            course_id: course._id,
+            coursetitle: course.name,
+            coursedescription: course.description,
+            score: take.score,
+            isCompleted: take.isCompleted,
+            completedAt: take.completedAt,
+          }
+          courses.push(data);
+        }          
 
-        if(takes.length == courses.length){
+        if(takes.length == i){
           res.send(courses);
         }
       })

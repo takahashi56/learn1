@@ -25,7 +25,7 @@ export class LessonContent implements OnInit{
 	trueNumber: number = 0;
 	submitAttempt: boolean = false;
 
-	private _content_id : number;
+	private _content_id : string;
 
 	constructor(private _session: Session, private builder: FormBuilder) {
 
@@ -33,6 +33,8 @@ export class LessonContent implements OnInit{
 
 	ngOnInit(){
 		this._content_id = this.content._content_id ? this.content._content_id : this.content._id;
+		console.log("this content id");
+		console.log(this._content_id);
 
 		this.videoOrQuestion = this.content.videoOrQuestion;
 		this.singleOrMulti = this.content.singleOrMulti;
@@ -42,7 +44,8 @@ export class LessonContent implements OnInit{
 		this.answerA = new Control(this.content.answerA , Validators.required);
 		this.answerB = new Control(this.content.answerB , Validators.required);
 		this.answerC = new Control(this.content.answerC , Validators.required);
-
+		this.trueNumber = this.content.trueNumber;
+		
 		this.contentForm = this.builder.group({
 			videoLabel : this.videoLabel,
 			videoEmbedCode : this.videoEmbedCode,
@@ -57,21 +60,22 @@ export class LessonContent implements OnInit{
 	choiceChange(flag: boolean){
 		this.singleOrMulti = flag;
 	}
+	choiceAnswer(n: number){
+		this.trueNumber = n;
+	}
+
 	removeContent(){
+
+		console.log("remove content")
 		var original = JSON.parse(this._session.getItem('Content')),
 			id = this._content_id;
 
 		if(original.length == 1) return false;
 
 		original = original.filter(function( obj ) {
-			console.log(obj);
-			
-			if(obj._content_id){
-				return obj._content_id !== id;	
-			}else{
-				return obj._id !== id;
-			}
-		    
+			var content_id = obj._content_id ? obj._content_id : obj._id;
+
+			return content_id !== id;	
 		});
 		this._session.setItem('Content', JSON.stringify(original));
 		this.manageContent.emit(original);
@@ -80,7 +84,7 @@ export class LessonContent implements OnInit{
 
 	blurChange(form: any){
 		this.submitAttempt = true;
-
+		console.log(this.trueNumber);
 		var original = JSON.parse(this._session.getItem('Content')), updated = true, original_copy = [];
 		if(this.videoOrQuestion){
 			if(form.videoLabel != "" && form.videoEmbedCode != "") updated = false;
@@ -119,7 +123,11 @@ export class LessonContent implements OnInit{
 
 			var data = this.content;
 			original.forEach(function(obj){
-				if((obj._content_id == data._content_id) || (obj._id == data._content_id)){
+				var first_id = obj._content_id ? obj._content_id : obj._id;
+				var second_id = data._content_id ? data._content_id: data._id;
+
+				console.log(obj);
+				if((first_id == second_id)){			
 					original_copy.push(data)
 				}else{
 					original_copy.push(obj)
@@ -185,8 +193,10 @@ export class LessonContent implements OnInit{
 			original_copy = [];
 
 			original.forEach(function(obj){
-				if((obj._content_id == data._content_id) || (obj._id == data._content_id)){
-					original_copy.push(data)
+				var first_id = obj._content_id ? obj._content_id : obj._id;
+				var second_id = data._content_id ? data._content_id: data._id;
+				if(first_id == second_id){
+					original_copy.push(data);
 					original_copy.push(new_data);
 				}else{
 					original_copy.push(obj)

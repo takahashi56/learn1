@@ -7,6 +7,7 @@ import {QuestionText} from './questiontext/student';
 import {QuestionChoice} from './questionchoice/student';
 import {StudentVideo} from './video/student';
 import {SelectedContent} from './selected/student';
+import {LessonResult} from './result/student';
 
 @Component({
 	selector: 'student',
@@ -21,6 +22,7 @@ import {SelectedContent} from './selected/student';
 	new Route({ path: '/text', component: QuestionText, name: 'QuestionText' }),
 	new Route({ path: '/choice', component: QuestionChoice, name: 'QuestionChoice' }),
 	new Route({ path: '/video', component: StudentVideo, name: 'StudentVideo' }),
+	new Route({ path: '/lesson-result', component: LessonResult, name: 'LessonResult' }),
 ])
 
 export class Student {
