@@ -95,7 +95,7 @@ export class LessonContent implements OnInit{
 					if(form.question != "" ) updated = false; 
 					break;
 				case true:
-					if(form.question == "" || form.answerA == "" || form.answerB == "" || form.answerC == "" || this.trueNumber == 0 ) {
+					if(form.question == "" || form.answerA == "" || form.answerB == "" || form.answerC == "") {
 						console.log("true");
 						updated = true;
 					}else{
