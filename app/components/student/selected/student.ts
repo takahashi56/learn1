@@ -27,6 +27,16 @@ export class SelectedContent implements OnInit {
 
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
 		this.contents = JSON.parse(this._session.getItem('SelectedContents'));
+		var count = 0;
+		this.contents.forEach(function(content){
+			if(content.videoOrQuestion == false){
+				count++;
+			}
+		})
+
+		this._session.setItem('questionCount', count);
+		this._session.setItem('rightQuestionCount', 0);
+
 		this.currentLesson = JSON.parse(this._session.getItem('SelectedLessonById'));
 		
 		this.currentContent = this.contents[0];
@@ -34,6 +44,8 @@ export class SelectedContent implements OnInit {
 		this.lessonindex = this._session.getItem('SelectedLessonIndex');
 		this.lessontotal = this._session.getItem('TotalLesson');	
 		this.lessonname = this.currentLesson.lessonname;
+		this._session.setItem('LessonName', this.lessonname);
+
 	}
 
 	ngOnInit() {
@@ -42,12 +54,7 @@ export class SelectedContent implements OnInit {
 
 
 	gotoNextContent(event){		
-		console.log("this.contents")
-		console.log(this.contents);
-		console.log("this.contents.length");
-		console.log(this.contents.length);
-
-		console.log("current Index " + this.index);
+	
 		if((this.index + 1) >= this.contents.length){
 			return this.gotoResultPage();			
 		}else{			
@@ -72,7 +79,26 @@ export class SelectedContent implements OnInit {
 	}
 
 	gotoResultPage(){
-		this._router.navigate(['LessonResult'])
+		
+		var totalCount = this._session.getItem('questionCount'),
+			rightCount = this._session.getItem('rightQuestionCount'),
+			score = Math.floor(rightCount / totalCount * 100),
+			lesson_id = this._session.getItem('SelectedLessonId'),
+			student_id = this._session.getCurrentId(),
+			data = {
+				student_id: student_id,
+				lesson_id: lesson_id,
+				score: score,
+			};
+		console.log("goto result page");
+		console.log('total :' + totalCount);
+		console.log('right :' + rightCount);
+		console.log(' score :' + score);
+		console.log(data);	
+		this._session.setItem(lesson_id, score);
+		this._studentService.setScoreForLesson(data).subscribe((res)=>{
+			this._router.navigate(['LessonResult'])	
+		})			
 	}
 
 

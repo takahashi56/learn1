@@ -43,4 +43,15 @@ export class StudentService {
 
 		return this._http.post(this.baseUrl + 'getcontentslist', JSON.stringify(data), HEADER).map((res)=>res.json());
 	}
+
+	setScoreForLesson(data){
+		return this._http.post(this.baseUrl + 'setscoreforlesson', JSON.stringify(data), HEADER).map((res)=>res.json());
+	}
+
+	setCourseScoreWithStudent(data){
+		return this._http.post(this.baseUrl + 'setcoursescorewithstudent', JSON.stringify(data), HEADER).map((res)=>res.json());	
+	}
+	getScoreListByCourse(data){
+		return this._http.post(this.baseUrl + 'getscorelist', JSON.stringify(data), HEADER).map((res)=>res.json());
+	}
 }

@@ -41,6 +41,8 @@ export class StudentMain implements OnInit {
 
 	gotoLessonList(course){
 		this._session.setItem('selectedCourse', JSON.stringify(course));
+		this._session.setItem('CourseName', this.getCourseName(course));
+		this._session.setItem('CourseId', course.course_id);
 		this._router.navigate(['StudentLesson']);
 	}
 

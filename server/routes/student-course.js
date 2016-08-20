@@ -17,8 +17,21 @@ module.exports = function(app) {
 		res.send(studentcourse.viewCertificate());
 	});
 	
+	
+	app.post('/api/student/setscoreforlesson', function(req, res) {
+		studentcourse.setScoreForLesson(req, res);
+	});
 
 	app.post('/api/student/getcontentslist', function(req, res) {
 		studentcourse.getContentsList(req, res);
+	});
+	
+	app.post('/api/student/getscorelist', function(req, res) {
+		studentcourse.getScoreList(req, res);
+	});
+	
+
+	app.post('/api/student/setcoursescorewithstudent', function(req, res) {
+		studentcourse.setCourseScoreWithStudent(req, res);
 	});
 }

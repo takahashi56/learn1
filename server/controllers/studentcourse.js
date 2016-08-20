@@ -48,6 +48,31 @@ exports.getStudentInfo = function(req, res) {
   })
 }
 
+
+exports.getScoreList = function(req, res){
+    var student_id = req.body.student_id,
+      course_id = req.body.course_id,
+      return_data = [];
+    Lesson.find({course_id: course_id}, function(err, lessons){
+      var i = 0;
+      lessons.forEach(function(lesson){
+        Score.findOne({lesson_id: lesson._id, student_id: student_id}, function(err, score){
+          i++;
+          if(score != null){
+            var data = {
+              lesson_id: score.lesson_id,
+              score: score.score
+            }
+            return_data.push(data);
+          }
+          if(i == lessons.length){
+            res.send(return_data);
+          }
+        })
+      })
+    })
+}
+
 exports.getLessonList = function(req, res) {
   var student_id = req.body.student_id,
       course_id = req.body.course_id,
@@ -99,4 +124,66 @@ exports.getContentsList = function(req, res){
 
     res.send(contents);
   })
+}
+
+exports.setScoreForLesson = function(req, res){
+  console.log(req.body);
+
+  var score = parseInt(req.body.score),
+    lesson_id = req.body.lesson_id,
+    student_id = req.body.student_id,
+    isCompleted = score >= 70 ? true : false,
+    completedAt = isCompleted ? new Date() : '',
+    certificate = '',
+    data = {
+      score: score,
+      lesson_id: lesson_id,
+      student_id: student_id,
+      isCompleted: isCompleted,
+      completedAt: completedAt,
+      certificate: certificate
+    };
+
+    Score.findOneAndUpdate({lesson_id: lesson_id, student_id: student_id}, data, {upsert: true}, function(err, s){
+      if(err) return console.error(err);
+
+      return res.send({sucess: true});      
+    });
+}
+
+exports.setCourseScoreWithStudent = function(req, res){
+
+  var score = parseInt(req.body.score),
+    course_id = req.body.course_id,
+    student_id = req.body.student_id,
+    isCompleted = score >= 70 ? true : false,
+    completedAt = isCompleted ? new Date() : '',
+    certificate = '',
+    data = {
+      score: score,
+      course_id: course_id,
+      student_id: student_id,
+      isCompleted: isCompleted,
+      completedAt: completedAt,
+      certificate: certificate
+    };
+
+    Take.findOne({course_id: course_id, student_id: student_id}, function(err, take){
+      if(err) return console.error(err);
+
+      if(take != null){
+            take.score = score;
+            take.isCompleted = isCompleted;
+            take.completedAt = completedAt;
+      
+            take.save();
+      }
+    })
+
+    res.send({sucess: true});      
+    // Take.findOneAndUpdate({course_id: course_id, student_id: student_id}, data, {upsert: true}, function(err, s){
+    //   if(err) return console.error(err);
+
+    //   return 
+    // });
 }

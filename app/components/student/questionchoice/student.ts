@@ -30,9 +30,20 @@ export class QuestionChoice implements OnInit {
 
 	}	
 
+	chooseAnswer(n: number){
+		this.answerNumber = n;
+	}
+
 	gotoNext(){
 		if(this.answerNumber == 0) return false;
 
+		console.log(this.content.trueNumber);
+		if(this.content.trueNumber == this.answerNumber){
+			var count = parseInt(this._session.getItem('rightQuestionCount'));
+			count++;
+			console.log("Count :"+ count);
+			this._session.setItem('rightQuestionCount', count);
+		}
 		
 		this.gotoNextContent.emit({});
 	}

@@ -19,13 +19,19 @@ export class StudentLesson  {
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
 		this.course = JSON.parse(this._session.getItem('selectedCourse'));
 		this.student_id = this._session.getItem('MainStudentId');
-
+		var self = this;
 		console.log(this.course);
 
 		this._studentService.getLessonListById(this.course.course_id, this.student_id).subscribe((res)=>{
 			this.lessonList = res;
+			this._session.setItem('lessonList', JSON.stringify(res));
 		})
 
+		this._studentService.getScoreListByCourse({course_id: this.course.course_id, student_id: this.student_id}).subscribe((res)=>{
+			res.forEach(function(score){
+				self._session.setItem(score.lesson_id, score.score);
+			})
+		})
 	}
 
 	ngOnInit(){
@@ -66,7 +72,7 @@ export class StudentLesson  {
 		});
 
 		this._session.setItem('SelectedLessonById', JSON.stringify(lesson));
-		
+		this._session.setItem('SelectedLessonId', lesson.lesson_id);
 		this._session.setItem('SelectedLessonIndex', i);
 		this._session.setItem('TotalLesson', this.lessonList.length);
 		this._router.navigate(['SelectedContent']);
