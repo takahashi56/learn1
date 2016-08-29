@@ -85,7 +85,7 @@ export class TutorMain implements OnInit {
 	}
 
 	beforeAssignStudent(course){
-		this._session.setItem('AssignCourse', course)
+		this._session.setItem('AssignCourse', course.course_id)
 	}
 
 	onSelectCourse(value){
@@ -104,9 +104,9 @@ export class TutorMain implements OnInit {
 		if(!selectedId) return false;
 
 		let ids = [];
-		ids.push(selectedId);
+		ids.push(id);
 
-		this._tutorService.setAssignStudentsWithCourse(id,ids).subscribe((res)=>{
+		this._tutorService.setAssignStudentsWithCourse(selectedId,ids).subscribe((res)=>{
 			console.log(res);
 			this._router.navigateByUrl('/home/tutor/main');
 			this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
@@ -126,13 +126,9 @@ export class TutorMain implements OnInit {
 		var id = this._session.getItem('SelectCourseWithId');
 		if(!id) return false;
 
-		let selectedId = this.studentList.filter((x)=>x.isSelected);
-		if(selectedId.length == 0) return false;
-		
-		let ids = [];
-		selectedId.forEach(function(select){
-			ids.push(select.student_id);
-		});
+		if(this.selectStudents.length == 0) return false;
+
+		let ids = this.selectStudents;
 
 		this._tutorService.setAssignStudentsWithCourse(id,ids).subscribe((res)=>{
 
@@ -221,6 +217,7 @@ export class TutorMain implements OnInit {
 				instance.studentList = instance.studentList.filter(function(student){
 					return student.student_id != id;
 				})
+				instance._session.setItem('TutorAllStudent', JSON.stringify(instance.studentList))
 			})
 		})
 	}

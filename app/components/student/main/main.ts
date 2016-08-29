@@ -62,10 +62,10 @@ export class StudentMain implements OnInit {
 			return '';
 		}
 		if(course.score < 70){
-			return 'In progress, ' + course.score + '% Complete';
+			return `In progress ${course.score}% Complete`;
 		}
 		if(course.score > 80){
-			return 'Completed,'+ course.completedAt + ', Score '+ course.score + '%';
+			return `Completed, ${course.completedAt.toString().slice(0,10)} Score ${course.score}%`;
 		}
 	}
 

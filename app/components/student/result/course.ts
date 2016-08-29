@@ -17,8 +17,11 @@ export class CourseResult {
 	username: string = "";
 	coursetitle: string;
 	score: number = 0;
+	showResultOrfalse: boolean = false;
+	showLessonResult: any= [];
 
 	constructor(private _session: Session, private _studentService: StudentService, private router:Router) {
+		this.showLessonResult = [];
 		this.username = _session.getCurrentUsername();
 
 		this.coursetitle = this._session.getItem('CourseName');
@@ -26,23 +29,41 @@ export class CourseResult {
 		var lessonList = JSON.parse(this._session.getItem('lessonList')), self = this, count = 0;
 
 		lessonList.forEach(function(lesson){
-			var score = self._session.getItem(lesson.lesson_id);
-			
-			self.score += parseInt(score);
+			console.log("lesson list ok")
+			console.log(lessonList);
+			var status = JSON.parse(self._session.getItem(lesson.lesson_id)),
+				s = parseInt(status.score);
+
+			s = isNaN(s) ? 0 : s;
+			console.log(`status = ${status.score}`);
+			self.score += s
 		});
 
 
 		console.log(this.score);
-
-		var student_id = this._session.getCurrentId, coures_id = this._session.getItem('CourseId');
-		this._studentService.setCourseScoreWithStudent({student_id: student_id, course_id:coures_id }).subscribe((res)=>{
-			console.log(res)
-		})
 		this.score = Math.floor( this.score / (lessonList.length));
+
+		var student_id = this._session.getCurrentId(), coures_id = this._session.getItem('CourseId'), score = this.score;
+
+		console.log(`student id = ${student_id}`);
+		this._studentService.setCourseScoreWithStudent({student_id: student_id, course_id:coures_id, score: score }).subscribe((res)=>{
+			console.log(res)
+		});
+
+		lessonList.forEach((lesson)=>{
+			var status = JSON.parse(this._session.getItem(lesson.lesson_id)),
+				temp = {
+					lessonname: lesson.lessonname,
+					total: status.total,
+					right: status.right
+				};
+			this.showLessonResult.push(temp);
+		})
+
 	}
 
 	showResult(){
-
+		this.showResultOrfalse = true;
 	}
 
 	gotoFinish(){

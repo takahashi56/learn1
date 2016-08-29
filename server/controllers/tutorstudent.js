@@ -37,53 +37,65 @@ exports.getAllStudents = function(req, res) {
 exports.getAllCourses = function(req, res) {
 	var tutor_id = req.body.tutor_id;
 	console.log("tutor id" + tutor_id);
+    var main_data = [];
   	Course.find({},null, {sort: 'created_at'}, function(err, courses){
   		if(err) return console.error(err)
 
-  		var main_data = [];
+
   		courses.forEach(function (course) {
-  			var data = {
-					course_id: course._id,
-					coursetitle: course.name,
-					enrolled: 0,
-					coursedescription: course.description
-				}
 
-			main_data.push(data);
+            //
+			// if(main_data.length == courses.length){
+			// 	res.send(main_data);
+			// }
+  			Take.find({course_id: course._id}, function(err, takes){
+  				if(err) return console.error(err)
 
-			if(main_data.length == courses.length){
-				res.send(main_data);
-			}	
-  	// 		Take.find({course_id: course.id}, function(err, takes){
-  	// 			if(err) return console.error(err)
-  				
-  	// 			var count = 0, i=0;
-  	// 			takes.forEach(function(take){
-  	// 				Student.findOne({_id: take.student_id, tutor_id: tutor_id}, function(err, student){
-  	// 					if(err) return console.error(err);
-  						
-  	// 					i++;
-  	// 					console.log(i);
-  	// 					console.log(takes.length);
-  	// 					if(student != null) count++;
+  				var count = 0, i=0;
+                if(takes.length == 0){
+                    i++;
+                    var data1 = {
+                        course_id: course._id,
+                        coursetitle: course.name,
+                        enrolled: 0,
+                        coursedescription: course.description
+                    }
+                    main_data.push(data1);
+                    if(main_data.length == courses.length){
+                        res.send(main_data);
 
-  	// 					if(i == takes.length){
-  	// 						console.log(course);
-  	// 						var data = {
-			// 					course_id: course._id,
-			// 					coursetitle: course.name,
-			// 					enrolled: count,
-			// 					coursedescription: course.description
-			// 				}
-			// 				main_data.push(data);
+                        return false;
+                    }
+                }else{
+                    takes.forEach(function(take){
+                        Student.findOne({_id: take.student_id, tutor_id: tutor_id}, function(err, student){
+                            if(err) return console.error(err);
 
-			// 				if(main_data.length == courses.length){
-			// 					res.send(main_data);
-			// 				}
-  	// 					}
-  	// 				})
-  	// 			})				
-			// })
+                            i++;
+                            console.log(i);
+                            console.log(takes.length);
+                            if(student != null) count++;
+
+                            if(i == takes.length){
+                                console.log(course);
+                                var data = {
+                                    course_id: course._id,
+                                    coursetitle: course.name,
+                                    enrolled: count,
+                                    coursedescription: course.description
+                                }
+                                main_data.push(data);
+                                if(main_data.length == courses.length){
+                                    res.send(main_data);
+
+                                    return false;
+                                }
+                            }
+                        })
+                    })
+                }
+
+			})
   		});
   		
   	})
@@ -179,15 +191,11 @@ exports.setStudentByCourse = function(req, res){
 	var course_id = req.body.course_id, 
 		students_ids = req.body.ids;
 
-	console.log("course_id");
-	console.log(course_id);
-	console.log(students_ids);
-
 	students_ids.map(function(id){
-		Take.find({student_id: id},null, {sort: 'created_at'}, function(err, takes){
+		Take.find({student_id: id}, function(err, takes){
 			if(err) return console.log(err);
 
-			var confirm = takes.filter(function(x){x.course_id == course_id});
+			var confirm = takes.filter(function(x){return x.course_id == course_id});
 
 			console.log(confirm);
 			

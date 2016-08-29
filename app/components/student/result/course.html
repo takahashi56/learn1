@@ -29,6 +29,12 @@
             <h3>
                 <strong>You scored {{score}}%</strong>
             </h3>
+            <div *ngIf="showResultOrfalse">
+                <h4 *ngFor="let data of showLessonResult; let i = index">
+                    <div *ngIf="!data.total"><strong>Lesson {{i+1}} {{data.lessonname}}, No question</strong></div>
+                    <div *ngIf="data.total"><strong>Lesson {{i+1}} {{data.lessonname}}, You answered {{data.right}} out {{data.total}} questions correctly</strong></div>
+                </h4>
+            </div>
             <div class="white-space m-t-30 m-b-30">
                 <div class="row">
                     <div class="col-xs-12">
@@ -36,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="white-space m-t-30 m-b-30">
                 <div class="row">
                     <div class="col-xs-12">

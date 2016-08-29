@@ -152,7 +152,7 @@ exports.setScoreForLesson = function(req, res){
 }
 
 exports.setCourseScoreWithStudent = function(req, res){
-
+    console.log('req.body ' + JSON.stringify(req.body));
   var score = parseInt(req.body.score),
     course_id = req.body.course_id,
     student_id = req.body.student_id,
@@ -172,6 +172,7 @@ exports.setCourseScoreWithStudent = function(req, res){
       if(err) return console.error(err);
 
       if(take != null){
+            console.log("take  =  " + take);
             take.score = score;
             take.isCompleted = isCompleted;
             take.completedAt = completedAt;

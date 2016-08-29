@@ -15,12 +15,14 @@ export class StudentLesson  {
 	lessonList: any = [];
 	course: any;
 	student_id: string;
+	htmlstring: string;
 
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
 		this.course = JSON.parse(this._session.getItem('selectedCourse'));
 		this.student_id = this._session.getItem('MainStudentId');
 		var self = this;
 		console.log(this.course);
+		this.htmlstring = "";
 
 		this._studentService.getLessonListById(this.course.course_id, this.student_id).subscribe((res)=>{
 			this.lessonList = res;
@@ -58,7 +60,7 @@ export class StudentLesson  {
 		}else if(lesson.score < 70){
 			return 'In progress';
 		}else if(lesson.score >= 70){
-			return '<i class="ion-checkmark-round m-r-5"></i> Completed ' + lesson.completedAt;
+			return `<i class="ion-checkmark-round m-r-5"></i> Completed ${lesson.completedAt.toString().slice(0, 10)}`;
 		}
 
 	}

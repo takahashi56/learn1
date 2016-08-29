@@ -10,7 +10,7 @@
                             {{i + 1}} {{getLessonName(lesson)}}
                         </div>
                         <div class="col-sm-5 text-right">
-                            {{getCurrentLessonStatus(lesson)}}
+                            <div [innerHtml]="getCurrentLessonStatus(lesson)"></div>
                         </div>
                         <div class="col-sm-2 text-right">
                             <i class="fa fa-film m-r-5"></i>{{lesson.count}} Videos 

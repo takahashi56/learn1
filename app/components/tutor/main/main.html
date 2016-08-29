@@ -131,8 +131,8 @@
                 <div class="modal-footer">
 					<div class="row"> 
                         <div class="col-md-12"> 
-                            <select class="course-select" (change)="onSelectStudent($event.target.value)">
-                            <option *ngFor="let student of studentList" [ngValue]="student">{{student.firstName+ " " + student.lastName}}</option>
+                            <select class="course-select"  (change)="onSelectStudent($event.target.value)">
+                            <option *ngFor="let student of studentList" [value]="student.student_id">{{student.firstName+ " " + student.lastName}}</option>
               							</select>
                         </div> 
                     </div> 
