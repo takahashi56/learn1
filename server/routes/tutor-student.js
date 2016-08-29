@@ -33,5 +33,9 @@ module.exports = function(app) {
 
 	app.post('/api/tutor/getStudentsByCourseId', function(req, res) {
 		tutorstudent.getStudentsByCourseId(req, res);
-	});	
+	});
+
+	app.post('/api/tutor/removestudent', function(req, res) {
+		tutorstudent.removeStudent(req, res);
+	});
 }

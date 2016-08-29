@@ -13,6 +13,7 @@
             <div class="tab-pane active" id="students">
                 <div class="text-right m-b-30">
                     <a  class="btn btn-primary w-sm m-r-5" (click)="gotoAddStudent()" >Add Student</a>
+                    <a  class="btn btn-primary w-sm m-r-5" (click)="removeStudent()" >Remove Student</a>
                     <a class="btn btn-primary w-sm m-r-5" onClick="$('#file-uploader').click()">Import Students</a>
                     <input type="file" id="file-uploader" (change)="importAddStudent($event)" style="display: none;"/>
                     <a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-course">Assign Course</a>
@@ -34,7 +35,7 @@
                         <tr *ngFor="let student of studentList">
                             <td>
                                 <label class="cr-styled">
-                                    <input type="checkbox" [(ngModel)]="student.isSelected">
+                                    <input type="checkbox" (change)="checkStudent($event,student)">
                                     <i class="fa"></i>
                                 </label>
                             </td>

@@ -74,4 +74,18 @@ export class AdminService {
 			})
 		}
 	}
+	removeOrgById(list){
+		return this._http.post(this.baseUrl + 'removetutor', JSON.stringify({list: list}), HEADER)
+			.map((res) => {
+				return res.json();
+			})
+	}
+
+	removeCourseById(list){
+		return this._http.post(this.baseUrl + 'removecourse', JSON.stringify({list: list}), HEADER)
+			.map((res) => {
+				return res.json();
+			})
+	}
+
 }

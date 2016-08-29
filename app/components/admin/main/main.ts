@@ -17,6 +17,8 @@ export class Main implements OnInit {
 	coursesData: any = [];
 	lessonsData: any = [];
 	contentsData: any = [];
+	selectOrg: any = [];
+	selectCourse: any = [];
 
 
 	constructor(private _session: Session, private _adminService: AdminService, private _router: Router) {
@@ -64,7 +66,61 @@ export class Main implements OnInit {
 		this._router.navigate(['AdminAddCourse']);
 	}
 
-	doLogin(form: any) {
-		
+	removeCourse(){
+		if(this.selectCourse.length == 0) return false;
+		let instance = this;
+		console.log(this.selectCourse);
+
+		this._adminService.removeCourseById(this.selectCourse).subscribe((res)=>{
+			instance.selectCourse.map((id) => {
+				instance.courseList = instance.courseList.filter((course) => {
+					return course.course_id != id;
+				})
+			})
+		})
 	}
+
+	removeOrg(){
+		if(this.selectOrg.length == 0) return false;
+		let instance = this;
+		console.log(this.selectOrg);
+
+		this._adminService.removeOrgById(this.selectOrg).subscribe((res)=>{
+			instance.selectOrg.map(function(id){
+				instance.orgList = instance.orgList.filter(function(org){
+					return org.id != id;
+				})
+			})
+		})
+
+	}
+
+	checkCourse(event, object){
+		console.log(event.currentTarget.checked);
+		console.log(`coures  = ${JSON.stringify(object)}`);
+
+		if(event.currentTarget.checked){
+			this.selectCourse.push(object.course_id);
+		}else{
+			this.selectCourse = this.selectCourse.filter((o) => {
+				return o != object.course_id;
+			})
+		}
+		console.log(this.selectCourse);
+	}
+
+
+	checkOrganization(event, object){
+		console.log(event.currentTarget.checked);
+
+		if(event.currentTarget.checked){
+			this.selectOrg.push(object.id);
+		}else{
+			this.selectOrg = this.selectOrg.filter(function(o){
+				return o != object.id;
+			})
+		}
+		console.log(this.selectOrg);
+	}
+
 }

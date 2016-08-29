@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter} from 'angular2/core';
+import {Component, Input, Output, OnInit, EventEmitter} from 'angular2/core';
 import {Session} from '../../../services/session';
 import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
 

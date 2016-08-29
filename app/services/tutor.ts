@@ -87,4 +87,10 @@ export class TutorService {
 			return res.json();
 		})	
 	}
+
+	removeStudentById(list){
+		return this._http.post(this.baseUrl + "removestudent", JSON.stringify({list: list}), HEADER).map((res) => {
+			return res.json();
+		})
+	}
 }

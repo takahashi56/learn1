@@ -13,7 +13,7 @@ exports.getCourseList = function(req, res) {
       courses = [];
   var i = 0;
   
-  Take.find({student_id: student_id}, function(err, takes){
+  Take.find({student_id: student_id},null, {sort: 'created_at'}, function(err, takes){
     
     takes.forEach(function (take) {
       Course.findOne({_id: take.course_id}, function(err, course){
@@ -53,7 +53,7 @@ exports.getScoreList = function(req, res){
     var student_id = req.body.student_id,
       course_id = req.body.course_id,
       return_data = [];
-    Lesson.find({course_id: course_id}, function(err, lessons){
+    Lesson.find({course_id: course_id},null, {sort: 'created_at'}, function(err, lessons){
       var i = 0;
       lessons.forEach(function(lesson){
         Score.findOne({lesson_id: lesson._id, student_id: student_id}, function(err, score){
@@ -80,7 +80,7 @@ exports.getLessonList = function(req, res) {
   console.log("course id" + course_id);
   console.log("student id" + student_id);
 
-  Lesson.find({course_id: course_id}, function(err, lessons){
+  Lesson.find({course_id: course_id}, null, {sort: 'created_at'},function(err, lessons){
     lessons.forEach(function(lesson){
       Score.findOne({lesson_id: lesson._id}, function(err, score){
         if(err) return console.log(err);
@@ -119,7 +119,7 @@ exports.getLessonList = function(req, res) {
 exports.getContentsList = function(req, res){
   var lesson_id = req.body.lesson_id;
 
-  Content.find({lesson_id: lesson_id}, function(err, contents){
+  Content.find({lesson_id: lesson_id},null, {sort: 'created_at'}, function(err, contents){
     if(err) return console.error(err);
 
     res.send(contents);

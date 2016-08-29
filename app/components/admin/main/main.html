@@ -13,6 +13,7 @@
             <div class="tab-pane active" id="courses">
                 <div class="text-right m-b-30">
                     <a class="btn btn-primary w-sm" (click)="gotoAddCourse()" >Add Course</a>
+                    <a class="btn btn-primary w-sm" (click)="removeCourse()" >Remove Course</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table text-page">
@@ -29,7 +30,7 @@
                         <tr *ngFor="let course of courseList">
                             <td>
                                 <label class="cr-styled">
-                                    <input type="checkbox">
+                                    <input type="checkbox" (change)="checkCourse($event, course)">
                                     <i class="fa"></i>
                                 </label>
                             </td>
@@ -46,6 +47,7 @@
             <div class="tab-pane" id="organization">
                 <div class="text-right m-b-30">
                     <a  class="btn btn-primary w-sm" [routerLink]="['AdminAddOrganization']">Add Organization</a>
+                    <a  class="btn btn-primary w-sm" (click)="removeOrg()">Remove Organization</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table text-page">
@@ -65,7 +67,7 @@
                         <tr *ngFor="let org of orgList">
                             <td>
                                 <label class="cr-styled">
-                                    <input type="checkbox">
+                                    <input type="checkbox" (change)="checkOrganization($event, org)">
                                     <i class="fa"></i>
                                 </label>
                             </td>

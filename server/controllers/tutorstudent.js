@@ -12,7 +12,7 @@ exports.getAllStudents = function(req, res) {
 	var data = req.body, tutor_id = data.tutor_id;
 	console.log(tutor_id);
 
-  	Student.find({tutor_id: tutor_id}, function(err, students){
+  	Student.find({tutor_id: tutor_id},null, {sort: 'created_at'}, function(err, students){
   		if(err) return console.error(err)
   		var students_copy = [];
 
@@ -37,7 +37,7 @@ exports.getAllStudents = function(req, res) {
 exports.getAllCourses = function(req, res) {
 	var tutor_id = req.body.tutor_id;
 	console.log("tutor id" + tutor_id);
-  	Course.find({}, function(err, courses){
+  	Course.find({},null, {sort: 'created_at'}, function(err, courses){
   		if(err) return console.error(err)
 
   		var main_data = [];
@@ -184,10 +184,10 @@ exports.setStudentByCourse = function(req, res){
 	console.log(students_ids);
 
 	students_ids.map(function(id){
-		Take.find({student_id: id}, function(err, takes){
+		Take.find({student_id: id},null, {sort: 'created_at'}, function(err, takes){
 			if(err) return console.log(err);
 
-			var confirm = takes.filter((x)=> x.course_id == course_id);
+			var confirm = takes.filter(function(x){x.course_id == course_id});
 
 			console.log(confirm);
 			
@@ -212,10 +212,12 @@ exports.setStudentByCourse = function(req, res){
 	res.send({success: true});
 }
 
+
+
 exports.getCoursesByStudentId = function(req, res){
 	var id = req.body.student_id, tutor_id = req.body.tutor_id;
 
-	Take.find({student_id: id}, function(err, takes){
+	Take.find({student_id: id},null, {sort: 'created_at'}, function(err, takes){
 		if(err) return console.log(err);
 		var courses = [];
 		var count = 0, i=0;
@@ -275,7 +277,7 @@ exports.getStudentsByCourseId = function(req, res){
 	// })	
 
 
-	Take.find({course_id: id}, function(err, takes){
+	Take.find({course_id: id},null, {sort: 'created_at'}, function(err, takes){
 		if(err) return console.error(err)
 		var courses = [];
 			
@@ -302,4 +304,19 @@ exports.getStudentsByCourseId = function(req, res){
 			})
 		})				
 	})
+}
+
+
+exports.removeStudent = function(req, res){
+	var list = req.body.list;
+	console.log(list);
+	list.forEach(function(id){
+		Student.findOne({_id: id}, function(err, student){
+			if(err) console.error(err);
+
+			student.remove()
+		})
+	})
+
+	res.send({success: true});
 }

@@ -16,6 +16,21 @@ module.exports = function() {
     updated_at: Date,
   });
 
+
+  tutorSchema.pre('save', function(next) {
+    // get the current date
+    var currentDate = new Date();
+
+    // change the updated_at field to current date
+    this.updated_at = currentDate;
+
+    // if created_at doesn't exist, add to that field
+    if (!this.created_at)
+      this.created_at = currentDate;
+
+    next();
+  });
+
   tutorSchema.methods = {
     authenticate: function(pwdToMatch) {
       return (encrypt.hashPwd(this.salt, pwdToMatch) === this.hashed_pwd) && (this.hashed_pwd != "");

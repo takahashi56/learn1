@@ -5,10 +5,11 @@ var mongoose = require('mongoose'),
 	Lesson = mongoose.model('Lesson'),
 	Content = mongoose.model('Content'),
 	Take = mongoose.model('Take'),
+	Score = mongoose.model('Score'),
 	encrypt = require('../utilities/encryption');
 
 exports.getAllCourse = function(req, res) {
-	Course.find({}, function(err, collection) {
+	Course.find({},null, {sort: 'created_at'}, function(err, collection) {
 		if(err) {
 			return console.error(err);
 		}		
@@ -16,7 +17,7 @@ exports.getAllCourse = function(req, res) {
 		collection.forEach(function (course) {
 			console.log(course);
 			console.log(course._id);
-			Lesson.find({course_id: course._id}, function(err, lessons){
+			Lesson.find({course_id: course._id},null, {sort: 'created_at'}, function(err, lessons){
 				if (err) return console.error(err);
 				console.log('============lessons====================');
 				console.log(lessons);
@@ -53,6 +54,7 @@ exports.getAllCourse = function(req, res) {
 	});
 }
 
+
 exports.getEditCourses = function(req, res){
 	var id = req.body.id;
 	
@@ -66,12 +68,12 @@ exports.getEditCourses = function(req, res){
 			coursedescription: course.description,
 			lesson: []
 		}
-		Lesson.find({course_id: course._id}, function(err, lessons){
+		Lesson.find({course_id: course._id},null, {sort: 'created_at'}, function(err, lessons){
 			if (err) return console.error(err);
 
 			var lessonData = {};
 			lessons.forEach(function(lesson){
-				Content.find({lesson_id:lesson._id}, function(err, contents){
+				Content.find({lesson_id:lesson._id},null, {sort: 'created_at'}, function(err, contents){
 					if (err) return console.error(err);
 
 					lessonData = {
@@ -92,8 +94,9 @@ exports.getEditCourses = function(req, res){
 }
 
 
+
 exports.getAllContent = function(req, res){
-	Content.find({}, function(err, collection) {
+	Content.find({},null, {sort: 'created_at'}, function(err, collection) {
 		if(err) {
 			return console.error(err);
 		}		
@@ -143,6 +146,8 @@ exports.addCourse = function(req, res) {
 	})
 	res.send({success: true});
 }
+
+
 
 exports.updateCourse = function(req, res) {
 	var data = req.body,
@@ -307,5 +312,43 @@ exports.updateCourse = function(req, res) {
 }
 
 exports.deleteCourse = function(req, res) {
-	res.send({data: "delete Course"});
+	var list = req.body.list;
+
+	list.forEach(function (l) {
+		Course.findOneAndRemove({_id: mongoose.Types.ObjectId(l)}, function(err, removed){
+			if(err) console.error(err);
+
+			Lesson.find({course_id: l}, function(err, lessons){
+				if(err) console.error(err);
+
+				lessons.forEach(function (lesson) {
+					Content.find({lesson_id: lesson._id}, function (err, contents) {
+						contents.forEach(function (content) {
+							content.remove();
+						});
+					});
+					Score.find({lesson_id: lesson._id}, function (err, scores) {
+						scores.forEach(function(score){
+							score.remove();
+						})
+					})
+				})
+
+				lessons.forEach(function (lesson) {
+					lesson.remove();
+				});
+			})
+
+			Take.find({course_id: l}, function (err, takes) {
+				if(err) console.error(err);
+
+				takes.forEach(function (take) {
+					take.remove();
+				});
+			})
+			console.log(removed);
+		})
+	})
+
+	res.send({success: true});
 }

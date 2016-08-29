@@ -13,7 +13,8 @@ module.exports = function(app) {
 		admintutor.editTutor(req, res);
 	});
 
-	app.delete('/api/admin/tutor', function(req, res) {
+	app.post('/api/admin/removetutor', function(req, res) {
 		admintutor.deleteTutor(req, res);
 	});
+
 }

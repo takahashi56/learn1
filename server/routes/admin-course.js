@@ -22,7 +22,7 @@ module.exports = function(app) {
 		admincourse.updateCourse(req, res);
 	});
 
-	app.delete('/api/admin/course', function(req, res) {
+	app.post('/api/admin/removecourse', function(req, res) {
 		admincourse.deleteCourse(req, res);
 	});
 }

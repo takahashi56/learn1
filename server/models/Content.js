@@ -14,6 +14,22 @@ module.exports = function() {
     trueNumber: Number,
     answer_text: String,
     lesson_id: String, 
+    created_at: Date,
+    updated_at: Date,
+  });
+
+  contentSchema.pre('save', function(next) {
+    // get the current date
+    var currentDate = new Date();
+
+    // change the updated_at field to current date
+    this.updated_at = currentDate;
+
+    // if created_at doesn't exist, add to that field
+    if (!this.created_at)
+      this.created_at = currentDate;
+
+    next();
   });
 
   mongoose.model('Content', contentSchema);

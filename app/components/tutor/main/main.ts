@@ -16,6 +16,7 @@ export class TutorMain implements OnInit {
 	studentList: any = [];
 	courseList: any = [];
 	tutor_id: string;
+	selectStudents: any = [];
 
 	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router) {
 		this.tutor_id = this._session.getCurrentId()
@@ -195,5 +196,32 @@ export class TutorMain implements OnInit {
 
 	doLogin(form: any) {
 		
+	}
+
+	checkStudent(event, object){
+		console.log(`coures  = ${JSON.stringify(object)}`);
+
+		if(event.currentTarget.checked){
+			this.selectStudents.push(object.student_id);
+		}else{
+			this.selectStudents = this.selectStudents.filter((o) => {
+				return o != object.student_id;
+			})
+		}
+		console.log(this.selectStudents);
+	}
+
+	removeStudent(){
+		if(this.selectStudents.length == 0) return false;
+		let instance = this;
+		console.log(this.selectStudents);
+
+		this._tutorService.removeStudentById(this.selectStudents).subscribe((res)=>{
+			instance.selectStudents.map(function(id){
+				instance.studentList = instance.studentList.filter(function(student){
+					return student.student_id != id;
+				})
+			})
+		})
 	}
 }

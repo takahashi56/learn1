@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
 exports.getAllTutors = function(req, res) {
 	var temp={}, i=0,data = [];
 
-	Tutor.find({}, function(err, results){
+	Tutor.find({},null, {sort: 'created_at'}, function(err, results){
 		results.forEach(function(tutor){
 			Student.count({tutor_id: tutor._id}, function(err, count){											
 				i+=1;
@@ -67,5 +67,19 @@ exports.editTutor = function(req, res) {
 	})	
 }
 exports.deleteTutor = function(req, res) {
-	res.send({data: "delete Tutor"});
+	
+	var list = req.body.list;
+	
+	list.forEach(function (l) {
+		Tutor.findOneAndRemove({_id: mongoose.Types.ObjectId(l)}, function(err, removed){
+			if(err) console.error(err);
+
+			console.log(removed);
+		})
+	})
+
+	res.send({success: true});
+
 }
+
+

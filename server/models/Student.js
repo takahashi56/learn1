@@ -11,7 +11,23 @@ module.exports = function() {
     roles: [String],
     DOB: String,
     phone: String,
-    tutor_id: String
+    tutor_id: String,
+    created_at: Date,
+    updated_at: Date,
+  });
+
+  studentSchema.pre('save', function(next) {
+    // get the current date
+    var currentDate = new Date();
+
+    // change the updated_at field to current date
+    this.updated_at = currentDate;
+
+    // if created_at doesn't exist, add to that field
+    if (!this.created_at)
+      this.created_at = currentDate;
+
+    next();
   });
 
   studentSchema.methods = {
