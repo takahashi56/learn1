@@ -17,6 +17,8 @@ export class TutorMain implements OnInit {
 	courseList: any = [];
 	tutor_id: string;
 	selectStudents: any = [];
+	showRemoveStudent: boolean = false;
+	selectedStudentsName: string = '';
 
 	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router) {
 		this.tutor_id = this._session.getCurrentId()
@@ -220,5 +222,22 @@ export class TutorMain implements OnInit {
 				instance._session.setItem('TutorAllStudent', JSON.stringify(instance.studentList))
 			})
 		})
+	}
+
+	beforeRemoveStudent(){
+		if(this.selectStudents.length == 0){
+			this.showRemoveStudent = false;
+			return false;
+		}
+		this.showRemoveStudent = true;
+		let instance = this;
+		var data = [];
+
+		this.selectStudents.map((id) => {
+			var element = this.studentList.filter((student) => { return student.student_id == id});
+			console.log(element);
+			data.push(`${element[0].firstName} ${element[0].lastName}`);
+		});
+		this.selectedStudentsName = data.join(',');
 	}
 }

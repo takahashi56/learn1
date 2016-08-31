@@ -26,6 +26,7 @@ export class StudentMain implements OnInit {
 
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 		this.studentId = this._session.getItem('MainStudentId');
+		console.log(this.studentId);
 	}
 
 	ngOnInit(){

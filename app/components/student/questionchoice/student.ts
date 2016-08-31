@@ -14,6 +14,8 @@ export class QuestionChoice implements OnInit {
 
 	courseList: any = [];
 	answerNumber: number = 0;
+	checkedRadio: string = '0';
+    iterator: any = [1,2,3];
 
 	@Input() content: any;
 	@Input() lessonname: string;
@@ -27,14 +29,17 @@ export class QuestionChoice implements OnInit {
 	}
 
 	ngOnInit(){
-
-	}	
+	}
 
 	chooseAnswer(n: number){
+		console.log(`checked radio before: ${this.checkedRadio}`)
+		this.checkedRadio = n.toString();
 		this.answerNumber = n;
+		console.log(`checked radio after: ${this.checkedRadio}`)
 	}
 
 	gotoNext(){
+		console.log(`checked radio next before: ${this.checkedRadio}`)
 		if(this.answerNumber == 0) return false;
 
 		console.log(this.content.trueNumber);
@@ -42,13 +47,16 @@ export class QuestionChoice implements OnInit {
 			var count = parseInt(this._session.getItem('rightQuestionCount'));
 			count++;
 			console.log("Count :"+ count);
+
 			this._session.setItem('rightQuestionCount', count);
 		}
-		
+		this.checkedRadio = '0';
+		console.log(`checked radio next after: ${this.checkedRadio}`)
 		this.gotoNextContent.emit({});
 	}
 
 	gotoPrevious(){
+		this.checkedRadio = '0';
 		this.gotoPreviousContent.emit({});	
 	}
 }

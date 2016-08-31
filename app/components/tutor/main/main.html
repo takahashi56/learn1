@@ -13,7 +13,7 @@
             <div class="tab-pane active" id="students">
                 <div class="text-right m-b-30">
                     <a  class="btn btn-primary w-sm m-r-5" (click)="gotoAddStudent()" >Add Student</a>
-                    <a  class="btn btn-primary w-sm m-r-5" (click)="removeStudent()" >Remove Student</a>
+                    <a  class="btn btn-primary w-sm m-r-5" (click)="beforeRemoveStudent()"  data-toggle="modal" data-target="#remove-student" >Remove Student</a>
                     <a class="btn btn-primary w-sm m-r-5" onClick="$('#file-uploader').click()">Import Students</a>
                     <input type="file" id="file-uploader" (change)="importAddStudent($event)" style="display: none;"/>
                     <a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-course">Assign Course</a>
@@ -143,3 +143,30 @@
             </div> 
         </div>
     </div>
+
+
+<div *ngIf="showRemoveStudent" id="remove-student" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Remove Student</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>Are you sure to remove the {{selectedStudentsName}}? </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeStudent()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

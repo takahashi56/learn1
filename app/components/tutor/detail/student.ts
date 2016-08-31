@@ -3,6 +3,7 @@ import {Session} from '../../../services/session';
 import {ROUTER_DIRECTIVES,Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
 import {TutorService} from '../../../services/tutor';
+
 import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
 
 @Component({
@@ -130,5 +131,9 @@ export class DetailTutorStudent {
 	 	return str.split(' ').map(function(val){ 
 	    	return val.charAt(0).toUpperCase() + val.substr(1).toLowerCase();
 	  	}).join(' ');
+	}
+
+	gotoCertificate(course: any){
+		this._router.navigateByUrl('/certificate');
 	}
 }

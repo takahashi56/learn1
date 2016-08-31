@@ -82,7 +82,7 @@ exports.getLessonList = function(req, res) {
 
   Lesson.find({course_id: course_id}, null, {sort: 'created_at'},function(err, lessons){
     lessons.forEach(function(lesson){
-      Score.findOne({lesson_id: lesson._id}, function(err, score){
+      Score.findOne({lesson_id: lesson._id, student_id: student_id}, function(err, score){
         if(err) return console.log(err);
 
         Content.count({lesson_id: lesson._id, videoOrQuestion: true}, function(err, content_count){

@@ -191,13 +191,15 @@ exports.setStudentByCourse = function(req, res){
 	var course_id = req.body.course_id, 
 		students_ids = req.body.ids;
 
+	console.log('student ids ' + JSON.stringify(students_ids));
+	console.log('course id ' + JSON.stringify(course_id));
 	students_ids.map(function(id){
 		Take.find({student_id: id}, function(err, takes){
 			if(err) return console.log(err);
 
 			var confirm = takes.filter(function(x){return x.course_id == course_id});
 
-			console.log(confirm);
+			console.log('confirm = ' + JSON.stringify(confirm));
 			
 			if(confirm.length == 0){
 				var data = {
