@@ -134,6 +134,10 @@ export class DetailTutorStudent {
 	}
 
 	gotoCertificate(course: any){
+		console.log("goto certificate");
+		if(course.score < 70) return false;
+		var self = this;
+		console.log("goto certificate +++");
 		this._tutorService.getLessonsNameByCourseId({course_id: course.course_id}).subscribe((res)=>{
 			var	data = {
 				couresname: course.coursetitle,
@@ -142,8 +146,9 @@ export class DetailTutorStudent {
 				completed_at: course.completedAt,
 				lessons: res.data.join(',')
 			}
-			this._session.setItem('certificate', JSON.stringify(data));
-			this._router.navigateByUrl('/certificate');
+			console.log(`data = ${JSON.stringify(data)}`);
+			self._session.setItem('certificate', JSON.stringify(data));
+			self._router.navigateByUrl('/certificate');
 		});
 	}
 }

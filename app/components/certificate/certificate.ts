@@ -23,6 +23,7 @@ export class CertificateView implements OnInit{
 
     constructor(private _tutorService: TutorService, private _router: Router, private _session: Session){
         this.data = JSON.parse(this._session.getItem('certificate'));
+        if(this.data == null) this._router.navigateByUrl('/login');
     }
 
     ngOnInit(){
