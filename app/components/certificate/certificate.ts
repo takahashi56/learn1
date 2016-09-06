@@ -2,14 +2,14 @@
  * Created by root on 31/08/2016.
  */
 
-import {Component, AfterViewInit} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {Session} from '../../services/session';
 import {ROUTER_DIRECTIVES,Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
 import {TutorService} from '../../services/tutor';
 
-import 'jspdf';
-declare let jsPDF;
+// import 'jspdf';
+// declare let jsPDF;
 
 @Component({
     selector: 'certificate',
@@ -18,49 +18,46 @@ declare let jsPDF;
     directives: [ROUTER_DIRECTIVES]
 })
 
-export class CertificateView implements AfterViewInit {
-    constructor(private _tutorService: TutorService, private _router: Router, private _session: Session){
+export class CertificateView implements OnInit{
+    data: any = {};
 
+    constructor(private _tutorService: TutorService, private _router: Router, private _session: Session){
+        this.data = JSON.parse(this._session.getItem('certificate'));
     }
 
-    ngAfterViewInit(){
-        var pdf = new jsPDF('p', 'pt', 'letter'),
-            // source can be HTML-formatted string, or a reference
-            // to an actual DOM element from which the text will be scraped.
+    ngOnInit(){
+      // setTimeout(this.downloadpdf(), 2000)
+          // this.downloadpdf()
+    }
 
-            source = document.getElementById('pdffromHtml').innerHTML, //$('#pdffromHtml')[0],
+    downloadpdf(){
+        // var pdf = new jsPDF('l', 'pt', 'letter'),
+        //     source = document.getElementById('pdffromHtml').innerHTML,
+        //     specialElementHandlers = {
+        //         // element with id of "bypass" - jQuery style selector
+        //         '#editor': function (element, renderer) {
+        //             // true = "handled elsewhere, bypass text extraction"
+        //             return true;
+        //         }
+        //     },
+        //     margins = {
+        //         top: 0,
+        //         bottom: 0,
+        //         left: 0,
+        //         width: 1341
+        //     };
+        //
+        //
+        // pdf.fromHTML(
+        //     source,
+        //     0,
+        //     0, {
+        //         'width': margins.width,
+        //         'elementHandlers': specialElementHandlers
+        //     }, function(disposal){
+        //         console.log(disposal);
+        //         pdf.save('Test.pdf');
+        //     }, margins);
 
-            // we support special element handlers. Register them with jQuery-style
-            // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-            // There is no support for any other type of selectors
-            // (class, of compound) at this time.
-            specialElementHandlers = {
-                // element with id of "bypass" - jQuery style selector
-                '#bypassme': function (element, renderer) {
-                    // true = "handled elsewhere, bypass text extraction"
-                    return true
-                }
-            },
-            margins = {
-                top: 80,
-                bottom: 60,
-                left: 40,
-                width: 522
-            };
-        // all coords and widths are in jsPDF instance's declared units
-        // 'inches' in this case
-        pdf.fromHTML(
-            source, // HTML string or DOM elem ref.
-            margins.left, // x coord
-            margins.top, { // y coord
-                'width': margins.width, // max width of content on PDF
-                'elementHandlers': specialElementHandlers
-            },
-
-            function (dispose) {
-                // dispose: object with X, Y of the last line add to the PDF
-                //          this allow the insertion of new lines after html
-                pdf.save('Test.pdf');
-            }, margins);
     }
 }

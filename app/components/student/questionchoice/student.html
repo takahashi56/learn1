@@ -5,7 +5,7 @@
             <div class="panel-heading m-b-30">
                 <h3 class="text-page m-l-15 m-t-15"><strong>Question</strong></h3>
             </div>
-            
+
             <form class="text-page text-left m-l-15 m-r-15">
                 <h4 class="m-b-30 m-t-30">
                     <strong>{{content.question}}</strong>
@@ -13,28 +13,35 @@
                 <div class="form-group">
                     <div class="radio-box m-t-20">
                         <label class="cr-styled" for="answer1">
-                            <input type="radio" name="answer" id="answer1" value="1" [ngModel]="{checked: checkedRadio == '1' }" (change)="checkedRadio = $event.target.value" (click)="chooseAnswer(1)">
+                          <input type="radio" name="answer" id="answer1" value="first" [ngModel]="{checked: checkedRadio == 'first'}" (ngModelChange)="checkedRadio = 'first'" (click)="chooseAnswer(1)">
                             <i class="fa"></i>
                             <strong class="m-l-10">{{content.answerA}}</strong>
                         </label>
                     </div>
                     <div class="radio-box m-t-20">
                         <label class="cr-styled" for="answer2">
-                            <input type="radio" name="answer" id="answer2" value="2" [ngModel]="{checked: checkedRadio == '2' }" (change)="checkedRadio = $event.target.value" (click)="chooseAnswer(2)">
+                            <input type="radio" name="answer" id="answer2" value="second" [ngModel]="{checked: checkedRadio == 'second'}" (ngModelChange)="checkedRadio = 'second'" (click)="chooseAnswer(2)">
+                            <i class="fa"></i>
+                            <strong class="m-l-10">{{content.answerB}}</strong>
+                        </label>
+                    </div>
+                    <div class="radio-box m-t-20 sr-only">
+                        <label class="cr-styled" for="answer2">
+                            <input type="radio" name="answer" id="answer2" value="fourth" [ngModel]="{checked: checkedRadio == 'fourth'}" (ngModelChange)="checkedRadio = 'fourth'" (click)="chooseAnswer(0)">
                             <i class="fa"></i>
                             <strong class="m-l-10">{{content.answerB}}</strong>
                         </label>
                     </div>
                     <div class="radio-box m-t-20">
                         <label class="cr-styled" for="answer3">
-                            <input type="radio" name="answer" id="answer3" value="3" [ngModel]="{checked: checkedRadio == '3' }" (change)="checkedRadio = $event.target.value" (click)="chooseAnswer(3)">
+                            <input type="radio" name="answer" id="answer3" value="third" [ngModel]="{checked: checkedRadio == 'third'}" (ngModelChange)="checkedRadio = 'third'" (click)="chooseAnswer(3)">
                             <i class="fa"></i>
                             <strong class="m-l-10">{{content.answerC}}</strong>
                         </label>
                     </div>
 
                 </div>
-                    
+
             </form>
             <div class="white-space m-t-30 m-b-30">
                 <div class="row">
@@ -61,5 +68,5 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
 </section>

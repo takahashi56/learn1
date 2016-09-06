@@ -15,11 +15,11 @@ exports.login = function(req, res) {
 	data.text = "This email is not valid. Please try again.";
 
 	Admin.findOne({email: email}, function(err, user){
-		if(user == null){ 
+		if(user == null){
 			Tutor.findOne({email: email}, function(err, tutor){
 				if(tutor == null) {
 					res.send(data);
-					return console.error(err);				
+					return console.error(err);
 				}else{
 					if(tutor.authenticate(pwd)){
 						action = 2;
@@ -31,12 +31,13 @@ exports.login = function(req, res) {
 					}else{
 						res.send(data);
 					}
-				}	
-			})	
-		}else{	
+				}
+			})
+		}else{
 			if(user.authenticate(pwd)){
 				action = 1;
 				data.action = "/home/admin/main";
+				data._id = user._id;
 				data.role = 0;
 				data.success = true;
 				return res.send(data);
@@ -51,7 +52,7 @@ exports.login = function(req, res) {
 	// 		Tutor.findOne({email: email}, function(err, tutor){
 	// 			if(tutor == null) {
 	// 				res.send(data);
-	// 				return console.error(err);				
+	// 				return console.error(err);
 	// 			}
 	// 			if(tutor.authenticate(pwd)){
 	// 				action = 2;
@@ -62,10 +63,10 @@ exports.login = function(req, res) {
 	// 			}else{
 	// 				res.send(data);
 	// 			}
-	// 		})	
-	// 	}	
+	// 		})
+	// 	}
 	// }, 2000);
-	
+
 }
 
 exports.studentLogin = function(req, res) {
@@ -84,14 +85,13 @@ exports.studentLogin = function(req, res) {
 			data.role = 2;
 			data.success = true;
 			data.id = student._id;
-			res.send(data)	
+			res.send(data)
 		}else{
 			res.send(data);
 		}
-	})	
+	})
 }
 
 exports.resetPassword = function(req, res) {
 	res.send({data: "reset password"});
 }
-

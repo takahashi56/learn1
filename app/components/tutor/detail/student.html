@@ -13,8 +13,8 @@
             <div class="tab-pane" id="profile">
                 <h3 class="text-page m-b-10 m-l-10 m-t-0">
                     <strong>Student Details</strong>
-                </h3>              
-                <hr class="m-b-30">     
+                </h3>
+                <hr class="m-b-30">
                 <div class=" form">
                     <form class="cmxform form-horizontal tasi-form"  [ngFormModel]="StudentDetailForm" (submit)="AddStudent(StudentDetailForm.value)">
                         <div class="container-fluid">
@@ -32,7 +32,7 @@
                                                 <input class=" form-control" id="fname" name="name" type="text" ngControl="firstname"  placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class=""  [ngClass]="{ 'has-error' : !lastname.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
@@ -44,7 +44,7 @@
                                                 <input class=" form-control" id="lname" name="name" type="text" ngControl="lastname"  placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                                             <input class=" form-control" id="password" name="name" type="password" ngControl="verifiedpassword"  placeholder="">
                                         </div>
                                     </div>
-                                </div>    
+                                </div>
                             </div>
                             <div class="form-group" >
                                 <div class="col-lg-2">
@@ -132,7 +132,7 @@
                             </div>
                         </div>
                     </form>
-                </div>                                   
+                </div>
             </div>
             <div class="tab-pane active" id="courses">
                 <div class="table-responsive">
@@ -150,10 +150,10 @@
                             <td><strong>{{course.coursetitle}}</strong></td>
                             <td class="text-center"><strong>{{getCompletedStatus(course.isCompleted)}}</strong></td>
                             <td class="text-center"><strong>{{course.score}}%</strong></td>
-                            <td class="text-center"><strong>{{course.completedAt}}</strong></td>
+                            <td class="text-center"><strong>{{course.completedAt == null ? '' : course.completedAt | slice:0:10}}</strong></td>
                             <td class="text-center"><a href="javascript:void(0)" target="_blank" (click)="gotoCertificate(course)"><strong class="text-page">View</strong></a></td>
-                            
-                        </tr>                        
+
+                        </tr>
                     </table>
                 </div>
                             <div class="white-space m-t-30 m-b-30">
@@ -171,7 +171,7 @@
                                 </div>
                             </div>
                         </div>
-                </div>                                   
+                </div>
             </div>
-        
+
 </section>

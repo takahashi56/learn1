@@ -23,7 +23,7 @@ export class TutorMain implements OnInit {
 	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router) {
 		this.tutor_id = this._session.getCurrentId()
 		var role=this._session.getCurrentRole();
-		
+
 		// console.log(tutor_id);
 		// console.log(role);
 
@@ -36,15 +36,15 @@ export class TutorMain implements OnInit {
 
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 		this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
-			this.courseList = res;	
+			this.courseList = res;
 			console.log(res);
 		});
 		this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
-			this.studentList = res;	
+			this.studentList = res;
 			this._session.setItem('TutorAllStudent', JSON.stringify(res))
 		});
 
-		
+
 		console.log(this._location.path())
 	}
 
@@ -112,15 +112,15 @@ export class TutorMain implements OnInit {
 			console.log(res);
 			this._router.navigateByUrl('/home/tutor/main');
 			this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
-				this.studentList = res;	
+				this.studentList = res;
 				this._session.setItem('TutorAllStudent', JSON.stringify(res))
 			});
 
 			this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
-				this.courseList = res;	
+				this.courseList = res;
 				console.log(res);
 			});
-			
+
 		});;
 	}
 
@@ -139,12 +139,12 @@ export class TutorMain implements OnInit {
 			this._router.navigateByUrl('/home/tutor/main');
 
 			this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
-				this.studentList = res;	
+				this.studentList = res;
 				this._session.setItem('TutorAllStudent', JSON.stringify(res))
 			});
 
 			this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
-				this.courseList = res;	
+				this.courseList = res;
 				console.log(res);
 			});
 		});
@@ -165,19 +165,19 @@ export class TutorMain implements OnInit {
 	          resultSet.push(columns[i].split(' '));
 	      }
 	      self._tutorService.addStudentCSV({result:resultSet, tutor_id: self._session.getCurrentId()}).subscribe((res)=>{
-	 				this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
-						this.studentList = res;	
-						this._session.setItem('TutorAllStudent', JSON.stringify(res))
+	 				self._tutorService.getAllStudents({tutor_id: self.tutor_id}).subscribe((res)=>{
+						self.studentList = res;
+						self._session.setItem('TutorAllStudent', JSON.stringify(res))
 					});
 
-					this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
-						this.courseList = res;	
+					self._tutorService.getAllCourses({tutor_id: self.tutor_id}).subscribe((res)=>{
+						self.courseList = res;
 						console.log(res);
 					});
 	 		})
 	 	}
 
-	    
+
 	}
 
 	assignCourseToStudent(){
@@ -193,7 +193,7 @@ export class TutorMain implements OnInit {
 	}
 
 	doLogin(form: any) {
-		
+
 	}
 
 	checkStudent(event, object){

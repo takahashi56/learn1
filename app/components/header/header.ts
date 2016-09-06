@@ -16,6 +16,7 @@ export class Header {
 
 	constructor(private _session: Session, private router:Router) {
 		this.username = _session.getCurrentUsername();
+		console.log(this.username);
 	}
 
 	doLogout(){

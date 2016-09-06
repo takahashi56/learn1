@@ -2,17 +2,18 @@ import {Component} from 'angular2/core';
 import {Session} from '../../services/session';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {AuthService} from '../../services/authentication';
-import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common'
+import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
+import {Home} from '../home/home';
 
 @Component({
 	selector: 'login',
 	templateUrl: '/components/login/login.html',
 	providers: [Session,AuthService],
-	directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES]
+	directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES, Home]
 })
 export class Login {
 	actionPath: string = "";
-	text: string = ""; 
+	text: string = "";
 
 	LoginForm: ControlGroup;
 	username: Control;
@@ -37,7 +38,7 @@ export class Login {
 	doLogin(form: any) {
 		this.authFailure = false;
 		this.submitAttempt = true;
-		if (this.LoginForm.valid) {		
+		if (this.LoginForm.valid) {
 			var data = {
 				username: form.username,
 				password: form.password
@@ -51,11 +52,14 @@ export class Login {
 						if(res.role == 2){
 							this._session.setItem('MainStudentId', res.id);
 						}
-						this._router.navigate(['Home'])
+						console.log(res.action);
+						// this._router.navigate(['Home']);
+						console.log(this._router);
+						this._router.navigateByUrl('/home');
 					}else{
 						this.authFailure = true;
-					}					
-				});				
-		}			
+					}
+				});
+		}
 	}
 }

@@ -38,4 +38,8 @@ module.exports = function(app) {
 	app.post('/api/tutor/removestudent', function(req, res) {
 		tutorstudent.removeStudent(req, res);
 	});
+
+	app.post('/api/tutor/getlessonsnamebycourseid', function(req, res) {
+		tutorstudent.getLessonsNameByCourseId(req, res);
+	});
 }

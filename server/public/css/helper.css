@@ -199,6 +199,7 @@ header {
     font-weight: normal;
     cursor: pointer;
 }
+
 .cr-styled i {
     display: inline-block;
     height: 18px;
@@ -221,19 +222,21 @@ header {
 .cr-styled input[type=checkbox]:checked + i:before {
     content: "\f00c";
 }
+
 .cr-styled input[type=radio] + i {
     border-radius: 18px;
     font-size: 11px;
     line-height: 13px;
 }
 
-.cr-styled input[type=radio]:checked + i:before {
+.cr-styled input[type=radio]:checked +i:before {
     content: "\f111";
 }
 .cr-styled input:checked + i {
     border-color: #3bc0c3;
     color: #3bc0c3;
 }
+
 /* Icon-list (Used Icon-page only) */
 
 .icon-list div {
@@ -288,9 +291,9 @@ header {
 
 
 /* Only Mozila */
-@-moz-document url-prefix() { 
-    
-    .cr-styled i {
+@-moz-document url-prefix() {
+
+    .cr-styled span > i {
         padding-top: 0px;
     }
     label {

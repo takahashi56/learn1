@@ -2,6 +2,7 @@ import {Component, OnInit} from 'angular2/core';
 
 import {Router, Route, RouteConfig, RouterOutlet, ROUTER_DIRECTIVES} from 'angular2/router';
 import {Main} from './main/main';
+import {CanActivate} from 'angular2/router';
 import {AddCourse} from './add/course';
 import {AddLesson} from './add/lesson';
 import {AddOrganization} from './add/organization';
@@ -33,5 +34,5 @@ export class Admin {
 	constructor() {
 
 	}
-	
+
 }

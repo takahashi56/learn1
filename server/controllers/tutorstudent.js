@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 	Student = mongoose.model('Student'),
 	Course = mongoose.model('Course'),
 	Take = mongoose.model('Take'),
+	Lesson = mongoose.model('Lesson'),
 	encrypt = require('../utilities/encryption'),
 	csv = require('fast-csv');
 
@@ -97,7 +98,7 @@ exports.getAllCourses = function(req, res) {
 
 			})
   		});
-  		
+
   	})
 }
 
@@ -110,7 +111,7 @@ exports.addStudent = function(req, res) {
 		if(err) return console.error(err);
 
 		res.send({success: true});
-	})	
+	})
 }
 
 exports.addStudentCSV = function(req, res) {
@@ -178,9 +179,9 @@ exports.editStudent = function(req, res) {
 
 	Student.update({_id: student._id}, student, function(err, student){
 		if(err) return console.error(err);
-		
+
 		res.send({success: true});
-	})	
+	})
 }
 
 exports.deleteStudent = function(req, res) {
@@ -188,7 +189,7 @@ exports.deleteStudent = function(req, res) {
 }
 
 exports.setStudentByCourse = function(req, res){
-	var course_id = req.body.course_id, 
+	var course_id = req.body.course_id,
 		students_ids = req.body.ids;
 
 	console.log('student ids ' + JSON.stringify(students_ids));
@@ -200,7 +201,7 @@ exports.setStudentByCourse = function(req, res){
 			var confirm = takes.filter(function(x){return x.course_id == course_id});
 
 			console.log('confirm = ' + JSON.stringify(confirm));
-			
+
 			if(confirm.length == 0){
 				var data = {
 					student_id: id,
@@ -234,7 +235,7 @@ exports.getCoursesByStudentId = function(req, res){
 		takes.forEach(function(take){
 			Course.findOne({_id: take.course_id}, function(err, course){
 				if(err) return console.error(err);
-				
+
 				i++;
 
 				if(course != null){
@@ -244,8 +245,8 @@ exports.getCoursesByStudentId = function(req, res){
 						score: take.score,
 						completedAt: take.completedAt,
 						certificate: take.certificate,
-					}			
-					courses.push(data);		
+					}
+					courses.push(data);
 				}
 				if(i == takes.length){
 					res.send(courses);
@@ -277,20 +278,20 @@ exports.getStudentsByCourseId = function(req, res){
 	// 					certificate: take.certificate,
 	// 				}
 	// 				courses.push(data);
-	
+
 	// 				if(courses.length == takes.length){
 	// 					res.send(courses);
 	// 				}
 	// 			}
 	// 		})
 	// 	})
-	// })	
+	// })
 
 
 	Take.find({course_id: id},null, {sort: 'created_at'}, function(err, takes){
 		if(err) return console.error(err)
 		var courses = [];
-			
+
 		var count = 0, i=0;
 		takes.forEach(function(take){
 			Student.findOne({_id: take.student_id, tutor_id: tutor_id}, function(err, student){
@@ -305,14 +306,14 @@ exports.getStudentsByCourseId = function(req, res){
 						score: take.score,
 						completedAt: take.completedAt,
 						certificate: take.certificate,
-					}			
-					courses.push(data);		
+					}
+					courses.push(data);
 				}
 				if(i == takes.length){
 					res.send(courses);
 				}
 			})
-		})				
+		})
 	})
 }
 
@@ -329,4 +330,16 @@ exports.removeStudent = function(req, res){
 	})
 
 	res.send({success: true});
+}
+
+exports.getLessonsNameByCourseId = function (req, res) {
+	var course_id = req.body.course_id, data = [];
+	Lesson.find({coures_id: course_id}, function(err, lessons){
+
+		lessons.forEach(function(lesson){
+			data.push(lesson.name);
+		});
+
+		res.send({data: data});
+	})
 }

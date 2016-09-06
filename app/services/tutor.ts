@@ -93,4 +93,10 @@ export class TutorService {
 			return res.json();
 		})
 	}
+
+	getLessonsNameByCourseId(data){
+		return this._http.post(this.baseUrl + 'getlessonsnamebycourseid', JSON.stringify(data), HEADER).map((res) => {
+			return res.json();
+		})
+	}
 }

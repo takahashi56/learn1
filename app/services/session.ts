@@ -52,7 +52,7 @@ export class Session {
 
 	 getCurrentId(){
 	 	return localStorage.getItem('id');
-	 	
+
 	 }
 
 	 getCurrentUser(){
@@ -61,7 +61,7 @@ export class Session {
 	 	return {
 	 		username: username,
 	 		role: role,
-	 	}	
+	 	}
 	 }
 
 	 getCurrentUsername(){
@@ -69,6 +69,6 @@ export class Session {
 	 }
 
 	 getCurrentRole(){
-	 	return localStorage.getItem('role');
+	 	return parseInt(localStorage.getItem('role'));
 	 }
 }

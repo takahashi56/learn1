@@ -16,6 +16,7 @@ export class QuestionChoice implements OnInit {
 	answerNumber: number = 0;
 	checkedRadio: string = '0';
     iterator: any = [1,2,3];
+	checkedStatus: string = '';
 
 	@Input() content: any;
 	@Input() lessonname: string;
@@ -23,25 +24,35 @@ export class QuestionChoice implements OnInit {
 
 	@Output() gotoNextContent=new EventEmitter();
 	@Output() gotoPreviousContent=new EventEmitter();
-	
+
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
 
 	}
 
 	ngOnInit(){
+		this.checkedStatus = '<i class="fa"></i>';
 	}
 
 	chooseAnswer(n: number){
-		console.log(`checked radio before: ${this.checkedRadio}`)
-		this.checkedRadio = n.toString();
+		console.log(`checked radio before: ${this.checkedRadio}`);
+
+		switch(n){
+			case 1: this.checkedRadio = 'first'; break;
+			case 2: this.checkedRadio = 'second'; break;
+			case 3: this.checkedRadio = 'third'; break;
+			default: this.checkedRadio = ''; break;
+		}
+
 		this.answerNumber = n;
 		console.log(`checked radio after: ${this.checkedRadio}`)
 	}
 
 	gotoNext(){
 		console.log(`checked radio next before: ${this.checkedRadio}`)
-		if(this.answerNumber == 0) return false;
 
+		this.checkedRadio = 'fourth';
+
+		if(this.answerNumber == 0) return false;
 		console.log(this.content.trueNumber);
 		if(this.content.trueNumber == this.answerNumber){
 			var count = parseInt(this._session.getItem('rightQuestionCount'));
@@ -50,14 +61,14 @@ export class QuestionChoice implements OnInit {
 
 			this._session.setItem('rightQuestionCount', count);
 		}
-		this.checkedRadio = '0';
 		console.log(`checked radio next after: ${this.checkedRadio}`)
 		this.gotoNextContent.emit({});
 	}
 
 	gotoPrevious(){
-		this.checkedRadio = '0';
-		this.gotoPreviousContent.emit({});	
+		// this.changeChecked(null);
+		this.checkedRadio = 'fourth';
+		this.gotoPreviousContent.emit({});
 	}
-}
 
+}

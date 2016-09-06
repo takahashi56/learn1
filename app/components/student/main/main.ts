@@ -17,28 +17,30 @@ export class StudentMain implements OnInit {
 	studentId: string;
 
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
-		// var student_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
-		
-		// if(student_id == '' || parseInt(role) != 2){
-		// 	this._router.navigateByUrl('/login');
-		// }
-
-
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 		this.studentId = this._session.getItem('MainStudentId');
 		console.log(this.studentId);
+		var role = this._session.getCurrentRole();
+		if(role == 2){
+			this._studentService.getCourseListById(this.studentId).subscribe((res)=>{
+				this.courseList = res;
+				console.log(res);
+			})
+
+			this._studentService.getStudentInfo(this.studentId).subscribe((res)=>{
+				this.studentInfo = res;
+			})
+		}else{
+				console.log('not student');
+				var url = this._session.getItem('homeUrl');
+				console.log(url);
+				// this._router.navigateByUrl(url);
+		}
 	}
 
 	ngOnInit(){
-		this._studentService.getCourseListById(this.studentId).subscribe((res)=>{
-			this.courseList = res;
-			console.log(res);
-		})
 
-		this._studentService.getStudentInfo(this.studentId).subscribe((res)=>{
-			this.studentInfo = res;
-		})
-	}	
+	}
 
 	gotoLessonList(course){
 		this._session.setItem('selectedCourse', JSON.stringify(course));
@@ -71,7 +73,7 @@ export class StudentMain implements OnInit {
 	}
 
 	private titleCase(str: string) : string {
-	 	return str.split(' ').map(function(val){ 
+	 	return str.split(' ').map(function(val){
 	    	return val.charAt(0).toUpperCase() + val.substr(1).toLowerCase();
 	  	}).join(' ');
 	}

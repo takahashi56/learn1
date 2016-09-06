@@ -23,12 +23,17 @@ export class Main implements OnInit {
 
 	constructor(private _session: Session, private _adminService: AdminService, private _router: Router) {
 		// var admin_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
-		
+
 		// if(admin_id == '' || parseInt(role) != 0){
 		// 	this._router.navigate(['Login']);
 		// }
+
+		this._adminService.getAllCourses().subscribe((res) => {
+			this.courseList = res;
+		});
+
 		this._adminService.getAllOrgs().subscribe((res)=>{
-			this.orgList = res;	
+			this.orgList = res;
 		})
 	}
 
@@ -48,9 +53,7 @@ export class Main implements OnInit {
 	}
 
 	ngOnInit(){
-		this._adminService.getAllCourses().subscribe((res) => {  
-			this.courseList = res;
-		});
+
 	}
 
 	gotoAddCourse(){

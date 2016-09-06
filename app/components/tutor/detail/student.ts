@@ -27,9 +27,9 @@ export class DetailTutorStudent {
 	courseList: any;
 	submitAttempt: boolean = false;
 
-	
+
 	constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
-		this.student = JSON.parse(this._session.getItem('TutorStudent'));	
+		this.student = JSON.parse(this._session.getItem('TutorStudent'));
 		this.allStudentData = JSON.parse(this._session.getItem('TutorAllStudent'));
 		console.log(this.allStudentData);
 		var id = this.student.student_id;
@@ -74,17 +74,17 @@ export class DetailTutorStudent {
 	getValue(form: any){
 		if(form.firstname == "" || form.lastname == "") return '';
 
-		var firstname = form.firstname, 
+		var firstname = form.firstname,
 			lastname = form.lastname,
 			username = firstname.charAt(0).toLowerCase() + lastname.toLowerCase(),
 			i = 0;
 
 		this.allStudentData.forEach(function(student){
 			if(student.username.includes(username)) i++;
-		})	
+		})
 		if(i != 0) username = username + i;
-		
-		(<Control>this.StudentDetailForm.controls['username']).updateValue(username);			
+
+		(<Control>this.StudentDetailForm.controls['username']).updateValue(username);
 	}
 
 	matchedPassword(form: any){
@@ -94,7 +94,7 @@ export class DetailTutorStudent {
 			return true;
 		}else{
 			return false;
-		}	
+		}
 
 	}
 
@@ -115,7 +115,7 @@ export class DetailTutorStudent {
 			};
 			var flag = JSON.parse(this._session.getItem('editORadd'))
 			if(flag.flag) data["_id"] = this.student._id;
-			
+
 			this._tutorService.addStudent(data, flag.flag)
 				.subscribe((res) => {
 					console.log("aaaa")
@@ -128,12 +128,22 @@ export class DetailTutorStudent {
 	}
 
 	private titleCase(str: string) : string {
-	 	return str.split(' ').map(function(val){ 
+	 	return str.split(' ').map(function(val){
 	    	return val.charAt(0).toUpperCase() + val.substr(1).toLowerCase();
 	  	}).join(' ');
 	}
 
 	gotoCertificate(course: any){
-		this._router.navigateByUrl('/certificate');
+		this._tutorService.getLessonsNameByCourseId({course_id: course.course_id}).subscribe((res)=>{
+			var	data = {
+				couresname: course.coursetitle,
+				studentname: `${this.student.firstName} ${this.student.lastName}`,
+				score: course.score,
+				completed_at: course.completedAt,
+				lessons: res.data.join(',')
+			}
+			this._session.setItem('certificate', JSON.stringify(data));
+			this._router.navigateByUrl('/certificate');
+		});
 	}
 }
