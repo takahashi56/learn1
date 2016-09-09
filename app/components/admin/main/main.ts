@@ -19,7 +19,8 @@ export class Main implements OnInit {
 	contentsData: any = [];
 	selectOrg: any = [];
 	selectCourse: any = [];
-
+	showRemoveOrg: boolean = false;
+	showRemoveCourse: boolean = false;
 
 	constructor(private _session: Session, private _adminService: AdminService, private _router: Router) {
 		// var admin_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
@@ -73,7 +74,7 @@ export class Main implements OnInit {
 		if(this.selectCourse.length == 0) return false;
 		let instance = this;
 		console.log(this.selectCourse);
-
+		this.showRemoveCourse = false;
 		this._adminService.removeCourseById(this.selectCourse).subscribe((res)=>{
 			instance.selectCourse.map((id) => {
 				instance.courseList = instance.courseList.filter((course) => {
@@ -87,7 +88,7 @@ export class Main implements OnInit {
 		if(this.selectOrg.length == 0) return false;
 		let instance = this;
 		console.log(this.selectOrg);
-
+		this.showRemoveOrg = false;
 		this._adminService.removeOrgById(this.selectOrg).subscribe((res)=>{
 			instance.selectOrg.map(function(id){
 				instance.orgList = instance.orgList.filter(function(org){
@@ -126,4 +127,19 @@ export class Main implements OnInit {
 		console.log(this.selectOrg);
 	}
 
+	beforeRemoveOrg(){
+		if(this.selectOrg.length == 0){
+			this.showRemoveOrg = false;
+			return false;
+		}
+		this.showRemoveOrg = true;
+	}
+
+	beforeRemoveCourse(){
+		if(this.selectCourse.length == 0){
+			this.showRemoveCourse = false;
+			return false;
+		}
+		this.showRemoveCourse = true;
+	}
 }

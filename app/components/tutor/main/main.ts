@@ -162,19 +162,20 @@ export class TutorMain implements OnInit {
 	      // as an example i am just splitting strings by spaces
 	      var columns = myReader.result.split(/\r\n|\r|\n/g);
 	      for (var i = 0; i < columns.length; i++) {
-	          resultSet.push(columns[i].split(' '));
+						console.log(columns[i]);
+						if(columns[i].split(',').length < 3) continue;
+	          resultSet.push(columns[i].split(']'));
 	      }
+				console.log(resultSet);
 	      self._tutorService.addStudentCSV({result:resultSet, tutor_id: self._session.getCurrentId()}).subscribe((res)=>{
-	 				self._tutorService.getAllStudents({tutor_id: self.tutor_id}).subscribe((res)=>{
+
+					// self._router.navigateByUrl('/home/tutor/main');
+
+					self._tutorService.getAllStudents({tutor_id: self.tutor_id}).subscribe((res)=>{
 						self.studentList = res;
 						self._session.setItem('TutorAllStudent', JSON.stringify(res))
 					});
-
-					self._tutorService.getAllCourses({tutor_id: self.tutor_id}).subscribe((res)=>{
-						self.courseList = res;
-						console.log(res);
-					});
-	 		})
+				})
 	 	}
 
 

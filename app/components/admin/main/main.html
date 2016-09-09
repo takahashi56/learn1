@@ -13,7 +13,7 @@
             <div class="tab-pane active" id="courses">
                 <div class="text-right m-b-30">
                     <a class="btn btn-primary w-sm" (click)="gotoAddCourse()" >Add Course</a>
-                    <a class="btn btn-primary w-sm" (click)="removeCourse()" >Remove Course</a>
+                    <a class="btn btn-primary w-sm" (click)="beforeRemoveCourse()"  data-toggle="modal" data-target="#remove-course">Remove Course</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table text-page">
@@ -40,14 +40,14 @@
                             <td><strong>{{course.student}}</strong></td>
                             <td class="text-right"><a  class="btn w-xs btn-sm btn-primary" (click)="editCourse(course)">Edit</a></td>
                         </tr>
-                        
+
                     </table>
                 </div>
             </div>
             <div class="tab-pane" id="organization">
                 <div class="text-right m-b-30">
                     <a  class="btn btn-primary w-sm" [routerLink]="['AdminAddOrganization']">Add Organization</a>
-                    <a  class="btn btn-primary w-sm" (click)="removeOrg()">Remove Organization</a>
+                    <a  class="btn btn-primary w-sm" (click)="beforeRemoveOrg()" data-toggle="modal" data-target="#remove-org">Remove Organization</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table text-page">
@@ -84,5 +84,58 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 </section>
+
+
+<div *ngIf="showRemoveCourse" id="remove-course" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Remove Course</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>Are you sure to remove this Course? </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeCourse()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showRemoveOrg" id="remove-org" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Remove Organization</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>Are you sure to remove this organization? </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeOrg()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

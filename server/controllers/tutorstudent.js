@@ -45,20 +45,17 @@ exports.getAllCourses = function(req, res) {
 
   		courses.forEach(function (course) {
 
-            //
-			// if(main_data.length == courses.length){
-			// 	res.send(main_data);
-			// }
   			Take.find({course_id: course._id}, function(err, takes){
   				if(err) return console.error(err)
 
-  				var count = 0, i=0;
+  				var count = 0, i=0, past = 0;;
                 if(takes.length == 0){
                     i++;
                     var data1 = {
                         course_id: course._id,
                         coursetitle: course.name,
                         enrolled: 0,
+												past: 0,
                         coursedescription: course.description
                     }
                     main_data.push(data1);
@@ -75,7 +72,8 @@ exports.getAllCourses = function(req, res) {
                             i++;
                             console.log(i);
                             console.log(takes.length);
-                            if(student != null) count++;
+                            if(student != null && take.score >= 70) past++;
+														if(student != null && take.score < 70) count++;
 
                             if(i == takes.length){
                                 console.log(course);
@@ -83,6 +81,7 @@ exports.getAllCourses = function(req, res) {
                                     course_id: course._id,
                                     coursetitle: course.name,
                                     enrolled: count,
+																		past: past,
                                     coursedescription: course.description
                                 }
                                 main_data.push(data);
@@ -115,12 +114,13 @@ exports.addStudent = function(req, res) {
 }
 
 exports.addStudentCSV = function(req, res) {
-  	var students = req.body.result, tutor_id=req.body.tutor_id, count=false;
-  	console.log(students);
+  	var students = req.body.result, tutor_id=req.body.tutor_id, count=false, ii=0, flag = true;
 
   	students.forEach(function (studentcsv) {
+			ii++;
   		csv.fromString(studentcsv[0], {header: true})
   			.on("data", function(data){
+					console.log(data);
   				var student = {
   					firstName: data[0],
   					lastName: data[1],
@@ -139,37 +139,22 @@ exports.addStudentCSV = function(req, res) {
   					});
   					if(i != 0) student.username = data[4] + i;
   					Student.create(student, function(err, std){
-  						if(err) return console.log(err);
+							if(err) return console.log(err);
   						count=true;
-  						// res.send({success: true});
+
+							if(ii == students.length && flag == true){
+									console.log("++++++++++++++++++++++++++++++++++++++++++++++++++")
+									flag = false
+									res.send({success: true});
+
+									return false;
+							}
   					})
   				})
   			})
   	});
-  	// console.log(count)
-  	// console.log(students.length)
-  	// if(count){
-  	// 	Student.find({}, function(err, stds){
-	  // 		if(err) return console.error(err)
-	  // 		var students_copy = [];
 
-	  // 		stds.forEach(function (st) {
-	  // 			var s = {
-	  // 				student_id: st._id,
-	  // 				username: st.username,
-	  // 				firstName: st.firstName,
-	  // 				lastName: st.lastName,
-	  // 				DOB: st.DOB,
-	  // 				hashed_pwd: st.hashed_pwd,
-	  // 				isSelected: false,
-	  // 			};
-	  // 			students_copy.push(s);
-	  // 		});
-
-	  // 		res.send(students_copy);
-	  // 	})
-  	// }
-  	res.send({success: true});
+		return false;
 }
 
 exports.editStudent = function(req, res) {

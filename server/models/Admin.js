@@ -26,10 +26,11 @@ module.exports = function() {
 
     next();
   });
-  
+
 
   adminSchema.methods = {
-    authenticate: function(pwdToMatch) {      
+    authenticate: function(pwdToMatch) {
+      console.log(encrypt.hashPwd(this.salt, pwdToMatch))     
       return encrypt.hashPwd(this.salt, pwdToMatch) == this.hashed_pwd;
     },
     hasRole: function(role) {

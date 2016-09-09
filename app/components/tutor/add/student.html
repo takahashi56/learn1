@@ -5,7 +5,7 @@
             <div class="panel-heading">
                 <h3 class="text-page m-l-15 m-t-15"><strong>Student Details</strong></h3>
             </div>
-            
+
             <div class="panel-body">
                 <div class=" form">
                     <form class="cmxform form-horizontal tasi-form"  [ngFormModel]="StudentForm" (submit)="AddStudent(StudentForm.value)">
@@ -21,10 +21,10 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="fname" name="name" type="text" ngControl="firstname"  placeholder="student's first name" (blur)="getValue(StudentForm.value)">
+                                                <input class=" form-control" id="fname" name="name" type="text" ngControl="firstname"  placeholder="irst Name" (blur)="getValue(StudentForm.value)">
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class=""  [ngClass]="{ 'has-error' : !lastname.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
@@ -33,10 +33,10 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="lname" name="name" type="text" ngControl="lastname"  placeholder="student's last name" (blur)="getValue(StudentForm.value)">
+                                                <input class=" form-control" id="lname" name="name" type="text" ngControl="lastname"  placeholder="Last Name" (blur)="getValue(StudentForm.value)">
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username"  placeholder="student's user id" readonly >
+                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username"  placeholder="Username(logon name)" readonly >
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                                             <input class=" form-control" id="text" name="name" type="text" ngControl="verifiedpassword"  placeholder="">
                                         </div>
                                     </div>
-                                </div>    
+                                </div>
                             </div>
                             <div class="form-group" >
                                 <div class="col-lg-2">
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="dob" name="name" type="text" ngControl="phone" maxlength="20" size="20" placeholder="student's phone number" (keyup)="onKey($event)" >
+                                        <input class=" form-control" id="dob" name="name" type="text" ngControl="phone" maxlength="20" size="20" placeholder="Telephone Number (optional)" (keyup)="onKey($event)" >
                                     </div>
                                 </div>
                             </div>
@@ -128,5 +128,5 @@
             </div>
         </div>
     </div>
-        
+
 </section>
