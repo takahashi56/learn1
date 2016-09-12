@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 	Admin = mongoose.model('Admin'),
 	adminLogin = require('./adminlogin'),
 	encrypt = require('../utilities/encryption'),
-	nodemailer = require('nodemailer');
+	nodemailer = require('nodemailer'),
+	smtpTransport = require('nodemailer-smtp-transport');
 
 
 exports.login = function(req, res) {
@@ -123,10 +124,15 @@ exports.forgetpwd = function(req, res){
 			    subject: 'Hello ✔', // Subject line
 			    text: 'Hello world 🐴', // plaintext body
 			    html: mailContent // html body
-			},
-			transporter = nodemailer.createTransport(smtpConfig);
-
-			transporter.sendMail(mailOptions, function(error, info){
+			}
+			,transport = nodemailer.createTransport(smtpTransport({
+			    service: 'gmail',
+			    auth: {
+			        user: 'jlee021199@gmail.com', // my mail
+			        pass: 'newFirst100'
+			    }
+			}));
+			transport.sendMail(mailOptions, function(error, info){
 			    if(error){
 			        return console.log(error);
 			    }
