@@ -28,6 +28,8 @@
     "jade": "^1.11.0",
     "moment": "^2.12.0",
     "mongoose": "^4.4.7",
+    "nodemailer": "^2.6.0",
+    "nodemailer-smtp-transport": "^2.7.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "primeng": "^1.0.0-beta.12",

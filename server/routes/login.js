@@ -10,6 +10,14 @@ module.exports = function(app) {
 			login.login(req, res);
 		}else{
 			return login.studentLogin(req, res);
-		}		
+		}
 	});
+
+	app.post('/api/login/forgetpwd', function(req, res){
+		login.forgetpwd(req, res);
+	})
+
+	app.post('/api/login/resetpwd', function(req, res){
+		login.resetPwd(req, res);
+	})
 }

@@ -2142,3 +2142,6 @@ input.alert-page{
 .bottom {
 	padding-top: 10px;
 }
+.form_pwd {
+  margin-bottom: 30px !important;
+}

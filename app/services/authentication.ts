@@ -21,4 +21,18 @@ export class AuthService {
 				return	res.json();
 			});
 	}
+
+  forgetpwd(data){
+    return this._http.post(this.loginUrl + '/forgetpwd', JSON.stringify(data), HEADER)
+			.map((res) => {
+				return res.json();
+			})
+  }
+
+  resetpwd(data){
+    return this._http.post(this.loginUrl + '/resetpwd', JSON.stringify(data), HEADER)
+			.map((res) => {
+				return res.json();
+			})
+  }
 }

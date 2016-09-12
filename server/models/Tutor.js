@@ -9,7 +9,7 @@ module.exports = function() {
     salt: {type: String, required: '{PATH} is required!'},
     hashed_pwd: {type: String, required: '{PATH} is required!'},
     organization: String,
-    department: String, 
+    department: String,
     phone: String,
     email: {type: String, required: '{PATH} is required!', unique: true},
     created_at: Date,
@@ -37,6 +37,9 @@ module.exports = function() {
     },
     hasRole: function(role) {
       return this.roles.indexOf(role) > -1;
+    },
+    getHashPwd: function(password) {
+      return encrypt.hashPwd(this.salt, password);
     }
   };
 

@@ -4,7 +4,9 @@ var mongoose = require('mongoose'),
 	Tutor = mongoose.model('Tutor'),
 	Admin = mongoose.model('Admin'),
 	adminLogin = require('./adminlogin'),
-	encrypt = require('../utilities/encryption');
+	encrypt = require('../utilities/encryption'),
+	nodemailer = require('nodemailer');
+
 
 exports.login = function(req, res) {
 	var email = req.body.username,
@@ -92,6 +94,61 @@ exports.studentLogin = function(req, res) {
 	})
 }
 
-exports.resetPassword = function(req, res) {
-	res.send({data: "reset password"});
+exports.forgetpwd = function(req, res){
+	var email = req.body.email,
+			data = {};
+
+	Tutor.findOne({email: email}, function(err, tutor){
+		if(tutor == null) {
+			data = {fail: true};
+			res.send(data);
+			return console.error(err);
+		}else{
+			data = {success: true};
+			res.send(data);
+
+			var smtpConfig = {
+			    host: 'smtp.gmail.com',
+			    port: 465,
+			    secure: true, // use SSL
+			    auth: {
+			        user: 'jlee021199@gmail.com',
+			        pass: 'newFirst100'
+			    }
+			},
+			mailContent = 'You can set your password again. please follow this url <br/> The url is <a href="'+ req.baseUrl + '/#/resetpwd" >Reset the password </a> ',
+			mailOptions = {
+			    from: 'jlee021199@gmail.com', // sender address
+			    to: 'chrisbrownapple001@gmail.com', // list of receivers
+			    subject: 'Hello ✔', // Subject line
+			    text: 'Hello world 🐴', // plaintext body
+			    html: '<b>Hello world 🐴</b>' // html body
+			},
+			transporter = nodemailer.createTransport(smtpConfig);
+
+			transporter.sendMail(mailOptions, function(error, info){
+			    if(error){
+			        return console.log(error);
+			    }
+			    console.log('Message sent: ' + info.response);
+			});
+		}
+	});
+}
+
+exports.resetPwd = function(req, res){
+	var password = req.body.password,
+			email = req.body.email,
+			data = {};
+	Tutor.findOne({email: email}, function(err, tutor){
+		if(err) return console.error(err);
+
+		tutor.hashed_pwd = tutor.getHashPwd(password);
+		tutor.save();
+
+		data = {success: true};
+
+		res.send(data);
+	});
+
 }
