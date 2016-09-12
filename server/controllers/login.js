@@ -106,8 +106,8 @@ exports.forgetpwd = function(req, res){
 		}else{
 			data = {success: true};
 			res.send(data);
-
-			var smtpConfig = {
+			var fullUrl = req.protocol + '://' + req.get('host'),
+			smtpConfig = {
 			    host: 'smtp.gmail.com',
 			    port: 465,
 			    secure: true, // use SSL
@@ -116,13 +116,13 @@ exports.forgetpwd = function(req, res){
 			        pass: 'newFirst100'
 			    }
 			},
-			mailContent = 'You can set your password again. please follow this url <br/> The url is <a href="'+ req.baseUrl + '/#/resetpwd" >Reset the password </a> ',
+			mailContent = 'You can set your password again. please follow this url <br/> The url is <a href="'+ fullUrl + '/#/resetpwd" >Reset the password </a> ',
 			mailOptions = {
 			    from: 'jlee021199@gmail.com', // sender address
 			    to: 'chrisbrownapple001@gmail.com', // list of receivers
 			    subject: 'Hello ✔', // Subject line
 			    text: 'Hello world 🐴', // plaintext body
-			    html: '<b>Hello world 🐴</b>' // html body
+			    html: mailContent // html body
 			},
 			transporter = nodemailer.createTransport(smtpConfig);
 
