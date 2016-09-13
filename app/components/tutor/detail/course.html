@@ -13,8 +13,8 @@
             <div class="tab-pane" id="profile">
                 <h3 class="text-page m-b-10 m-l-10 m-t-0">
                     <strong>Course Detail</strong>
-                </h3>              
-                <hr class="m-b-30">     
+                </h3>
+                <hr class="m-b-30">
                 <div class=" form">
                     <form class="cmxform form-horizontal tasi-form" id="commentForm" method="get" action="#" novalidate="novalidate">
                         <div class="container-fluid">
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </form>
-                </div>                                   
+                </div>
             </div>
             <div class="tab-pane active" id="students">
                 <div class="table-responsive">
@@ -78,10 +78,10 @@
                             <td><strong>{{student.firstName + " " + student.lastName}}</strong></td>
                             <td class="text-center"><strong>{{getComplete(student.isCompleted)}}</strong></td>
                             <td class="text-center"><strong>{{student.score}}%</strong></td>
-                            <td class="text-center"><strong>{{student.completedAt}}</strong></td>
+                            <td class="text-center"><strong>{{student.completedAt == null ? '' : student.completedAt | slice:0:10}}</strong></td>
                             <td class="text-center"><a href="#"><strong class="text-page">View</strong></a></td>
-                            
-                        </tr>                        
+
+                        </tr>
                     </table>
                 </div>
                             <div class="white-space m-t-30 m-b-30">
@@ -99,7 +99,7 @@
                                 </div>
                             </div>
                         </div>
-                </div>                                   
+                </div>
             </div>
-        
+
 </section>
