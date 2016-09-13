@@ -1,6 +1,6 @@
 
 <form [ngFormModel]="contentForm">
-    <div *ngIf="videoOrQuestion"> 
+    <div *ngIf="videoOrQuestion">
         <div class="single">
             <hr class="m-t-20 m-b-25">
             <div class="container-fluid">
@@ -36,7 +36,7 @@
 
                 <div class="m-l-5 m-r-5">
                     <div class="row">
-                        
+
                         <div class="col-xs-12 text-right">
                            <span (click)="removeContent()" class="remove btn btn-primary m-b-10 w-sm m-l-10">Remove</span>
                             <span (click)="addQuestionOrVideo(contentForm.value, false )" class="add-question btn btn-primary m-b-10 w-sm m-l-10">Add Question</span>
@@ -44,10 +44,10 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
 	</div>
-	
+
     <div *ngIf="!videoOrQuestion">
     	<div class="single">
             <hr class="m-t-20 m-b-25">
@@ -60,18 +60,18 @@
                         <div class="col-sm-4 col-md-3 col-lg-2">
                             <label class="cr-styled text-page">
                                 <strong class="m-r-5">Multyple Choice</strong>
-                                <input type="radio" name="multiChoice" value="1" class="r-question multipleChoice" (click)="choiceChange(true)" [checked] = "singleOrMulti == true" (blur)="blurChange(contentForm.value)"> 
+                                <input type="radio" name="multiChoice" value="1" class="r-question multipleChoice" (click)="choiceChange(true)" [checked] = "singleOrMulti == true" (blur)="blurChange(contentForm.value)">
                                 <i class="fa"></i>
                             </label>
                         </div>
                         <div class="col-sm-4 col-md-3 col-lg-2">
                             <label class="cr-styled text-page">
                                 <strong class="m-r-5">Text Response</strong>
-                                <input type="radio"  name="multiChoice" value="0" (click)="choiceChange(false)" [checked] = "singleOrMulti == false" class="r-question textResponce"> 
+                                <input type="radio"  name="multiChoice" value="0" (click)="choiceChange(false)" [checked] = "singleOrMulti == false" class="r-question textResponce">
                                 <i class="fa"></i>
                             </label>
                         </div>
-                        
+
                     </div> <!-- form-group -->
                 </div>
                 <div class="form-group">
@@ -100,8 +100,8 @@
                                                 <input class="form-control alert alert-page text-page answerA" role="alert" ngControl="answerA" value="" (blur)="blurChange(contentForm.value)">
                                             </div>
                                             <label class="cr-styled">
-                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="1" (click)="choiceAnswer(1)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 1">
-                                                <i class="fa"></i> 
+                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="1" (click)="choiceAnswer(contentForm.value, 1)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 1">
+                                                <i class="fa"></i>
                                             </label>
                                         </div>
                                     </div>
@@ -118,8 +118,8 @@
                                                 <input class="form-control alert alert-page text-page answerB" role="alert" value="" ngControl="answerB" (blur)="blurChange(contentForm.value)">
                                             </div>
                                             <label class="cr-styled">
-                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="2" (click)="choiceAnswer(2)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 2">
-                                                <i class="fa"></i> 
+                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="2" (click)="choiceAnswer(contentForm.value ,2)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 2">
+                                                <i class="fa"></i>
                                             </label>
                                         </div>
                                     </div>
@@ -134,10 +134,10 @@
                                         <div class="m-l-10 m-r-10 answer-section">
                                             <div [ngClass]="{ 'has-error' : !answerC.valid && submitAttempt }">
                                                 <input class="form-control alert alert-page text-page answerC" role="alert" value="" ngControl="answerC" (blur)="blurChange(contentForm.value)">
-                                            </div>    
+                                            </div>
                                             <label class="cr-styled" >
-                                                <input type="radio"  name="choosenAnswer" class="multipleChoiceAnswer" required value="3" (click)="choiceAnswer(3)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 3">
-                                                <i class="fa"></i> 
+                                                <input type="radio"  name="choosenAnswer" class="multipleChoiceAnswer" required value="3" (click)="choiceAnswer(contentForm.value, 3)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 3">
+                                                <i class="fa"></i>
                                             </label>
                                         </div>
                                     </div>
@@ -150,7 +150,7 @@
 
                 <div class="m-l-5 m-r-5">
                     <div class="row">
-                        
+
                         <div class="col-xs-12 text-right">
                             <span (click)="removeContent()" class="remove btn btn-primary m-b-10 w-sm m-l-10">Remove</span>
                             <span (click)="addQuestionOrVideo(contentForm.value, false )" class="add-question btn btn-primary m-b-10 w-sm m-l-10">Add Question</span>
@@ -158,7 +158,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
-        </div>	
-    </div>						
+            </div>
+        </div>
+    </div>
 </form>
