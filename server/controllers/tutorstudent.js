@@ -125,6 +125,7 @@ exports.addStudentCSV = function(req, res) {
   					firstName: data[0],
   					lastName: data[1],
   					DOB: data[2],
+						phone: data[3],
   					username: data[4],
   					hashed_pwd: data[5],
   					tutor_id: tutor_id,
