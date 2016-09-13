@@ -25,6 +25,7 @@ exports.getAllStudents = function(req, res) {
   				lastName: student.lastName,
   				DOB: student.DOB,
   				hashed_pwd: student.hashed_pwd,
+					phone: student.phone,
   				isSelected: false,
   				tutor_id: tutor_id,
   			};
