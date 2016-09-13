@@ -61,13 +61,10 @@ export class StudentMain implements OnInit {
 	}
 
 	getCurrentStatus(course: any){
-		if(course.lock == false){
-			return '';
-		}
-		if(course.score < 70){
+		if(course.score <= 70){
 			return `In progress ${course.score}% Complete`;
 		}
-		if(course.score > 80){
+		if(course.score > 70){
 			return `Completed, ${course.completedAt.toString().slice(0,10)} Score ${course.score}%`;
 		}
 	}

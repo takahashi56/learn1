@@ -5,16 +5,16 @@ var mongoose = require('mongoose'),
   Score = mongoose.model('Score'),
   Lesson = mongoose.model('Lesson'),
   Course = mongoose.model('Course'),
-  Content = mongoose.model('Content'),  
+  Content = mongoose.model('Content'),
   encrypt = require('../utilities/encryption');
 
 exports.getCourseList = function(req, res) {
   var student_id = req.body.student_id,
       courses = [];
   var i = 0;
-  
+
   Take.find({student_id: student_id},null, {sort: 'created_at'}, function(err, takes){
-    
+
     takes.forEach(function (take) {
       Course.findOne({_id: take.course_id}, function(err, course){
         if(err) return console.error(err);
@@ -30,7 +30,7 @@ exports.getCourseList = function(req, res) {
             completedAt: take.completedAt,
           }
           courses.push(data);
-        }          
+        }
 
         if(takes.length == i){
           res.send(courses);
@@ -112,7 +112,7 @@ exports.getLessonList = function(req, res) {
           })
       })
     })
-  })    
+  })
 }
 
 
@@ -133,7 +133,7 @@ exports.setScoreForLesson = function(req, res){
     lesson_id = req.body.lesson_id,
     student_id = req.body.student_id,
     isCompleted = score >= 70 ? true : false,
-    completedAt = isCompleted ? new Date() : '',
+    completedAt = new Date(),
     certificate = '',
     data = {
       score: score,
@@ -147,7 +147,7 @@ exports.setScoreForLesson = function(req, res){
     Score.findOneAndUpdate({lesson_id: lesson_id, student_id: student_id}, data, {upsert: true}, function(err, s){
       if(err) return console.error(err);
 
-      return res.send({sucess: true});      
+      return res.send({sucess: true});
     });
 }
 
@@ -157,7 +157,7 @@ exports.setCourseScoreWithStudent = function(req, res){
     course_id = req.body.course_id,
     student_id = req.body.student_id,
     isCompleted = score >= 70 ? true : false,
-    completedAt = isCompleted ? new Date() : '',
+    completedAt = new Date(),
     certificate = '',
     data = {
       score: score,
@@ -176,15 +176,15 @@ exports.setCourseScoreWithStudent = function(req, res){
             take.score = score;
             take.isCompleted = isCompleted;
             take.completedAt = completedAt;
-      
+
             take.save();
       }
     })
 
-    res.send({sucess: true});      
+    res.send({sucess: true});
     // Take.findOneAndUpdate({course_id: course_id, student_id: student_id}, data, {upsert: true}, function(err, s){
     //   if(err) return console.error(err);
 
-    //   return 
+    //   return
     // });
 }
