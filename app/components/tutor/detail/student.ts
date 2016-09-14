@@ -151,4 +151,11 @@ export class DetailTutorStudent {
 			self._router.navigateByUrl('/certificate');
 		});
 	}
+
+	getCompleteDate(date){
+		if(date == null) return '';
+		var d = new Date(date),
+				datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+		return datestring;
+	}
 }
