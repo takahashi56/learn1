@@ -78,7 +78,7 @@
                             <td><strong>{{student.firstName + " " + student.lastName}}</strong></td>
                             <td class="text-center"><strong>{{getComplete(student.isCompleted)}}</strong></td>
                             <td class="text-center"><strong>{{student.score}}%</strong></td>
-                            <td class="text-center"><strong>{{student.completedAt == null ? '' : student.completedAt | slice:0:10}}</strong></td>
+                            <td class="text-center"><strong>{{getCompleteDate(student.completedAt)}}</strong></td>
                             <td class="text-center"><a href="#"><strong class="text-page">View</strong></a></td>
 
                         </tr>
