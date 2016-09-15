@@ -2145,3 +2145,17 @@ input.alert-page{
 .form_pwd {
   margin-bottom: 30px !important;
 }
+
+.logo{
+  display: inline;
+  padding-left: 15px;
+  width: 250px;
+}
+
+.logo img{
+  padding-top: 8px;
+}
+
+.logoPadding{
+  padding: 10px 0;
+}
