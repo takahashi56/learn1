@@ -17,13 +17,13 @@
         this.$navbarItem = $("aside.left-panel nav.navigation > ul > li:has(ul) > a")
     };
 
-    //initilizing 
+    //initilizing
     SideBar.prototype.init = function() {
         //on toggle side menu bar
         var $this = this;
         $(document).on('click', '.navbar-toggle', function () {
             $this.$sideBar.toggleClass('collapsed');
-        }); 
+        });
 
         //on menu item clicking
         this.$navbarItem.click(function () {
@@ -53,7 +53,7 @@
 
     //exposing the sidebar module
     $.SideBar = new SideBar, $.SideBar.Constructor = SideBar
-    
+
 }(window.jQuery),
 
 
@@ -101,31 +101,31 @@ function($) {
     },
     //
     $.Portlet = new Portlet, $.Portlet.Constructor = Portlet
-    
+
 }(window.jQuery),
- 
+
 
 //main app module
 function($) {
     "use strict";
-    
+
     var VelonicApp = function() {
-        this.VERSION = "1.0.0", 
-        this.AUTHOR = "Coderthemes", 
-        this.SUPPORT = "coderthemes@gmail.com", 
-        this.pageScrollElement = "html, body", 
+        this.VERSION = "1.0.0",
+        this.AUTHOR = "Coderthemes",
+        this.SUPPORT = "coderthemes@gmail.com",
+        this.pageScrollElement = "html, body",
         this.$body = $("body")
     };
 
     //initializing tooltip
     VelonicApp.prototype.initTooltipPlugin = function() {
         $.fn.tooltip && $('[data-toggle="tooltip"]').tooltip()
-    }, 
+    },
 
     //initializing popover
     VelonicApp.prototype.initPopoverPlugin = function() {
         $.fn.popover && $('[data-toggle="popover"]').popover()
-    }, 
+    },
 
     //initializing nicescroll
     VelonicApp.prototype.initNiceScrollPlugin = function() {
@@ -139,8 +139,8 @@ function($) {
             $(".knob").knob();
         }
     },
-    
-    //initilizing 
+
+    //initilizing
     VelonicApp.prototype.init = function() {
         this.initTooltipPlugin(),
         this.initPopoverPlugin(),
@@ -166,12 +166,12 @@ function($) {
 /* ==============================================
 7.WOW plugin triggers animate.css on scroll
 =============================================== */
-var wow = new WOW(
-    {
-        boxClass: 'wow', // animated element css class (default is wow)
-        animateClass: 'animated', // animation css class (default is animated)
-        offset: 50, // distance to the element when triggering the animation (default is 0)
-        mobile: false        // trigger animations on mobile devices (true is default)
-    }
-);
-wow.init();
+// var wow = new WOW(
+//     {
+//         boxClass: 'wow', // animated element css class (default is wow)
+//         animateClass: 'animated', // animation css class (default is animated)
+//         offset: 50, // distance to the element when triggering the animation (default is 0)
+//         mobile: false        // trigger animations on mobile devices (true is default)
+//     }
+// );
+// wow.init();
