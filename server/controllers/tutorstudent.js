@@ -330,3 +330,25 @@ exports.getLessonsNameByCourseId = function (req, res) {
 		res.send({data: data});
 	})
 }
+
+exports.getAllMatrix = function(req, res){
+	var tutor_id = req.body.tutor_id, data=[];
+	Student.find({tutor_id: tutor_id},null, {sort: 'created_at'}, function(err, students){
+		if(err) return console.error(err);
+
+		students.forEach(function(student){
+			Take.find({student_id: student._id}, function(err, takes){
+				if(err) return console.error(err);
+
+				data.push({
+					student_name: student.firstName + ' ' + student.lastName,
+					course: takes
+				})
+
+				if(data.length == students.length){
+					res.send(data);
+				}
+			})
+		})
+	})
+}

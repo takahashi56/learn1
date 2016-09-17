@@ -1,13 +1,14 @@
 doctype
 html
 	head
-		title LEARNING WITH VIDEO
+		title Correct Care
 		base(href="/")
 		//- bower:css
 		link(rel='stylesheet', href='/vendor/bootstrap/dist/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/vendor/font-awesome/css/font-awesome.min.css')
 		link(rel='stylesheet', href='/vendor/metisMenu/dist/metisMenu.css')
 		link(rel='stylesheet', href='/vendor/bootstrap-social/bootstrap-social.css')
+		link(rel='stylesheet', href='/vendor/jquery.bootgrid/dist/jquery.bootgrid.css')
 		//- endbower
 		//- inject:css
 
@@ -51,25 +52,27 @@ html
 		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 
 		script(type="text/javascript").
-			System.config({
-				defaultJSExtensions: true,
-				packages: {
-					"app": {
-						format: 'register',
-						defaultExtension: 'js'
-					},
-					"/angular2-jwt": {
-						defaultExtension: 'js'
-					},
-					'jspdf': {
-						format: 'global'
-					}
+			System.config( {
+				  defaultJSExtensions: true,
+								packages: {
+									"app": {
+										format: 'register',
+										defaultExtension: 'js'
 				},
-				map: {
-					"angular2-jwt": "angular2-jwt/angular2-jwt"
+									"/angular2-jwt": {
+				  defaultExtension: 'js'
+				},
+									'jspdf': {
+				  format: 'global'
 				}
-			});
-			System.import('app/main');
+								},
+				map: {
+									"angular2-jwt"
+				  : "angular2-jwt/angular2-jwt"
+				}
+							});
+
+				System.import('app/main');
 	body
 		div(id="wrapper")
 			block main-content
@@ -78,6 +81,7 @@ html
 		script(src='/vendor/jquery/dist/jquery.js')
 		script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
 		script(src='/vendor/metisMenu/dist/metisMenu.js')
+		script(src='/vendor/jquery.bootgrid/dist/jquery.bootgrid.js')
 		//- endbower
 		//- inject:js
 

@@ -23,18 +23,13 @@ export class TutorMain implements OnInit {
 	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router) {
 		this.tutor_id = this._session.getCurrentId()
 		var role=this._session.getCurrentRole();
-
-		// console.log(tutor_id);
-		// console.log(role);
-
-		// if(tutor_id == '' || parseInt(role) != 1){
-		// 	console.log('aaaaaaaa');
-		// 	this._router.navigateByUrl('/login');
-		// }
-
-
-
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
+
+		this._tutorService.getAllMatrix({tutor_id: this.tutor_id}).subscribe((res) => {
+      console.log(res)
+      this._session.setItem('studentList', JSON.stringify(res));
+    })
+
 		this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
 			this.courseList = res;
 			console.log(res);
@@ -240,5 +235,15 @@ export class TutorMain implements OnInit {
 			data.push(`${element[0].firstName} ${element[0].lastName}`);
 		});
 		this.selectedStudentsName = data.join(',');
+	}
+
+	gotoMatrix(){
+		console.log(this.courseList)
+		if(this.courseList == [] || this.courseList == null || this.courseList.length == 0) return false;
+
+		this._session.setItem('courseList', JSON.stringify(this.courseList));
+		var baseurl = window.location.origin+window.location.pathname + '#/home/tutor/matrix';
+		window.open(baseurl, '_blank');
+		// this._router.navigateByUrl('/home/tutor/matrix');
 	}
 }

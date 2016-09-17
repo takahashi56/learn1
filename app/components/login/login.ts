@@ -52,6 +52,9 @@ export class Login {
 						if(res.role == 2){
 							this._session.setItem('MainStudentId', res.id);
 						}
+						if(res.role == 1){
+							this._session.setItem("organization", res.organization);
+						}
 						console.log(res.action);
 						// this._router.navigate(['Home']);
 						console.log(this._router);

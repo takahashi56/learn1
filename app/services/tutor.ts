@@ -20,14 +20,14 @@ export class TutorService {
 		// }).share();
 	}
 
-	getAllCourses(data) {		
-		return this._http.post(this.baseUrl + "courses",JSON.stringify(data),  HEADER).map((res) =>{ 
+	getAllCourses(data) {
+		return this._http.post(this.baseUrl + "courses",JSON.stringify(data),  HEADER).map((res) =>{
 			return res.json();
 		});
 	}
 
 	getAllStudents(data){
-		return this._http.post(this.baseUrl + "students",JSON.stringify(data),  HEADER).map((res) =>{ 
+		return this._http.post(this.baseUrl + "students",JSON.stringify(data),  HEADER).map((res) =>{
 			return res.json();
 		});
 	}
@@ -35,16 +35,16 @@ export class TutorService {
 	addStudent(data, flag){
 		if(!flag){
 			return this._http.post(this.baseUrl + "student", JSON.stringify(data), HEADER)
-			.map((res) => {		
+			.map((res) => {
 				return res.json();
 			})
 		}else{
 			return this._http.put(this.baseUrl + "student", JSON.stringify(data), HEADER)
-			.map((res) => {		
+			.map((res) => {
 				return res.json();
 			})
 		}
-		
+
 	}
 
 	addStudentCSV(data){
@@ -59,7 +59,7 @@ export class TutorService {
 			course_id: id,
 			ids: ids
 		}
-		return this._http.post(this.baseUrl + "setstudentbycourse", JSON.stringify(data), HEADER).map((res) => { 
+		return this._http.post(this.baseUrl + "setstudentbycourse", JSON.stringify(data), HEADER).map((res) => {
 			return res.json();
 		});
 	}
@@ -85,7 +85,7 @@ export class TutorService {
 			};
 		return this._http.post(this.baseUrl + "getStudentsByCourseId", JSON.stringify(data), HEADER).map((res)=>{
 			return res.json();
-		})	
+		})
 	}
 
 	removeStudentById(list){
@@ -99,4 +99,10 @@ export class TutorService {
 			return res.json();
 		})
 	}
+
+  getAllMatrix(data){
+    return this._http.post(this.baseUrl + 'getallmatrix', JSON.stringify(data), HEADER).map((res) => {
+      return res.json();
+		})
+  }
 }

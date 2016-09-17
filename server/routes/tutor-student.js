@@ -16,7 +16,7 @@ module.exports = function(app) {
 
 	app.post('/api/tutor/studentcsv', function(req, res) {
 		tutorstudent.addStudentCSV(req, res);
-	});	
+	});
 
 	app.put('/api/tutor/student', function(req, res) {
 		tutorstudent.editStudent(req, res);
@@ -29,7 +29,7 @@ module.exports = function(app) {
 
 	app.post('/api/tutor/getCoursesByStudentId', function(req, res) {
 		tutorstudent.getCoursesByStudentId(req, res);
-	});	
+	});
 
 	app.post('/api/tutor/getStudentsByCourseId', function(req, res) {
 		tutorstudent.getStudentsByCourseId(req, res);
@@ -41,5 +41,9 @@ module.exports = function(app) {
 
 	app.post('/api/tutor/getlessonsnamebycourseid', function(req, res) {
 		tutorstudent.getLessonsNameByCourseId(req, res);
+	});
+
+	app.post('/api/tutor/getallmatrix', function(req, res) {
+		tutorstudent.getAllMatrix(req, res);
 	});
 }

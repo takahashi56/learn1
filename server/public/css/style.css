@@ -2159,3 +2159,13 @@ input.alert-page{
 .logoPadding{
   padding: 10px 0;
 }
+
+.matrix-container{
+  background-color: white;
+  padding: 2% 4%;
+}
+
+.title-bar{
+  content; '';
+  border-bottom: 9px solid #1eb0bd;
+}

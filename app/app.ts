@@ -9,6 +9,7 @@ import {SignUp} from './components/signup/signup';
 import {Forgetpwd} from './components/forgetpwd/forgetpwd';
 import {CertificateView} from './components/certificate/certificate';
 import {Resetpwd} from './components/resetpwd/resetpwd';
+import {Matrix} from './components/matrix/matrix';
 
 
 @Component({
@@ -24,6 +25,7 @@ import {Resetpwd} from './components/resetpwd/resetpwd';
 	new Route({ path: '/forgetpwd', component: Forgetpwd, name: 'Forgetpwd' }),
 	new Route({ path: '/resetpwd', component: Resetpwd, name: 'Resetpwd' }),
 	new Route({ path: '/certificate', component: CertificateView, name: 'CertificateView' }),
+	new Route({ path: '/home/tutor/matrix', component: Matrix, name: 'Matrix' })
 ])
 export class AppComponent{
 

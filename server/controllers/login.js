@@ -30,6 +30,7 @@ exports.login = function(req, res) {
 						data.action = "/home/tutor/main";
 						data.role = 1;
 						data.success = true;
+						data["organization"] = tutor.organization;
 						return res.send(data);
 					}else{
 						res.send(data);
