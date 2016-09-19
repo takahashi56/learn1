@@ -56,7 +56,7 @@ gulp.task('serve', ['style', 'inject'], function() {
 		tasks: ['style', 'inject'],
 		delayTime: 0.3,
 		env: {
-			'PORT': 3001
+			'PORT': 3000
 		},
 		watch: [paths.jsFiles, paths.customFiles],
 		livereload: true

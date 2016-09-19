@@ -9,7 +9,7 @@
             <table id="gridbasic" #gridbasic class="table text-page">
                 <thead>
                     <tr>
-                        <th data-column-id="id" data-column-id="name">Name</th>
+                        <th data-column-id="id" id="table-head-name" data-column-id="name" style="min-width:100px;">Name</th>
                         <th *ngFor="let head of courseList" attr.data-column-id="{{head.course_id}}">{{head.coursetitle}}</th>
                     </tr>
                 </thead>

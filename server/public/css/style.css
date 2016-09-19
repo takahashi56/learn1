@@ -774,6 +774,22 @@ lesshat-selector {
   }
 }
 
+
+
+#gridbasic th, #gridbasic td{
+   font-size: 11px;
+   min-width: 50px;
+   padding: 5px  2px;
+}
+#gridbasic th[data-column-id="name"]{
+  min-width:100px;
+}
+
+#table-head-name {
+   min-width: 100px;
+}
+
+
 .loader-1:after {
   -webkit-animation: loaderAnimate2 1000ms ease-in-out infinite;
   -moz-animation: loaderAnimate2 1000ms ease-in-out infinite;
