@@ -6,10 +6,12 @@ module.exports = function(app) {
 	});
 
 	app.post('/api/admin/tutor', function(req, res) {
+		console.log("+++++++++++++++++++++++++++++")
 		admintutor.addTutor(req, res);
 	});
 
 	app.put('/api/admin/tutor', function(req, res) {
+		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 		admintutor.editTutor(req, res);
 	});
 

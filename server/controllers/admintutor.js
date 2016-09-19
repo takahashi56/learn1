@@ -16,7 +16,7 @@ exports.getAllTutors = function(req, res) {
 					id: tutor._id,
 					organization: tutor.organization,
 					firstname: tutor.firstname,
-					lastname: tutor.lastname,
+					lastname: tutor.lastname,					
 					phone: tutor.phone,
 					email: tutor.email,
 					student: count,
@@ -57,12 +57,16 @@ exports.addTutor = function(req, res) {
 exports.editTutor = function(req, res) {
 	var tutor = req.body,
 		salt = encrypt.createSalt();
+
+	console.log("#################################")
+	console.log(tutor)	
 	tutor["salt"] = salt;
 	tutor["hashed_pwd"] = encrypt.hashPwd(salt, tutor["password"]);
 	tutor["updated_at"] = new Date();
 
 	Tutor.update({_id: tutor._id}, tutor, function(err, tutor){
 		if(err) return console.error(err);
+
 		res.send({success: true});
 	})	
 }
