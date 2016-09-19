@@ -2170,7 +2170,15 @@ input.alert-page{
   border-bottom: 9px solid #1eb0bd;
 }
 
-#gridbasic th,#gridbasic td{
-    min-width: 130px;
-    padding: 9px 2px;
+#gridbasic th, #gridbasic td{
+   font-size: 11px;
+   min-width: 50px;
+   padding: 5px  2px;
+}
+#gridbasic th[data-column-id="name"]{
+  min-width:100px;
+}
+
+#table-head-name {
+   min-width: 100px;
 }
