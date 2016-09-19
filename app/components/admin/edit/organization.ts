@@ -34,7 +34,7 @@ export class EditOrganization {
 		this.lastname = new Control(this.org.lastname, Validators.required);
 		this.organization = new Control(this.org.organization, Validators.required);
 		this.email = new Control(this.org.email, Validators.required);
-		this.password = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
+		this.password = new Control(this.org.password, Validators.compose([Validators.required, Validators.minLength(6)]))
 		this.phone = new Control(this.org.phone);
 		this.department = new Control(this.org.department);
 
@@ -56,7 +56,7 @@ export class EditOrganization {
 		this.submitAttempt = true;
 		if(this.OrganizeForm.valid){
 			var data = {
-				_id: this.org._id,
+				_id: this.org.id,
 				firstname: form.firstname,
 				lastname: form.lastname,
 				organization: form.organization,
