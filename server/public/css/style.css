@@ -2169,3 +2169,8 @@ input.alert-page{
   content; '';
   border-bottom: 9px solid #1eb0bd;
 }
+
+#gridbasic th,#gridbasic td{
+    min-width: 130px;
+    padding: 9px 2px;
+}
