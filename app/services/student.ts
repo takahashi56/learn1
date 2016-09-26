@@ -14,6 +14,10 @@ export class StudentService {
 
 	constructor(private _http: Http) {}
 
+	updateCourse(id){
+		return this._http.post(this.baseUrl + "updatescore", JSON.stringify({student_id:id}), HEADER).map((res)=>res.json());
+	}
+
 	getCourseListById(id){
 		var data = {
 			student_id: id,

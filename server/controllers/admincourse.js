@@ -46,6 +46,9 @@ exports.getAllCourse = function(req, res) {
 							console.log(main_data.length)
 							console.log(collection.length)
 							if(main_data.length == collection.length){
+								main_data.sort(function(a, b){
+						            return a.title.localeCompare(b.title);    
+						          })
 								res.send(main_data);
 							}
 						})

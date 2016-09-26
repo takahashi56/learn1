@@ -27,6 +27,9 @@ exports.getAllTutors = function(req, res) {
 				data.push(temp);	
 				
 				if(i == results.length){
+					data.sort(function(a, b){
+		            	return a.organization.localeCompare(b.organization);    
+		          	})
 					res.send(data)
 				}
 			})	

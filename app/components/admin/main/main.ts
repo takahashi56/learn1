@@ -43,7 +43,7 @@ export class Main implements OnInit {
 		console.log(course.course_id);
 		this._adminService.getEditCourses(course.course_id).subscribe((res) => {
 			this._session.setItem('editORadd', JSON.stringify({flag: true}));
-			this._session.setItem('Course', JSON.stringify(res));
+			this._session.setItem('Course', JSON.stringify(res));			
 			this._router.navigate(['AdminAddCourse']);
 		})
 	}

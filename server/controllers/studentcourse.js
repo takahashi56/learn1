@@ -111,21 +111,37 @@ exports.getLessonList = function(req, res) {
               lessondescription: lesson.description,
               isCompleted: false,
               completedAt: '',
-              score: 0,
+              score: Number(-1),
               lock: false,
               count: content_count,
+              created_at: lesson.created_at
             }
 
             if(score){
               data.isCompleted = score.isCompleted;
               data.completedAt = score.completedAt;
               data.score = score.score;
-              data.lock = true;
+              // data.lock = true;
             }
 
             return_data.push(data);
 
             if(lessons.length == return_data.length){
+              return_data.sort(function(a, b){
+                return new Date(a.created_at) - new Date(b.created_at);    
+              })
+
+              var one = true;
+              return_data.forEach(function(part, index, theArray) { 
+              if(Number(theArray[index].score) == Number(-1) && one == true)
+               { 
+                  theArray[index].lock = true; 
+                  theArray[index].score = 0; 
+                  one = false;
+                }
+              });
+              console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+              console.log(return_data);              
               res.send(return_data);
             }
           })
@@ -206,4 +222,45 @@ exports.setCourseScoreWithStudent = function(req, res){
 
     //   return
     // });
+}
+
+exports.updateScore = function(req, res){
+  var student_id = req.body.student_id;
+  console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
+  scoreUpdate(student_id);
+  res.send({success: true});
+}
+
+var scoreUpdate = function(student_id){
+
+   var courseScore = 0;
+   Course.find({student_id: student_id},null, {sort: 'created_at'}).lean().then(function(err, courses){
+      courses.forEach(function(course){
+        Lesson.find({course_id: course._id}).lean().then(function(err, lessons){
+          lessons.forEach(function(lesson, index, theArray){
+            Score.findOne({lesson_id: lesson._id, student_id: student._id}).lean().then(function(err, score){
+              console.log(score);
+              if(score == undefined || Number(score) == -1){
+                Take.update({course_id: course._id, student_id: student_id}, {score: 0, isCompleted: false, completedAt: ''}, function(err, take){
+                  if(err) console.log(err)
+                })
+                console.log()
+                return false;
+              }
+
+              // courseScore += score;
+              // if(lessons.length = index + 1){
+              //   courseScore = courseScore/lessons.length * 100;
+              //   Take.update({course_id: course._id, student_id: student_id}, {score: courseScore}, function(err, take){
+              //     if(err) console.log(err)
+              //   })
+              //   break finish;
+              //   return false;
+              // }
+            })
+
+          })
+        })
+      })
+   });
 }
