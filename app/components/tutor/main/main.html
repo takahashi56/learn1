@@ -3,7 +3,7 @@
         <h2 class="text-page m-b-30"><strong>Manager Adminstration</strong></h2>
         <ul class="nav nav-tabs nav-justified">
             <li class="active">
-                <a href="#students" data-toggle="tab" aria-expanded="true"><strong class="text-page">All Students</strong></a>
+                <a href="#students" data-toggle="tab" aria-expanded="true"><strong class="text-page">All Employees</strong></a>
             </li>
             <li class="">
                 <a href="#courses" data-toggle="tab" aria-expanded="false"><strong class="text-page">All Courses</strong></a>
@@ -12,9 +12,9 @@
         <div class="tab-content">
             <div class="tab-pane active" id="students">
                 <div class="text-right m-b-30">
-                    <a  class="btn btn-primary w-sm m-r-5" (click)="gotoAddStudent()" >Add Student</a>
-                    <a  class="btn btn-primary w-sm m-r-5" (click)="beforeRemoveStudent()"  data-toggle="modal" data-target="#remove-student" >Remove Student</a>
-                    <a class="btn btn-primary w-sm m-r-5" onClick="$('#file-uploader').click()">Import Students</a>
+                    <a  class="btn btn-primary w-sm m-r-5" (click)="gotoAddStudent()" >Add Employee</a>
+                    <a  class="btn btn-primary w-sm m-r-5" (click)="beforeRemoveStudent()"  data-toggle="modal" data-target="#remove-student" >Remove Employee</a>
+                    <a class="btn btn-primary w-sm m-r-5" onClick="$('#file-uploader').click()">Import Employees</a>
                     <input type="file" id="file-uploader" (change)="importAddStudent($event)" style="display: none;"/>
                     <a  class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#select-course">Assign Course</a>
                     <a  class="btn btn-primary w-sm m-r-5" (click)="gotoMatrix()" target="_blank">Training Matrix</a>
@@ -29,7 +29,7 @@
                                 <th>DOB</th>
                                 <th>Username</th>
                                 <th>Password</th>
-                                <th>Other</th>
+                                <th>Complete</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -45,7 +45,7 @@
                             <td><strong>{{student.DOB}}</strong></td>
                             <td  (click)="gotoStudentDetail(student)" style="cursor: pointer;" ><strong>{{student.username}}</strong></td>
                             <td><strong>{{student.hashed_pwd}}</strong></td>
-                            <td><strong>other</strong></td>
+                            <td><strong>{{student.other}}</strong></td>
                             <td class="text-right"><a  class="btn w-xs btn-sm btn-primary" (click)="editStudent(student)">Edit</a></td>
                         </tr>
                     </table>
@@ -58,8 +58,8 @@
                         <thead>
                             <tr>
                                 <th>Course Name</th>
-                                <th>Enrolled Students</th>
-                                <th>Past Students</th>
+                                <th>Enrolled Employees</th>
+                                <th>Past Employees</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -67,7 +67,7 @@
                             <td (click)="gotoDetail(course)" style="cursor: pointer;" ><strong>{{course.coursetitle}}</strong></td>
                             <td (click)="gotoDetail(course)" style="cursor: pointer;" > <strong>{{course.enrolled}}</strong></td>
                             <td class="" >{{course.past}}</td>
-                            <td class="text-right"><a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-student" (click)="beforeAssignStudent(course)">Assign Student</a></td>
+                            <td class="text-right"><a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-student" (click)="beforeAssignStudent(course)">Assign Employee</a></td>
                         </tr>
                     </table>
                 </div>
@@ -116,13 +116,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Assign a Student</h4>
+                    <h4 class="modal-title">Assign a Employee</h4>
                 </div>
                 <div class="modal-body assign-text">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <p>Click the arrow below to select a student and then click Assign.</p>
+                                <p>Click the arrow below to select a Employee and then click Assign.</p>
                             </div>
                         </div>
                     </div>
@@ -151,13 +151,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Remove Student</h4>
+                <h4 class="modal-title">Remove Employee</h4>
             </div>
             <div class="modal-body assign-text">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <p>Are you sure to remove the {{selectedStudentsName}}? </p>
+                            <p>This action cannot be undone, this will delete the employees record. <br> Are you sure you want to proceed? </p>
                         </div>
                     </div>
                 </div>

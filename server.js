@@ -5,8 +5,8 @@ var express = require('express'),
 	passport = require('passport'),
 	cors = require('cors');
 
+var fileUpload = require('express-fileupload');
 var app = express();
-
 
 var port = process.env.PORT || 5000;
 
@@ -18,6 +18,8 @@ require('./server/config/mongoose')(config);
 app.use(express.static(__dirname + '/server/public'));
 app.use(express.static(__dirname + '/node_modules'));
 app.use(express.static(__dirname + '/app'));
+app.use(fileUpload());
+
 app.set('views', './server/views');
 app.set('view engine', 'jade');
 

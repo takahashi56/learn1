@@ -25,4 +25,8 @@ module.exports = function(app) {
 	app.post('/api/admin/removecourse', function(req, res) {
 		admincourse.deleteCourse(req, res);
 	});
+
+	app.post('/api/admin/upload', function(req, res) {
+		admincourse.upload(req, res);
+	});
 }

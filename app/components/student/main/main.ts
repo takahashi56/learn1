@@ -50,7 +50,7 @@ export class StudentMain implements OnInit {
 	}
 
 	getHeadingClass(course: any){
-		if(course.score > 70)
+		if(course.score > 0)
 			return "panel-heading panel-completed";
 		else
 			return "panel-heading";
@@ -61,10 +61,10 @@ export class StudentMain implements OnInit {
 	}
 
 	getCurrentStatus(course: any){
-		if(course.score <= 70){
+		if(course.score == 0){
 			return `In progress ${course.score}% Complete`;
 		}
-		if(course.score > 70){
+		if(course.score > 0){
 			return `Completed, ${course.completedAt.toString().slice(0,10)} Score ${course.score}%`;
 		}
 	}

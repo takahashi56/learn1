@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 
 
 exports.getAllStudents = function(req, res) {
-	var data = req.body, tutor_id = data.tutor_id;
+	var data = req.body, tutor_id = data.tutor_id, total = 0, complete = 0;
 	console.log(tutor_id);
 
   	Student.find({tutor_id: tutor_id},null, {sort: 'created_at'}, function(err, students){
@@ -18,21 +18,36 @@ exports.getAllStudents = function(req, res) {
   		var students_copy = [];
 
   		students.forEach(function (student) {
-  			var s = {
-  				student_id: student._id,
-  				username: student.username,
-  				firstName: student.firstName,
-  				lastName: student.lastName,
-  				DOB: student.DOB,
-  				hashed_pwd: student.hashed_pwd,
-					phone: student.phone,
-  				isSelected: false,
-  				tutor_id: tutor_id,
-  			};
-  			students_copy.push(s);
-  		});
+  			Take.find({student_id: student._id}).lean().exec(function(err, takes){
+  				complete = 0;
+  				total = takes.length;
+  				for (var i = 0, len = takes.length; i !== len; i++) {
+				    if(takes[i].isCompleted) complete++;
+				}
 
-  		res.send(students_copy);
+				var s = {
+	  				student_id: student._id,
+	  				username: student.username,
+	  				firstName: student.firstName,
+	  				lastName: student.lastName,
+	  				DOB: student.DOB,
+	  				hashed_pwd: student.hashed_pwd,
+					phone: student.phone,
+	  				isSelected: false,
+	  				tutor_id: tutor_id,
+	  				other: complete + ' of ' + total
+	  			};
+
+	  			students_copy.push(s);
+	  			console.log("+++++++++++++++++++++++++++++")
+	  			console.log(students_copy.length);
+	  			console.log(students.length)
+	  			if(students.length == students_copy.length){
+	  				res.send(students_copy);			
+	  			}
+  			})	  			
+  		});
+  		
   	})
 }
 
@@ -95,7 +110,6 @@ exports.getAllCourses = function(req, res) {
                         })
                     })
                 }
-
 			})
   		});
 

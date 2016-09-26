@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 module.exports = function() {
   var contentSchema = mongoose.Schema({
     videoOrQuestion: Boolean,
+    questionType: Boolean, // if type is true, image question type, false, fourth multiple question type
     videoLabel: String,
     videoEmbedCode: String,
     singleOrMulti: Boolean,
@@ -11,6 +12,8 @@ module.exports = function() {
     answerA: String,
     answerB: String,
     answerC: String,
+    answerD: String,
+    image: Object,
     trueNumber: Number,
     answer_text: String,
     lesson_id: String, 

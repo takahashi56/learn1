@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
 	Score = mongoose.model('Score'),
 	encrypt = require('../utilities/encryption');
 
+const path = require('path');
+
 exports.getAllCourse = function(req, res) {
 	Course.find({},null, {sort: 'created_at'}, function(err, collection) {
 		if(err) {
@@ -124,6 +126,8 @@ exports.addCourse = function(req, res) {
 				if (err) return console.error(err);
 
 				lesson.content.forEach(function(content){
+					console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+					console.log(content.image);
 					var contentData = {
 						videoOrQuestion: content.videoOrQuestion,
 					    videoLabel: content.videoLabel,
@@ -133,9 +137,12 @@ exports.addCourse = function(req, res) {
 					    answerA: content.answerA,
 					    answerB: content.answerB,
 					    answerC: content.answerC,
+					    answerD: content.answerD,
 					    trueNumber: content.trueNumber,
 					    answer_text: '',
 					    lesson_id: less._id, 
+					    questionType: content.questionType,
+					    image: content.image
 					}
 					Content.create(contentData, function(err, cont){
 						if (err) return console.error(err);
@@ -193,10 +200,13 @@ exports.updateCourse = function(req, res) {
 							    videoLabel: content.videoLabel,
 							    videoEmbedCode: content.videoEmbedCode,
 							    singleOrMulti: content.singleOrMulti,
+							    questionType: content.questionType,
+							    image: content.image,
 							    question: content.question,
 							    answerA: content.answerA,
 							    answerB: content.answerB,
 							    answerC: content.answerC,
+							    answerD: content.answerD,
 							    trueNumber: content.trueNumber,
 							    answer_text: '',
 							    lesson_id: less.id, 
@@ -351,4 +361,32 @@ exports.deleteCourse = function(req, res) {
 	})
 
 	res.send({success: true});
+}
+
+
+exports.upload = function(req, res){
+	var sampleFile,
+		filename =(new Date%9e6).toString(36);
+ 
+    if (!req.files) {
+        res.send('No files were uploaded.');
+        return;
+    }
+ 
+ 	console.log(req.files.uploads);
+    sampleFile = req.files.uploads;
+    filename += sampleFile.name;
+
+    console.log();
+
+    var filePath = path.join(__dirname, '../public/images/upload/' , filename);
+
+    sampleFile.mv(filePath, function(err) {
+        if (err) {
+            res.status(500).send(err);
+        }
+        else {
+            res.send({image: filename});
+        }
+    });
 }

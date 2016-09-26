@@ -59,15 +59,23 @@
                         </div>
                         <div class="col-sm-4 col-md-3 col-lg-2">
                             <label class="cr-styled text-page">
-                                <strong class="m-r-5">Multyple Choice</strong>
-                                <input type="radio" name="multiChoice" value="1" class="r-question multipleChoice" (click)="choiceChange(true)" [checked] = "singleOrMulti == true" (blur)="blurChange(contentForm.value)">
+                                <strong class="m-r-5">Multiple Choice</strong>
+                                <input type="radio" name="multiChoice" value="1" class="r-question multipleChoice" (click)="choiceChange(1)" [checked] = "questionType == false && singleOrMulti == true" (blur)="blurChange(contentForm.value)">
                                 <i class="fa"></i>
                             </label>
                         </div>
                         <div class="col-sm-4 col-md-3 col-lg-2">
                             <label class="cr-styled text-page">
                                 <strong class="m-r-5">Text Response</strong>
-                                <input type="radio"  name="multiChoice" value="0" (click)="choiceChange(false)" [checked] = "singleOrMulti == false" class="r-question textResponce">
+                                <input type="radio"  name="multiChoice" value="0" (click)="choiceChange(0)" [checked] = "questionType == false && singleOrMulti == false" class="r-question textResponce">
+                                <i class="fa"></i>
+                            </label>
+                        </div>
+
+                        <div class="col-sm-5 col-md-4 col-lg-3">
+                            <label class="cr-styled text-page">
+                                <strong class="m-r-5">Choice with Image</strong>
+                                <input type="radio"  name="imageChoice" value="2" (click)="choiceChange(2)" [checked] = "questionType == true && singleOrMulti == true" class="r-question textResponce">
                                 <i class="fa"></i>
                             </label>
                         </div>
@@ -88,6 +96,26 @@
                     <div *ngIf="singleOrMulti">
                         <div class="box multipleChoiceBox">
                             <div class="multi-q">
+                                <div *ngIf="questionType" class="answer-div">
+                                    <div class="col-lg-2">
+                                        <div class="m-l-10 m-r-10">
+                                            <label for="q-input" class="control-label text-left text-page">Image</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <div class="m-l-10 m-r-10 answer-section">
+                                            <div [ngClass]="{ 'has-error' : (image == '') && submitAttempt }" style="margin-bottom: 15px;" >
+
+                                                <a class='btn btn-primary' href='javascript:;'>
+                                                    Choose File...
+                                                    <input type="file" class="" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' accept="image/*" name="file_source" size="40"  (blur)="blurChange(contentForm.value)" (change)="onFileChange($event,contentForm.value)">
+                                                </a>
+                                                &nbsp;
+                                                <span class='label label-info' id="upload-file-info">{{image}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="answer-div">
                                     <div class="col-lg-2">
                                         <div class="m-l-10 m-r-10">
@@ -137,6 +165,24 @@
                                             </div>
                                             <label class="cr-styled" >
                                                 <input type="radio"  name="choosenAnswer" class="multipleChoiceAnswer" required value="3" (click)="choiceAnswer(contentForm.value, 3)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 3">
+                                                <i class="fa"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="answer-div">
+                                    <div class="col-lg-2">
+                                        <div class="m-l-10 m-r-10">
+                                            <label for="q-input" class="control-label text-left text-page">Answer D</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <div class="m-l-10 m-r-10 answer-section">
+                                            <div [ngClass]="{ 'has-error' : !answerD.valid && submitAttempt }">
+                                                <input class="form-control alert alert-page text-page answerD" role="alert" value="" ngControl="answerD" (blur)="blurChange(contentForm.value)">
+                                            </div>
+                                            <label class="cr-styled" >
+                                                <input type="radio"  name="choosenAnswer" class="multipleChoiceAnswer" required value="4" (click)="choiceAnswer(contentForm.value, 4)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 4">
                                                 <i class="fa"></i>
                                             </label>
                                         </div>

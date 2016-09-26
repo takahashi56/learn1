@@ -6,6 +6,10 @@
                 <h3 class="text-page m-l-15 m-t-15"><strong>Question</strong></h3>
             </div>
 
+            <div *ngIf="content.questionType" class="text-center">
+                <img [src]="getImagePath(content.image)" width ="300" height="300"/>
+            </div>
+
             <form class="text-page text-left m-l-15 m-r-15">
                 <h4 class="m-b-30 m-t-30">
                     <strong>{{content.question}}</strong>
@@ -27,7 +31,7 @@
                     </div>
                     <div class="radio-box m-t-20 sr-only">
                         <label class="cr-styled" for="answer2">
-                            <input type="radio" name="answer" id="answer2" value="fourth" [ngModel]="{checked: checkedRadio == 'fourth'}" (ngModelChange)="checkedRadio = 'fourth'" (click)="chooseAnswer(0)">
+                            <input type="radio" name="answer" id="answer2" value="fifth" [ngModel]="{checked: checkedRadio == 'fifth'}" (ngModelChange)="checkedRadio = 'fifth'" (click)="chooseAnswer(0)">
                             <i class="fa"></i>
                             <strong class="m-l-10">{{content.answerB}}</strong>
                         </label>
@@ -39,7 +43,13 @@
                             <strong class="m-l-10">{{content.answerC}}</strong>
                         </label>
                     </div>
-
+                    <div class="radio-box m-t-20">
+                        <label class="cr-styled" for="answer4">
+                            <input type="radio" name="answer" id="answer4" value="fourth" [ngModel]="{checked: checkedRadio == 'fourth'}" (ngModelChange)="checkedRadio = 'fourth'" (click)="chooseAnswer(4)">
+                            <i class="fa"></i>
+                            <strong class="m-l-10">{{content.answerD}}</strong>
+                        </label>
+                    </div>
                 </div>
 
             </form>
