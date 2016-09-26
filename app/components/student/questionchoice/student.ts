@@ -51,9 +51,11 @@ export class QuestionChoice implements OnInit {
 	gotoNext(){
 		console.log(`checked radio next before: ${this.checkedRadio}`)
 
-		this.checkedRadio = 'fifth';
+		if(this.checkedRadio == 'fifth') return;
 
 		if(this.answerNumber == 0) return false;
+
+		this.checkedRadio = 'fifth';
 		console.log(this.content.trueNumber);
 		if(this.content.trueNumber == this.answerNumber){
 			var count = parseInt(this._session.getItem('rightQuestionCount'));
