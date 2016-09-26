@@ -15,7 +15,7 @@ export class QuestionChoice implements OnInit {
 	courseList: any = [];
 	answerNumber: number = 0;
 	checkedRadio: string = '0';
-    iterator: any = [1,2,3];
+    iterator: any = [1,2,3,4];
 	checkedStatus: string = '';
 
 	@Input() content: any;
@@ -40,6 +40,7 @@ export class QuestionChoice implements OnInit {
 			case 1: this.checkedRadio = 'first'; break;
 			case 2: this.checkedRadio = 'second'; break;
 			case 3: this.checkedRadio = 'third'; break;
+			case 4: this.checkedRadio = 'fourth'; break;
 			default: this.checkedRadio = ''; break;
 		}
 
@@ -50,7 +51,7 @@ export class QuestionChoice implements OnInit {
 	gotoNext(){
 		console.log(`checked radio next before: ${this.checkedRadio}`)
 
-		this.checkedRadio = 'fourth';
+		this.checkedRadio = 'fifth';
 
 		if(this.answerNumber == 0) return false;
 		console.log(this.content.trueNumber);
@@ -67,8 +68,11 @@ export class QuestionChoice implements OnInit {
 
 	gotoPrevious(){
 		// this.changeChecked(null);
-		this.checkedRadio = 'fourth';
+		this.checkedRadio = 'fifth';
 		this.gotoPreviousContent.emit({});
 	}
 
+	getImagePath(image: string) : string{
+		return "images/upload/"+image;
+	}
 }

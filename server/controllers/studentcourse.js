@@ -33,6 +33,25 @@ exports.getCourseList = function(req, res) {
         }
 
         if(takes.length == i){
+          var completeArray = [], unCompleteArray = [];
+
+          courses.forEach(function(course){
+            if(course.isCompleted){
+              completeArray.push(course);              
+            }else{
+              unCompleteArray.push(course)
+            }
+          });
+
+          completeArray.sort(function(a, b){
+            return a.coursetitle.localeCompare(b.coursetitle);    
+          })
+
+          unCompleteArray.sort(function(a, b){
+            return a.coursetitle.localeCompare(b.coursetitle);    
+          })
+
+          courses = unCompleteArray.concat(completeArray);
           res.send(courses);
         }
       })
@@ -132,7 +151,7 @@ exports.setScoreForLesson = function(req, res){
   var score = parseInt(req.body.score),
     lesson_id = req.body.lesson_id,
     student_id = req.body.student_id,
-    isCompleted = score >= 70 ? true : false,
+    isCompleted = score > 0 ? true : false,
     completedAt = new Date(),
     certificate = '',
     data = {
@@ -156,7 +175,7 @@ exports.setCourseScoreWithStudent = function(req, res){
   var score = parseInt(req.body.score),
     course_id = req.body.course_id,
     student_id = req.body.student_id,
-    isCompleted = score >= 70 ? true : false,
+    isCompleted = score > 0 ? true : false,
     completedAt = new Date(),
     certificate = '',
     data = {

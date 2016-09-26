@@ -66,6 +66,7 @@ export class AddCourse {
 		var data = [{
 			_content_id: (Date.now()).toString(),
 			videoOrQuestion: true,
+			questionType: false,
 			videoLabel: '',
 			videoEmbedCode: '',
 			singleOrMulti: false,
@@ -73,6 +74,8 @@ export class AddCourse {
 			answerA: '',
 			answerB: '',
 			answerC: '',
+			answerD: '',
+			image: '',
 			trueNumber: '',
 		}];
 
@@ -97,6 +100,7 @@ export class AddCourse {
 			
 			data.coursetitle = form.coursetitle;
 			data.coursedescription = form.coursedescription;
+			console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 			console.log(data);
 
 

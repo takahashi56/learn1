@@ -29,6 +29,7 @@ export class AddLesson {
 
 	manageContent(value){
 		this.contents = value; //JSON.parse(this._session.getItem('Content'));		
+		console.log(this.contents)
 	}
 
 	cancel(){
@@ -54,6 +55,7 @@ export class AddLesson {
 			let data = [{
 				_content_id: (Date.now()).toString(),
 				videoOrQuestion: true,
+				questionType: false,
 				videoLabel: '',
 				videoEmbedCode: '',
 				singleOrMulti: false,
@@ -61,6 +63,8 @@ export class AddLesson {
 				answerA: '',
 				answerB: '',
 				answerC: '',
+				answerD: '',
+				image: '',
 				trueNumber: '',
 			}];
 
@@ -84,27 +88,38 @@ export class AddLesson {
 			if(obj.videoOrQuestion){
 				if(obj.videoLabel != "" && obj.videoEmbedCode != "") updated = false;
 			}else{
-				switch (obj.singleOrMulti) {
-					case false:
-						if(obj.question != "" ) updated = false; 
-						break;
-					case true:
-						if(obj.question == "" || obj.answerA == "" || obj.answerB == "" || obj.answerC == "" || obj.trueNumber == 0 ) {
-							console.log("true");
-							updated = true;
-						}else{
-							console.log("false");
-							updated = false;
-						}
-						break;				
-					default:
-						updated = true;					
-						break;
+				if(obj.questionType == false){
+					switch (obj.singleOrMulti) {
+						case false:
+							if(obj.question != "" ) updated = false; 
+							break;
+						case true:
+							if(obj.question == "" || obj.answerA == "" || obj.answerB == "" || obj.answerC == "" || obj.answerD == "" || obj.trueNumber == 0 ) {
+								console.log("true");
+								updated = true;
+							}else{
+								console.log("false");
+								updated = false;
+							}
+							break;				
+						default:
+							updated = true;					
+							break;
+					}
+				}else{
+					if(obj.question == "" || obj.answerA == "" || obj.answerB == "" || obj.answerC == "" || obj.answerD == "" || obj.trueNumber == 0 || obj.image == '') {
+						console.log("true");
+						updated = true;
+					}else{
+						console.log("false");
+						updated = false;
+					}
 				}
 			}
 			if(!updated) return obj; 
 		})
-
+		console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+		console.log(contentData)
 		let lesson = {
 			lesson_id: this.lesson_id,
 			lessonname: this.lessonForm.controls['lessonname'].value,

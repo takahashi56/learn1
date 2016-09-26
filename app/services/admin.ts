@@ -1,6 +1,9 @@
 import {Injectable} from 'angular2/core';
 import 'rxjs/add/operator/map';
 import {Http, Headers} from 'angular2/http';
+//import {Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs/Observer';
 
 const HEADER = {
   headers: new Headers({
@@ -12,7 +15,12 @@ const HEADER = {
 export class AdminService {
 	private baseUrl: string = "/api/admin/";
 
-	constructor(private _http: Http) {}
+	constructor(private _http: Http) {
+		// this.progress$ = Observable.create(observer => {
+  //       	this.progressObserver = observer
+  //   	}).share();
+	}
+
 
 	getAllCourses(){
 		return this._http.get(this.baseUrl + "courses", HEADER).map((res) =>{
@@ -88,6 +96,33 @@ export class AdminService {
 			})
 	}
 
+	upload(files: File[]): Observable<any> {
+		var url = this.baseUrl + 'upload';
+	    return Observable.create(observer => {
+			let formData: FormData = new FormData(),
+				xhr: XMLHttpRequest = new XMLHttpRequest();
+
+			for (let i = 0; i < files.length; i++) {
+				formData.append("uploads", files[i], files[i].name);
+			}
+
+			xhr.onreadystatechange = () => {
+				if (xhr.readyState === 4) {
+				  	if (xhr.status === 200) {
+				  		console.log("______________________________________________")
+				  		console.log(xhr.response)
+				    	observer.next(JSON.parse(xhr.response));
+				    	observer.complete();
+					} else {
+					    observer.error(xhr.response);
+				 	}
+				}
+			};
+
+			xhr.open('POST', url, true);
+			xhr.send(formData);
+		});
+	}
   
 
 }

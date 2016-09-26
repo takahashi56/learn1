@@ -57,9 +57,9 @@ export class StudentLesson  {
 	getCurrentLessonStatus(lesson: any){
 		if(lesson.lock == false){
 			return '';
-		}else if(lesson.score < 70){
+		}else if(lesson.score == 0){
 			return 'In progress';
-		}else if(lesson.score >= 70){
+		}else if(lesson.score > 0){
 			return `<i class="ion-checkmark-round m-r-5"></i> Completed ${lesson.completedAt.toString().slice(0, 10)}`;
 		}
 

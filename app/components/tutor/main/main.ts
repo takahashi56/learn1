@@ -26,9 +26,9 @@ export class TutorMain implements OnInit {
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 
 		this._tutorService.getAllMatrix({tutor_id: this.tutor_id}).subscribe((res) => {
-      console.log(res)
-      this._session.setItem('studentList', JSON.stringify(res));
-    })
+	      console.log(res)
+	      this._session.setItem('studentList', JSON.stringify(res));
+	    })
 
 		this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
 			this.courseList = res;
