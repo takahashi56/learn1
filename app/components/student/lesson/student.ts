@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, EventEmitter} from 'angular2/core';
 import {Session} from '../../../services/session';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
@@ -31,6 +31,8 @@ export class StudentLesson  {
 
 		this._studentService.getScoreListByCourse({course_id: this.course.course_id, student_id: this.student_id}).subscribe((res)=>{
 			res.forEach(function(score){
+				console.log(score.lesson_id);
+				console.log(score);
 				self._session.setItem(score.lesson_id, score.score);
 			})
 		})
@@ -55,19 +57,63 @@ export class StudentLesson  {
 		this._router.navigate(['StudentLesson']);
 	}
 	getCurrentLessonStatus(lesson: any){
-		if(lesson.lock == false){
-			return '';
-		}else if(lesson.score == 0){
-			return 'In progress';
-		}else if(lesson.score > 0){
-			return `<i class="ion-checkmark-round m-r-5"></i> Completed ${lesson.completedAt.toString().slice(0, 10)}`;
-		}
+		console.log(lesson)
+		console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+		var score = lesson.score;
+		console.log(score);
+		console.log(Number(score.toString()));
+		if(Number(score) == -1){
+			return `
+				<div class="col-sm-6 text-right">
+	                <div> Locked </div>
+	            </div>
+
+	            <div class="col-sm-2 text-right"></div>
+			`;	
+		}	
+
+		if(lesson.lock == true){
+			return `<div class="col-sm-6 text-right">
+	                <div> Ready </div>
+	            </div>
+
+	            <div class="col-sm-2 text-right"></div>`;
+		}else if(lesson.score == 0){			
+			return `
+				<div class="col-sm-5 text-right">
+	                <div> In progress </div>
+	            </div>
+
+	            <div class="col-sm-2 text-right">
+	                <i class="fa fa-film m-r-5"></i>${lesson.count} Videos 
+	            </div>
+			`;
+		}else if(lesson.score > 0){			
+			return `
+				<div class="col-sm-5 text-right">
+	                <div> <i class="ion-checkmark-round m-r-5"></i> Completed ${lesson.completedAt.toString().slice(0, 10)} </div>
+	            </div>
+
+	            <div class="col-sm-2 text-right">
+	                <i class="fa fa-film m-r-5"></i>${lesson.count} Videos 
+	            </div>
+			`;
+		}	
 
 	}
+
+
 	countVideo(lesson: any){
 
 	}
 	gotoLessonVideo(lesson: any, i: number){
+		var score = lesson.score;
+		console.log(typeof score);
+		console.log(Number(score));
+		if(Number(score) == -1){
+			return false;
+		}
 
 		this._studentService.getContentsByLessonId(lesson.lesson_id).subscribe((res) => {
 			this._session.setItem('SelectedContents', JSON.stringify(res));			

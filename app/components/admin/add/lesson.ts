@@ -167,4 +167,21 @@ export class AddLesson {
 			(<Control>this.lessonForm.controls['lessondescription']).updateValue(this.lessonData.lessondescription);
 		}	
 	}
+
+	getCourseName(){
+		var course = JSON.parse(this._session.getItem('Course'));
+		if (course.coursetitle == ""){
+			return "Add Lesson";
+		}else{
+			return course.coursetitle;
+		}
+	}
+
+	getLessonName(){
+		if(this.lessonData.lessonname == ""){
+			return "Lesson Name";
+		}else{
+			return this.lessonData.lessonname;
+		}
+	}
 }

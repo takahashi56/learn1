@@ -42,7 +42,9 @@ export class LessonContent implements OnInit{
 
 		this.videoOrQuestion = this.content.videoOrQuestion;
 		this.singleOrMulti = this.content.singleOrMulti;
-		this.questionType = this.content.questionType;
+		console.log(this.content.questionType == true);
+
+		this.questionType = this.content.questionType == true ? true : false;
 		this.image = this.content.image;
 		this.videoLabel = new Control(this.content.videoLabel,Validators.required);
 		this.videoEmbedCode = new Control(this.content.videoEmbedCode , Validators.required);
@@ -52,6 +54,10 @@ export class LessonContent implements OnInit{
 		this.answerC = new Control(this.content.answerC , Validators.required);
 		this.answerD = new Control(this.content.answerD , Validators.required);
 		this.trueNumber = this.content.trueNumber;
+
+		console.log("this.questionType and this.singleMulti");
+		console.log(this.singleOrMulti);
+		console.log(this.questionType);		
 
 		this.contentForm = this.builder.group({
 			videoLabel : this.videoLabel,

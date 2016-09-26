@@ -21,6 +21,10 @@ export class StudentMain implements OnInit {
 		this.studentId = this._session.getItem('MainStudentId');
 		console.log(this.studentId);
 		var role = this._session.getCurrentRole();
+		this._studentService.updateCourse(this.studentId).subscribe((res)=>{
+			console.log(res)
+		})
+
 		if(role == 2){
 			this._studentService.getCourseListById(this.studentId).subscribe((res)=>{
 				this.courseList = res;

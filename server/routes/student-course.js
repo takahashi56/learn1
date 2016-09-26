@@ -29,7 +29,10 @@ module.exports = function(app) {
 	app.post('/api/student/getscorelist', function(req, res) {
 		studentcourse.getScoreList(req, res);
 	});
-	
+
+	app.post('/api/student/updatescore', function(req, res) {
+		studentcourse.updateScore(req, res);
+	});
 
 	app.post('/api/student/setcoursescorewithstudent', function(req, res) {
 		studentcourse.setCourseScoreWithStudent(req, res);

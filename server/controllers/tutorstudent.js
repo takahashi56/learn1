@@ -43,6 +43,9 @@ exports.getAllStudents = function(req, res) {
 	  			console.log(students_copy.length);
 	  			console.log(students.length)
 	  			if(students.length == students_copy.length){
+	  				students_copy.sort(function(a, b){
+			            return a.firstName.localeCompare(b.firstName);    
+			          })
 	  				res.send(students_copy);			
 	  			}
   			})	  			
@@ -71,7 +74,7 @@ exports.getAllCourses = function(req, res) {
                         course_id: course._id,
                         coursetitle: course.name,
                         enrolled: 0,
-												past: 0,
+						past: 0,
                         coursedescription: course.description
                     }
                     main_data.push(data1);
@@ -88,8 +91,8 @@ exports.getAllCourses = function(req, res) {
                             i++;
                             console.log(i);
                             console.log(takes.length);
-                            if(student != null && take.score >= 70) past++;
-														if(student != null && take.score < 70) count++;
+                            if(student != null && take.score  > 0) past++;
+							if(student != null && take.score == 0) count++;
 
                             if(i == takes.length){
                                 console.log(course);
@@ -97,11 +100,14 @@ exports.getAllCourses = function(req, res) {
                                     course_id: course._id,
                                     coursetitle: course.name,
                                     enrolled: count,
-																		past: past,
+									past: past,
                                     coursedescription: course.description
                                 }
                                 main_data.push(data);
                                 if(main_data.length == courses.length){
+                                	main_data.sort(function(a, b){
+							            return a.coursetitle.localeCompare(b.coursetitle);    
+							          })
                                     res.send(main_data);
 
                                     return false;

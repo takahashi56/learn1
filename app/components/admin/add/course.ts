@@ -103,7 +103,8 @@ export class AddCourse {
 			console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 			console.log(data);
 
-
+			if(data.lesson.length == 0) return false;
+			
 			this._adminService.addCourse(data, editORadd.flag)
 				.subscribe((res) => {
 					if(res.success){
@@ -115,6 +116,14 @@ export class AddCourse {
 						console.log("fail");
 					}
 				})
+		}
+	}
+
+	getCourseName(){
+		if(this.courseData.coursetitle != ""){
+			return this.courseData.coursetitle;
+		}else{
+			return "Add Course";
 		}
 	}
 }
