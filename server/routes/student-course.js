@@ -37,4 +37,8 @@ module.exports = function(app) {
 	app.post('/api/student/setcoursescorewithstudent', function(req, res) {
 		studentcourse.setCourseScoreWithStudent(req, res);
 	});
+
+	app.post('/api/student/resetcourse', function(req, res) {
+		studentcourse.resetCourse(req, res);
+	});
 }

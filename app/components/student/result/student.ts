@@ -28,9 +28,9 @@ export class LessonResult {
 
 		lessonList.forEach((lesson) => {
 			console.log('lesson: ' + lesson);
-			var score = this._session.getItem(lesson.lesson_id);
+			var score = JSON.parse(this._session.getItem(lesson.lesson_id));
 			console.log('lesson score: '+ score.score);
-			if(score.score == -1){
+			if(score.score == 0){				
 				nextlesson = lesson;
 				return false;
 			}else{
@@ -56,21 +56,7 @@ export class LessonResult {
 
 	}
 
-	gotoFinish(){
-		var lessonList = JSON.parse(this._session.getItem('lessonList')), self = this, nextlesson :any = [], count = 0;
-
-		lessonList.forEach((lesson) => {
-			console.log('lesson: ' + lesson);
-			var score = this._session.getItem(lesson.lesson_id);
-			console.log('lesson score: '+ score);
-			if(score.score == 0 || score.score == null || score.score == -1){
-				nextlesson = lesson;
-				return false;
-			}else{
-				count++;
-			}
-		})
-		
+	gotoFinish(){		
 		this.router.navigate(['CourseResult']);
 	}
 }

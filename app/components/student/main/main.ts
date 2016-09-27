@@ -13,6 +13,7 @@ import {StudentService} from '../../../services/student';
 export class StudentMain implements OnInit {
 
 	courseList: any = [];
+	course: any={};
 	studentInfo: any;
 	studentId: string;
 
@@ -71,6 +72,19 @@ export class StudentMain implements OnInit {
 		if(course.score > 0){
 			return `Completed, ${course.completedAt.toString().slice(0,10)} Score ${course.score}%`;
 		}
+	}
+
+	beforeGotoLessonList(course: any){
+		if(course.score == 0){
+			this.gotoLessonList(course);
+		}
+		this.course = course;
+	}
+
+	retakeCourse(){
+		this._studentService.resetCourse(this.studentId, this.course.course_id).subscribe((res) => {
+			this.gotoLessonList(this.course);	
+		})		
 	}
 
 	private titleCase(str: string) : string {

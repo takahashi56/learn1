@@ -58,4 +58,8 @@ export class StudentService {
 	getScoreListByCourse(data){
 		return this._http.post(this.baseUrl + 'getscorelist', JSON.stringify(data), HEADER).map((res)=>res.json());
 	}
+
+	resetCourse(student_id, course_id){
+		return this._http.post(this.baseUrl + 'resetcourse', JSON.stringify({student_id: student_id, course_id: course_id}), HEADER).map((res)=>res.json());	
+	}
 }

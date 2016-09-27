@@ -140,8 +140,6 @@ exports.getLessonList = function(req, res) {
                   one = false;
                 }
               });
-              console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-              console.log(return_data);              
               res.send(return_data);
             }
           })
@@ -257,4 +255,22 @@ var scoreUpdate = function(student_id){
         })
       })
    });
+}
+
+exports.resetCourse = function(req, res){
+  var student_id = req.body.student_id, 
+      course_id = req.body.course_id;
+
+   Lesson.find({course_id: course_id}, null, {sort: 'created_at'},function(err, lessons){
+    lessons.forEach(function(lesson, index, theArray){
+      Score.update({lesson_id: lesson._id, student_id: student_id}, {score: Number(-1)}, function(err, score){
+        if(err) return console.log(err);
+        
+        if(index == theArray.length -1){
+          res.send({success: true});
+        }
+      })
+    })
+  })
+
 }
