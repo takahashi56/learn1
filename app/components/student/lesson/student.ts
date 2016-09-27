@@ -65,39 +65,28 @@ export class StudentLesson  {
 		console.log(Number(score.toString()));
 		if(Number(score) == -1){
 			return `
-				<div class="col-sm-6 text-right">
+				<div class="col-sm-7 text-right">
 	                <div> Locked </div>
 	            </div>
-
-	            <div class="col-sm-2 text-right"></div>
 			`;	
 		}	
 
 		if(lesson.lock == true){
-			return `<div class="col-sm-6 text-right">
+			return `<div class="col-sm-7 text-right">
 	                <div> Ready </div>
-	            </div>
-
-	            <div class="col-sm-2 text-right"></div>`;
+	            	</div>
+	            `;
 		}else if(lesson.score == 0){			
 			return `
-				<div class="col-sm-5 text-right">
+				<div class="col-sm-7 text-right">
 	                <div> In progress </div>
-	            </div>
-
-	            <div class="col-sm-2 text-right">
-	                <i class="fa fa-film m-r-5"></i>${lesson.count} Videos 
 	            </div>
 			`;
 		}else if(lesson.score > 0){			
 			return `
-				<div class="col-sm-5 text-right">
+				<div class="col-sm-7 text-right">
 	                <div> <i class="ion-checkmark-round m-r-5"></i> Completed ${lesson.completedAt.toString().slice(0, 10)} </div>
-	            </div>
-
-	            <div class="col-sm-2 text-right">
-	                <i class="fa fa-film m-r-5"></i>${lesson.count} Videos 
-	            </div>
+	            </div>	            
 			`;
 		}	
 

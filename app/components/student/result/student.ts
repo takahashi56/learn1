@@ -55,4 +55,24 @@ export class LessonResult {
 		}
 
 	}
+
+	gotoFinish(){
+		var lessonList = JSON.parse(this._session.getItem('lessonList')), self = this, nextlesson :any = [], count = 0;
+
+		lessonList.forEach(function(lesson){
+			console.log('lesson: ' + lesson);
+			var score = self._session.getItem(lesson.lesson_id);
+			console.log('lesson score: '+ score);
+			if(score == 0 || score == null || score == ""){
+				nextlesson = lesson;
+				return false;
+			}else{
+				count++;
+			}
+		})
+		console.log(count);
+		console.log(nextlesson);
+		
+		this.router.navigate(['CourseResult']);
+	}
 }
