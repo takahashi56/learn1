@@ -31,15 +31,16 @@ export class CourseResult {
 		lessonList.forEach(function(lesson){
 			console.log("lesson list ok")
 			console.log(lessonList);
-			var status = JSON.parse(self._session.getItem(lesson.lesson_id)),
-				s = parseInt(status.score);
+			console.log(lesson.lesson_id);
+			var status = JSON.parse(self._session.getItem(lesson.lesson_id));
+
+			var	s = parseInt(status == null ? 0 : status.score);
 
 			s = isNaN(s) ? 0 : s;
-			console.log(`status = ${status.score}`);
 			self.score += s
 		});
 
-
+		console.log("--------------------------------------------------")
 		console.log(this.score);
 		this.score = Math.floor( this.score / (lessonList.length));
 
@@ -54,8 +55,8 @@ export class CourseResult {
 			var status = JSON.parse(this._session.getItem(lesson.lesson_id)),
 				temp = {
 					lessonname: lesson.lessonname,
-					total: status.total,
-					right: status.right
+					total: status == null? 0 : status.total,
+					right: status == null? 0 : status.right
 				};
 			this.showLessonResult.push(temp);
 		})
