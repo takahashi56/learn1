@@ -2198,3 +2198,14 @@ input.alert-page{
 #table-head-name {
    min-width: 100px;
 }
+
+
+@media (min-width: 960px){
+  .container{
+    width: 960px;
+  }
+
+  .containerHeight{
+    height: 540px;
+  }
+}

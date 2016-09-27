@@ -240,25 +240,19 @@ var scoreUpdate = function(student_id){
           lessons.forEach(function(lesson, index, theArray){
             Score.findOne({lesson_id: lesson._id, student_id: student._id}).lean().then(function(err, score){
               console.log(score);
-              if(score == undefined || Number(score) == -1){
-                Take.update({course_id: course._id, student_id: student_id}, {score: 0, isCompleted: false, completedAt: ''}, function(err, take){
-                  if(err) console.log(err)
-                })
-                console.log()
-                return false;
+              if(score == null || Number(score.score) == -1){
+                courseScore += 0;
+              }else{
+                courseScore += Number(score.score);                
               }
 
-              // courseScore += score;
-              // if(lessons.length = index + 1){
-              //   courseScore = courseScore/lessons.length * 100;
-              //   Take.update({course_id: course._id, student_id: student_id}, {score: courseScore}, function(err, take){
-              //     if(err) console.log(err)
-              //   })
-              //   break finish;
-              //   return false;
-              // }
+              if(lessons.length = index + 1){
+                courseScore = courseScore/lessons.length * 100;
+                Take.update({course_id: course._id, student_id: student_id}, {score: courseScore}, function(err, take){
+                  if(err) console.log(err)
+                })
+              }
             })
-
           })
         })
       })
