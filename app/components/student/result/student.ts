@@ -29,8 +29,8 @@ export class LessonResult {
 		lessonList.forEach((lesson) => {
 			console.log('lesson: ' + lesson);
 			var score = this._session.getItem(lesson.lesson_id);
-			console.log('lesson score: '+ score);
-			if(score.score == 0 || score.score == null || score.score == -1){
+			console.log('lesson score: '+ score.score);
+			if(score.score == -1){
 				nextlesson = lesson;
 				return false;
 			}else{
