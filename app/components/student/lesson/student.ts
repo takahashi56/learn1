@@ -85,13 +85,7 @@ export class StudentLesson  {
 	                <div> Ready </div>
 	            	</div>
 	            `;
-		}else if(lesson.score == 0){			
-			return `
-				<div class="col-sm-7 text-right">
-	                <div> In progress </div>
-	            </div>
-			`;
-		}else if(lesson.score > 0){			
+		}else if(lesson.score >= 0){			
 			return `
 				<div class="col-sm-7 text-right">
 	                <div> <i class="ion-checkmark-round m-r-5"></i> Completed ${lesson.completedAt.toString().slice(0, 10)} </div>

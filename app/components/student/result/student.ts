@@ -24,23 +24,17 @@ export class LessonResult {
 	}
 
 	gotoNextLesson(){
-		var lessonList = JSON.parse(this._session.getItem('lessonList')), self = this, nextlesson :any = [], count = 0;
+		var lessonList = JSON.parse(this._session.getItem('lessonList')), self = this, nextlesson :any = [], count = false, lessonIndex = Number(this._session.getItem('SelectedLessonIndex')) + 1;
 
-		lessonList.forEach((lesson) => {
-			console.log('lesson: ' + lesson);
-			var score = JSON.parse(this._session.getItem(lesson.lesson_id));
-			console.log('lesson score: '+ score.score);
-			if(score.score == 0){				
-				nextlesson = lesson;
-				return false;
-			}else{
-				count++;
-			}
-		})
+		if(lessonList.length > lessonIndex){
+			nextlesson = lessonList[lessonIndex];
+			count = true;
+		}
+				
 		console.log(count);
 		console.log(nextlesson);
 
-		if(count == lessonList.length){
+		if(!count){
 			this.router.navigate(['CourseResult']);
 		}else{
 			this._studentService.getContentsByLessonId(nextlesson.lesson_id).subscribe((res) => {
@@ -48,7 +42,7 @@ export class LessonResult {
 				this._session.setItem('SelectedContents', JSON.stringify(res));			
 				this._session.setItem('SelectedLessonById', JSON.stringify(nextlesson));
 				this._session.setItem('SelectedLessonId', nextlesson.lesson_id);
-				this._session.setItem('SelectedLessonIndex', count);
+				this._session.setItem('SelectedLessonIndex', lessonIndex);
 				this._session.setItem('TotalLesson', lessonList.length);
 				this.router.navigate(['SelectedContent']);
 			});			
