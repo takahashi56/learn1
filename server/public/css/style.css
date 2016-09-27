@@ -2207,5 +2207,7 @@ input.alert-page{
 
   .containerHeight{
     height: 540px;
+    padding: 0 !important;
+    overflow-y: hidden;
   }
 }
