@@ -26,11 +26,11 @@ export class LessonResult {
 	gotoNextLesson(){
 		var lessonList = JSON.parse(this._session.getItem('lessonList')), self = this, nextlesson :any = [], count = 0;
 
-		lessonList.forEach(function(lesson){
+		lessonList.forEach((lesson) => {
 			console.log('lesson: ' + lesson);
-			var score = self._session.getItem(lesson.lesson_id);
+			var score = this._session.getItem(lesson.lesson_id);
 			console.log('lesson score: '+ score);
-			if(score == 0 || score == null || score == ""){
+			if(score.score == 0 || score.score == null || score.score == -1){
 				nextlesson = lesson;
 				return false;
 			}else{
@@ -44,14 +44,14 @@ export class LessonResult {
 			this.router.navigate(['CourseResult']);
 		}else{
 			this._studentService.getContentsByLessonId(nextlesson.lesson_id).subscribe((res) => {
+				this._session.setItem('SelectedContents', '');			
 				this._session.setItem('SelectedContents', JSON.stringify(res));			
-			});
-
-			this._session.setItem('SelectedLessonById', JSON.stringify(nextlesson));
-			this._session.setItem('SelectedLessonId', nextlesson.lesson_id);
-			this._session.setItem('SelectedLessonIndex', count);
-			this._session.setItem('TotalLesson', lessonList.length);
-			this.router.navigate(['SelectedContent']);
+				this._session.setItem('SelectedLessonById', JSON.stringify(nextlesson));
+				this._session.setItem('SelectedLessonId', nextlesson.lesson_id);
+				this._session.setItem('SelectedLessonIndex', count);
+				this._session.setItem('TotalLesson', lessonList.length);
+				this.router.navigate(['SelectedContent']);
+			});			
 		}
 
 	}
@@ -59,19 +59,17 @@ export class LessonResult {
 	gotoFinish(){
 		var lessonList = JSON.parse(this._session.getItem('lessonList')), self = this, nextlesson :any = [], count = 0;
 
-		lessonList.forEach(function(lesson){
+		lessonList.forEach((lesson) => {
 			console.log('lesson: ' + lesson);
-			var score = self._session.getItem(lesson.lesson_id);
+			var score = this._session.getItem(lesson.lesson_id);
 			console.log('lesson score: '+ score);
-			if(score == 0 || score == null || score == ""){
+			if(score.score == 0 || score.score == null || score.score == -1){
 				nextlesson = lesson;
 				return false;
 			}else{
 				count++;
 			}
 		})
-		console.log(count);
-		console.log(nextlesson);
 		
 		this.router.navigate(['CourseResult']);
 	}

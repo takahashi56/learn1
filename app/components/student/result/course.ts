@@ -28,20 +28,20 @@ export class CourseResult {
 
 		var lessonList = JSON.parse(this._session.getItem('lessonList')), self = this, count = 0;
 
-		lessonList.forEach(function(lesson){
+		lessonList.forEach((lesson) => {
 			console.log("lesson list ok")
 			console.log(lessonList);
 			console.log(lesson.lesson_id);
-			var status = JSON.parse(self._session.getItem(lesson.lesson_id));
+			var status = JSON.parse(this._session.getItem(lesson.lesson_id));
+			console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			console.log(status);
 
 			var	s = parseInt(status == null ? 0 : status.score);
 
 			s = isNaN(s) ? 0 : s;
-			self.score += s
+			this.score += s
 		});
 
-		console.log("--------------------------------------------------")
-		console.log(this.score);
 		this.score = Math.floor( this.score / (lessonList.length));
 
 		var student_id = this._session.getCurrentId(), coures_id = this._session.getItem('CourseId'), score = this.score;

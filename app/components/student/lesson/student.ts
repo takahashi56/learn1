@@ -27,15 +27,24 @@ export class StudentLesson  {
 		this._studentService.getLessonListById(this.course.course_id, this.student_id).subscribe((res)=>{
 			this.lessonList = res;
 			this._session.setItem('lessonList', JSON.stringify(res));
+			this.lessonList.forEach((lesson) => {
+				console.log(lesson.score);
+				this._session.setItem(lesson.lesson_id, JSON.stringify({
+						total: 0,
+						right: 0,
+						score: lesson.score
+				}));
+			})
+			console.log(this.lessonList);
 		})
 
-		this._studentService.getScoreListByCourse({course_id: this.course.course_id, student_id: this.student_id}).subscribe((res)=>{
-			res.forEach(function(score){
-				console.log(score.lesson_id);
-				console.log(score);
-				self._session.setItem(score.lesson_id, score.score);
-			})
-		})
+		// this._studentService.getScoreListByCourse({course_id: this.course.course_id, student_id: this.student_id}).subscribe((res)=>{
+		// 	res.forEach(function(score){
+		// 		console.log(score.lesson_id);
+		// 		console.log(score);
+		// 		self._session.setItem(score.lesson_id, score.score);
+		// 	})
+		// })
 	}
 
 	ngOnInit(){
@@ -105,14 +114,15 @@ export class StudentLesson  {
 		}
 
 		this._studentService.getContentsByLessonId(lesson.lesson_id).subscribe((res) => {
+			this._session.setItem('SelectedContents', '');			
 			this._session.setItem('SelectedContents', JSON.stringify(res));			
+			this._session.setItem('SelectedLessonById', JSON.stringify(lesson));
+			this._session.setItem('SelectedLessonId', lesson.lesson_id);
+			this._session.setItem('SelectedLessonIndex', i);
+			this._session.setItem('TotalLesson', this.lessonList.length);
+			this._router.navigate(['SelectedContent']);
 		});
-
-		this._session.setItem('SelectedLessonById', JSON.stringify(lesson));
-		this._session.setItem('SelectedLessonId', lesson.lesson_id);
-		this._session.setItem('SelectedLessonIndex', i);
-		this._session.setItem('TotalLesson', this.lessonList.length);
-		this._router.navigate(['SelectedContent']);
+		
 	}
 
 	private titleCase(str: string) : string {
