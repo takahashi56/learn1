@@ -165,7 +165,7 @@ exports.setScoreForLesson = function(req, res){
   var score = parseInt(req.body.score),
     lesson_id = req.body.lesson_id,
     student_id = req.body.student_id,
-    isCompleted = score > 0 ? true : false,
+    isCompleted = score >= 0 ? true : false,
     completedAt = new Date(),
     certificate = '',
     data = {
