@@ -34,14 +34,16 @@ export class CertificateView implements OnInit, AfterViewInit{
     }
 
     ngAfterViewInit(){
-      setTimeout(this.downloadpdf(), 2000)  
+      this.downloadpdf();  
     }
 
     downloadpdf(){
         let data = window.location.href; 
           
         this._tutorService.makePdf({data:data}).subscribe((res) => {            
-           window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+           setTimeout(() => { 
+               window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url } 
+               , 5000);
            console.log(res.url);
         })
 
