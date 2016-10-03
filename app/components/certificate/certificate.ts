@@ -36,6 +36,7 @@ export class CertificateView implements OnInit{
     }
 
     downloadpdf(){
+        let self = this;
         html2canvas(document.getElementById('pdffromHtml'), {
             onrendered: function (canvas) {
                 var data = canvas.toDataURL();
@@ -48,7 +49,7 @@ export class CertificateView implements OnInit{
                 };
                 // console.log(docDefinition);
                 // pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
-                this._tutorService.makePdf({data:docDefinition}).subscribe((res) => {            
+                self._tutorService.makePdf({data:docDefinition}).subscribe((res) => {            
                    window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
                    console.log(res.url);
                 })
