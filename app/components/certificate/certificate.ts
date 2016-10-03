@@ -48,8 +48,11 @@ export class CertificateView implements OnInit{
                     }]
                 };
 
-                var para = document.createElement("div");
-                para.appendChild(canvas);
+                var para = document.createElement("div"),
+                    image = document.createElement("img");
+                image.src = data;
+                    
+                para.appendChild(image);
                 // console.log(docDefinition);
                 // pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
                 console.log(para);
