@@ -47,9 +47,12 @@ export class CertificateView implements OnInit{
                         width: 520,
                     }]
                 };
+
+                var para = document.createElement("div");
+                para.appendChild(canvas);
                 // console.log(docDefinition);
                 // pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
-                self._tutorService.makePdf({data:canvas}).subscribe((res) => {            
+                self._tutorService.makePdf({data:para}).subscribe((res) => {            
                    window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
                    console.log(res.url);
                 })
