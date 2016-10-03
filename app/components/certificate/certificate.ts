@@ -2,7 +2,7 @@
  * Created by root on 31/08/2016.
  */
 
-import {Component, OnInit, AfterViewInit} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {Session} from '../../services/session';
 import {ROUTER_DIRECTIVES,Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
@@ -21,7 +21,7 @@ declare let PDFJS;
     directives: [ROUTER_DIRECTIVES]
 })
 
-export class CertificateView implements OnInit, AfterViewInit{
+export class CertificateView implements OnInit{
     data: any = {};
 
     constructor(private _tutorService: TutorService, private _router: Router, private _session: Session){
@@ -30,22 +30,35 @@ export class CertificateView implements OnInit, AfterViewInit{
     }
 
     ngOnInit(){
-      
-    }
 
-    ngAfterViewInit(){
-      this.downloadpdf();  
+
+      setTimeout(this.downloadpdf(), 2000)
     }
 
     downloadpdf(){
-        let data = window.location.href; 
+        html2canvas(document.getElementById('pdffromHtml'), {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                console.log(canvas.width)
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 520,
+                    }]
+                };
+                // console.log(docDefinition);
+                // pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
+                this._tutorService.makePdf({data:docDefinition}).subscribe((res) => {            
+                   window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+                   console.log(res.url);
+                })
+            }
+        });
+
+        // let data = document.getElementById('pdffromHtml').innerHTML;
+        // let data = window.location.href; 
           
-        this._tutorService.makePdf({data:data}).subscribe((res) => {            
-           setTimeout(() => { 
-               window.open('/pdf-viewer/web/viewer.html?file=/pdf/' + res.url, '_blank') } 
-               , 5000);
-           console.log(res.url);
-        })
+        
 
     }
 
