@@ -135,7 +135,8 @@ export class DetailTutorStudent {
 
 	gotoCertificate(course: any){
 		console.log("goto certificate");
-		if(course.score < 70) return false;
+		console.log(course)
+		if(course.score == 0) return false;
 		var self = this;
 		console.log("goto certificate +++");
 		this._tutorService.getLessonsNameByCourseId({course_id: course.course_id}).subscribe((res)=>{
