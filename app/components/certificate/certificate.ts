@@ -57,7 +57,7 @@ export class CertificateView implements OnInit{
                 // pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
                 console.log(para);
                 self._tutorService.makePdf({data:para.innerHTML}).subscribe((res) => {            
-                   // window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+                   window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
                    console.log(res.url);
                 })
             }
