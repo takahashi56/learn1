@@ -105,4 +105,10 @@ export class TutorService {
       return res.json();
 		})
   }
+
+  makePdf(data){
+  	return this._http.post(this.baseUrl + 'makepdf', JSON.stringify(data), HEADER).map((res) => {
+      return res.json();
+		})
+  }
 }

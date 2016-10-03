@@ -145,7 +145,7 @@ export class DetailTutorStudent {
 				studentname: `${this.student.firstName} ${this.student.lastName}`,
 				score: course.score,
 				completed_at: course.completedAt,
-				lessons: res.data.join(',')
+				lessons: res.data.join(', ')
 			}
 			console.log(`data = ${JSON.stringify(data)}`);
 			self._session.setItem('certificate', JSON.stringify(data));

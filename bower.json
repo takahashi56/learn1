@@ -18,7 +18,8 @@
     "font-awesome": "^4.5.0",
     "metisMenu": "~1.1.3",
     "bootstrap-social": "~4.8.0",
-    "jquery.bootgrid": "^1.3.1"
+    "jquery.bootgrid": "^1.3.1",
+    "pdfjs-dist":"1.5.500",
   },
   "overrides": {
     "bootstrap": {
