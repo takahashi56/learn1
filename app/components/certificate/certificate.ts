@@ -2,7 +2,7 @@
  * Created by root on 31/08/2016.
  */
 
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, AfterViewInit} from 'angular2/core';
 import {Session} from '../../services/session';
 import {ROUTER_DIRECTIVES,Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
@@ -21,7 +21,7 @@ declare let PDFJS;
     directives: [ROUTER_DIRECTIVES]
 })
 
-export class CertificateView implements OnInit{
+export class CertificateView implements OnInit, AfterViewInit{
     data: any = {};
 
     constructor(private _tutorService: TutorService, private _router: Router, private _session: Session){
@@ -30,9 +30,11 @@ export class CertificateView implements OnInit{
     }
 
     ngOnInit(){
+      
+    }
 
-
-      setTimeout(this.downloadpdf(), 5000)
+    AfterViewInit(){
+      setTimeout(this.downloadpdf(), 2000)  
     }
 
     downloadpdf(){
