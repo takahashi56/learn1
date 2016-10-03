@@ -6,8 +6,9 @@ var mongoose = require('mongoose'),
 	Take = mongoose.model('Take'),
 	Lesson = mongoose.model('Lesson'),
 	encrypt = require('../utilities/encryption'),
-	csv = require('fast-csv');
-
+	csv = require('fast-csv'),
+ 	pdf = require('pdfcrowd'),
+ 	path = require('path');
 
 exports.getAllStudents = function(req, res) {
 	var data = req.body, tutor_id = data.tutor_id, total = 0, complete = 0;
@@ -247,6 +248,7 @@ exports.getCoursesByStudentId = function(req, res){
 
 				if(course != null){
 					var data = {
+						course_id: course._id,
 						coursetitle: course.name,
 						isCompleted: take.isCompleted,
 						score: take.score,
@@ -340,15 +342,25 @@ exports.removeStudent = function(req, res){
 }
 
 exports.getLessonsNameByCourseId = function (req, res) {
-	var course_id = req.body.course_id, data = [];
-	Lesson.find({coures_id: course_id}, function(err, lessons){
+	var course_id = req.body.course_id, data = [], date;
+	Course.findOne({_id: course_id}, function(err, course){
+		if(course.created_at == null){
+			date = course.updated_at;
+		}else{
+			date = course.created_at;
+		}
+		Lesson.find({course_id: course_id, created_at: {$gte: date}}, function(err, lessons){
+			console.log("DDDDDDDDDDDDDDDD")
+			console.log(lessons)
 
-		lessons.forEach(function(lesson){
-			data.push(lesson.name);
-		});
+			lessons.forEach(function(lesson){
+				data.push(lesson.name);
+			});
 
-		res.send({data: data});
+			res.send({data: data});
+		})	
 	})
+	
 }
 
 exports.getAllMatrix = function(req, res){
@@ -372,3 +384,17 @@ exports.getAllMatrix = function(req, res){
 		})
 	})
 }
+
+exports.makePdf = function(req, res){
+	var url = req.body.data,
+		randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26)),
+		uniqid = randLetter + Date.now(),
+		file_name = uniqid + '.pdf',
+		pdf_path = path.join(__dirname, '..','public','pdf',file_name);
+
+	var client = new pdf.Pdfcrowd('Pedro19880417', 'd5e42b4e5df7e4a921f52e6aefeda841');
+	client.convertURI(url, pdf.saveToFile(pdf_path));
+	res.send({url: file_name});
+} 
+
+

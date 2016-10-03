@@ -12,6 +12,7 @@ import {TutorService} from '../../services/tutor';
 // declare let jsPDF;
 declare let html2canvas;
 declare let pdfMake;
+declare let PDFJS;
 
 @Component({
     selector: 'certificate',
@@ -29,51 +30,50 @@ export class CertificateView implements OnInit{
     }
 
     ngOnInit(){
+
+
       setTimeout(this.downloadpdf(), 2000)
     }
 
     downloadpdf(){
-        html2canvas(document.getElementById('pdffromHtml'), {
-            onrendered: function (canvas) {
-                var data = canvas.toDataURL();
-                var docDefinition = {
-                    content: [{
-                        image: data,
-                        width: 500,
-                    }]
-                };
-                console.log(docDefinition);
-                pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
-            }
-        });
+        // html2canvas(document.getElementById('pdffromHtml'), {
+        //     onrendered: function (canvas) {
+        //         var data = canvas.toDataURL();
+        //         console.log(canvas.width)
+        //         var docDefinition = {
+        //             content: [{
+        //                 image: data,
+        //                 width: 520,
+        //             }]
+        //         };
+        //         console.log(docDefinition);
+        //         pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
+        //     }
+        // });
 
-        // var pdf = new jsPDF('l', 'pt', 'letter'),
-        //     source = document.getElementById('pdffromHtml').innerHTML,
-        //     specialElementHandlers = {
-        //         // element with id of "bypass" - jQuery style selector
-        //         '#editor': function (element, renderer) {
-        //             // true = "handled elsewhere, bypass text extraction"
-        //             return true;
-        //         }
-        //     },
-        //     margins = {
-        //         top: 0,
-        //         bottom: 0,
-        //         left: 0,
-        //         width: 1341
-        //     };
-        //
-        //
-        // pdf.fromHTML(
-        //     source,
-        //     0,
-        //     0, {
-        //         'width': margins.width,
-        //         'elementHandlers': specialElementHandlers
-        //     }, function(disposal){
-        //         console.log(disposal);
-        //         pdf.save('Test.pdf');
-        //     }, margins);
+        // let data = document.getElementById('pdffromHtml').innerHTML;
+        let data = window.location.href; 
+          
+        this._tutorService.makePdf({data:data}).subscribe((res) => {            
+           window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+           console.log(res.url);
+        })
 
+    }
+
+    extractDomain(url) {
+        var domain;
+        //find & remove protocol (http, ftp, etc.) and get domain
+        if (url.indexOf("://") > -1) {
+            domain = url.split('/')[2];
+        }
+        else {
+            domain = url.split('/')[0];
+        }
+
+        //find & remove port number
+        //domain = domain.split(':')[0];
+
+        return domain;
     }
 }

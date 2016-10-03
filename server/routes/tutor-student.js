@@ -46,4 +46,8 @@ module.exports = function(app) {
 	app.post('/api/tutor/getallmatrix', function(req, res) {
 		tutorstudent.getAllMatrix(req, res);
 	});
+
+	app.post('/api/tutor/makepdf', function(req, res) {
+		tutorstudent.makePdf(req, res);
+	});
 }

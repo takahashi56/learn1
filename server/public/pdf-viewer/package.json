@@ -1,0 +1,166 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "pdf-viewer",
+        "scope": null,
+        "escapedName": "pdf-viewer",
+        "name": "pdf-viewer",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/root/Documents/Work/mean/learn - steven/learn1"
+    ]
+  ],
+  "_from": "pdf-viewer@latest",
+  "_id": "pdf-viewer@0.8.1",
+  "_inCache": true,
+  "_location": "/pdf-viewer",
+  "_nodeVersion": "0.12.7",
+  "_npmUser": {
+    "name": "ocrolus",
+    "email": "npmjs@ocrolus.com"
+  },
+  "_npmVersion": "2.11.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "pdf-viewer",
+    "scope": null,
+    "escapedName": "pdf-viewer",
+    "name": "pdf-viewer",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/pdf-viewer/-/pdf-viewer-0.8.1.tgz",
+  "_shasum": "290c89f5b57c6ceb2a564e0a86140f88303698c1",
+  "_shrinkwrap": null,
+  "_spec": "pdf-viewer",
+  "_where": "/root/Documents/Work/mean/learn - steven/learn1",
+  "author": "",
+  "contributors": [
+    {
+      "name": "This is an",
+      "url": "incomplete"
+    },
+    {
+      "name": "codebase which lives in this repository. If you make a contribution"
+    },
+    {
+      "name": "here, you may add your name and, optionally, email address in the"
+    },
+    {
+      "name": "appropriate place."
+    },
+    {
+      "name": "Adil Allawi",
+      "email": "@ironymark"
+    },
+    {
+      "name": "Andreas Gal",
+      "email": "gal@mozilla.com"
+    },
+    {
+      "name": "Artur Adib",
+      "email": "aadib@mozilla.com"
+    },
+    {
+      "name": "Brendan Dahl",
+      "email": "bdahl@mozilla.com"
+    },
+    {
+      "name": "Bill Walker",
+      "email": "bwalker@mozilla.com"
+    },
+    {
+      "name": "Chris G Jones",
+      "email": "cjones@mozilla.com"
+    },
+    {
+      "name": "David Quintana",
+      "email": "gigaherz@gmail.com"
+    },
+    {
+      "name": "Felix Kälberer",
+      "email": "@fkaelberer"
+    },
+    {
+      "name": "Jakob Miland",
+      "email": "saebekassebil@gmail.com"
+    },
+    {
+      "name": "Jonas Jenwald",
+      "email": "jonas.jenwald@gmail.com"
+    },
+    {
+      "name": "Julian Viereck"
+    },
+    {
+      "name": "Justin D'Arcangelo",
+      "email": "justindarc@gmail.com"
+    },
+    {
+      "name": "Kalervo Kujala"
+    },
+    {
+      "name": "Ophir Lojkine",
+      "email": "@lovasoa"
+    },
+    {
+      "name": "Rob Wu",
+      "email": "rob@robwu.nl"
+    },
+    {
+      "name": "Shaon Barman",
+      "email": "shaon.barman@gmail.com"
+    },
+    {
+      "name": "Tim van der Meij",
+      "email": "info@timvandermeij.nl"
+    },
+    {
+      "name": "Vivien Nicolas",
+      "email": "21@vingtetun.org"
+    },
+    {
+      "name": "Yury Delendik",
+      "email": "ydelendik@mozilla.com"
+    },
+    {
+      "name": "waddlesplash",
+      "email": "@waddlesplash"
+    }
+  ],
+  "dependencies": {},
+  "description": "Build including the viewer in PDF.JS",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "290c89f5b57c6ceb2a564e0a86140f88303698c1",
+    "tarball": "https://registry.npmjs.org/pdf-viewer/-/pdf-viewer-0.8.1.tgz"
+  },
+  "gitHead": "42ddb7151b02454e43a9b31b320e1c9dc37d7de2",
+  "keywords": [
+    "PDF.JS",
+    "VIEWER"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "ocrolus",
+      "email": "npmjs@ocrolus.com"
+    }
+  ],
+  "name": "pdf-viewer",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.8.1"
+}
