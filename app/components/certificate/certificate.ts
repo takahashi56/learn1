@@ -10,6 +10,8 @@ import {TutorService} from '../../services/tutor';
 
 // import 'jspdf';
 // declare let jsPDF;
+declare let html2canvas;
+declare let pdfMake;
 
 @Component({
     selector: 'certificate',
@@ -27,11 +29,24 @@ export class CertificateView implements OnInit{
     }
 
     ngOnInit(){
-      // setTimeout(this.downloadpdf(), 2000)
-          // this.downloadpdf()
+      setTimeout(this.downloadpdf(), 2000)
     }
 
     downloadpdf(){
+        html2canvas(document.getElementById('pdffromHtml'), {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 500,
+                    }]
+                };
+                console.log(docDefinition);
+                pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
+            }
+        });
+
         // var pdf = new jsPDF('l', 'pt', 'letter'),
         //     source = document.getElementById('pdffromHtml').innerHTML,
         //     specialElementHandlers = {
