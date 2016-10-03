@@ -42,7 +42,7 @@ export class CertificateView implements OnInit, AfterViewInit{
           
         this._tutorService.makePdf({data:data}).subscribe((res) => {            
            setTimeout(() => { 
-               window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url } 
+               window.open('/pdf-viewer/web/viewer.html?file=/pdf/' + res.url, '_blank') } 
                , 5000);
            console.log(res.url);
         })
