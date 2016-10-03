@@ -32,26 +32,10 @@ export class CertificateView implements OnInit{
     ngOnInit(){
 
 
-      setTimeout(this.downloadpdf(), 2000)
+      setTimeout(this.downloadpdf(), 5000)
     }
 
     downloadpdf(){
-        // html2canvas(document.getElementById('pdffromHtml'), {
-        //     onrendered: function (canvas) {
-        //         var data = canvas.toDataURL();
-        //         console.log(canvas.width)
-        //         var docDefinition = {
-        //             content: [{
-        //                 image: data,
-        //                 width: 520,
-        //             }]
-        //         };
-        //         console.log(docDefinition);
-        //         pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
-        //     }
-        // });
-
-        // let data = document.getElementById('pdffromHtml').innerHTML;
         let data = window.location.href; 
           
         this._tutorService.makePdf({data:data}).subscribe((res) => {            
