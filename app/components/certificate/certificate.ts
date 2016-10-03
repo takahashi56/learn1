@@ -52,6 +52,7 @@ export class CertificateView implements OnInit{
                 para.appendChild(canvas);
                 // console.log(docDefinition);
                 // pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
+                console.log(para);
                 self._tutorService.makePdf({data:para}).subscribe((res) => {            
                    window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
                    console.log(res.url);
