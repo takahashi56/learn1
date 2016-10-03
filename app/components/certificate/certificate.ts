@@ -33,7 +33,7 @@ export class CertificateView implements OnInit, AfterViewInit{
       
     }
 
-    AfterViewInit(){
+    ngAfterViewInit(){
       setTimeout(this.downloadpdf(), 2000)  
     }
 
