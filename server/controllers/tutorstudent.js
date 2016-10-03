@@ -395,7 +395,7 @@ exports.makePdf = function(req, res){
 	console.log(url);
 	
 	var client = new pdf.Pdfcrowd('Pedro19880417', 'd5e42b4e5df7e4a921f52e6aefeda841');
-	// client.convertHtml(url, pdf.saveToFile(pdf_path));
+	client.convertHtml(url, pdf.saveToFile(pdf_path));
 	res.send({url: file_name});
 } 
 
