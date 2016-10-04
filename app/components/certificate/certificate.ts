@@ -43,13 +43,14 @@ export class CertificateView implements OnInit{
                 // canvas.height = 1584;
                 // canvas.style.width = "1224pt";
                 // canvas.style.height = "1584pt";
-                
+                canvas.scale(2.04, 1.87);
+
                 var data = canvas.toDataURL();
                 console.log(canvas.width)
                 var docDefinition = {
                     content: [{
                         image: data,
-                        width: 520,
+                        width: 400,
                     }]
                 };
 
