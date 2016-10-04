@@ -2215,3 +2215,7 @@ input.alert-page{
     overflow-y: hidden;
   }
 }
+
+#pdffromHtml{
+  display: none;
+}
