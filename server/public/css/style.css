@@ -2201,5 +2201,5 @@ input.alert-page{
 }
 
 #pdffromHtml{
-  display: none;
+  display: none !important;
 }
