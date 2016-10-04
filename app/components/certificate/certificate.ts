@@ -56,7 +56,7 @@ export class CertificateView implements OnInit{
                 image.src = data;
                 para.appendChild(image);
                 // para.appendChild(image1);
-                self.makeHighResScreenshot(image, image1, 160);                    
+                self.makeHighResScreenshot(image, image1, 200);                    
                 para1.appendChild(image1);
                 // console.log(docDefinition);
                 // pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
