@@ -23,22 +23,27 @@ declare let PDFJS;
 
 export class CertificateView implements OnInit{
     data: any = {};
+    show: boolean = true;
 
     constructor(private _tutorService: TutorService, private _router: Router, private _session: Session){
         this.data = JSON.parse(this._session.getItem('certificate'));
         if(this.data == null) this._router.navigateByUrl('/login');
+
     }
 
     ngOnInit(){
-
-
-      setTimeout(this.downloadpdf(), 2000)
+      this.downloadpdf()  
     }
 
     downloadpdf(){
         let self = this;
         html2canvas(document.getElementById('pdffromHtml'), {
             onrendered: function (canvas) {
+                canvas.width = 1224;
+                canvas.height = 1584;
+                canvas.style.width = "1224pt";
+                canvas.style.height = "1584pt";
+                
                 var data = canvas.toDataURL();
                 console.log(canvas.width)
                 var docDefinition = {
@@ -62,27 +67,5 @@ export class CertificateView implements OnInit{
                 })
             }
         });
-
-        // let data = document.getElementById('pdffromHtml').innerHTML;
-        // let data = window.location.href; 
-          
-        
-
-    }
-
-    extractDomain(url) {
-        var domain;
-        //find & remove protocol (http, ftp, etc.) and get domain
-        if (url.indexOf("://") > -1) {
-            domain = url.split('/')[2];
-        }
-        else {
-            domain = url.split('/')[0];
-        }
-
-        //find & remove port number
-        //domain = domain.split(':')[0];
-
-        return domain;
     }
 }
