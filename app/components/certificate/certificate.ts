@@ -39,17 +39,18 @@ export class CertificateView implements OnInit{
         let self = this;
         html2canvas(document.getElementById('pdffromHtml'), {
             onrendered: function (canvas) {
-                canvas.width = 1224;
-                canvas.height = 1584;
+                // canvas.width = 1224;
+                // canvas.height = 1584;
                 // canvas.style.width = "1224pt";
                 // canvas.style.height = "1584pt";
-                
+                canvas.scale(2.04, 1.87);
+
                 var data = canvas.toDataURL();
                 console.log(canvas.width)
                 var docDefinition = {
                     content: [{
                         image: data,
-                        width: 520,
+                        width: 400,
                     }]
                 };
 
