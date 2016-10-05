@@ -2219,3 +2219,7 @@ input.alert-page{
 #pdffromHtml{
   /*display: none !important;*/
 }
+
+#element::-webkit-scrollbar { 
+    display: none; 
+}
