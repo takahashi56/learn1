@@ -57,10 +57,10 @@ export class CertificateView implements OnInit{
                 para.appendChild(image);
                 // self.makeHighResScreenshot(image, image1, 200);                    
                 // para1.appendChild(image);
-                // self._tutorService.makePdf({data:para.innerHTML}).subscribe((res) => {            
-                //    window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
-                //    console.log(res.url);
-                // })
+                self._tutorService.makePdf({data:para.innerHTML}).subscribe((res) => {            
+                   window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+                   console.log(res.url);
+                })
             }
         });
     }
