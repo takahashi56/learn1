@@ -35,6 +35,14 @@ export class CertificateView implements OnInit{
       this.downloadpdf()  
     }
 
+    getCompleteDate(date){
+        if(date == null) return '';
+        var d = new Date(date),
+            month = d.getMonth().toString().length == 1 ? '0' + (d.getMonth() + 1 ) : (d.getMonth() + 1 ), 
+                datestring = d.getDate()  + "/" + month + "/" + d.getFullYear();
+        return datestring;
+    }
+
     downloadpdf(){
         let self = this;
         html2canvas(document.getElementById('pdffromHtml'), {
