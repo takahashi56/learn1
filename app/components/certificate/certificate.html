@@ -1,8 +1,8 @@
-<div style="height: 100%;width: 100%;overflow: hidden; ">
-<div style="z-index: 10000;  width: 100%;height: 100%;overflow-y: scroll;    padding-right: 17px;">
-<img src="images/cert.png" style="height:845px; margin-left:auto; margin-right:auto; "/>
-</div>
-<div  id="pdffromHtml" style="width:598px; height:845px; background-image:url(images/certbg.png); background-position:center center; background-repeat:no-repeat; float:none; margin-left:auto; margin-right:auto; z-index: -1;overflow-y: scroll; padding-right: 17px;">    
+<div id="element" style="height: 100%;width: 100%;overflow: hidden; ">
+    <div style="z-index: 10000;  width: 100%;height: 100%;overflow-y: hidden;    padding-right: 17px;">
+    <img src="images/cert.png" style="height:845px; margin-left:auto; margin-right:auto; "/>
+    </div>
+<div  id="pdffromHtml" style="width:598px; height:845px; background-image:url(images/certbg.png); background-position:center center; background-repeat:no-repeat; float:none; margin-left:auto; margin-right:auto; z-index: -1;overflow-y: hidden; padding-right: 17px;">    
 
     <div style="text-align:center; color:#2d5b33; font-size:45px; width:100%; font-weight:400; display:block; padding-top:100px; line-height:40px; padding-bottom:0px; margin-bottom:0px;">Certificate of Completion <br> <span style="font-size:20px; padding-top:15px; color:#000; padding-bottom:0px; margin-bottom:0px;">in</span></div>
     <div style="text-align:center; color:#2d5b33; font-size:20px; width:100%; font-weight:100; display:block; padding-top:0px; line-height:normal; margin-top:0px;">{{data.coursename}}</div>
@@ -18,4 +18,10 @@
 </div>
 </div>
 
-<div id="editor"></div>
+<div id="editor" style="width: 100%;height: 100%;overflow-y: hidden;    padding-right: 17px;"></div>
+
+<style>
+    #element::-webkit-scrollbar { 
+        display: none; 
+    }
+</style>
