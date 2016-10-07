@@ -2216,11 +2216,3 @@ input.alert-page{
     overflow-y: hidden;
   }
 }
-
-#pdffromHtml{
-  /*display: none !important;*/
-}
-
-#element::-webkit-scrollbar { 
-    display: none; 
-}
