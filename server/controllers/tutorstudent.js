@@ -40,9 +40,6 @@ exports.getAllStudents = function(req, res) {
 	  			};
 
 	  			students_copy.push(s);
-	  			console.log("+++++++++++++++++++++++++++++")
-	  			console.log(students_copy.length);
-	  			console.log(students.length)
 	  			if(students.length == students_copy.length){
 	  				students_copy.sort(function(a, b){
 			            return a.firstName.localeCompare(b.firstName);    
@@ -240,12 +237,20 @@ exports.getCoursesByStudentId = function(req, res){
 		if(err) return console.log(err);
 		var courses = [];
 		var count = 0, i=0;
+		console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		console.log(takes.length);
+		console.log(takes);
+
 		takes.forEach(function(take){
 			Course.findOne({_id: take.course_id}, function(err, course){
 				if(err) return console.error(err);
 
+				if(course == null){
+					take.remove();
+				}
 				i++;
-
+				console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
+				console.log(course)
 				if(course != null){
 					var data = {
 						course_id: course._id,
