@@ -146,7 +146,8 @@ export class DetailTutorStudent {
 				studentname: `${this.student.firstName} ${this.student.lastName}`,
 				score: course.score,
 				completed_at: course.completedAt,
-				lessons: res.data.join(', ')
+				lessons: res.data.join(', '),
+				organization: this._session.getItem("organization")
 			}
 			console.log(`data = ${JSON.stringify(data)}`);
 			self._session.setItem('certificate', JSON.stringify(data));
@@ -155,8 +156,9 @@ export class DetailTutorStudent {
 		});
 	}
 
-	getCompleteDate(date){
-		if(date == null) return '';
+	getCompleteDate(course: any){
+		var date = course.completedAt, isCompleted = course.isCompleted;
+		if(date == null || isCompleted == false ) return '';
 		var d = new Date(date),
 				datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
 		return datestring;

@@ -70,7 +70,7 @@ export class StudentMain implements OnInit {
 			return `In progress ${course.score}% Complete`;
 		}
 		if(course.score > 0){
-			return `Completed, ${course.completedAt.toString().slice(0,10)} Score ${course.score}%`;
+			return `Completed, ${this.getCompleteDate(course.completedAt)}, Score ${course.score}%`;
 		}
 	}
 
@@ -86,6 +86,19 @@ export class StudentMain implements OnInit {
 			this.gotoLessonList(this.course);	
 		})		
 	}
+
+	getCompleteDate(date){
+        if(date == null) return '';
+
+
+        var d = new Date(date),
+            day = d.getDate().toString().length == 1 ? '0' + d.getDate() : d.getDate(),
+            month = (d.getMonth() + 1 ).toString().length == 1 ? '0' + (d.getMonth() + 1 ) : (d.getMonth() + 1 ), 
+                datestring = day  + "/" + month + "/" + d.getFullYear();
+ 
+        return datestring;
+    }
+
 
 	private titleCase(str: string) : string {
 	 	return str.split(' ').map(function(val){

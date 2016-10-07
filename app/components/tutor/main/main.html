@@ -17,7 +17,14 @@
                     <a class="btn btn-primary w-sm m-r-5" onClick="$('#file-uploader').click()">Import Employees</a>
                     <input type="file" id="file-uploader" (change)="importAddStudent($event)" style="display: none;"/>
                     <a  class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#select-course">Assign Course</a>
-                    <a  class="btn btn-primary w-sm m-r-5" (click)="gotoMatrix()" target="_blank">Training Matrix</a>
+                    
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Training Matrix <span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a (click)="gotoMatrix()" target="_blank">Training Matrix</a></li>
+                            <li><a href="javascript:void(0)">Uncompleted Course</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table text-page">
