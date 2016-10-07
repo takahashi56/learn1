@@ -29,24 +29,20 @@ export class CourseResult {
 		var lessonList = JSON.parse(this._session.getItem('lessonList')), flag = false, count = 0;
 
 		lessonList.forEach((lesson) => {
-			var status = JSON.parse(this._session.getItem(lesson.lesson_id));
+			var status = JSON.parse(this._session.getItem(lesson.lesson_id)), s = 0;
 
 			if(Number(status.score) == -1){
-				flag = true;
-				return false;
+				s = 0;
+			}else{
+				s = parseInt(status == null ? 0 : status.score);
 			}
-			var	s = parseInt(status == null ? 0 : status.score);
+			
 
 			s = isNaN(s) ? 0 : s;
 			this.score += s
 		});
 
-		if(flag == true){
-			this.score = 0;
-		}else{
-			this.score = Math.floor( this.score / (lessonList.length));	
-		}		
-
+		this.score = Math.floor( this.score / (lessonList.length));	
 		var student_id = this._session.getCurrentId(), coures_id = this._session.getItem('CourseId'), score = this.score;
 
 		console.log(`student id = ${student_id}`);
