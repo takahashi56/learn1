@@ -15,8 +15,15 @@ export class Header {
 	username: string = "";
 
 	constructor(private _session: Session, private router:Router) {
-		this.username = _session.getCurrentUsername();
-		console.log(this.username);
+		this.username = _session.getCurrentUsername();	
+	}
+
+	ngOnInit(){		
+		if(this.username == null){
+			console.log(this.username);
+			this.router.navigate(['Login'])
+			console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")		
+		}
 	}
 
 	doLogout(){
