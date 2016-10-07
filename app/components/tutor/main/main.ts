@@ -22,25 +22,29 @@ export class TutorMain implements OnInit {
 
 	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router) {
 		this.tutor_id = this._session.getCurrentId()
-		var role=this._session.getCurrentRole();
-		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 
-		this._tutorService.getAllMatrix({tutor_id: this.tutor_id}).subscribe((res) => {
-	      console.log(res)
-	      this._session.setItem('studentList', JSON.stringify(res));
-	    })
+		if(this.tutor_id == "" || this.tutor_id == null ){
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@");
+			this._router.navigateByUrl('/login');
+		}else{
+			var role=this._session.getCurrentRole();
+			this._session.setItem('editORadd', JSON.stringify({flag: false}));
 
-		this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
-			this.courseList = res;
-			console.log(res);
-		});
-		this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
-			this.studentList = res;
-			this._session.setItem('TutorAllStudent', JSON.stringify(res))
-		});
+			this._tutorService.getAllMatrix({tutor_id: this.tutor_id}).subscribe((res) => {
+		      console.log(res)
+		      this._session.setItem('studentList', JSON.stringify(res));
+		    })
 
+			this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
+				this.courseList = res;
+				console.log(res);
+			});
+			this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
+				this.studentList = res;
+				this._session.setItem('TutorAllStudent', JSON.stringify(res))
+			});
 
-		console.log(this._location.path())
+		}
 	}
 
 	editStudent(student: any){
@@ -52,6 +56,10 @@ export class TutorMain implements OnInit {
 
 
 	ngOnInit(){
+		if(this.tutor_id == "" || this.tutor_id == null ){
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@");
+			this._router.navigateByUrl('/login');
+		}
 	}
 
 	gotoStudentDetail(student: any){
