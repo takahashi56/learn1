@@ -37,9 +37,17 @@ export class CertificateView implements OnInit{
 
     getCompleteDate(date){
         if(date == null) return '';
+
+
         var d = new Date(date),
-            month = d.getMonth().toString().length == 1 ? '0' + (d.getMonth() + 1 ) : (d.getMonth() + 1 ), 
-                datestring = d.getDate()  + "/" + month + "/" + d.getFullYear();
+            day = d.getDate().toString().length == 1 ? '0' + d.getDate() : d.getDate(),
+            month = (d.getMonth() + 1 ).toString().length == 1 ? '0' + (d.getMonth() + 1 ) : (d.getMonth() + 1 ), 
+                datestring = day  + "/" + month + "/" + d.getFullYear();
+
+        console.log(d.getDate());
+        console.log(d.getDate().toString());
+        console.log(d.getMonth());
+        console.log(d.getMonth.toString());        
         return datestring;
     }
 
@@ -65,10 +73,10 @@ export class CertificateView implements OnInit{
                 para.appendChild(image);
                 // self.makeHighResScreenshot(image, image1, 200);                    
                 // para1.appendChild(image);
-                self._tutorService.makePdf({data:para.innerHTML}).subscribe((res) => {            
-                   window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
-                   console.log(res.url);
-                })
+                // self._tutorService.makePdf({data:para.innerHTML}).subscribe((res) => {            
+                //    window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+                //    console.log(res.url);
+                // })
             }
         });
     }

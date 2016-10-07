@@ -46,8 +46,9 @@ export class DetailTutorCourse {
 	  	}).join(' ');
 	}
 
-	getCompleteDate(date){
-		if(date == null) return '';
+	getCompleteDate(student: any){
+		var date = student.completedAt, isCompleted = student.isCompleted;
+		if(date == null || isCompleted == false) return '';
 		var d = new Date(date),
 				datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
 		return datestring;
@@ -61,15 +62,17 @@ export class DetailTutorCourse {
 		console.log(this.course)
 		this._tutorService.getLessonsNameByCourseId({course_id: this.course.course_id}).subscribe((res)=>{
 			var	data = {
-				couresname: this.course.coursetitle,
+				coursename: this.course.coursetitle,
 				studentname: `${student.firstName} ${student.lastName}`,
 				score: student.score,
 				completed_at: student.completedAt,
-				lessons: res.data.join(',')
+				lessons: res.data.join(','),
+				organization: this._session.getItem("organization")
 			}
 			console.log(`data = ${JSON.stringify(data)}`);
 			self._session.setItem('certificate', JSON.stringify(data));
-			self._router.navigateByUrl('/certificate');
+			window.open('/#/certificate');
+			// self._router.navigateByUrl('/certificate');
 		});
 	}
 }
