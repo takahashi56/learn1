@@ -26,12 +26,14 @@ export class CourseResult {
 
 		this.coursetitle = this._session.getItem('CourseName');
 
-		var lessonList = JSON.parse(this._session.getItem('lessonList')), flag = false, count = 0;
+		var lessonList = JSON.parse(this._session.getItem('lessonList')), flag = true, count = 0, progress = lessonList.length;
 
 		lessonList.forEach((lesson) => {
 			var status = JSON.parse(this._session.getItem(lesson.lesson_id)), s = 0;
 
 			if(Number(status.score) == -1){
+				flag = false;
+				progress--;
 				s = 0;
 			}else{
 				s = parseInt(status == null ? 0 : status.score);
@@ -42,11 +44,13 @@ export class CourseResult {
 			this.score += s
 		});
 
+		if(flag == false) progress = progress / lessonList.length * 100;
+
 		this.score = Math.floor( this.score / (lessonList.length));	
 		var student_id = this._session.getCurrentId(), coures_id = this._session.getItem('CourseId'), score = this.score;
 
 		console.log(`student id = ${student_id}`);
-		this._studentService.setCourseScoreWithStudent({student_id: student_id, course_id:coures_id, score: score }).subscribe((res)=>{
+		this._studentService.setCourseScoreWithStudent({student_id: student_id, course_id:coures_id, score: score, isCompleted: flag, progress: progress }).subscribe((res)=>{
 			console.log(res)
 		});
 

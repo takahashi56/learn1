@@ -31,8 +31,8 @@
             </h3>
             <div *ngIf="showResultOrfalse">
                 <h4 *ngFor="let data of showLessonResult; let i = index">
-                    <div *ngIf="!data.total"><strong>Lesson {{i+1}} {{data.lessonname}}, No question</strong></div>
-                    <div *ngIf="data.total"><strong>Lesson {{i+1}} {{data.lessonname}}, You answered {{data.right}} out {{data.total}} questions correctly</strong></div>
+                    <div *ngIf="data.total == 0"><strong>Lesson {{i+1}} {{data.lessonname}}, No question</strong></div>
+                    <div *ngIf="data.total != 0"><strong>Lesson {{i+1}} {{data.lessonname}}, You answered {{data.right}} out {{data.total}} questions correctly</strong></div>
                 </h4>
             </div>
             <div class="white-space m-t-30 m-b-30">
