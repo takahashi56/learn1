@@ -26,6 +26,7 @@ exports.getCourseList = function(req, res) {
             coursetitle: course.name,
             coursedescription: course.description,
             score: take.score,
+            progress: take.progress == null? 0 : take.progress,
             isCompleted: take.isCompleted,
             completedAt: take.completedAt,
           }
@@ -104,7 +105,7 @@ exports.getLessonList = function(req, res) {
       Score.findOne({lesson_id: lesson._id, student_id: student_id}, function(err, score){
         if(err) return console.log(err);
 
-        Content.count({lesson_id: lesson._id, videoOrQuestion: true}, function(err, content_count){
+        Content.count({lesson_id: lesson._id, videoOrQuestion: false}, function(err, content_count){
             var data = {
               lesson_id: lesson._id,
               lessonname: lesson.name,
@@ -136,7 +137,6 @@ exports.getLessonList = function(req, res) {
               if(Number(theArray[index].score) == Number(-1) && one == true)
                { 
                   theArray[index].lock = true; 
-                  theArray[index].score = 0; 
                   one = false;
                 }
               });
@@ -189,7 +189,8 @@ exports.setCourseScoreWithStudent = function(req, res){
   var score = parseInt(req.body.score),
     course_id = req.body.course_id,
     student_id = req.body.student_id,
-    isCompleted = score > 0 ? true : false,
+    progress = req.body.progress,
+    isCompleted = req.body.isCompleted,
     completedAt = new Date(),
     certificate = '',
     data = {
@@ -198,7 +199,8 @@ exports.setCourseScoreWithStudent = function(req, res){
       student_id: student_id,
       isCompleted: isCompleted,
       completedAt: completedAt,
-      certificate: certificate
+      certificate: certificate,
+      progress: progress
     };
 
     Take.findOne({course_id: course_id, student_id: student_id}, function(err, take){
@@ -209,6 +211,7 @@ exports.setCourseScoreWithStudent = function(req, res){
             take.score = score;
             take.isCompleted = isCompleted;
             take.completedAt = completedAt;
+            take.progress = progress;
 
             take.save();
       }

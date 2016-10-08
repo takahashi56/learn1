@@ -55,7 +55,7 @@ export class StudentMain implements OnInit {
 	}
 
 	getHeadingClass(course: any){
-		if(course.score > 0)
+		if(course.isCompleted)
 			return "panel-heading panel-completed";
 		else
 			return "panel-heading";
@@ -66,16 +66,17 @@ export class StudentMain implements OnInit {
 	}
 
 	getCurrentStatus(course: any){
-		if(course.score == 0){
-			return `In progress ${course.score}% Complete`;
+		if(course.isCompleted == false){
+			return `In progress ${course.progress}% Complete`;
 		}
-		if(course.score > 0){
+		if(course.isCompleted == true){
 			return `Completed, ${this.getCompleteDate(course.completedAt)}, Score ${course.score}%`;
 		}
 	}
 
 	beforeGotoLessonList(course: any){
-		if(course.score == 0){
+		console.log(course)
+		if(course.isCompleted == false){
 			this.gotoLessonList(course);
 		}
 		this.course = course;

@@ -6,6 +6,8 @@ module.exports = function() {
 		student_id: String,
 		lesson_id: String,
 		score: Number,
+		total: Number,
+		right: Number,
 		isCompleted: Boolean,
 		completedAt: Date,
 		certificate: String,

@@ -1,7 +1,7 @@
 <section class="m-t-20 m-b-30">
     <div class="container">
         <h2 class="text-page" style="margin: 0 0 15px 0"><strong>My Courses</strong></h2>
-        <div class="panel panel-color full-panel panel-primary m-b-15" *ngFor="let course of courseList" (click)="beforeGotoLessonList(course)"  [attr.data-toggle]="course.score == 0 ? '' : 'modal'" data-target="#retake-student">
+        <div class="panel panel-color full-panel panel-primary m-b-15" *ngFor="let course of courseList" (click)="beforeGotoLessonList(course)"  [attr.data-toggle]="course.isCompleted == false ? '' : 'modal'" data-target="#retake-student">
             <div [class]="getHeadingClass(course)">
                 <div class="row">
                     <div class="col-xs-6">

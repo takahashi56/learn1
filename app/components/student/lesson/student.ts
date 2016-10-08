@@ -30,7 +30,7 @@ export class StudentLesson  {
 			this.lessonList.forEach((lesson) => {
 				console.log(lesson.score);
 				this._session.setItem(lesson.lesson_id, JSON.stringify({
-						total: 0,
+						total: lesson.count,
 						right: 0,
 						score: lesson.score
 				}));
@@ -72,7 +72,7 @@ export class StudentLesson  {
 		var score = lesson.score;
 		console.log(score);
 		console.log(Number(score.toString()));
-		if(Number(score) == -1){
+		if(Number(score) == -1 && lesson.lock == false){
 			return `
 				<div class="col-sm-7 text-right">
 	                <div> Locked </div>
@@ -103,7 +103,7 @@ export class StudentLesson  {
 		var score = lesson.score;
 		console.log(typeof score);
 		console.log(Number(score));
-		if(Number(score) == -1){
+		if(Number(score) == -1 && lesson.lock == false){
 			return false;
 		}
 
