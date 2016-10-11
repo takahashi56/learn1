@@ -213,11 +213,16 @@ exports.setCourseScoreWithStudent = function(req, res){
             take.completedAt = completedAt;
             take.progress = progress;
 
-            take.save();
+            take.save(function(err, saved){
+              if(err){
+                res.status(500).send(err).end();
+              }
+              res.status(200).send({sucess: true}).end();
+            });            
       }
     })
 
-    res.send({sucess: true});
+    
     // Take.findOneAndUpdate({course_id: course_id, student_id: student_id}, data, {upsert: true}, function(err, s){
     //   if(err) return console.error(err);
 
