@@ -118,9 +118,9 @@ exports.getLessonList = function(req, res) {
               created_at: lesson.created_at
             }
 
-            if(score){
+            if(score){              
               data.isCompleted = score.isCompleted;
-              data.completedAt = score.completedAt;
+              data.completedAt = score.completedAt == null ? '' : score.completedAt;
               data.score = score.score;
               // data.lock = true;
             }
@@ -218,7 +218,8 @@ exports.setCourseScoreWithStudent = function(req, res){
                 res.status(500).send(err).end();
               }
               res.status(200).send({sucess: true}).end();
-            });            
+            });
+            
       }
     })
 
