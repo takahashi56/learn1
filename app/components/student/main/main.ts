@@ -16,19 +16,27 @@ export class StudentMain implements OnInit {
 	course: any={};
 	studentInfo: any;
 	studentId: string;
+	empty: boolean = false;
 
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
 		this._session.setItem('editORadd', JSON.stringify({flag: false}));
 		this.studentId = this._session.getItem('MainStudentId');
 		console.log(this.studentId);
-		var role = this._session.getCurrentRole();
+		var role = this._session.getCurrentRole(), count = this._session.getItem('CourseCount');
+
+		if(count == 0){
+			this.empty = true;
+		}else{
+			this.empty = false;
+		}
+
 		this._studentService.updateCourse(this.studentId).subscribe((res)=>{
 			console.log(res)
 		})
 
 		if(role == 2){
 			this._studentService.getCourseListById(this.studentId).subscribe((res)=>{
-				this.courseList = res;
+				this.courseList = res;				
 				console.log(res);
 			})
 

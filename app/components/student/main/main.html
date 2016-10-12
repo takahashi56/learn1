@@ -1,4 +1,37 @@
-<section class="m-t-20 m-b-30">
+<section *ngIf="empty == true" class="m-t-20 m-b-30">
+    <div class="container">
+        <h2 class="text-page" style="margin: 0 0 15px 0"><strong></strong></h2>
+         <div class="white-space m-t-30 m-b-30">
+            <div class="row">
+                <div class="col-xs-12">
+                    <span class="sr-only">Empty Space</span>
+                </div>
+            </div>
+        </div>
+        <div class="white-space m-t-30 m-b-30">
+            <div class="row">
+                <div class="col-xs-12">
+                    <span class="sr-only">Empty Space</span>
+                </div>
+            </div>
+        </div>
+        <div class="white-space m-t-30 m-b-30">
+            <div class="row">
+                <div class="col-xs-12">
+                    <span class="sr-only">Empty Space</span>
+                </div>
+            </div>
+        </div>
+        <div class="m-t-40 p-t-10 text-center text-page text-lg">
+            <p>
+                You have not been allocated any courses, please speak to your manager.
+            </p>
+        </div>
+    </div>
+
+</section>
+
+<section *ngIf="empty == false" class="m-t-20 m-b-30">
     <div class="container">
         <h2 class="text-page" style="margin: 0 0 15px 0"><strong>My Courses</strong></h2>
         <div class="panel panel-color full-panel panel-primary m-b-15" *ngFor="let course of courseList" (click)="beforeGotoLessonList(course)"  [attr.data-toggle]="course.isCompleted == false ? '' : 'modal'" data-target="#retake-student">

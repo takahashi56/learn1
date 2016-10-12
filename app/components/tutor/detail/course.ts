@@ -56,7 +56,7 @@ export class DetailTutorCourse {
 
 	gotoCertificate(student: any){
 		console.log("goto certificate");
-		if(student.score == 0) return false;
+		if(student.score == 0 || student.isCompleted == false) return false;
 		var self = this;
 		console.log("goto certificate +++");
 		console.log(this.course)
