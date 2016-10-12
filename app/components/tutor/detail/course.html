@@ -77,7 +77,7 @@
                         <tr *ngFor="let student of studentList">
                             <td><strong>{{student.firstName + " " + student.lastName}}</strong></td>
                             <td class="text-center"><strong>{{getComplete(student.isCompleted)}}</strong></td>
-                            <td class="text-center"><strong>{{student.isCompleted ? student.score : ''}}%</strong></td>
+                            <td class="text-center"><strong>{{student.isCompleted ? student.score + '%' : ''}}</strong></td>
                             <td class="text-center"><strong>{{getCompleteDate(student)}}</strong></td>
                             <td class="text-center"><a href="javascript:void(0)" target="_blank" (click)="gotoCertificate(student)"><strong class="text-page">View</strong></a></td>
 
