@@ -85,11 +85,15 @@ exports.getEditCourses = function(req, res){
 						lesson_id: lesson._id,
 						lessonname: lesson.name,
 						lessondescription: lesson.description,
-						content: contents
+						content: contents,
+						created_at: lesson.created_at
 					}
 
 					data.lesson.push(lessonData);
 					if(lessons.length == data.lesson.length){
+						data.lesson.sort(function(a, b){
+			                return new Date(a.created_at) - new Date(b.created_at);    
+			              })
 						res.send(data);
 					}
 				})
@@ -105,6 +109,9 @@ exports.getAllContent = function(req, res){
 		if(err) {
 			return console.error(err);
 		}		
+		collection.sort(function(a, b){
+	        return new Date(a.created_at) - new Date(b.created_at);    
+	    })
 		res.send(collection);
 	})
 }
@@ -184,7 +191,8 @@ exports.updateCourse = function(req, res) {
 				var lessonData = {				
 					name: lesson.lessonname,
 					description: lesson.lessondescription,
-					course_id: courseData._id
+					course_id: courseData._id,
+					created_at: lesson.created_at
 				}
 				var reg = new RegExp('^[0-9]+$');
 				if(reg.test(lesson.lesson_id.toString()) == false){

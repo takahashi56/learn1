@@ -22,6 +22,7 @@ export class AddLesson {
 	submitAttempt: boolean = false;
 	lessonData: any = [];
 	contents: any = [];
+	created_at: Date;
 
 	constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
 		this.newInit(false);
@@ -72,7 +73,8 @@ export class AddLesson {
 				lesson_id: (Date.now()).toString(),
 				lessonname: '',
 				lessondescription: '',
-				content: data
+				content: data,
+				created_at: new Date()
 			}
 			this._session.setItem('Lesson_new', JSON.stringify(data1));
 			this._session.setItem('Content', JSON.stringify(data));
@@ -124,7 +126,8 @@ export class AddLesson {
 			lesson_id: this.lesson_id,
 			lessonname: this.lessonForm.controls['lessonname'].value,
 			lessondescription: this.lessonForm.controls['lessondescription'].value,
-			content: contentData
+			content: contentData,
+			created_at: this.created_at
 		}
 		console.log(lesson)
 		this.submitAttempt = false;
@@ -152,6 +155,7 @@ export class AddLesson {
 
 	private newInit(flag: boolean) : void {
 		this.lessonData = JSON.parse(this._session.getItem('Lesson_new'));
+		this.created_at = this.lessonData.created_at;
 		this.lesson_id = this.lessonData.lesson_id;
 		this.contents = JSON.parse(this._session.getItem('Content')); //this.lessonData.content;
 		if(!flag){

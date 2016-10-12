@@ -76,14 +76,15 @@ export class AddCourse {
 			answerC: '',
 			answerD: '',
 			image: '',
-			trueNumber: '',
+			trueNumber: '',			
 		}];
 
 		var data1 = {
 			lesson_id: (Date.now()).toString(),
 			lessonname: '',
 			lessondescription: '',
-			content: data
+			content: data,
+			created_at: new Date()
 		} 
 
 		this._session.setItem('Course', JSON.stringify(data2));
