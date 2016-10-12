@@ -2,6 +2,7 @@
 var mongoose = require('mongoose'),
 	Student = mongoose.model('Student'),
 	Tutor = mongoose.model('Tutor'),
+	Take = mongoose.model('Take'),
 	Admin = mongoose.model('Admin'),
 	adminLogin = require('./adminlogin'),
 	encrypt = require('../utilities/encryption'),
@@ -76,7 +77,7 @@ exports.login = function(req, res) {
 exports.studentLogin = function(req, res) {
 	var userid = req.body.username,
 		pwd = req.body.password,
-		data = {action: "not-found", text: "This id is not valid. Please try again.", role: NaN, success: false, _id: ""};
+		data = {action: "not-found", text: "This id is not valid. Please try again.", role: NaN, success: false, _id: "", count: 0};
 
 	Student.findOne({username: userid}, function(err, student){
 		if(student == null){
@@ -84,12 +85,15 @@ exports.studentLogin = function(req, res) {
 			return console.error(err);
 		}
 		if(student.authenticate(pwd)){
-			data.action = "/home/student/main";
-			data._id = student._id;
-			data.role = 2;
-			data.success = true;
-			data.id = student._id;
-			res.send(data)
+			Take.count({student_id: student._id}, function(err, count){
+				data.action = "/home/student/main";
+				data._id = student._id;
+				data.role = 2;
+				data.success = true;
+				data.id = student._id;
+				data.count = count;
+				res.send(data)	
+			})			
 		}else{
 			res.send(data);
 		}

@@ -152,7 +152,7 @@
                             <td class="text-center"><strong>{{course.isCompleted ? course.score + '%' : ''}}</strong></td>
                             <!-- <td class="text-center"><strong>{{course.completedAt == null ? '' : getCompleteDate(course.completedAt) | date: 'h:mm  dd/MM/yyyy'}}</strong></td> -->
                             <td class="text-center"><strong>{{getCompleteDate(course)}}</strong></td>
-                            <td class="text-center"><a href="javascript:void(0)" target="_blank" (click)="gotoCertificate(course)"><strong class="text-page">View</strong></a></td>
+                            <td class="text-center"><a href="javascript:void(0)" target="_blank" (click)="gotoCertificate(course)"><strong class="text-page">{{course.isCompleted ? 'View' : ''}}</strong></a></td>
 
                         </tr>
                     </table>

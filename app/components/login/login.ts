@@ -51,6 +51,7 @@ export class Login {
 						this._session.setItem('homeUrl', res.action);
 						if(res.role == 2){
 							this._session.setItem('MainStudentId', res.id);
+							this._session.setItem('CourseCount', res.count);
 						}
 						if(res.role == 1){
 							this._session.setItem("organization", res.organization);
