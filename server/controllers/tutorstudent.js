@@ -263,6 +263,9 @@ exports.getCoursesByStudentId = function(req, res){
 					courses.push(data);
 				}
 				if(i == takes.length){
+					courses.sort(function(a, b){
+			            return a.coursetitle.localeCompare(b.coursetitle);    
+			          })
 					res.send(courses);
 				}
 			})
@@ -324,6 +327,9 @@ exports.getStudentsByCourseId = function(req, res){
 					courses.push(data);
 				}
 				if(i == takes.length){
+					courses.sort(function(a, b){
+			            return a.firstName.localeCompare(b.firstName);    
+			          })
 					res.send(courses);
 				}
 			})
@@ -383,6 +389,9 @@ exports.getAllMatrix = function(req, res){
 				})
 
 				if(data.length == students.length){
+					data.sort(function(a, b){
+			            return a.student_name.localeCompare(b.student_name);    
+			        })
 					res.send(data);
 				}
 			})
