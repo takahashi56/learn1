@@ -204,8 +204,8 @@ border-radius: 12px;
 
 .btn-primary,.btn-primary:hover,.btn-primary:focus,.btn-primary:active,
 .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open>.dropdown-toggle.btn-primary{
-    background-color: #0D425A;
-    border: 1px solid #0D425A;
+    background-color: #0d81b7;
+    border: 1px solid #0d81b7;
 }
 .btn-success,.btn-success:hover,.btn-success:focus,.btn-success:active,
 .btn-success.active, .btn-success.focus, .btn-success:active, .btn-success:focus, .btn-success:hover, .open>.dropdown-toggle.btn-success{
