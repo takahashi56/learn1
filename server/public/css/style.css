@@ -44,7 +44,8 @@ Last Update: Nov 2015
 body {
   color: #797979;
   background-color: #edf0f0;
-  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /*font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+  font-family: 'Open Sans', 'sans-serif', 'serif';
   padding: 0px !important;
   margin: 0px !important;
   font-size: 14px;
@@ -2062,7 +2063,7 @@ input.alert-page{
 }
 
 .padd-min{
-  height: 540px;  
+  height: 540px;
 }
 
 @media(max-width: 767px){
@@ -2199,4 +2200,9 @@ input.alert-page{
     padding: 0 !important;
     overflow-y: hidden;
   }
+}
+
+
+.form-group.m-t-30 .col-sm-5.text-right{
+  padding: 0;
 }
