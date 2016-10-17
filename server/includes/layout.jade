@@ -29,13 +29,13 @@ html
 
 		link(rel="stylesheet", href="/css/morris/morris.css")
 
-		link(rel="stylesheet", href="/css/font-awesome/css/font-awesome.css")
-
-		link(rel="stylesheet", href="/css/font-awesome/css/font-awesome.min.css")
-
 		link(rel="stylesheet", href="/css/ionicon/css/ionicons.css")
 
 		link(rel="stylesheet", href="/css/ionicon/css/ionicons.min.css")
+
+		link(rel="stylesheet", href="/css/font-awesome/css/font-awesome.css")
+
+		link(rel="stylesheet", href="/css/font-awesome/css/font-awesome.min.css")
 
 		//- endinject
 		script(src="/es6-shim/es6-shim.min.js")
@@ -72,7 +72,6 @@ html
 		script(src="/js/1-theme.js")
 		script(src="/js/jquery.app.js")
 		script(src="/js/jquery.nicescroll.js")
-		script(src="/js/pace.min.js")
 		//- endinject
 
 		script(type="text/javascript").
@@ -101,5 +100,6 @@ html
 				window.loading_screen = window.pleaseWait({
 				logo: "images/logo.png",
 				backgroundColor: '#EBEDF3',
-				loadingHtml: "<div class='sk-spinner sk-spinner-wave'><div class='sk-rect1'></div><div class='sk-rect2'></div><div class='sk-rect3'></div><div class='sk-rect4'></div><div class='sk-rect5'></div></div>"
+				loadingHtml: "<div class='sk-spinner sk-spinner-wave'><div class='sk-rect1'></div><div class='sk-rect2'></div><div class='sk-rect3'></div><div class='sk-rect4'></div><div class='sk-rect5'></div></div>",
+				onLoadedCallback: function(){alert('complete')}
 				}).finish()
