@@ -1,4 +1,4 @@
-/*
+﻿/*
 Template Name: Velonic Dashboard build with Bootstrap v3.3.6
 Template Version: 2.1
 Author: CoderThemes
@@ -43,9 +43,14 @@ Last Update: Nov 2015
 /******** 1. General ********/
 body {
   color: #797979;
+<<<<<<< HEAD
   background-color: #edf0f0;
   /*font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
   font-family: 'Open Sans', 'sans-serif', 'serif';
+=======
+  background-color: #EBEDF3;
+  font-family: 'Open Sans Condensed', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+>>>>>>> cb1d790fd2404c2749d88436f146637280604a30
   padding: 0px !important;
   margin: 0px !important;
   font-size: 14px;
@@ -277,7 +282,7 @@ aside:not(.collapsed) .navigation ul li.active ul {
 
 header {
   background-color: #fff;
-  border-bottom: 1px solid #ececee;
+  border-bottom: 1px solid #084F70;
   padding-top: 4px;
   padding-bottom: 4px;
 }
@@ -479,18 +484,18 @@ header {
 .nav.nav-tabs>li.active>a,.tabs-vertical-env .nav.tabs-vertical li.active>a {
   border: 0;
   background-color: #fff;
-  border-top: 2px solid #D8D6D6;
+  border-top: 2px solid #0d81b7;
 }
 
 .nav.nav-tabs>li>a {
   border: none;
-  background-color: #eee;
+  background-color: #F3F5FA;
   margin-right: 5px;
   padding-left: 20px;
   padding-right: 20px;
   cursor: pointer;
   border-radius: 0;
-  border-top: 2px solid #eee;
+  border-top: 2px solid #DADDE0;
 }
 
 .nav.nav-tabs>li:last-of-type a {
@@ -503,7 +508,7 @@ header {
 
 .nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:hover, .nav-tabs.nav-justified>.active>a:focus ,.tabs-vertical-env .nav.tabs-vertical li.active>a {
   border: none;
-  border-top: 2px solid #D8D6D6;
+  border-top: 2px solid #6A6D7B;
 }
 
 .tabs-vertical-env {
@@ -774,6 +779,22 @@ lesshat-selector {
     transform: rotate(140deg);
   }
 }
+
+
+
+#gridbasic th, #gridbasic td{
+   font-size: 11px;
+   min-width: 50px;
+   padding: 5px  2px;
+}
+#gridbasic th[data-column-id="name"]{
+  min-width:100px;
+}
+
+#table-head-name {
+   min-width: 100px;
+}
+
 
 .loader-1:after {
   -webkit-animation: loaderAnimate2 1000ms ease-in-out infinite;
@@ -2003,9 +2024,10 @@ ul.p-social-link li a {
   background: #1EB0BD;
 }
 .custom-header{
-  background-color: #1EB0BD;
-  min-height: 60px;
+  background-color: #084F70;
+  min-height: 80px;
   padding: 0 15px;
+  box-shadow: 0px 0px 10px #888888;
 }
 .custom-header .top-right-menu > li{
   line-height: 65px;
@@ -2154,11 +2176,11 @@ input.alert-page{
 .logo{
   display: inline;
   padding-left: 15px;
-  width: 250px;
+  width: 280px;
 }
 
 .logo img{
-  padding-top: 8px;
+  padding: 4px;
 }
 
 .logoPadding{
@@ -2191,8 +2213,8 @@ input.alert-page{
 
 @media (min-width: 960px){
   .container{
-    width: 960px;
-    padding: 0;
+    width: 990px;
+    padding: 10;
   }
 
   .containerHeight{
@@ -2200,9 +2222,4 @@ input.alert-page{
     padding: 0 !important;
     overflow-y: hidden;
   }
-}
-
-
-.form-group.m-t-30 .col-sm-5.text-right{
-  padding: 0;
 }
