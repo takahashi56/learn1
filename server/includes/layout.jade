@@ -9,6 +9,7 @@ html
 		link(rel='stylesheet', href='/vendor/metisMenu/dist/metisMenu.css')
 		link(rel='stylesheet', href='/vendor/bootstrap-social/bootstrap-social.css')
 		link(rel='stylesheet', href='/vendor/jquery.bootgrid/dist/jquery.bootgrid.css')
+		link(rel='stylesheet', href='/vendor/please-wait/build/please-wait.css')
 		//- endbower
 		//- inject:css
 
@@ -19,6 +20,8 @@ html
 		link(rel="stylesheet", href="/css/bootstrap-reset.css")
 
 		link(rel="stylesheet", href="/css/helper.css")
+
+		link(rel="stylesheet", href="/css/loading.css")
 
 		link(rel="stylesheet", href="/css/style-responsive.css")
 
@@ -49,11 +52,36 @@ html
 		script(src="//cdn.auth0.com/js/lock-9.0.min.js")
 		script(src="//cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js")
 		script(src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.20/pdfmake.js")
-		
+
 		//- Setting the right viewport
 		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	body
+		div(id="wrapper")
+			block main-content
+
+		//- bower:js
+		script(src='/vendor/jquery/dist/jquery.js')
+		script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
+		script(src='/vendor/metisMenu/dist/metisMenu.js')
+		script(src='/vendor/jquery.bootgrid/dist/jquery.bootgrid.js')
+		script(src='/vendor/pdfjs-dist/build/pdf.js')
+		script(src='/vendor/pdfjs-dist/build/pdf.worker.js')
+		script(src='/vendor/please-wait/build/please-wait.js')
+		//- endbower
+		//- inject:js
+		script(src="/js/1-theme.js")
+		script(src="/js/jquery.app.js")
+		script(src="/js/jquery.nicescroll.js")
+		script(src="/js/pace.min.js")
+		//- endinject
 
 		script(type="text/javascript").
+			window.loading_screen = window.pleaseWait({
+			logo: "images/logo.png",
+			backgroundColor: '#EBEDF3',
+			loadingHtml: "<div class='sk-spinner sk-spinner-wave'><div class='sk-rect1'></div><div class='sk-rect2'></div><div class='sk-rect3'></div><div class='sk-rect4'></div><div class='sk-rect5'></div></div>"
+			}).finish()
+
 			System.config( {
 				  defaultJSExtensions: true,
 								packages: {
@@ -74,23 +102,4 @@ html
 				}
 							});
 
-				System.import('app/main');				
-	body
-		div(id="wrapper")
-			block main-content
-
-		//- bower:js
-		script(src='/vendor/jquery/dist/jquery.js')
-		script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
-		script(src='/vendor/metisMenu/dist/metisMenu.js')
-		script(src='/vendor/jquery.bootgrid/dist/jquery.bootgrid.js')
-		script(src='/vendor/pdfjs-dist/build/pdf.js')
-		script(src='/vendor/pdfjs-dist/build/pdf.worker.js')
-		//- endbower
-		//- inject:js
-		script(src="/js/1-theme.js")
-		script(src="/js/jquery.app.js")
-		script(src="/js/jquery.nicescroll.js")
-		script(src="/js/pace.min.js")
-		script(src="/js/wow.min.js")
-		//- endinject
+				System.import('app/main');
