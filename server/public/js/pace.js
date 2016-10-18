@@ -861,11 +861,14 @@
     i++;
     Pace.trigger('restart');
     Pace.stop();
-    if(i < 4){
-        return Pace.start();
-    }else{
-      return false;
-    }
+    console.log(i)
+    return Pace.start();
+
+    // if(i < 4){
+    //     return Pace.start();
+    // }else{
+    //   return false;
+    // }
   };
 
   Pace.go = function() {
