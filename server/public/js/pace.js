@@ -856,9 +856,12 @@
     return init();
   };
 
+  var i = 0;
+  console.log("=============" + i);
   Pace.restart = function() {
     Pace.trigger('restart');
     Pace.stop();
+    console.log("+++++++++++++" + i);
     return Pace.start();
   };
 
