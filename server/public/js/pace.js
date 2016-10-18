@@ -14,11 +14,11 @@
     easeFactor: 1.25,
     startOnPageLoad: true,
     restartOnPushState: true,
-    restartOnRequestAfter: false,
-    target: '.my-pace',
+    restartOnRequestAfter: 500,
+    target: 'body',
     elements: {
       checkInterval: 100,
-      selectors: ['.my-pace']
+      selectors: ['body']
     },
     eventLag: {
       minSamples: 10,
@@ -26,8 +26,8 @@
       lagThreshold: 3
     },
     ajax: {
-      trackMethods: ['POST'],
-      trackWebSockets: false,
+      trackMethods: ['GET'],
+      trackWebSockets: true,
       ignoreURLs: []
     }
   };
@@ -856,19 +856,10 @@
     return init();
   };
 
-  var i = 0;
   Pace.restart = function() {
-    i++;
     Pace.trigger('restart');
     Pace.stop();
-    console.log(i)
     return Pace.start();
-
-    // if(i < 4){
-    //     return Pace.start();
-    // }else{
-    //   return false;
-    // }
   };
 
   Pace.go = function() {
