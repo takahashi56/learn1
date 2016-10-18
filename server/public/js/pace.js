@@ -856,10 +856,16 @@
     return init();
   };
 
+  var i = 0;
   Pace.restart = function() {
+    i++;
     Pace.trigger('restart');
     Pace.stop();
-    //return Pace.start();
+    if(i == 3){
+        return Pace.start();
+    }else{
+      return false;
+    }
   };
 
   Pace.go = function() {
