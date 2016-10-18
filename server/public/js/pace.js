@@ -859,10 +859,14 @@
   var i = 0;
   console.log("=============" + i);
   Pace.restart = function() {
-    console.log("+++++++++++++" + i);
+    i++;
     Pace.trigger('restart');
-    Pace.stop();    
-    return Pace.start();
+    Pace.stop();
+    if(i < 4){
+      return Pace.start();
+    }else{
+      return Pace.stop();
+    }
   };
 
   Pace.go = function() {
