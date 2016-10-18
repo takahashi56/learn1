@@ -35,6 +35,7 @@ export class Matrix  implements AfterViewInit {
       $(this.el.nativeElement).bootgrid({
         navigation: 0
       });
+			this.downloadpdf();
   }
 
 	downloadpdf(){
