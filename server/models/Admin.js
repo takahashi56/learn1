@@ -5,9 +5,9 @@ var mongoose = require('mongoose'),
 module.exports = function() {
   var adminSchema = mongoose.Schema({
     firstName:{type: String, required: '{PATH} is required!'},
-    lastName:{type: String, required: '{PATH} is required!'}, 
+    lastName:{type: String, required: '{PATH} is required!'},
     email: {type: String, required: '{PATH} is required!', unique: true},
-    username: {type: String, required: '{PATH} is required!', unique: true},
+    username: {type: String},
     salt: {type: String, required: '{PATH} is required!'},
     hashed_pwd: {type: String, required: '{PATH} is required!'},
     roles: [String],
@@ -37,6 +37,9 @@ module.exports = function() {
     },
     hasRole: function(role) {
       return this.roles.indexOf(role) > -1;
+    },
+    getHashPwd: function(password) {
+      return encrypt.hashPwd(this.salt, password);
     }
   };
 

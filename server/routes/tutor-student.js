@@ -47,12 +47,12 @@ module.exports = function(app) {
 		tutorstudent.getAllMatrix(req, res);
 	});
 
-	app.post('/api/tutor/isvalidoldpwd', function(req, res) {
-		tutorstudent.isValidOldPwd(req, res);
-	});
-
 	app.post('/api/tutor/makepdf', function(req, res) {
 		tutorstudent.makePdf(req, res);
+	});
+
+	app.post('/api/tutor/isvalidoldpwd', function(req, res) {
+		tutorstudent.isValidOldPwd(req, res);
 	});
 
 	app.post('/api/tutor/changepassword', function(req, res) {

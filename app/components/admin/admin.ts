@@ -6,8 +6,10 @@ import {CanActivate} from 'angular2/router';
 import {AddCourse} from './add/course';
 import {AddLesson} from './add/lesson';
 import {AddOrganization} from './add/organization';
+import {AddAdmin} from './add/admin';
 import {EditLesson} from './edit/lesson';
 import {EditCourse} from './edit/course';
+import {EditAdmin} from './edit/admin';
 import {EditOrganization} from './edit/organization';
 
 
@@ -24,8 +26,10 @@ import {EditOrganization} from './edit/organization';
 	new Route({ path: '/add/course', component: AddCourse, name: 'AdminAddCourse' }),
 	new Route({ path: '/add/lesson', component: AddLesson, name: 'AdminAddLesson' }),
 	new Route({ path: '/add/organization', component: AddOrganization, name: 'AdminAddOrganization' }),
+	new Route({ path: '/add/admin', component: AddAdmin, name: 'AdminAddAdmin' }),
 	new Route({ path: '/edit/course', component: EditCourse, name: 'AdminEditCourse' }),
 	new Route({ path: '/edit/lesson', component: EditLesson, name: 'AdminEditLesson' }),
+	new Route({ path: '/edit/admin', component: EditAdmin, name: 'AdminEditAdmin' }),
 	new Route({ path: '/edit/organization', component: EditOrganization, name: 'AdminEditOrganization' }),
 	// new Route({ path: '/student/...', component: Admin, name: 'Student' }),
 ])

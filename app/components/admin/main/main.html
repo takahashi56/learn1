@@ -9,6 +9,9 @@
                 <a href="#organization" data-toggle="tab" aria-expanded="true"><strong class="text-page">Tutor/Organization</strong></a>
             </li>
             <li class="">
+                <a href="#admin" data-toggle="tab" aria-expanded="true"><strong class="text-page">Administrators</strong></a>
+            </li>
+            <li class="">
                 <a href="#settings" data-toggle="tab" aria-expanded="true"><strong class="text-page">Settings</strong></a>
             </li>
         </ul>
@@ -87,7 +90,122 @@
                 </div>
             </div>
             <div class="tab-pane" id="settings">
-                
+              <div class="">
+                <div class="m-t-40 padd-min">
+                  <div class="panel-body m-t-30">
+                    <div class="form">
+                      <form class="cmxform form-horizontal tasi-form"  [ngFormModel]="SettingForm" (submit)="ChangePassowrd(SettingForm.value)">
+                        <div class="container-fluid">
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <div class="alert alert-info" *ngIf="changeSuccess && showAlert">
+                                Your password has been updated successfully!
+                              </div>
+                              <div class="alert alert-info" *ngIf="!changeSuccess && showAlert">
+                                Your update was failure.
+                              </div>
+                              <div class="form-group" [ngClass]="{ 'has-error' : !oldpwd.valid && validateoldconfirm && validOldPassword }">
+                                <div class=" col-xs-offset-2 col-lg-3">
+                                    <div class="m-l-10 m-r-10">
+                                        <label for="oldpwd" class="control-label text-left text-page">Old Password</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="m-l-10 m-r-10">
+                                        <input class=" form-control" id="oldpwd" name="oldpwd" type="password" ngControl="oldpwd"  placeholder="Old Password" (blur)="blurChange(SettingForm.value)" (keyup)="onKey($event)" >
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <div class="form-group" [ngClass]="{ 'has-error' : !newpwd.valid && validatenewconfirm }">
+                                <div class="col-lg-3  col-xs-offset-2">
+                                    <div class="m-l-10 m-r-10">
+                                        <label for="newpwd" class="control-label text-left text-page">New Password</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="m-l-10 m-r-10">
+                                        <input class=" form-control" id="newpwd" name="newpwd" type="password" ngControl="newpwd"  placeholder="New Password" [disabled]="validOldPassword" >
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <div class="form-group" [ngClass]="{ 'has-error' : !matchedPassword(SettingForm.value) && validatenewconfirm }">
+                                <div class="col-lg-3  col-xs-offset-2">
+                                    <div class="m-l-10 m-r-10">
+                                        <label for="newpwdconfirm" class="control-label text-left text-page">New Password Confirm</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="m-l-10 m-r-10">
+                                        <input class=" form-control" id="newpwdconfirm" name="newpwdconfirm" type="password" ngControl="newpwdconfirm"  placeholder="Retype New Password"  [disabled]="validOldPassword" >
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <div class="form-group">
+                                <div class="col-lg-3  col-xs-offset-2">
+                                    <div class="m-l-10 m-r-10">
+                                        <label for="newpwdconfirm" class="control-label text-left text-page"></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 text-center">
+                                    <div class="m-l-10 m-r-10">
+                                      <input type="button" (click)="cancel(SettingForm.value)" value="Cancel" class="btn btn-primary m-b-10 w-sm">
+                                      <input type="submit"  value="Save" class="btn btn-primary m-b-10 w-sm m-l-15">
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="admin">
+              <div class="text-right m-b-30">
+                  <a  class="btn btn-primary w-sm  m-r-5" [routerLink]="['AdminAddAdmin']">Add Golbal Admin</a>
+                  <a  class="btn btn-primary w-sm" (click)="beforeRemoveAdmin()" data-toggle="modal" data-target="#remove-admin">Remove Admin</a>
+              </div>
+              <div class="table-responsive">
+                  <table class="table text-page">
+                      <thead>
+                          <tr>
+                              <th></th>
+                              <th>First Name</th>
+                              <th>Last Name</th>
+                              <th>Email</th>
+                              <th>Last Logon</th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tr *ngFor="let admin of adminList">
+                          <td>
+                              <label class="cr-styled">
+                                  <input type="checkbox" (change)="checkAdmin($event, admin)">
+                                  <i class="fa"></i>
+                              </label>
+                          </td>
+                          <td><strong>{{admin.firstName}}</strong></td>
+                          <td><strong>{{admin.lastName}}</strong></td>
+                          <td><strong>{{admin.email}}</strong></td>
+                          <td><strong>{{admin.created_at.toString().slice(0,10)}}</strong></td>
+                          <td class="text-right"><a class="btn w-xs btn-sm btn-primary" (click)="gotoEditAdmin(admin)">Edit</a></td>
+                      </tr>
+                  </table>
+              </div>
             </div>
         </div>
     </div>
@@ -141,6 +259,32 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeOrg()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showRemoveAdmin" id="remove-admin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Remove Administrator</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>Are you sure to remove this administrator? </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeAdmin()">Yes</button>
             </div>
         </div>
     </div>

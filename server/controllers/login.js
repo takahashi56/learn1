@@ -100,8 +100,8 @@ exports.studentLogin = function(req, res) {
 				data.success = true;
 				data.id = student._id;
 				data.count = count;
-				res.send(data);
 				data["name"] = student.firstName + " " + student.lastName;
+				res.send(data).end();				
 			})
 		}else{
 			res.send(data);
