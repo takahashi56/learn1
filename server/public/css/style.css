@@ -113,6 +113,9 @@ body, html {
   display: none;
 }
 
+.my-pace{
+  display: none;
+}
 /******** 2. Left Panel (aside navigation) ********/
 aside.left-panel {
   background-color: #1a2942;
