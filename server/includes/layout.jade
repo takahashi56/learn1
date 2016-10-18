@@ -59,7 +59,7 @@ html
 	body
 		div(id="wrapper")
 			block main-content
-			div(class="my-pace")
+			div(class="my-pace")			
 
 		//- bower:js
 		script(src='/vendor/jquery/dist/jquery.js')
@@ -80,10 +80,6 @@ html
 		link(rel="stylesheet", href="//fonts.googleapis.com/css?family=Open+Sans")
 		script(type="text/javascript").
 			PDFJS.workerSrc = '/vendor/pdfjs-dist/build/pdf.worker.js';
-			$('div.my-pace').attr('style', 'display:block;');
-			$(window).on('load', function(){
-				$('div.my-pace').attr('style', 'display:none;');				
-			})
 
 			System.config( {
 				  defaultJSExtensions: true,

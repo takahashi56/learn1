@@ -859,7 +859,7 @@
   Pace.restart = function() {
     Pace.trigger('restart');
     Pace.stop();
-    return Pace.start();
+    //return Pace.start();
   };
 
   Pace.go = function() {
