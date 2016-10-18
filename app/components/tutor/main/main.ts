@@ -4,12 +4,13 @@ import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
 import {TutorService} from '../../../services/tutor';
 import {Location} from 'angular2/platform/common';
+import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
 
 @Component({
 	selector: 'tutor-main',
 	templateUrl: '/components/tutor/main/main.html',
 	providers: [Session, TutorService],
-	directives: [ROUTER_DIRECTIVES],
+	directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
 })
 export class TutorMain implements OnInit {
 
@@ -22,7 +23,13 @@ export class TutorMain implements OnInit {
 	creditcount: number = 0;
 	employeecount: number = 0;
 
-	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router) {
+	SettingForm: ControlGroup;
+	newpwd: Control;
+	oldpwd: Control;
+	newpwdconfirm: Control;
+	validateconfirm: boolean = false;
+
+	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router, private builder: FormBuilder) {
 		this.tutor_id = this._session.getCurrentId()
 
 		if(this.tutor_id == "" || this.tutor_id == null ){
@@ -47,6 +54,15 @@ export class TutorMain implements OnInit {
 				this._session.setItem('TutorAllStudent', JSON.stringify(res))
 			});
 
+			this.oldpwd = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
+			this.newpwd = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
+			this.newpwdconfirm = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
+
+			this.SettingForm = builder.group({
+				newpwd: this.newpwd,
+				newpwdconfirm: this.newpwdconfirm,
+				oldpwd: this.oldpwd
+			})
 		}
 	}
 
