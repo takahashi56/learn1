@@ -859,9 +859,9 @@
   var i = 0;
   console.log("=============" + i);
   Pace.restart = function() {
-    Pace.trigger('restart');
-    Pace.stop();
     console.log("+++++++++++++" + i);
+    Pace.trigger('restart');
+    Pace.stop();    
     return Pace.start();
   };
 
