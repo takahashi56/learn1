@@ -74,8 +74,12 @@ html
 		script(src="/js/jquery.nicescroll.js")
 		script(src="/js/pace.min.js")
 		//- endinject
+		
+		link(rel="stylesheet", href="//fonts.googleapis.com/css?family=Open+Sans")
 
 		script(type="text/javascript").
+			PDFJS.workerSrc = '/vendor/pdfjs-dist/build/pdf.worker.js'
+
 			System.config( {
 				  defaultJSExtensions: true,
 								packages: {
