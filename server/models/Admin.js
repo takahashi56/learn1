@@ -4,6 +4,8 @@ var mongoose = require('mongoose'),
 
 module.exports = function() {
   var adminSchema = mongoose.Schema({
+    firstName:{type: String, required: '{PATH} is required!'},
+    lastName:{type: String, required: '{PATH} is required!'}, 
     email: {type: String, required: '{PATH} is required!', unique: true},
     username: {type: String, required: '{PATH} is required!', unique: true},
     salt: {type: String, required: '{PATH} is required!'},
@@ -30,7 +32,7 @@ module.exports = function() {
 
   adminSchema.methods = {
     authenticate: function(pwdToMatch) {
-      console.log(encrypt.hashPwd(this.salt, pwdToMatch))     
+      console.log(encrypt.hashPwd(this.salt, pwdToMatch))
       return encrypt.hashPwd(this.salt, pwdToMatch) == this.hashed_pwd;
     },
     hasRole: function(role) {

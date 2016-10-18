@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, EventEmitter} from 'angular2/core';
 import {Session} from '../../../services/session';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
@@ -19,16 +19,19 @@ export class TutorMain implements OnInit {
 	selectStudents: any = [];
 	showRemoveStudent: boolean = false;
 	selectedStudentsName: string = '';
+	creditcount: number = 0;
+	employeecount: number = 0;
 
 	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router) {
 		this.tutor_id = this._session.getCurrentId()
 
 		if(this.tutor_id == "" || this.tutor_id == null ){
-			console.log("@@@@@@@@@@@@@@@@@@@@@@@");
 			this._router.navigateByUrl('/login');
 		}else{
 			var role=this._session.getCurrentRole();
 			this._session.setItem('editORadd', JSON.stringify({flag: false}));
+			this.creditcount = Number(this._session.getItem('creditcount'));
+			this.employeecount = Number(this._session.getItem('employeecount'));
 
 			this._tutorService.getAllMatrix({tutor_id: this.tutor_id}).subscribe((res) => {
 		      console.log(res)
@@ -57,7 +60,6 @@ export class TutorMain implements OnInit {
 
 	ngOnInit(){
 		if(this.tutor_id == "" || this.tutor_id == null ){
-			console.log("@@@@@@@@@@@@@@@@@@@@@@@");
 			this._router.navigateByUrl('/login');
 		}
 	}
@@ -83,10 +85,15 @@ export class TutorMain implements OnInit {
 			phone: '',
 		}
 
-		this._session.setItem('editORadd', JSON.stringify({flag: false}));
-		this._session.setItem('TutorStudent', JSON.stringify(data));
+		var studentLength = this.studentList.length;
+		if((studentLength + 1) > this.employeecount){
+			return ;
+		}else{
+			this._session.setItem('editORadd', JSON.stringify({flag: false}));
+			this._session.setItem('TutorStudent', JSON.stringify(data));
 
-		this._router.navigate(['AddTutorStudent']);
+			this._router.navigate(['AddTutorStudent']);
+		}
 	}
 
 	beforeAssignStudent(course){
@@ -105,15 +112,27 @@ export class TutorMain implements OnInit {
 		var id = this._session.getItem('SelectStudentWithId');
 		if(!id) return false;
 
+		if(this.creditcount == 0){
+			console.log("You cannot assign the course to students!");
+			return false;
+		}
+
 		let selectedId = this._session.getItem('AssignCourse');
 		if(!selectedId) return false;
 
 		let ids = [];
 		ids.push(id);
 
-		this._tutorService.setAssignStudentsWithCourse(selectedId,ids).subscribe((res)=>{
+		this._tutorService.setAssignStudentsWithCourse(this.tutor_id, selectedId,ids).subscribe((res)=>{
 			console.log(res);
+			this.creditcount--;
+			this._session.setItem('creditcount', this.creditcount);
+			console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+			console.log(this._tutorService.event_emitter);
+			this._tutorService.event_emitter.emit('decrease_credit');
+
 			this._router.navigateByUrl('/home/tutor/main');
+
 			this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
 				this.studentList = res;
 				this._session.setItem('TutorAllStudent', JSON.stringify(res))
@@ -131,13 +150,23 @@ export class TutorMain implements OnInit {
 		var id = this._session.getItem('SelectCourseWithId');
 		if(!id) return false;
 
+		if(this.creditcount == 0){
+			console.log("You cannot assign the course to students!");
+			return false;
+		}
+
 		if(this.selectStudents.length == 0) return false;
 
 		let ids = this.selectStudents;
 
-		this._tutorService.setAssignStudentsWithCourse(id,ids).subscribe((res)=>{
+		this._tutorService.setAssignStudentsWithCourse(this.tutor_id, id,ids).subscribe((res)=>{
 
 			console.log(res);
+			this.creditcount--;
+			this._session.setItem('creditcount', this.creditcount);
+			console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+			this._tutorService.event_emitter.emit('decrease');
+			console.log(this._tutorService.event_emitter);
 
 			this._router.navigateByUrl('/home/tutor/main');
 
@@ -160,7 +189,7 @@ export class TutorMain implements OnInit {
 	    var myReader:FileReader = new FileReader();
 	    myReader.readAsText(file);
 	    var resultSet = [];
-	  	 myReader.onloadend = function(e){
+	  	 myReader.onloadend = (e) => {
 	      // you can perform an action with data read here
 	      // as an example i am just splitting strings by spaces
 	      var columns = myReader.result.split(/\r\n|\r|\n/g);
@@ -170,6 +199,15 @@ export class TutorMain implements OnInit {
 	          resultSet.push(columns[i].split(']'));
 	      }
 				console.log(resultSet);
+				var studentLength = this.studentList.length, remainderLength=0;
+				if((studentLength + resultSet.length) > this.employeecount){
+					remainderLength = (studentLength + resultSet.length) - this.employeecount;
+				}
+				if(remainderLength <= 0){
+					return false;
+				}else{
+					resultSet = resultSet.slice(0, remainderLength);
+				}
 	      self._tutorService.addStudentCSV({result:resultSet, tutor_id: self._session.getCurrentId()}).subscribe((res)=>{
 
 					// self._router.navigateByUrl('/home/tutor/main');

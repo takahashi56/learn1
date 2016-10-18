@@ -26,13 +26,20 @@ export class Login {
 		this.actionPath = "";
 		this.text = "";
 
-		this.username = new Control('', Validators.required);
-		this.password = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
+		var username = _session.getCurrentUsername(), role=_session.getCurrentRole(), id=_session.getCurrentId();
 
-		this.LoginForm = builder.group({
-			username: this.username,
-			password: this.password
-		})
+		if(username != null && role != null && id != null){
+			var url = _session.getItem('homeUrl');
+			this._router.navigateByUrl('/home');
+		}else{
+			this.username = new Control('', Validators.required);
+			this.password = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
+
+			this.LoginForm = builder.group({
+				username: this.username,
+				password: this.password
+			})
+		}
 	}
 
 	doLogin(form: any) {
@@ -47,7 +54,7 @@ export class Login {
 				.subscribe((res) => {
 					console.log(res);
 					if (res.success) {
-						this._session.setUser(data.username, res.role, res._id)
+						this._session.setUser(res.name, res.role, res._id)
 						this._session.setItem('homeUrl', res.action);
 						if(res.role == 2){
 							this._session.setItem('MainStudentId', res.id);
@@ -55,6 +62,8 @@ export class Login {
 						}
 						if(res.role == 1){
 							this._session.setItem("organization", res.organization);
+							this._session.setItem("creditcount", res.creditcount);
+							this._session.setItem("employeecount", res.employeecount);
 						}
 						console.log(res.action);
 						// this._router.navigate(['Home']);

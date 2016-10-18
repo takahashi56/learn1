@@ -19,15 +19,19 @@ export class Resetpwd {
   matched: boolean = false;
 
 	constructor(private _session: Session, private _adminService: AuthService, private builder: FormBuilder, private _router: Router) {
-		console.log('in the constructor');
+		var email = this._session.getItem('forget_user');
 
-		this.password = new Control('', Validators.required);
-    this.verfiedPassword = new Control('', Validators.required);
+		if(email == null){
+			this._router.navigate(['Login']);
+		}else{
+			this.password = new Control('', Validators.required);
+			this.verfiedPassword = new Control('', Validators.required);
 
-		this.ResetpwdForm = builder.group({
-			password: this.password,
-      verfiedPassword: this.verfiedPassword,
-		})
+			this.ResetpwdForm = builder.group({
+				password: this.password,
+				verfiedPassword: this.verfiedPassword,
+			})
+		}
 	}
 
   matchedPassword(form: any){
