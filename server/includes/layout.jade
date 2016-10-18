@@ -55,9 +55,11 @@ html
 
 		//- Setting the right viewport
 		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
 	body
 		div(id="wrapper")
 			block main-content
+			div(class="my-pace")
 
 		//- bower:js
 		script(src='/vendor/jquery/dist/jquery.js')
@@ -72,13 +74,16 @@ html
 		script(src="/js/1-theme.js")
 		script(src="/js/jquery.app.js")
 		script(src="/js/jquery.nicescroll.js")
-		script(src="/js/pace.min.js")
+		script(src="/js/pace.js")
 		//- endinject
-		
-		link(rel="stylesheet", href="//fonts.googleapis.com/css?family=Open+Sans")
 
+		link(rel="stylesheet", href="//fonts.googleapis.com/css?family=Open+Sans")
 		script(type="text/javascript").
-			PDFJS.workerSrc = '/vendor/pdfjs-dist/build/pdf.worker.js'
+			PDFJS.workerSrc = '/vendor/pdfjs-dist/build/pdf.worker.js';
+			$('div.my-pace').attr('style', 'display:block;');
+			$(window).on('load', function(){
+				$('div.my-pace').attr('style', 'display:none;');				
+			})
 
 			System.config( {
 				  defaultJSExtensions: true,
