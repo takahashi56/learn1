@@ -425,3 +425,32 @@ exports.makePdf = function(req, res){
     });
 	res.send({url: file_name});
 }
+
+exports.changePassword = function(req, res){
+	var tutor_id = req.body.tutor_id,
+			pwd = req.body.pwd;
+
+	Tutor.findOne({_id: tutor_id}, function(err, tutor){
+		if(err) res.send({success:false}).end();
+
+		var newpwd = tutor.getHashPwd(pwd.toString());
+		tutor.password = newpwd;
+		tutor.save();
+		res.status(200).send({success: true}).end();
+	})
+}
+
+exports.isValidOldPwd = function(req, res){
+	var tutor_id = req.body.tutor_id,
+			pwd = req.body.pwd;
+
+	Tutor.findOne({_id: tutor_id}, function(err, tutor){
+		if(err) res.send({success:false}).end();
+
+		if(tutor.authenticate(pwd)){
+			res.status(200).send({success: true}).end();
+		}else{
+			res.status(200).send({success: false}).end();
+		}
+	})
+}

@@ -27,7 +27,11 @@ export class TutorMain implements OnInit {
 	newpwd: Control;
 	oldpwd: Control;
 	newpwdconfirm: Control;
-	validateconfirm: boolean = false;
+	validateoldconfirm: boolean = false;
+	validatenewconfirm: boolean = false;
+	changeSuccess: boolean = false;
+	showAlert: boolean = false;
+	validOldPassword: boolean = true;
 
 	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router, private builder: FormBuilder) {
 		this.tutor_id = this._session.getCurrentId()
@@ -307,5 +311,67 @@ export class TutorMain implements OnInit {
 		var baseurl = window.location.origin+window.location.pathname + '#/home/tutor/matrix';
 		window.open(baseurl, '_blank');
 		// this._router.navigateByUrl('/home/tutor/matrix');
+	}
+
+	matchedPassword(form: any){
+		var password = form.newpwd,
+			verifiedpassword = form.newpwdconfirm;
+		if(password == verifiedpassword){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	ChangePassowrd(form: any){
+		if(form.oldpwd == "" || form.oldpwd == null || this.validOldPassword == true){
+			this.validateoldconfirm = true;
+			return;
+		}
+		this.validatenewconfirm = true;
+		console.log("abc")
+		if(this.SettingForm.valid){
+			var newPwd = form.newpwd;
+			console.log("abc")
+			this._tutorService.changePassword({tutor_id: this.tutor_id, pwd: newPwd}).subscribe((res) => {
+				this.showAlert = true;
+				if(res.success){
+					this.changeSuccess = true;
+				}else{
+					this.changeSuccess = false;
+				}
+			});
+		}
+	}
+
+	blurChange(form: any){
+		var oldPwd = form.oldpwd;
+		this.isValidOldPassword(oldPwd);
+		console.log(oldPwd)
+	}
+
+	onKey(event: any){
+		if(event.keyCode !== 13) return;
+		var value = event.target.value;
+		console.log(value);
+		this.isValidOldPassword(value);
+	}
+
+	isValidOldPassword(pwd: string){
+		this.validateoldconfirm = true;
+		this._tutorService.isValidOldPassword({tutor_id: this.tutor_id, pwd: pwd}).subscribe((res)=>{
+			if(res.success){
+				this.validOldPassword = false;
+			}else{
+				this.validOldPassword = true;
+				this.validateoldconfirm = false;
+			}
+		})
+	}
+
+	cancel(form: any){
+		(<Control>this.SettingForm.controls['oldpwd']).updateValue('');
+		(<Control>this.SettingForm.controls['newpwd']).updateValue('');
+		(<Control>this.SettingForm.controls['newpwdconfirm']).updateValue('');
 	}
 }
