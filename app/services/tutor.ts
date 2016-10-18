@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/core';
+import {Injectable, EventEmitter, Output} from 'angular2/core';
 import 'rxjs/add/operator/map';
 import {Http, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Rx';
@@ -13,12 +13,23 @@ const HEADER = {
 @Injectable()
 export class TutorService {
 	private baseUrl: string = "/api/tutor/";
+  @Output() event_emitter: EventEmitter<any> = new EventEmitter(true);
 
 	constructor (private _http: Http) {
 		// this.progress$ = Observable.create(observer => {
 		// 	this.progressObserver = observer
 		// }).share();
 	}
+
+  emitAction(event_name: string){
+    this.event_emitter.emit(event_name);
+  }
+
+  onEmittedAction(event_name: string, callback){
+    this.event_emitter.subscribe((event_name) => {
+      callback();
+    })
+  }
 
 	getAllCourses(data) {
 		return this._http.post(this.baseUrl + "courses",JSON.stringify(data),  HEADER).map((res) =>{
@@ -54,8 +65,9 @@ export class TutorService {
 			})
 	}
 
-	setAssignStudentsWithCourse(id, ids){
+	setAssignStudentsWithCourse(tutor_id, id, ids){
 		var data = {
+      tutor_id: tutor_id,
 			course_id: id,
 			ids: ids
 		}

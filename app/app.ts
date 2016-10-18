@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
 import {Router, Route, RouteConfig, RouterOutlet, ROUTER_DIRECTIVES} from 'angular2/router';
-
-// import {AuthenticatedRouterOutlet} from './directives/authenticated-router-outlet';
+// import {Idle, DEFAULT_INTERRUPTSOURCES} from 'ng2-idle/core';
+// import {AuthenticatedRouterOutlet} from './directives/authnpm enticated-router-outlet';
 import {Home} from './components/home/home';
 import {Login} from './components/login/login';
 import {Dashboard} from './components/dashboard/dashboard';

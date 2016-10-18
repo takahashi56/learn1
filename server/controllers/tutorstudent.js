@@ -42,13 +42,13 @@ exports.getAllStudents = function(req, res) {
 	  			students_copy.push(s);
 	  			if(students.length == students_copy.length){
 	  				students_copy.sort(function(a, b){
-			            return a.firstName.localeCompare(b.firstName);    
+			            return a.firstName.localeCompare(b.firstName);
 			          })
-	  				res.send(students_copy);			
+	  				res.send(students_copy);
 	  			}
-  			})	  			
+  			})
   		});
-  		
+
   	})
 }
 
@@ -104,7 +104,7 @@ exports.getAllCourses = function(req, res) {
                                 main_data.push(data);
                                 if(main_data.length == courses.length){
                                 	main_data.sort(function(a, b){
-							            return a.coursetitle.localeCompare(b.coursetitle);    
+							            return a.coursetitle.localeCompare(b.coursetitle);
 							          })
                                     res.send(main_data);
 
@@ -195,10 +195,18 @@ exports.deleteStudent = function(req, res) {
 
 exports.setStudentByCourse = function(req, res){
 	var course_id = req.body.course_id,
-		students_ids = req.body.ids;
+		students_ids = req.body.ids,
+		tutor_id = req.body.tutor_id;
 
-	console.log('student ids ' + JSON.stringify(students_ids));
-	console.log('course id ' + JSON.stringify(course_id));
+	Tutor.findOne({_id: tutor_id}, function(err, tutor){
+		if(tutor.creditcount == 0){
+			res.send(500).send({error: "you cannot assign the course to students!"}).end();
+		}else{
+			tutor.creditcount--;
+			tutor.save();
+		}
+	});
+
 	students_ids.map(function(id){
 		Take.find({student_id: id}, function(err, takes){
 			if(err) return console.log(err);
@@ -264,7 +272,7 @@ exports.getCoursesByStudentId = function(req, res){
 				}
 				if(i == takes.length){
 					courses.sort(function(a, b){
-			            return a.coursetitle.localeCompare(b.coursetitle);    
+			            return a.coursetitle.localeCompare(b.coursetitle);
 			          })
 					res.send(courses);
 				}
@@ -328,7 +336,7 @@ exports.getStudentsByCourseId = function(req, res){
 				}
 				if(i == takes.length){
 					courses.sort(function(a, b){
-			            return a.firstName.localeCompare(b.firstName);    
+			            return a.firstName.localeCompare(b.firstName);
 			          })
 					res.send(courses);
 				}
@@ -369,9 +377,9 @@ exports.getLessonsNameByCourseId = function (req, res) {
 			});
 
 			res.send({data: data});
-		})	
+		})
 	})
-	
+
 }
 
 exports.getAllMatrix = function(req, res){
@@ -390,7 +398,7 @@ exports.getAllMatrix = function(req, res){
 
 				if(data.length == students.length){
 					data.sort(function(a, b){
-			            return a.student_name.localeCompare(b.student_name);    
+			            return a.student_name.localeCompare(b.student_name);
 			        })
 					res.send(data);
 				}
@@ -407,10 +415,13 @@ exports.makePdf = function(req, res){
 		pdf_path = path.join(__dirname, '..','public','pdf',file_name);
 
 	console.log(url);
-	
+
 	var client = new pdf.Pdfcrowd('Pedro19880417', 'd5e42b4e5df7e4a921f52e6aefeda841');
-	client.convertHtml(url, pdf.saveToFile(pdf_path));
+	client.convertHtml(url, pdf.saveToFile(pdf_path),{
+        width: "11in",
+        height: "8.5in",
+        vmargin: ".1in",
+        footer_html: ''
+    });
 	res.send({url: file_name});
-} 
-
-
+}

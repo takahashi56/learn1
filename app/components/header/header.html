@@ -9,8 +9,20 @@
                 <a>{{username}}</a>
             </li>
             <li>|</li>
+            <li *ngIf="currentRole == 1">
+              <a>Credits {{creditcount}}</a>
+            </li>
+            <li *ngIf="currentRole == 1">
+              |
+            </li>
+            <li *ngIf="currentRole == 1">
+              <a href="http://correctcare.co.uk/help" target="_blank"> Support </a>
+            </li>
+            <li *ngIf="currentRole == 1">
+              |
+            </li>
             <li>
-                <a (click)="doLogout()">Logout <i class="ion-log-out m-l-10"></i></a>
+                <a (click)="doLogout()">Logout</a>
             </li>
         </ul>
     </div>

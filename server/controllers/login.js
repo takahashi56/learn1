@@ -7,8 +7,12 @@ var mongoose = require('mongoose'),
 	adminLogin = require('./adminlogin'),
 	encrypt = require('../utilities/encryption'),
 	nodemailer = require('nodemailer'),
-	smtpTransport = require('nodemailer-smtp-transport');
+	smtpTransport = require('nodemailer-smtp-transport'),
+	postmark = require('postmark');
 
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
+		config = require('../config/config')[env],
+		client = new postmark.Client(config.postmark_api);
 
 exports.login = function(req, res) {
 	var email = req.body.username,
@@ -32,6 +36,9 @@ exports.login = function(req, res) {
 						data.role = 1;
 						data.success = true;
 						data["organization"] = tutor.organization;
+						data["creditcount"] = tutor.creditcount;
+						data["employeecount"] = tutor.employeecount;
+						data["name"] = tutor.firstName + " " + tutor.lastName;
 						return res.send(data);
 					}else{
 						res.send(data);
@@ -45,6 +52,7 @@ exports.login = function(req, res) {
 				data._id = user._id;
 				data.role = 0;
 				data.success = true;
+				data["name"] = user.firstName + " " + user.lastName;
 				return res.send(data);
 			}else{
 				return res.send(data)
@@ -92,8 +100,9 @@ exports.studentLogin = function(req, res) {
 				data.success = true;
 				data.id = student._id;
 				data.count = count;
-				res.send(data)	
-			})			
+				res.send(data);
+				data["name"] = student.firstName + " " + student.lastName;
+			})
 		}else{
 			res.send(data);
 		}
@@ -113,35 +122,22 @@ exports.forgetpwd = function(req, res){
 			data = {success: true};
 			res.send(data);
 			var fullUrl = req.protocol + '://' + req.get('host'),
-			smtpConfig = {
-			    host: 'smtp.gmail.com',
-			    port: 465,
-			    secure: true, // use SSL
-			    auth: {
-			        user: 'jlee021199@gmail.com',
-			        pass: 'newFirst100'
+					api_key = randomString(30),
+					mailContent = 'You can set your password again. please follow this url <br/> The url is <a href="'+ fullUrl + '/#/resetpwd?api_key='+ api_key +' >Reset the password </a> ';
+
+			client.sendEmail({
+				"From": "admin@correctcore.co.uk",
+				"To": email,
+				"Subject": "Reset the Password",
+				"TextBody": mailContent
+			}, function(error, success) {
+			    if(error) {
+			        console.error("Unable to send via postmark: " + error.message);
+							res.status(500).send({success: false}).end()
+			        return;
 			    }
-			},
-			mailContent = 'You can set your password again. please follow this url <br/> The url is <a href="'+ fullUrl + '/#/resetpwd" >Reset the password </a> ',
-			mailOptions = {
-			    from: 'jlee021199@gmail.com', // sender address
-			    to: 'chrisbrownapple001@gmail.com', // list of receivers
-			    subject: 'Hello ✔', // Subject line
-			    text: 'Hello world 🐴', // plaintext body
-			    html: mailContent // html body
-			}
-			,transport = nodemailer.createTransport(smtpTransport({
-			    service: 'gmail',
-			    auth: {
-			        user: 'jlee021199@gmail.com', // my mail
-			        pass: 'newFirst100'
-			    }
-			}));
-			transport.sendMail(mailOptions, function(error, info){
-			    if(error){
-			        return console.log(error);
-			    }
-			    console.log('Message sent: ' + info.response);
+			    console.info("Sent to postmark for delivery")
+					res.status(200).send({success: true}).end()
 			});
 		}
 	});
@@ -162,4 +158,14 @@ exports.resetPwd = function(req, res){
 		res.send(data);
 	});
 
+}
+
+function randomString(len, charSet) {
+    charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var randomString = '';
+    for (var i = 0; i < len; i++) {
+    	var randomPoz = Math.floor(Math.random() * charSet.length);
+    	randomString += charSet.substring(randomPoz,randomPoz+1);
+    }
+    return randomString;
 }
