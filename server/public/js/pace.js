@@ -857,12 +857,11 @@
   };
 
   var i = 0;
-  console.log("=============" + i);
   Pace.restart = function() {
     i++;
     Pace.trigger('restart');
     Pace.stop();
-    if(i < 4){
+    if(i < 3){
       return Pace.start();
     }else{
       return Pace.stop();
