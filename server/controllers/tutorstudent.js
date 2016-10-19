@@ -409,6 +409,7 @@ exports.getAllMatrix = function(req, res){
 
 exports.makePdf = function(req, res){
 	var url = req.body.data,
+			direction = req.body.direction,
 		randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26)),
 		uniqid = randLetter + Date.now(),
 		file_name = uniqid + '.pdf',
@@ -417,12 +418,22 @@ exports.makePdf = function(req, res){
 	console.log(url);
 
 	var client = new pdf.Pdfcrowd('Pedro19880417', 'd5e42b4e5df7e4a921f52e6aefeda841');
-	client.convertHtml(url, pdf.saveToFile(pdf_path),{
-        width: "11in",
-        height: "8.5in",
-        vmargin: ".1in",
-        footer_html: ''
-    });
+	if(direction == true){
+		client.convertHtml(url, pdf.saveToFile(pdf_path),{
+	        width: "8.267in",
+	        height: "11.692in",
+	        vmargin: ".4in",
+	        footer_html: ''
+	    });
+	}else{
+		client.convertHtml(url, pdf.saveToFile(pdf_path),{
+					width: "11.692in",
+					height: "8.267in",
+					vmargin: ".2in",
+					footer_html: ''
+			});
+	}
+
 	res.send({url: file_name});
 }
 

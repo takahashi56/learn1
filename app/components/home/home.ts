@@ -23,17 +23,18 @@ import {Student} from '../student/student';
 
 export class Home implements OnInit {
 	constructor(private _router: Router, private _session: Session) {
+		console.log("Via Home")
 		var role = this._session.getCurrentRole(),
 			url = this._session.getItem('homeUrl');
-		
+
 		// this._router.navigate(['AdminMain']);
 		if(role == null || isNaN(role)){
-			this._router.navigateByUrl('/login');	
+			this._router.navigateByUrl('/login');
 		}else{
-			this._router.navigateByUrl(url);	
-		}		
+			this._router.navigateByUrl(url);
+		}
 	}
-	
+
 	ngOnInit(){
 
 	}

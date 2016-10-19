@@ -44,11 +44,6 @@ export class TutorMain implements OnInit {
 			this.creditcount = Number(this._session.getItem('creditcount'));
 			this.employeecount = Number(this._session.getItem('employeecount'));
 
-			this._tutorService.getAllMatrix({tutor_id: this.tutor_id}).subscribe((res) => {
-		      console.log(res)
-		      this._session.setItem('studentList', JSON.stringify(res));
-		    })
-
 			this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
 				this.courseList = res;
 				console.log(res);
@@ -57,6 +52,16 @@ export class TutorMain implements OnInit {
 				this.studentList = res;
 				this._session.setItem('TutorAllStudent', JSON.stringify(res))
 			});
+
+			this._tutorService.getAllMatrix({tutor_id: this.tutor_id}).subscribe((res) => {
+	      console.log(res)
+	      this._session.setItem('studentList', JSON.stringify(res));
+	    })
+
+			// this._tutorService.getAlUnCompleted({tutor_id: this.tutor_id}).subscribe((res) => {
+	    //   console.log(res)
+	    //   this._session.setItem('uncompleted', JSON.stringify(res));
+	    // })
 
 			this.oldpwd = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
 			this.newpwd = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
@@ -309,6 +314,16 @@ export class TutorMain implements OnInit {
 
 		this._session.setItem('courseList', JSON.stringify(this.courseList));
 		var baseurl = window.location.origin+window.location.pathname + '#/home/tutor/matrix';
+		window.open(baseurl, '_blank');
+		// this._router.navigateByUrl('/home/tutor/matrix');
+	}
+
+	gotoUncompleted(){
+		console.log(this.courseList)
+		if(this.courseList == [] || this.courseList == null || this.courseList.length == 0) return false;
+
+		this._session.setItem('courseList', JSON.stringify(this.courseList));
+		var baseurl = window.location.origin+window.location.pathname + '#/home/tutor/uncompleted';
 		window.open(baseurl, '_blank');
 		// this._router.navigateByUrl('/home/tutor/matrix');
 	}

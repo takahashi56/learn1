@@ -6,45 +6,36 @@ import {AdminService} from '../../../services/admin';
 import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
 
 @Component({
-	selector: 'admin-edit-organization',
-	templateUrl: '/components/admin/edit/organization.html',
+	selector: 'admin-edit-admin',
+	templateUrl: '/components/admin/edit/admin.html',
 	providers: [Session,AdminService],
 	directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES]
 })
-export class EditOrganization {
+export class EditAdmin {
 
-	OrganizeForm: ControlGroup;
+	AdminForm: ControlGroup;
 	firstname: Control;
 	lastname: Control;
-	organization: Control;
-	department: Control;
 	email: Control;
-	phone: Control;
 	password: Control;
 	submitAttempt: boolean = false;
-	org: any;
+	admin: any;
 
 	constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
 		console.log('in the constructor');
 
-		this.org = JSON.parse(this._session.getItem('org'));
-		console.log(this.org);
+		this.admin = JSON.parse(this._session.getItem('admin'));
+    console.log(this.admin);
 
-		this.firstname = new Control(this.org.firstname, Validators.required);
-		this.lastname = new Control(this.org.lastname, Validators.required);
-		this.organization = new Control(this.org.organization, Validators.required);
-		this.email = new Control(this.org.email, Validators.required);
-		this.password = new Control(this.org.password, Validators.compose([Validators.required, Validators.minLength(6)]))
-		this.phone = new Control(this.org.phone);
-		this.department = new Control(this.org.department);
+		this.firstname = new Control(this.admin.firstName, Validators.required);
+		this.lastname = new Control(this.admin.lastName, Validators.required);
+		this.email = new Control(this.admin.email, Validators.required);
+		this.password = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
 
-		this.OrganizeForm = builder.group({
+		this.AdminForm = builder.group({
 			firstname: this.firstname,
 			lastname: this.lastname,
-			organization: this.organization,
 			email: this.email,
-			phone: this.phone,
-			department: this.department,
 			password: this.password
 		})
 	}
@@ -54,19 +45,16 @@ export class EditOrganization {
 
 	update(form: any) {
 		this.submitAttempt = true;
-		if(this.OrganizeForm.valid){
+		if(this.AdminForm.valid){
 			var data = {
-				_id: this.org.id,
+				_id: this.admin._id,
 				firstname: form.firstname,
 				lastname: form.lastname,
-				organization: form.organization,
 				email: form.email,
 				password: form.password,
-				department: form.department,
-				phone: form.phone,
 			};
 
-			this._adminService.updateTutor(data)
+			this._adminService.updateAdmin(data)
 				.subscribe((res) => {
 					console.log(res.success);
 					if(res.success){

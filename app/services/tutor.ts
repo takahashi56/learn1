@@ -118,6 +118,12 @@ export class TutorService {
 		})
   }
 
+  getAllUnCompleted(data){
+    return this._http.post(this.baseUrl + 'getalluncompleted', JSON.stringify(data), HEADER).map((res) => {
+      return res.json();
+		})
+  }
+
   changePassword(data){
     return this._http.post(this.baseUrl + 'changepassword', JSON.stringify(data), HEADER).map((res) => {
       return res.json();

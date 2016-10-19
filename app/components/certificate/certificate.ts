@@ -26,13 +26,16 @@ export class CertificateView implements OnInit{
     show: boolean = true;
 
     constructor(private _tutorService: TutorService, private _router: Router, private _session: Session){
-        this.data = JSON.parse(this._session.getItem('certificate'));
-        if(this.data == null) this._router.navigateByUrl('/login');
-
+        if(this._session.getCurrentId() == null || this._session.getCurrentUser() == null){
+          this._router.navigate(['Login'])
+        }else{
+          this.data = JSON.parse(this._session.getItem('certificate'));
+          if(this.data == null) this._router.navigateByUrl('/login');
+        }
     }
 
     ngOnInit(){
-      this.downloadpdf()  
+      this.downloadpdf()
     }
 
     getCompleteDate(date){
@@ -41,9 +44,9 @@ export class CertificateView implements OnInit{
 
         var d = new Date(date),
             day = d.getDate().toString().length == 1 ? '0' + d.getDate() : d.getDate(),
-            month = (d.getMonth() + 1 ).toString().length == 1 ? '0' + (d.getMonth() + 1 ) : (d.getMonth() + 1 ), 
+            month = (d.getMonth() + 1 ).toString().length == 1 ? '0' + (d.getMonth() + 1 ) : (d.getMonth() + 1 ),
                 datestring = day  + "/" + month + "/" + d.getFullYear();
- 
+
         return datestring;
     }
 
@@ -67,9 +70,9 @@ export class CertificateView implements OnInit{
                     image1 = document.createElement('img');
                 image.src = data;
                 para.appendChild(image);
-                // self.makeHighResScreenshot(image, image1, 200);                    
+                // self.makeHighResScreenshot(image, image1, 200);
                 // para1.appendChild(image);
-                self._tutorService.makePdf({data:para.innerHTML}).subscribe((res) => {            
+                self._tutorService.makePdf({data:para.innerHTML, direction: true}).subscribe((res) => {
                    window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
                    console.log(res.url);
                 })

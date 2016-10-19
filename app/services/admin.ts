@@ -28,6 +28,12 @@ export class AdminService {
 		});
 	}
 
+  getAllAdmins(data){
+    return this._http.post(this.baseUrl + "adminslist", JSON.stringify(data),HEADER).map((res) =>{
+			return res.json();
+		});
+	}
+
 	getEditCourses(id: string){
 		return this._http.post(this.baseUrl + "courses/edit", JSON.stringify({"id": id}),HEADER).map((res) =>{
 			return res.json();
@@ -58,8 +64,22 @@ export class AdminService {
 			})
 	}
 
+  addAdmin(data){
+		return this._http.post(this.baseUrl + "add/admin", JSON.stringify(data), HEADER)
+			.map((res) => {
+				return res.json();
+			})
+	}
+
 	updateTutor(data){
 		return this._http.put(this.baseUrl + "tutor", JSON.stringify(data), HEADER)
+			.map((res) => {
+				return res.json();
+			})
+	}
+
+  updateAdmin(data){
+		return this._http.post(this.baseUrl + "edit/admin", JSON.stringify(data), HEADER)
 			.map((res) => {
 				return res.json();
 			})
@@ -84,6 +104,13 @@ export class AdminService {
 	}
 	removeOrgById(list){
 		return this._http.post(this.baseUrl + 'removetutor', JSON.stringify({list: list}), HEADER)
+			.map((res) => {
+				return res.json();
+			})
+	}
+
+  removeAdminById(list){
+		return this._http.post(this.baseUrl + 'removeadmin', JSON.stringify({list: list}), HEADER)
 			.map((res) => {
 				return res.json();
 			})
@@ -123,6 +150,17 @@ export class AdminService {
 			xhr.send(formData);
 		});
 	}
-  
+
+  changePassword(data){
+    return this._http.post(this.baseUrl + 'changepassword', JSON.stringify(data), HEADER).map((res) => {
+      return res.json();
+		})
+  }
+
+  isValidOldPassword(data){
+    return this._http.post(this.baseUrl + 'isvalidoldpwd', JSON.stringify(data), HEADER).map((res) => {
+      return res.json();
+		})
+  }
 
 }

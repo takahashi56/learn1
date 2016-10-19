@@ -40,12 +40,12 @@ export class Forgetpwd {
 		if(this.ForgetpwdForm.valid){
 			this._adminService.forgetpwd({email: form.email}).subscribe((res) => {
 				this.sentShow =  true;
-				if(res.success == true){
+				if(res.success){
 					this.showClass = "alert alert-success alert-dismissable";
 					this.sentStatus = "This email was sent. You can check your email";
 					this._session.setUser(form.email, 0, "");
 					this._session.setItem('forget_user', form.email);
-				}else if(res.success == false){
+				}else if(res.success ){
 					this.showClass = "alert alert-danger alert-dismissable";
 					this.sentStatus = "This email was not sent. Please type the email correctly!";
 				}
