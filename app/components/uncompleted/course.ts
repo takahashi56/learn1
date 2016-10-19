@@ -11,34 +11,29 @@ declare let PDFJS;
 
 
 @Component({
-	selector: 'matrix',
-  templateUrl: '/components/matrix/matrix.html',
+	selector: 'uncompleted-course',
+  templateUrl: '/components/uncompleted/course.html',
 	providers: [Session,TutorService],
 	directives: [ROUTER_DIRECTIVES]
 })
-export class Matrix  implements AfterViewInit {
-  organization: string = '';
-  courseList: any[];
+export class UnCompletedCourse implements AfterViewInit {
   studentList: any[];
+  courseList: any[];
+  organization: string = '';
 
-  @ViewChild('gridbasic') el:ElementRef;
 	constructor(private _session: Session, private _tutorService: TutorService, private _router: Router) {
-		if(this._session.getCurrentId() == null || this._session.getCurrentUser() == null){
-			this._router.navigate(['Login']);
-		}else{
-			console.log('in the constructor');
-			this.organization = this._session.getItem('organization')
-			this.courseList = JSON.parse(this._session.getItem('courseList'));
-			var tutor_id = this._session.getCurrentId();
-			this.studentList = JSON.parse(this._session.getItem('studentList'))
-			console.log(this.studentList)
-		}
+    if(this._session.getCurrentId() == null || this._session.getCurrentUser() == null){
+      this._router.navigate(['Login'])
+    }else{
+      this.organization = this._session.getItem('organization')
+      this.courseList = JSON.parse(this._session.getItem('courseList'));
+      var tutor_id = this._session.getCurrentId();
+      this.studentList = JSON.parse(this._session.getItem('studentList'))
+      console.log(this.studentList)
+    }
 	}
 
   ngAfterViewInit() {
-      $(this.el.nativeElement).bootgrid({
-        navigation: 0
-      });
 			this.downloadpdf();
   }
 
@@ -64,28 +59,22 @@ export class Matrix  implements AfterViewInit {
 							para.appendChild(image);
 							// self.makeHighResScreenshot(image, image1, 200);
 							// para1.appendChild(image);
-							self._tutorService.makePdf({data:para.innerHTML, direction: false}).subscribe((res) => {
+							self._tutorService.makePdf({data:para.innerHTML, direction: true}).subscribe((res) => {
 								 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
 								 console.log(res.url);
 							})
 					}
 			});
 	}
-
-  getCompleteDatefromCourse(course, student_course){
-    let coString = "";
-    student_course.forEach(c => {
-        if(c.course_id === course.course_id){
-          coString = this.getCompleteDate(c.completedAt)
+  getCourseName(student_course: any){
+    var course_names:string = "";
+    student_course.forEach((c) => {
+      this.courseList.forEach((course) => {
+        if(c.course_id == course.course_id && c.isCompleted == false){
+          course_names += course.coursetitle + "; ";
         }
-    });
-    return coString == ''? '' : coString;
+      })
+    })
+    return course_names;
   }
-
-  getCompleteDate(date){
-		if(date == null) return '';
-		var d = new Date(date),
-				datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
-		return datestring;
-	}
 }

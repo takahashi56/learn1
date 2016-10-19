@@ -101,7 +101,7 @@ exports.studentLogin = function(req, res) {
 				data.id = student._id;
 				data.count = count;
 				data["name"] = student.firstName + " " + student.lastName;
-				res.send(data).end();				
+				res.send(data).end();
 			})
 		}else{
 			res.send(data);
@@ -119,15 +119,13 @@ exports.forgetpwd = function(req, res){
 			res.send(data);
 			return console.error(err);
 		}else{
-			data = {success: true};
-			res.send(data);
 			var fullUrl = req.protocol + '://' + req.get('host'),
 					api_key = randomString(30),
 					mailContent = 'You can set your password again. please follow this url <br/> The url is <a href="'+ fullUrl + '/#/resetpwd?api_key='+ api_key +' >Reset the password </a> ';
 
 			client.sendEmail({
-				"From": "admin@correctcore.co.uk",
-				"To": email,
+				"From": "admin@correctcare.co.uk",
+				"To": "chrisbrownapple001@gmail.com",
 				"Subject": "Reset the Password",
 				"TextBody": mailContent
 			}, function(error, success) {
@@ -135,9 +133,10 @@ exports.forgetpwd = function(req, res){
 			        console.error("Unable to send via postmark: " + error.message);
 							res.status(500).send({success: false}).end()
 			        return;
-			    }
-			    console.info("Sent to postmark for delivery")
-					res.status(200).send({success: true}).end()
+			    }else{
+						console.info("Sent to postmark for delivery")
+						res.status(200).send({success: true}).end()
+					}
 			});
 		}
 	});
