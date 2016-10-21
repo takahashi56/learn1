@@ -142,7 +142,7 @@ export class Main implements OnInit {
 		this._adminService.removeAdminById(this.selectAdmin).subscribe((res)=>{
 			instance.selectAdmin.map(function(id){
 				instance.adminList = instance.adminList.filter(function(admin){
-					return admin.id != id;
+					return admin._id != id;
 				})
 			})
 		})
@@ -181,10 +181,10 @@ export class Main implements OnInit {
 		console.log(event.currentTarget.checked);
 
 		if(event.currentTarget.checked){
-			this.selectAdmin.push(object.id);
+			this.selectAdmin.push(object._id);
 		}else{
 			this.selectAdmin = this.selectAdmin.filter(function(o){
-				return o != object.id;
+				return o != object._id;
 			})
 		}
 		console.log(this.selectAdmin);
