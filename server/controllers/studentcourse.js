@@ -238,7 +238,7 @@ var getDateTime = function(dateString) {
         ' ' + [(d.getMonth() + 1).padLeft(),
             d.getDate().padLeft(),
             d.getFullYear() - 2000
-        ].join('-');
+        ].join('/');
 
     return dformat;
 }
@@ -250,7 +250,7 @@ var sendEmail = function(req, res) {
         coursename = req.body.coursename,
         name = req.body.name,
         subject = "Correct Care " + name + " has completed " + coursename + " course",
-        mailContent = '<html><body> <h4>' + name + '</h4> has completed <h5>' + coursename + ' </h5> at ' + getDateTime(completedAt) + ' and scored ' + score + '%. </body></html> ';
+        mailContent = '<html><body> ' + name + ' has completed ' + coursename + ' at ' + getDateTime(completedAt) + ' and scored ' + score + '%. <br/><br/> For your records, a copy of their certificate is attached to this email. <br/><br/> Thank you. </body></html> ';
 
     client.sendEmail({
         "From": "admin@correctcare.co.uk",
