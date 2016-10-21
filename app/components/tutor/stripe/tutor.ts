@@ -104,6 +104,10 @@ export class StripePayment {
             console.log(this.sentShow);
             this.showClass = "alert alert-success alert-dismissable";
             this.sentStatus = "Your Payment has been successfully. You have got the new credits " + res.creditcount;
+
+						setTimeout(()=>{
+							this._router.navigate(['TutorMain'])
+						}, 2000)
         } else {
             this.showClass = "alert alert-danger alert-dismissable";
             this.sentStatus = "Your Payment has not been failed. Please type your card information correctly!";
