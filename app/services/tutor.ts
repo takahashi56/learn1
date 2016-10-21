@@ -50,7 +50,7 @@ export class TutorService {
 				return res.json();
 			})
 		}else{
-			return this._http.put(this.baseUrl + "student", JSON.stringify(data), HEADER)
+			return this._http.post(this.baseUrl + "updatestudent", JSON.stringify(data), HEADER)
 			.map((res) => {
 				return res.json();
 			})
@@ -114,6 +114,30 @@ export class TutorService {
 
   getAllMatrix(data){
     return this._http.post(this.baseUrl + 'getallmatrix', JSON.stringify(data), HEADER).map((res) => {
+      return res.json();
+		})
+  }
+
+  performPayment(data){
+    return this._http.post(this.baseUrl + 'performpayment', JSON.stringify(data), HEADER).map((res) => {
+      return res.json();
+		})
+  }
+
+  getStripeTransactionHistory(data){
+    return this._http.post(this.baseUrl + 'getstripehistory', JSON.stringify(data), HEADER).map((res) => {
+      return res.json();
+		})
+  }
+
+  getRedirectUrl(data){
+    return this._http.post(this.baseUrl + 'getgcredirecturl', JSON.stringify(data), HEADER).map((res) => {
+      return res.json();
+		})
+  }
+
+  updateTutorInfo(data){
+    return this._http.post(this.baseUrl + 'updatetutorinfo', JSON.stringify(data), HEADER).map((res) => {
       return res.json();
 		})
   }

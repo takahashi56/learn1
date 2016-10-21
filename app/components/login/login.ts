@@ -64,6 +64,7 @@ export class Login {
 							this._session.setItem("organization", res.organization);
 							this._session.setItem("creditcount", res.creditcount);
 							this._session.setItem("employeecount", res.employeecount);
+							this._session.setItem("stripe_publish_key", res.stripe_publish_key);
 						}
 						console.log(res.action);
 						// this._router.navigate(['Home']);

@@ -1,0 +1,218 @@
+<section class="m-t-20 m-b-30">
+    <div class="container">
+        <h3 class="text-page m-b-30"><strong></strong></h3>
+        <div class="panel">
+          <div class="panel-heading">
+              <h3 class="text-page m-l-15 m-t-15"><strong>Purchase Credits</strong></h3>
+          </div>
+
+          <div class="panel-body">
+            <div style="max-width: 90%;">
+              Each course you assign an employee will return 1 credit. For example, if you have 15 employees and want each employee to complete the Health and Safety course this will require 15 credits.
+            </div>
+
+            <div class="m-l-5 m-r-5  m-t-30">
+              <div class=" form">
+                <div [class]="showClass" *ngIf="sentShow">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{sentStatus}}
+                </div>
+                  <form class="cmxform form-horizontal tasi-form" [ngFormModel]="stripe_form" (submit)="getPaid(stripe_form.value)">
+                      <div class="container-fluid">
+                          <div class="row">
+                              <div class="col-xs-12">
+                                  <div class="form-group">
+                                      <div class=""  [ngClass]="{ 'has-error' : !card_holder.valid && submit_validate }">
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+                                                  <label for="cardholder" class="control-label text-left text-page"><strong>Card Holder</strong></label>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-4">
+                                              <div class="m-l-10 m-r-10">
+                                              <input class=" form-control" id="cardholder" name="cardholder" type="text" ngControl="card_holder">
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class=""  [ngClass]="{ 'has-error' : submit_validate && !isValidateEmail(email.value) }">
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+                                                  <label for="email" class="control-label text-left text-page"><strong>Email Address</strong></label>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-4">
+                                              <div class="m-l-10 m-r-10">
+                                                <input class=" form-control" id="email" name="email" type="text" ngControl="email" ngControl="email">
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-xs-12">
+                                  <div class="form-group">
+                                      <div class=""  [ngClass]="{ 'has-error' : !card_number.valid && submit_validate }">
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+                                                  <label for="cardnumber" class="control-label text-left text-page"><strong>Card Number</strong></label>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-4">
+                                              <div class="m-l-10 m-r-10">
+                                              <input class=" form-control" id="cardnumber" name="cardnumber" type="text" ngControl="card_number">
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class=""  [ngClass]="{ 'has-error' : !amount.valid && submit_validate }">
+                                          <div class="col-lg-4">
+                                              <div class="m-l-10 m-r-10">
+                                                <label for="howmanycredits" class="control-label text-left text-page"><strong>How many credits do you needs?</strong></label>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+                                                <select class="form-control" ngControl="amount">
+                                                  <option *ngFor="let c of credits" [value]="c">{{c}}</option>
+                                              </select>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-xs-12">
+                                  <div class="form-group">
+                                      <div class=""  [ngClass]="{ 'has-error' : !expire_month.valid && !expire_year.valid && submit_validate }">
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+                                                <label for="cardexpire" class="control-label text-left text-page"><strong>Card Expiry Date</strong></label>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+                                                <input class=" form-control" id="cardexpire1" name="cardexpire1" type="text" ngControl="expire_month" maxlength="2" (keypress)="isNumberKey(event)">
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+                                                <input class=" form-control" id="cardexpir2" name="cardexpire2" type="text" ngControl="expire_year" maxlength="2" (keypress)="isNumberKey(event)">
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!-- <div class=""  [ngClass]="{ 'has-error' : !lastname.valid && submit_validate }"> -->
+                                      <div>
+                                          <div class="col-lg-4">
+                                              <div class="m-l-10 m-r-10">
+
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-xs-12">
+                                  <div class="form-group">
+                                      <div class=""  [ngClass]="{ 'has-error' : !card_cvv.valid && submit_validate }">
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+                                                  <label for="cardcvv" class="control-label text-left text-page"><strong>Card CVV</strong></label>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+                                                <input class=" form-control" id="cardcvv" name="cardcvv" type="text" maxlength="4" ngControl="card_cvv"  (keypress)="isNumberKey(event)">
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!-- <div class=""  [ngClass]="{ 'has-error' : !lastname.valid && submitAttempt }"> -->
+                                      <div>
+                                          <div class="col-lg-4">
+                                              <div class="m-l-10 m-r-10">
+
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-xs-12">
+                                  <div class="form-group">
+                                      <!-- <div class=""  [ngClass]="{ 'has-error' : !firstname.valid && submitAttempt }"> -->
+                                      <div>
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-4">
+                                              <div class="m-l-10 m-r-10">
+                                                <input type="submit" value="Purchase" class="btn btn-primary m-b-10 w-sm" style="padding: 6px 35%;">
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!-- <div class=""  [ngClass]="{ 'has-error' : !lastname.valid && submit_validate }"> -->
+                                      <div>
+                                          <div class="col-lg-4">
+                                              <div class="m-l-10 m-r-10">
+
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-2">
+                                              <div class="m-l-10 m-r-10">
+
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="white-space m-t-30 m-b-30">
+                              <div class="row">
+                                  <div class="col-xs-12">
+                                      <span class="sr-only">Empty Space</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table text-page">
+                    <thead>
+                        <tr>
+                            <th>Purchase History</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tr *ngFor="let trans of trans_history">
+                        <td>{{trans.credits}} Credits Purchased</td>
+                        <td>{{trans.credits | currency:'GBP':true:'1.2-2'}}</td>
+                        <td>{{getCreatedPaidDate(trans.created_at)}}</td>
+                    </tr>
+                </table>
+            </div>
+          </div>
+        </div>
+    </div>
+
+</section>

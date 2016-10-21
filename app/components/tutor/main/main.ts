@@ -190,7 +190,8 @@ export class TutorMain implements OnInit {
 			this.creditcount--;
 			this._session.setItem('creditcount', this.creditcount);
 			console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-			this._tutorService.event_emitter.emit('decrease');
+			console.log(Number(this._session.getItem('creditcount')))
+			// this._tutorService.event_emitter.emit('decrease');
 			console.log(this._tutorService.event_emitter);
 
 			this._router.navigateByUrl('/home/tutor/main');
@@ -388,5 +389,16 @@ export class TutorMain implements OnInit {
 		(<Control>this.SettingForm.controls['oldpwd']).updateValue('');
 		(<Control>this.SettingForm.controls['newpwd']).updateValue('');
 		(<Control>this.SettingForm.controls['newpwdconfirm']).updateValue('');
+	}
+
+	/*Stripe Payment*/
+	gotoStripePayment(){
+		console.log("goto Stripe")
+		this._router.navigate(['StripePayment']);
+	}
+
+	/*GoCardless Payment*/
+	gotoGoCardlessPayment(){
+		this._router.navigate(['GoCardlessPayment']);
 	}
 }

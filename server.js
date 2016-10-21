@@ -45,6 +45,8 @@ require('./server/models/Score')();
 
 require('./server/models/Student')();
 
+require('./server/models/StripeTransaction')();
+
 require('./server/models/Take')();
 
 require('./server/models/Tutor')();

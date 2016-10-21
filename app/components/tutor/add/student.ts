@@ -12,7 +12,7 @@ import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'a
 	directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES]
 })
 export class AddTutorStudent {
-	
+
 	student: any;
 	allStudentData: any;
 	StudentForm: ControlGroup;
@@ -27,7 +27,7 @@ export class AddTutorStudent {
 
 
 	constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
-		this.student = JSON.parse(this._session.getItem('TutorStudent'));	
+		this.student = JSON.parse(this._session.getItem('TutorStudent'));
 		this.allStudentData = JSON.parse(this._session.getItem('TutorAllStudent'));
 		console.log(this.allStudentData);
 
@@ -56,8 +56,8 @@ export class AddTutorStudent {
 	generatePassword(){
 		var pwd = this.randomString();
 
-		(<Control>this.StudentForm.controls['password']).updateValue(pwd);	
-		(<Control>this.StudentForm.controls['verifiedpassword']).updateValue(pwd);	
+		(<Control>this.StudentForm.controls['password']).updateValue(pwd);
+		(<Control>this.StudentForm.controls['verifiedpassword']).updateValue(pwd);
 	}
 
 	cancel(){
@@ -67,17 +67,17 @@ export class AddTutorStudent {
 	getValue(form: any){
 		if(form.firstname == "" || form.lastname == "") return '';
 
-		var firstname = form.firstname, 
+		var firstname = form.firstname,
 			lastname = form.lastname,
 			username = firstname.charAt(0).toLowerCase() + lastname.toLowerCase(),
 			i = 0;
 
 		this.allStudentData.forEach(function(student){
 			if(student.username.includes(username)) i++;
-		})	
+		})
 		if(i != 0) username = username + i;
-		
-		(<Control>this.StudentForm.controls['username']).updateValue(username);			
+
+		(<Control>this.StudentForm.controls['username']).updateValue(username);
 	}
 
 	matchedPassword(form: any){
@@ -87,7 +87,7 @@ export class AddTutorStudent {
 			return true;
 		}else{
 			return false;
-		}	
+		}
 
 	}
 
@@ -107,8 +107,8 @@ export class AddTutorStudent {
 				tutor_id:this._session.getCurrentId()
 			};
 			var flag = JSON.parse(this._session.getItem('editORadd'))
-			if(flag.flag) data["_id"] = this.student._id;
-			
+			if(flag.flag) data["_id"] = this.student.student_id;
+
 			this._tutorService.addStudent(data, flag.flag)
 				.subscribe((res) => {
 					console.log("aaaa")
@@ -126,7 +126,7 @@ export class AddTutorStudent {
 	}
 
 	private randomString() :string {
-		var length = 8, 
+		var length = 8,
 			chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	    var result = '';
 	    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];

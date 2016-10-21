@@ -18,7 +18,7 @@ module.exports = function(app) {
 		tutorstudent.addStudentCSV(req, res);
 	});
 
-	app.put('/api/tutor/student', function(req, res) {
+	app.post('/api/tutor/updatestudent', function(req, res) {
 		tutorstudent.editStudent(req, res);
 	});
 
@@ -62,4 +62,24 @@ module.exports = function(app) {
 	app.post('/api/tutor/changepassword', function(req, res) {
 		tutorstudent.changePassword(req, res);
 	});
+
+	app.post('/api/tutor/performpayment', function(req, res) {
+		tutorstudent.performPayment(req, res);
+	});
+
+	app.post('/api/tutor/getstripehistory', function(req, res) {
+		tutorstudent.getStripeHistory(req, res);
+	});
+
+	app.post('/api/tutor/getgcredirecturl', function(req, res){
+		tutorstudent.getGoCardlessRedirectUrl(req,res);
+	})
+
+	app.get('/api/tutor/getGoCardlessCompleteUrl', function(req,res){
+		tutorstudent.getGoCardlessCompleteUrl(req, res);
+	})
+
+	app.get('/api/tutor/updatetutorinfo', function(req,res){
+		tutorstudent.getTutorInfo(req, res);
+	})
 }
