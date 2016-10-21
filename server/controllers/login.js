@@ -39,6 +39,7 @@ exports.login = function(req, res) {
 						data["creditcount"] = tutor.creditcount;
 						data["employeecount"] = tutor.employeecount;
 						data["name"] = tutor.firstName + " " + tutor.lastName;
+						data["stripe_publish_key"] = config.stripe_publish_key;
 						return res.send(data);
 					}else{
 						res.send(data);

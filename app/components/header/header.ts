@@ -32,11 +32,18 @@ export class Header {
 			console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")
 		}
 
-		this._tutorService.event_emitter.subscribe((decrease)=>{
-			console.log("decrease credit");
-			console.log(decrease);
-			this.creditcount = Number(this._session.getItem('creditcount'));
-		})
+		setInterval(()=>{
+			this.updateCreditCount()
+		}, 1000);
+		// this._tutorService.event_emitter.subscribe((decrease)=>{
+		// 	console.log("decrease credit");
+		// 	console.log(decrease);
+		// 	this.creditcount = Number(this._session.getItem('creditcount'));
+		// })
+	}
+
+	updateCreditCount(){
+		this.creditcount = Number(this._session.getItem('creditcount'));
 	}
 
 	doLogout(){

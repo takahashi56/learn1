@@ -58,7 +58,7 @@ html
 
 	body
 		div(id="wrapper")
-			block main-content		
+			block main-content
 
 		//- bower:js
 		script(src='/vendor/jquery/dist/jquery.js')
@@ -77,9 +77,10 @@ html
 		//- endinject
 
 		link(rel="stylesheet", href="//fonts.googleapis.com/css?family=Open+Sans")
+		script(src="https://js.stripe.com/v2/")
 		script(type="text/javascript").
 			PDFJS.workerSrc = '/vendor/pdfjs-dist/build/pdf.worker.js';
-
+			Stripe.setPublishableKey('pk_test_We45bLO76vdmkYnW7Lr5KIpa');
 			System.config( {
 				  defaultJSExtensions: true,
 								packages: {
@@ -101,3 +102,22 @@ html
 							});
 
 				System.import('app/main');
+
+		script(type="text/javascript").
+			$(document).ready(function () {
+			var idleState = false;
+			var idleTimer = null;
+			$('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
+			clearTimeout(idleTimer);
+			if (idleState == true) {
+			console.log("user active!");
+			}
+			idleState = false;
+			idleTimer = setTimeout(function () {
+			localStorage.clear();
+			idleState = true;
+			window.location.reload(true);
+			}, 360000);
+			});
+			$("body").trigger("mousemove");
+			});

@@ -84,7 +84,56 @@
             </div>
             <div class="tab-pane" id="settings">
               <div class="">
-                <div class="m-t-40 padd-min">
+                <div class="panel-heading p-b-0">
+                    <h4 class="text-page m-l-15 m-t-15"><strong>Credits</strong></h4>
+                </div>
+
+                <div class="panel-body">
+                  <div style="max-width: 90%;">
+                    Each course you assign an employee will require 1 credit.<br/>
+                    For example if you have 15 employees and want each employee to completed the Health and Safety course this will require 15 credits
+                  </div>
+                  <div class="m-l-5 m-r-5 m-t-30">
+                      <div class="row">
+                          <div class="col-xs-4">
+                          </div>
+                          <div class="col-xs-8 text-right">
+                            <input type="button"  value="Purchase Credits" class="btn btn-primary m-b-10 w-sm m-l-15" (click)="gotoStripePayment()" />
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="">
+                <div class="panel-heading p-b-0">
+                    <h4 class="text-page m-l-15 m-t-15"><strong>Subscribe and Save</strong></h4>
+                </div>
+
+                <div class="panel-body">
+                  <div style="max-width: 90%;">
+                    If you are using Correct Care on a regular basis you can save money by subscribing<br/>
+                    A subscription to Correct Care includes full access to all courses
+                  </div>
+
+                  <div class="m-l-5 m-r-5  m-t-30">
+                      <div class="row">
+                          <div class="col-xs-4">
+                          </div>
+                          <div class="col-xs-8 text-right">
+                              <input type="button"  value="Subscribe" class="btn btn-primary m-b-10 w-sm m-l-15" style="padding:6px 33px;"  (click)="gotoGoCardlessPayment()" >
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="">
+                <div class="">
+                  <div class="panel-heading p-b-0">
+                      <h4 class="text-page m-l-15 m-t-15"><strong>Change Password</strong></h4>
+                  </div>
+
                   <div class="panel-body m-t-30">
                     <div class="form">
                       <form class="cmxform form-horizontal tasi-form"  [ngFormModel]="SettingForm" (submit)="ChangePassowrd(SettingForm.value)">
@@ -98,12 +147,12 @@
                                 Your update was failure.
                               </div>
                               <div class="form-group" [ngClass]="{ 'has-error' : !oldpwd.valid && validateoldconfirm && validOldPassword }">
-                                <div class=" col-xs-offset-2 col-lg-3">
+                                <div class="col-lg-3">
                                     <div class="m-l-10 m-r-10">
-                                        <label for="oldpwd" class="control-label text-left text-page">Old Password</label>
+                                        <label for="oldpwd" class="control-label text-left text-page">Current Password</label>
                                     </div>
                                 </div>
-                                <div class="col-lg-5">
+                                <div class="col-lg-9">
                                     <div class="m-l-10 m-r-10">
                                         <input class=" form-control" id="oldpwd" name="oldpwd" type="password" ngControl="oldpwd"  placeholder="Old Password" (blur)="blurChange(SettingForm.value)" (keyup)="onKey($event)" >
                                     </div>
@@ -114,12 +163,12 @@
                           <div class="row">
                             <div class="col-xs-12">
                               <div class="form-group" [ngClass]="{ 'has-error' : !newpwd.valid && validatenewconfirm }">
-                                <div class="col-lg-3  col-xs-offset-2">
+                                <div class="col-lg-3">
                                     <div class="m-l-10 m-r-10">
                                         <label for="newpwd" class="control-label text-left text-page">New Password</label>
                                     </div>
                                 </div>
-                                <div class="col-lg-5">
+                                <div class="col-lg-9">
                                     <div class="m-l-10 m-r-10">
                                         <input class=" form-control" id="newpwd" name="newpwd" type="password" ngControl="newpwd"  placeholder="New Password" [disabled]="validOldPassword" >
                                     </div>
@@ -130,12 +179,12 @@
                           <div class="row">
                             <div class="col-xs-12">
                               <div class="form-group" [ngClass]="{ 'has-error' : !matchedPassword(SettingForm.value) && validatenewconfirm }">
-                                <div class="col-lg-3  col-xs-offset-2">
+                                <div class="col-lg-3">
                                     <div class="m-l-10 m-r-10">
-                                        <label for="newpwdconfirm" class="control-label text-left text-page">New Password Confirm</label>
+                                        <label for="newpwdconfirm" class="control-label text-left text-page">Confirm New Password</label>
                                     </div>
                                 </div>
-                                <div class="col-lg-5">
+                                <div class="col-lg-9">
                                     <div class="m-l-10 m-r-10">
                                         <input class=" form-control" id="newpwdconfirm" name="newpwdconfirm" type="password" ngControl="newpwdconfirm"  placeholder="Retype New Password"  [disabled]="validOldPassword" >
                                     </div>
@@ -146,12 +195,12 @@
                           <div class="row">
                             <div class="col-xs-12">
                               <div class="form-group">
-                                <div class="col-lg-3  col-xs-offset-2">
+                                <div class="col-lg-3">
                                     <div class="m-l-10 m-r-10">
                                         <label for="newpwdconfirm" class="control-label text-left text-page"></label>
                                     </div>
                                 </div>
-                                <div class="col-lg-5 text-center">
+                                <div class="col-lg-9 text-right">
                                     <div class="m-l-10 m-r-10">
                                       <input type="button" (click)="cancel(SettingForm.value)" value="Cancel" class="btn btn-primary m-b-10 w-sm">
                                       <input type="submit"  value="Save" class="btn btn-primary m-b-10 w-sm m-l-15">
