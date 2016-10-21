@@ -2,30 +2,6 @@
     <div style="z-index: 10000;">
       <img src="images/cert.png" style="height:1000px; margin-left:auto; margin-right:auto; "/>
     </div>
-<<<<<<< HEAD
-    <div class="matrix-container">
-        <div class="text-center">
-            <h2>{{organization}} Training Matrix</h2>
-        </div>
-        <div class="table-responsive">
-            <table id="gridbasic" #gridbasic class="table text-page">
-                <thead>
-                    <tr>
-                        <th data-column-id="id" id="table-head-name" data-column-id="name" style="min-width:100px;">Name</th>
-                        <th *ngFor="let head of courseList" attr.data-column-id="{{head.course_id}}">{{head.coursetitle}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let student of studentList">
-                        <td>{{student.student_name}}</td>
-                        <td *ngFor="let head of courseList">
-                          {{getCompleteDatefromCourse(head, student.course)}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-=======
     <div id="pdffromHtml">
       <div class="title-bar">
       </div>
@@ -51,7 +27,6 @@
                   </tbody>
               </table>
           </div>
->>>>>>> cf28c41c5defc2812a03afa400d3c344d055c18a
 
           <div class="text-center">
               <img src="/images/logo1.png" />
