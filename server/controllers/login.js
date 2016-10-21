@@ -29,6 +29,8 @@ exports.login = function(req, res) {
 					res.send(data);
 					return console.error(err);
 				}else{
+					console.log('llllllllll')					
+
 					if(tutor.authenticate(pwd)){
 						action = 2;
 						data._id = tutor._id;

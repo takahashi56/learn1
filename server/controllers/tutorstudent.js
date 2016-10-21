@@ -578,16 +578,19 @@ exports.changePassword = function(req, res) {
     Tutor.findOne({
         _id: tutor_id
     }, function(err, tutor) {
-        if (err) res.send({
-            success: false
-        }).end();
 
-        var newpwd = tutor.getHashPwd(pwd.toString());
-        tutor.hashed_pwd = newpwd;
-        tutor.save();
-        res.status(200).send({
-            success: true
-        }).end();
+        if (err) {
+            res.send({
+                success: false
+            }).end();
+        } else {
+            var newpwd = tutor.getHashPwd(pwd.toString());
+            tutor.hashed_pwd = newpwd;
+            tutor.save();
+            res.status(200).send({
+                success: true
+            }).end();
+        }
     })
 }
 
