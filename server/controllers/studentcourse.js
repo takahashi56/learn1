@@ -254,7 +254,7 @@ var sendEmail = function(req, res) {
 
     client.sendEmail({
         "From": "admin@correctcare.co.uk",
-        "To": "chris850511@mail.com",
+        "To": email,
         "Subject": subject,
         "TextBody": '',
         "HtmlBody": mailContent
