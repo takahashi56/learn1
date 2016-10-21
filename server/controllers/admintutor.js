@@ -10,13 +10,13 @@ exports.getAllTutors = function(req, res) {
 
 	Tutor.find({},null, {sort: 'created_at'}, function(err, results){
 		results.forEach(function(tutor){
-			Student.count({tutor_id: tutor._id}, function(err, count){											
+			Student.count({tutor_id: tutor._id}, function(err, count){
 				i+=1;
 				temp = {
 					id: tutor._id,
 					organization: tutor.organization,
-					firstname: tutor.firstname,
-					lastname: tutor.lastname,					
+					firstName: tutor.firstName,
+					lastName: tutor.lastName,
 					phone: tutor.phone,
 					email: tutor.email,
 					student: count,
@@ -24,17 +24,17 @@ exports.getAllTutors = function(req, res) {
 					lastlogon: tutor.created_at//.toString().slice(0,10).replace(/-/g,""),
 				}
 
-				data.push(temp);	
-				
+				data.push(temp);
+
 				if(i == results.length){
 					data.sort(function(a, b){
-		            	return a.organization.localeCompare(b.organization);    
+		            	return a.organization.localeCompare(b.organization);
 		          	})
 					res.send(data)
 				}
-			})	
-		})		
-		
+			})
+		})
+
 	})
 }
 
@@ -51,9 +51,9 @@ exports.addTutor = function(req, res) {
 			res.send(err);
 		}else{
 			var data = {action: "success", text: "", role: 1, success: true, _id: tutor._id};
-			res.send(data);	
-		}		
-	})	
+			res.send(data);
+		}
+	})
 
 }
 
@@ -62,7 +62,7 @@ exports.editTutor = function(req, res) {
 		salt = encrypt.createSalt();
 
 	console.log("#################################")
-	console.log(tutor)	
+	console.log(tutor)
 	tutor["salt"] = salt;
 	tutor["hashed_pwd"] = encrypt.hashPwd(salt, tutor["password"]);
 	tutor["updated_at"] = new Date();
@@ -71,12 +71,12 @@ exports.editTutor = function(req, res) {
 		if(err) return console.error(err);
 
 		res.send({success: true});
-	})	
+	})
 }
 exports.deleteTutor = function(req, res) {
-	
+
 	var list = req.body.list;
-	
+
 	list.forEach(function (l) {
 		Tutor.findOneAndRemove({_id: mongoose.Types.ObjectId(l)}, function(err, removed){
 			if(err) console.error(err);
@@ -88,5 +88,3 @@ exports.deleteTutor = function(req, res) {
 	res.send({success: true});
 
 }
-
-

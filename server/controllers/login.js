@@ -115,12 +115,12 @@ var sendEmail = function(req, res){
 	var fullUrl = req.protocol + '://' + req.get('host'),
 			email = req.body.email,
 			api_key = randomString(30),
-			mailContent = '<html><body>You can set your password again. please follow this url <br/> The url is <a href="'+ fullUrl + '/#/resetpwd?api_key='+ api_key +'" >Reset the password </a></body></html> ';
+			mailContent = '<html><body>To reset your password, please click the link below. <br/> <a href="'+ fullUrl + '/#/resetpwd?api_key='+ api_key +'" >Reset Correct Care password </a> <br/> <br/> If you did not request to reset your password, please ignore this email and your account will not be affected.</body></html> ';
 
 	client.sendEmail({
 		"From": "admin@correctcare.co.uk",
 		"To": email,
-		"Subject": "Reset the Password",
+		"Subject": "Correct Care Password Reset",
 		"TextBody": '',
 		"HtmlBody": mailContent
 	}, function(error, success) {

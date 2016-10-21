@@ -42,7 +42,10 @@ export class Forgetpwd {
 				this.sentShow =  true;
 				if(res.success){
 					this.showClass = "alert alert-success alert-dismissable";
-					this.sentStatus = "This email was sent. You can check your email";
+					this.sentStatus = `An email containing instructions to reset your password has been sent to ${form.email}.
+														\n
+														if you did not receive the email, please contact us to recover your account.`;
+
 					this._session.setUser(form.email, 0, "");
 					this._session.setItem('forget_user', form.email);
 				}else if(res.success ){

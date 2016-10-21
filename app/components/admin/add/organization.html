@@ -5,7 +5,7 @@
             <div class="panel-heading">
                 <h3 class="text-page m-l-15 m-t-15"><strong></strong></h3>
             </div>
-            
+
             <div class="panel-body">
                 <div class=" form">
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="OrganizeForm" (submit)="AddOrgs(OrganizeForm.value)">
@@ -13,7 +13,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group" >
-                                        <div class=""  [ngClass]="{ 'has-error' : !firstname.valid && submitAttempt }">
+                                        <div class=""  [ngClass]="{ 'has-error' : !firstName.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
                                                     <label for="fname" class="control-label text-left text-page" >First Name</label>
@@ -21,19 +21,19 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="fname" name="name" type="text"   placeholder="e.x. John" ngControl="firstname">
+                                                <input class=" form-control" id="fname" name="name" type="text"   placeholder="e.x. John" ngControl="firstName">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class=""  [ngClass]="{ 'has-error' : !firstname.valid && submitAttempt }">
+                                        <div class=""  [ngClass]="{ 'has-error' : !firstName.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
                                                     <label for="lname" class="control-label text-left text-page">Last Name</label>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4" [ngClass]="{ 'has-error' : !lastname.valid && submitAttempt }">
+                                            <div class="col-lg-4" [ngClass]="{ 'has-error' : !lastName.valid && submitAttempt }">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="lname" name="name" type="text"   placeholder="e.x. Smith" ngControl="lastname">
+                                                <input class=" form-control" id="lname" name="name" type="text"   placeholder="e.x. Smith" ngControl="lastName">
                                                 </div>
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="department" name="department" type="text"   placeholder="e.x. Mathematics" ngControl="department">
+                                        <input class=" form-control" id="department" name="department" type="text"   placeholder="e.x. Social Care" ngControl="department">
                                     </div>
                                 </div>
                             </div>
@@ -123,5 +123,5 @@
             </div>
         </div>
     </div>
-        
+
 </section>

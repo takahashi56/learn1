@@ -14,8 +14,8 @@ import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'a
 export class EditOrganization {
 
 	OrganizeForm: ControlGroup;
-	firstname: Control;
-	lastname: Control;
+	firstName: Control;
+	lastName: Control;
 	organization: Control;
 	department: Control;
 	email: Control;
@@ -30,8 +30,8 @@ export class EditOrganization {
 		this.org = JSON.parse(this._session.getItem('org'));
 		console.log(this.org);
 
-		this.firstname = new Control(this.org.firstname, Validators.required);
-		this.lastname = new Control(this.org.lastname, Validators.required);
+		this.firstName = new Control(this.org.firstName, Validators.required);
+		this.lastName = new Control(this.org.lastName, Validators.required);
 		this.organization = new Control(this.org.organization, Validators.required);
 		this.email = new Control(this.org.email, Validators.required);
 		this.password = new Control(this.org.password, Validators.compose([Validators.required, Validators.minLength(6)]))
@@ -39,8 +39,8 @@ export class EditOrganization {
 		this.department = new Control(this.org.department);
 
 		this.OrganizeForm = builder.group({
-			firstname: this.firstname,
-			lastname: this.lastname,
+			firstName: this.firstName,
+			lastName: this.lastName,
 			organization: this.organization,
 			email: this.email,
 			phone: this.phone,
@@ -57,8 +57,8 @@ export class EditOrganization {
 		if(this.OrganizeForm.valid){
 			var data = {
 				_id: this.org.id,
-				firstname: form.firstname,
-				lastname: form.lastname,
+				firstName: form.firstName,
+				lastName: form.lastName,
 				organization: form.organization,
 				email: form.email,
 				password: form.password,
