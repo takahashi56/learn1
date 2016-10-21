@@ -583,7 +583,7 @@ exports.changePassword = function(req, res) {
         }).end();
 
         var newpwd = tutor.getHashPwd(pwd.toString());
-        tutor.password = newpwd;
+        tutor.hashed_pwd = newpwd;
         tutor.save();
         res.status(200).send({
             success: true

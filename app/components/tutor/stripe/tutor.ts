@@ -105,9 +105,9 @@ export class StripePayment {
             this.showClass = "alert alert-success alert-dismissable";
             this.sentStatus = "Your Payment has been successfully. You have got the new credits " + res.creditcount;
 
-						setTimeout(()=>{
-							this._router.navigate(['TutorMain'])
-						}, 2000)
+            setTimeout(() => {
+                this._router.navigate(['TutorMain'])
+            }, 2000)
         } else {
             this.showClass = "alert alert-danger alert-dismissable";
             this.sentStatus = "Your Payment has not been failed. Please type your card information correctly!";
@@ -116,10 +116,14 @@ export class StripePayment {
     }
 
     getToken(form) {
-				var creditcount = this._session.getItem('creditcount');
+        var creditcount = this._session.getItem('creditcount');
         this._tutorService.performPayment({ tutor_id: this.tutor_id, form: form, creditcount: creditcount }).subscribe((res) => {
             console.log(res);
             this.updateUI(res.flag, res.data);
         })
+    }
+
+    cancel() {
+        this._router.navigate(['TutorMain']);
     }
 }

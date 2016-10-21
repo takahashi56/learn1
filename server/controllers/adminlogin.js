@@ -76,11 +76,16 @@ exports.addAdmin = function(req, res) {
 	admin["salt"] = salt;
 	admin["hashed_pwd"] = encrypt.hashPwd(salt, admin["password"]);
 	admin["created_at"] = new Date();
+	admin['username'] = admin.email;
+
+	console.log(req.body);
 
 	Admin.create(admin, function(err, admin){
 		if(err) {
+			console.error(err)
 			res.send(err);
 		}else{
+			console.log("success")
 			var data = {action: "success", text: "", role: 0, success: true, _id: admin._id};
 			res.send(data);
 		}

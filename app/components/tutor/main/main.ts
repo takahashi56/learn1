@@ -62,6 +62,12 @@ export class TutorMain implements OnInit {
 	    //   console.log(res)
 	    //   this._session.setItem('uncompleted', JSON.stringify(res));
 	    // })
+			this._tutorService.updateTutorInfo({tutor_id: this.tutor_id}).subscribe((res) => {
+				this._session.setItem('employeecount', res.employeecount);
+				this._session.setItem('creditcount', res.creditcount);
+				this.creditcount = Number(this._session.getItem('creditcount'));
+				this.employeecount = Number(this._session.getItem('employeecount'));
+			});
 
 			this.oldpwd = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
 			this.newpwd = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
@@ -110,6 +116,8 @@ export class TutorMain implements OnInit {
 			phone: '',
 		}
 
+		console.log("DDDDDDDDDDDDDDDDDDDDDDDDD" + this.employeecount);
+
 		var studentLength = this.studentList.length;
 		if((studentLength + 1) > this.employeecount){
 			return ;
@@ -152,8 +160,6 @@ export class TutorMain implements OnInit {
 			console.log(res);
 			this.creditcount--;
 			this._session.setItem('creditcount', this.creditcount);
-			console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-			console.log(this._tutorService.event_emitter);
 			this._tutorService.event_emitter.emit('decrease_credit');
 
 			this._router.navigateByUrl('/home/tutor/main');

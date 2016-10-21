@@ -79,7 +79,7 @@ module.exports = function(app) {
 		tutorstudent.getGoCardlessCompleteUrl(req, res);
 	})
 
-	app.get('/api/tutor/updatetutorinfo', function(req,res){
+	app.post('/api/tutor/updatetutorinfo', function(req,res){
 		tutorstudent.getTutorInfo(req, res);
 	})
 }

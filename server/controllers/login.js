@@ -110,38 +110,53 @@ exports.studentLogin = function(req, res) {
 	})
 }
 
+
+var sendEmail = function(req, res){
+	var fullUrl = req.protocol + '://' + req.get('host'),
+			email = req.body.email,
+			api_key = randomString(30),
+			mailContent = '<html><body>You can set your password again. please follow this url <br/> The url is <a href="'+ fullUrl + '/#/resetpwd?api_key='+ api_key +'" >Reset the password </a></body></html> ';
+
+	client.sendEmail({
+		"From": "admin@correctcare.co.uk",
+		"To": email,
+		"Subject": "Reset the Password",
+		"TextBody": '',
+		"HtmlBody": mailContent
+	}, function(error, success) {
+			if(error) {
+					console.error("Unable to send via postmark: " + error.message);
+					res.status(500).send({success: false}).end()
+					return;
+			}else{
+				console.info("Sent to postmark for delivery")
+				res.status(200).send({success: true}).end()
+			}
+	});
+}
+
 exports.forgetpwd = function(req, res){
 	var email = req.body.email,
 			data = {};
 
 	Tutor.findOne({email: email}, function(err, tutor){
 		if(tutor == null) {
-			data = {fail: true};
-			res.send(data);
-			return console.error(err);
-		}else{
-			var fullUrl = req.protocol + '://' + req.get('host'),
-					api_key = randomString(30),
-					mailContent = 'You can set your password again. please follow this url <br/> The url is <a href="'+ fullUrl + '/#/resetpwd?api_key='+ api_key +' >Reset the password </a> ';
 
-			client.sendEmail({
-				"From": "admin@correctcare.co.uk",
-				"To": "chrisbrownapple001@gmail.com",
-				"Subject": "Reset the Password",
-				"TextBody": mailContent
-			}, function(error, success) {
-			    if(error) {
-			        console.error("Unable to send via postmark: " + error.message);
-							res.status(500).send({success: false}).end()
-			        return;
-			    }else{
-						console.info("Sent to postmark for delivery")
-						res.status(200).send({success: true}).end()
-					}
-			});
+			Admin.findOne({email: email}, function(err, admin){
+				if(err || admin == null){
+					data = {fail: true};
+					res.send(data);
+					return console.error(err);
+				}else{
+					sendEmail(req, res);
+				}
+			})
+		}else{
+			sendEmail(req, res);
 		}
 	});
 }
+
 
 exports.resetPwd = function(req, res){
 	var password = req.body.password,
@@ -149,13 +164,23 @@ exports.resetPwd = function(req, res){
 			data = {};
 	Tutor.findOne({email: email}, function(err, tutor){
 		if(err) return console.error(err);
+		if(tutor == null){
+				Admin.findOne({email: email}, function(err, admin){
+					if(err) return console.error(err);
 
-		tutor.hashed_pwd = tutor.getHashPwd(password);
-		tutor.save();
+					admin.hashed_pwd = admin.getHashPwd(password);
+					admin.save();
+					data = {success: true};
+					res.send(data).end();
+					return;
+				});
+		}else{
+			tutor.hashed_pwd = tutor.getHashPwd(password);
+			tutor.save();
 
-		data = {success: true};
-
-		res.send(data);
+			data = {success: true};
+			res.send(data).end();
+		}
 	});
 
 }

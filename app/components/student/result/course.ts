@@ -27,7 +27,7 @@ export class CourseResult {
 
 		this.coursetitle = this._session.getItem('CourseName');
 
-		var lessonList = JSON.parse(this._session.getItem('lessonList')), flag = true, count = 0, progress = lessonList.length, total=0, right=0;
+		var lessonList = JSON.parse(this._session.getItem('lessonList')), flag:boolean = true, count = 0, progress = lessonList.length, total=0, right=0;
 
 		lessonList.forEach((lesson) => {
 			var status = JSON.parse(this._session.getItem(lesson.lesson_id)), s = 0;
@@ -39,7 +39,7 @@ export class CourseResult {
 			}else{
 				s = parseInt(status == null ? 0 : status.score);
 			}
-			
+
 			total += parseInt(status.total);
 			right += Math.floor(status.total * s / 100);
 
@@ -47,10 +47,10 @@ export class CourseResult {
 			this.score += s
 		});
 
-		if(flag == false) progress = progress / lessonList.length * 100;
+		if( !flag ) progress = progress / lessonList.length * 100;
 		this.showOrFalse = flag;
 
-		this.score = Math.floor( right / total * 100);	
+		this.score = Math.floor( right / total * 100);
 		console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
 		console.log(total);
 		console.log(right);

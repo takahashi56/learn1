@@ -57,6 +57,7 @@ export class Resetpwd {
       console.log(email);
 			this._adminService.resetpwd({password: form.password, email: email.username}).subscribe((res) => {
 				if(res.success){
+					localStorage.clear();
           this._router.navigateByUrl("/login");
 				}
 			})
