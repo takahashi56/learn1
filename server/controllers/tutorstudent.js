@@ -549,8 +549,6 @@ exports.makePdf = function(req, res) {
         file_name = uniqid + '.pdf',
         pdf_path = path.join(__dirname, '..', 'public', 'pdf', file_name);
 
-    console.log(url);
-
     var client = new pdf.Pdfcrowd('Pedro19880417', 'd5e42b4e5df7e4a921f52e6aefeda841');
     if (direction == true) {
         client.convertHtml(url, pdf.saveToFile(pdf_path), {
