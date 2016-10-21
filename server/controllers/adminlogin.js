@@ -49,8 +49,8 @@ exports.changePassword = function(req, res){
 		if(err) res.send({success:false}).end();
 
 		var newpwd = admin.getHashPwd(pwd.toString());
-		tutor.password = newpwd;
-		tutor.save();
+		admin.hashed_pwd = newpwd;
+		admin.save();
 		res.status(200).send({success: true}).end();
 	})
 }

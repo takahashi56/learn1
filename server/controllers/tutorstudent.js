@@ -601,7 +601,6 @@ exports.isValidOldPwd = function(req, res) {
         if (err) res.send({
             success: false
         }).end();
-
         if (tutor.authenticate(pwd)) {
             res.status(200).send({
                 success: true
