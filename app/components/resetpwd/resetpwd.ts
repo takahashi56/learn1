@@ -20,7 +20,7 @@ export class Resetpwd {
 
 	constructor(private _session: Session, private _adminService: AuthService, private builder: FormBuilder, private _router: Router) {
 		var email = this._session.getItem('forget_user');
-
+	
 		if(email == null){
 			this._router.navigate(['Login']);
 		}else{

@@ -80,9 +80,22 @@ export class StripePayment {
     getPaid(form: any) {
         this.submit_validate = true;
         if (this.stripe_form.valid) {
+
             console.log(form);
             this.getToken(form);
         }
+    }
+
+    validateExpireDate(form) {
+        var date = new Date();
+        if (Number(form.expire_year) > (date.getFullYear() - 2000)) {
+            return false;
+        } else if (Number(form.expire_year) == (date.getFullYear() - 2000)) {
+            if (Number(form.expire_month) > (date.getMonth())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     getCreatedPaidDate(dateString) {
