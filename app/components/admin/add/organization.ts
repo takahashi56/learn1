@@ -60,6 +60,8 @@ export class AddOrganization {
 				password: form.password,
 				department: form.department,
 				phone: form.phone,
+				employeecount: 0,
+				creditcount: 0
 			};
 
 			this._adminService.addTutor(data)
