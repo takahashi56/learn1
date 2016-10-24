@@ -140,11 +140,16 @@ export class Main implements OnInit {
 		console.log(this.selectAdmin);
 		this.showRemoveAdmin = false;
 		this._adminService.removeAdminById(this.selectAdmin).subscribe((res)=>{
-			instance.selectAdmin.map(function(id){
-				instance.adminList = instance.adminList.filter(function(admin){
-					return admin._id != id;
+			if(res.success == false) {
+				return;
+			}
+			else{
+				instance.selectAdmin.map(function(id){
+					instance.adminList = instance.adminList.filter(function(admin){
+						return admin._id != id;
+					})
 				})
-			})
+			}
 		})
 
 	}

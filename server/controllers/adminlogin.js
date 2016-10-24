@@ -124,7 +124,9 @@ exports.removeAdmin = function(req, res) {
 
 	var list = req.body.list;
 
+	console.log(list);
 	list.forEach(function (l) {
+		console.log(l)
 		Admin.findOneAndRemove({_id: mongoose.Types.ObjectId(l)}, function(err, removed){
 			if(err) console.error(err);
 
