@@ -83,7 +83,7 @@
                             <td><strong>{{org.phone}}</strong></td>
                             <td><strong>{{org.email}}</strong></td>
                             <td><strong>{{org.student}}</strong></td>
-                            <td><strong>{{org.lastlogon.toString().slice(0,10)}}</strong></td>
+                            <td><strong>{{getCompleteDate(org.lastlogon)}}</strong></td>
                             <td class="text-right"><a class="btn w-xs btn-sm btn-primary" (click)="gotoEdit(org)">Edit</a></td>
                         </tr>
                     </table>
@@ -201,7 +201,7 @@
                           <td><strong>{{admin.firstName}}</strong></td>
                           <td><strong>{{admin.lastName}}</strong></td>
                           <td><strong>{{admin.email}}</strong></td>
-                          <td><strong>{{admin.created_at.toString().slice(0,10)}}</strong></td>
+                          <td><strong>{{getCompleteDate(admin.created_at)}}</strong></td>
                           <td class="text-right"><a class="btn w-xs btn-sm btn-primary" (click)="gotoEditAdmin(admin)">Edit</a></td>
                       </tr>
                   </table>

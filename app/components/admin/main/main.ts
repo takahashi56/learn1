@@ -281,4 +281,12 @@ export class Main implements OnInit {
 		(<Control>this.SettingForm.controls['newpwd']).updateValue('');
 		(<Control>this.SettingForm.controls['newpwdconfirm']).updateValue('');
 	}
+
+	getCompleteDate(date: any){
+		if(date == null) return '';
+		var d = new Date(date),
+				datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
+		return datestring;
+	}
+
 }
