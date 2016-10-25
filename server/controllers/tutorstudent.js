@@ -703,7 +703,10 @@ exports.getGoCardlessRedirectUrl = function(req, res) {
         sessionToken = tutor_id,
         successUrl = req.protocol + '://' + req.get('host') + '/api/tutor/getGoCardlessCompleteUrl';
 
-
+    console.log(description);
+    console.log(sessionToken);
+    console.log(successUrl);
+        
     goCardless.startRedirectFlow(description, sessionToken, successUrl)
         .then(function(response) {
             console.log(response);

@@ -6,7 +6,9 @@ module.exports = {
 		postmark_api: "17c11810-aceb-45b6-8495-35dad3962dde",
 		stripe_secret_key:"sk_test_kDMCSHs3rjNp8L2v7ay8JptV",
 		stripe_publish_key: "pk_test_We45bLO76vdmkYnW7Lr5KIpa",
-		gc_access_token: "sandbox_IkadxYNoWa7DdXR9l1fMbnlb34c4yGHGlxZmZ48t"
+		// gc_access_token: "sandbox_IkadxYNoWa7DdXR9l1fMbnlb34c4yGHGlxZmZ48t"
+		gc_access_token: "live_BLS8JVxjAY5eogFLoGZ0gf79PrkWOznePeQBQZuj"
+
 	},
 	production: {
 		db: 'mongodb://5woody:gb88200gtx@ds029575.mlab.com:29575/learningdb',

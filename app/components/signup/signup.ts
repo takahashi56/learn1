@@ -15,8 +15,8 @@ import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'a
 export class SignUp {
 
 	OrganizeForm: ControlGroup;
-	firstname: Control;
-	lastname: Control;
+	firstName: Control;
+	lastName: Control;
 	organization: Control;
 	email: Control;
 	phone: Control;
@@ -26,16 +26,16 @@ export class SignUp {
 
 	constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
 
-		this.firstname = new Control('', Validators.required);
-		this.lastname = new Control('', Validators.required);
+		this.firstName = new Control('', Validators.required);
+		this.lastName = new Control('', Validators.required);
 		this.organization = new Control('', Validators.required);
 		this.email = new Control('', Validators.required);
 		this.phone = new Control('', Validators.required);
 		this.password = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
 
 		this.OrganizeForm = builder.group({
-			firstname: this.firstname,
-			lastname: this.lastname,
+			firstName: this.firstName,
+			lastName: this.lastName,
 			organization: this.organization,
 			email: this.email,
 			phone: this.phone,
@@ -49,8 +49,8 @@ export class SignUp {
 		this.submitAttempt = true;
 		if(this.OrganizeForm.valid){
 			var data = {
-				firstname: form.firstname,
-				lastname: form.lastname,
+				firstName: form.firstName,
+				lastName: form.lastName,
 				organization: form.organization,
 				email: form.email,
 				password: form.password,
