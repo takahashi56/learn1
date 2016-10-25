@@ -10,14 +10,14 @@
             </div>
             <div class="form-group" [ngClass]="{ 'has-error' : !username.valid && submitAttempt }">
                 <div class="col-xs-12">
-                    <input class="form-control" type="text" ngControl="username" placeholder="Username">
+                    <input class="form-control" type="text" ngControl="username" placeholder="Username"  id="username">
                     <em *ngIf="!username.valid && submitAttempt"></em>
                 </div>
             </div>
 
             <div class="form-group " [ngClass]="{ 'has-error' : !password.valid && submitAttempt }">
                 <div class="col-xs-12">
-                    <input class="form-control" type="password" ngControl="password" placeholder="Password">
+                    <input class="form-control" type="password" ngControl="password" placeholder="Password"  id="pass">
                     <em *ngIf="password.hasError('required') && submitAttempt"></em>
                     <em *ngIf="password.hasError('minlength') && submitAttempt">Must be at least 6 characters</em>
                 </div>
@@ -26,7 +26,7 @@
             <div class="form-group ">
                 <div class="col-xs-12">
                     <label class="cr-styled">
-                        <input type="checkbox" checked>
+                        <input type="checkbox"id="remember_me" [(ngModel)]="remember_me" (change)="onClickRemember($event)">
                         <i class="fa"></i>
                         Remember me
                     </label>

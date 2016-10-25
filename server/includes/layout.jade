@@ -120,13 +120,17 @@ html
 			}, 360000);
 			});
 			$("body").trigger("mousemove");
-			});
 
-			function check(input) {
-					if (input.value != document.getElementById('newpwd').value) {
-							input.setCustomValidity('Password Must be Matching.');
-					} else {
-							// input is valid -- reset the error message
-							input.setCustomValidity('');
-					}
+			if (localStorage.chkbx && localStorage.chkbx != '') {
+			$('#remember_me').attr('checked', 'checked');
+			$('#username').val(localStorage.usrname);
+			$('#pass').val(localStorage.pass);
+			} else {
+			$('#remember_me').removeAttr('checked');
+			$('#username').val('');
+			$('#pass').val('');
 			}
+			$('#remember_me').click(function() {
+			
+			});
+			});
