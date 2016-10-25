@@ -32,6 +32,8 @@ export class TutorMain implements OnInit {
 	changeSuccess: boolean = false;
 	showAlert: boolean = false;
 	validOldPassword: boolean = true;
+	failure: string = '';
+	matchedTrue: boolean = false;
 
 	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router, private builder: FormBuilder) {
 		this.tutor_id = this._session.getCurrentId()
@@ -339,8 +341,10 @@ export class TutorMain implements OnInit {
 		var password = form.newpwd,
 			verifiedpassword = form.newpwdconfirm;
 		if(password == verifiedpassword){
+			this.matchedTrue = true;
 			return true;
 		}else{
+			this.matchedTrue = false;
 			return false;
 		}
 	}
@@ -352,7 +356,15 @@ export class TutorMain implements OnInit {
 		}
 		this.validatenewconfirm = true;
 		console.log("abc")
-		if(this.SettingForm.valid){
+
+		if(this.SettingForm.valid && !this.matchedTrue){
+			this.showAlert = true;
+			this.changeSuccess = false;
+			this.failure = 'The Password Must Be Matched';
+		}
+
+
+		if(this.SettingForm.valid  && this.matchedTrue){
 			var newPwd = form.newpwd;
 			console.log("abc")
 			this._tutorService.changePassword({tutor_id: this.tutor_id, pwd: newPwd}).subscribe((res) => {
@@ -361,6 +373,7 @@ export class TutorMain implements OnInit {
 					this.changeSuccess = true;
 				}else{
 					this.changeSuccess = false;
+					this.failure = 'Your update have been failed.';
 				}
 			});
 		}

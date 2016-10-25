@@ -101,8 +101,8 @@
                               <div class="alert alert-info" *ngIf="changeSuccess && showAlert">
                                 Your password has been updated successfully!
                               </div>
-                              <div class="alert alert-info" *ngIf="!changeSuccess && showAlert">
-                                Your update was failure.
+                              <div class="alert alert-danger" *ngIf="!changeSuccess && showAlert">
+                                {{failure}}
                               </div>
                               <div class="form-group" [ngClass]="{ 'has-error' : !oldpwd.valid && validateoldconfirm && validOldPassword }">
                                 <div class=" col-xs-offset-2 col-lg-3">
@@ -128,7 +128,7 @@
                                 </div>
                                 <div class="col-lg-5">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="newpwd" name="newpwd" type="password" ngControl="newpwd"  placeholder="New Password" [disabled]="validOldPassword" >
+                                        <input class=" form-control" id="newpwd" name="newpwd" type="password" ngControl="newpwd"  placeholder="New Password" [disabled]="validOldPassword" required minLength="6">
                                     </div>
                                 </div>
                               </div>
@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="col-lg-5">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="newpwdconfirm" name="newpwdconfirm" type="password" ngControl="newpwdconfirm"  placeholder="Retype New Password"  [disabled]="validOldPassword" >
+                                        <input class=" form-control" id="newpwdconfirm" name="newpwdconfirm" type="password" ngControl="newpwdconfirm"  placeholder="Retype New Password"  [disabled]="validOldPassword"  required minLength="6">
                                     </div>
                                 </div>
                               </div>

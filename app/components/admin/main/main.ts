@@ -36,6 +36,8 @@ export class Main implements OnInit {
 	changeSuccess: boolean = false;
 	showAlert: boolean = false;
 	validOldPassword: boolean = true;
+	matchedTrue: boolean = false;
+	failure: string = '';
 
 	constructor(private _session: Session, private _adminService: AdminService, private _router: Router, private builder: FormBuilder) {
 		// var admin_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
@@ -224,8 +226,10 @@ export class Main implements OnInit {
 		var password = form.newpwd,
 			verifiedpassword = form.newpwdconfirm;
 		if(password == verifiedpassword){
+			this.matchedTrue = true;
 			return true;
 		}else{
+			this.matchedTrue = false;
 			return false;
 		}
 	}
@@ -237,15 +241,23 @@ export class Main implements OnInit {
 		}
 		this.validatenewconfirm = true;
 		console.log("abc")
-		if(this.SettingForm.valid){
+		if(this.SettingForm.valid && !this.matchedTrue){
+			this.showAlert = true;
+			this.changeSuccess = false;
+			this.failure = 'The Password Must Be Matched';
+		}
+
+		if(this.SettingForm.valid && this.matchedTrue){
 			var newPwd = form.newpwd;
 			console.log("abc")
+			console.log(this.SettingForm)
 			this._adminService.changePassword({admin_id: this.admin_id, pwd: newPwd}).subscribe((res) => {
 				this.showAlert = true;
 				if(res.success){
 					this.changeSuccess = true;
 				}else{
 					this.changeSuccess = false;
+					this.failure = 'Your update have been failed.';
 				}
 			});
 		}
@@ -289,4 +301,7 @@ export class Main implements OnInit {
 		return datestring;
 	}
 
+	check(control: any){
+		console.log(control)
+	}
 }
