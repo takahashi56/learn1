@@ -14,7 +14,7 @@ import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'a
 })
 
 export class AddCourse {
-	
+
 	courseForm: ControlGroup;
 	coursetitle: Control;
 	coursedescription: Control;
@@ -32,7 +32,7 @@ export class AddCourse {
 
 		this.courseForm = builder.group({
 			coursetitle: this.coursetitle,
-			coursedescription: this.coursedescription,			
+			coursedescription: this.coursedescription,
 		});
 	}
 
@@ -60,8 +60,8 @@ export class AddCourse {
 			course_id: this.courseData.course_id,
 			coursetitle: this.courseForm.controls["coursetitle"].value,
 			coursedescription: this.courseForm.controls["coursedescription"].value,
-			lesson: this.courseData.lesson, 
-		} 
+			lesson: this.courseData.lesson,
+		}
 
 		var data = [{
 			_content_id: (Date.now()).toString(),
@@ -76,7 +76,7 @@ export class AddCourse {
 			answerC: '',
 			answerD: '',
 			image: '',
-			trueNumber: '',			
+			trueNumber: '',
 		}];
 
 		var data1 = {
@@ -85,7 +85,7 @@ export class AddCourse {
 			lessondescription: '',
 			content: data,
 			created_at: new Date()
-		} 
+		}
 
 		this._session.setItem('Course', JSON.stringify(data2));
 		this._session.setItem('Lesson_new', JSON.stringify(data1));
@@ -98,14 +98,14 @@ export class AddCourse {
 		var editORadd = JSON.parse(this._session.getItem('editORadd'));
 		if(this.courseForm.valid){
 			var data = JSON.parse(this._session.getItem('Course'));
-			
+
 			data.coursetitle = form.coursetitle;
 			data.coursedescription = form.coursedescription;
 			console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 			console.log(data);
 
-			if(data.lesson.length == 0) return false;
-			
+			// if(data.lesson.length == 0) return false;
+
 			this._adminService.addCourse(data, editORadd.flag)
 				.subscribe((res) => {
 					if(res.success){

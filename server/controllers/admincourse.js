@@ -14,7 +14,7 @@ exports.getAllCourse = function(req, res) {
 	Course.find({},null, {sort: 'created_at'}, function(err, collection) {
 		if(err) {
 			return console.error(err);
-		}		
+		}
 		var main_data = [];
 		collection.forEach(function (course) {
 			console.log(course);
@@ -23,8 +23,26 @@ exports.getAllCourse = function(req, res) {
 				if (err) return console.error(err);
 				console.log('============lessons====================');
 				console.log(lessons);
+
 				Take.count({course_id: course._id}, function(err, student_count){
 					if (err) return console.error(err);
+
+					if(lessons.length == 0){
+						var data = {
+							course_id: course._id,
+							title: course.name,
+							lesson: 0,
+							video: 0,
+							student: 0
+						}
+						main_data.push(data);
+						if(main_data.length == collection.length){
+							main_data.sort(function(a, b){
+											return a.title.localeCompare(b.title);
+										})
+							res.send(main_data).end();
+						}
+					}
 
 					var video_count = 0, i = 0;
 					lessons.forEach(function (lesson) {
@@ -32,7 +50,7 @@ exports.getAllCourse = function(req, res) {
 							if (err) return console.error(err);
 							i++;
 							video_count += content_count;
-							
+
 							if(i == lessons.length){
 								var data = {
 									course_id: course._id,
@@ -47,12 +65,12 @@ exports.getAllCourse = function(req, res) {
 							console.log(collection.length)
 							if(main_data.length == collection.length){
 								main_data.sort(function(a, b){
-						            return a.title.localeCompare(b.title);    
+						            return a.title.localeCompare(b.title);
 						          })
 								res.send(main_data);
 							}
 						})
-					})	
+					})
 				})
 			})
 		});
@@ -62,7 +80,7 @@ exports.getAllCourse = function(req, res) {
 
 exports.getEditCourses = function(req, res){
 	var id = req.body.id;
-	
+
 	Course.findOne({_id: id}, function(err, course){
 		if (err) return console.error(err);
 		console.log(course._id);
@@ -92,7 +110,7 @@ exports.getEditCourses = function(req, res){
 					data.lesson.push(lessonData);
 					if(lessons.length == data.lesson.length){
 						data.lesson.sort(function(a, b){
-			                return new Date(a.created_at) - new Date(b.created_at);    
+			                return new Date(a.created_at) - new Date(b.created_at);
 			              })
 						res.send(data);
 					}
@@ -108,9 +126,9 @@ exports.getAllContent = function(req, res){
 	Content.find({},null, {sort: 'created_at'}, function(err, collection) {
 		if(err) {
 			return console.error(err);
-		}		
+		}
 		collection.sort(function(a, b){
-	        return new Date(a.created_at) - new Date(b.created_at);    
+	        return new Date(a.created_at) - new Date(b.created_at);
 	    })
 		res.send(collection);
 	})
@@ -125,6 +143,8 @@ exports.addCourse = function(req, res) {
 		lessonList = data.lesson;
 	Course.create(courseData, function(err, course){
 		if (err) return console.error(err);
+
+		if(lessonList.length == 0) return;
 
 		lessonList.forEach(function(lesson){
 			var lessonData = {
@@ -150,7 +170,7 @@ exports.addCourse = function(req, res) {
 					    answerD: content.answerD,
 					    trueNumber: content.trueNumber,
 					    answer_text: '',
-					    lesson_id: less._id, 
+					    lesson_id: less._id,
 					    questionType: content.questionType,
 					    image: content.image
 					}
@@ -175,7 +195,7 @@ exports.updateCourse = function(req, res) {
 		},
 		lessonList = data.lesson;
 	console.log("data");
-	console.log(data);	
+	console.log(data);
 	console.log('courseData');
 	console.log(courseData);
 	console.log("lessonList");
@@ -188,7 +208,7 @@ exports.updateCourse = function(req, res) {
 			if (err) throw err;
 
 			lessonList.forEach(function(lesson){
-				var lessonData = {				
+				var lessonData = {
 					name: lesson.lessonname,
 					description: lesson.lessondescription,
 					course_id: courseData._id,
@@ -196,7 +216,7 @@ exports.updateCourse = function(req, res) {
 				}
 				var reg = new RegExp('^[0-9]+$');
 				if(reg.test(lesson.lesson_id.toString()) == false){
-					lessonData["_id"] = lesson.lesson_id;				
+					lessonData["_id"] = lesson.lesson_id;
 				}
 
 				Lesson.create(lessonData, function(err, less){
@@ -206,7 +226,7 @@ exports.updateCourse = function(req, res) {
 
 
 						lesson.content.forEach(function(content){
-							var contentData = {															
+							var contentData = {
 								videoOrQuestion: content.videoOrQuestion,
 							    videoLabel: content.videoLabel,
 							    videoEmbedCode: content.videoEmbedCode,
@@ -220,7 +240,7 @@ exports.updateCourse = function(req, res) {
 							    answerD: content.answerD,
 							    trueNumber: content.trueNumber,
 							    answer_text: '',
-							    lesson_id: less.id, 
+							    lesson_id: less.id,
 							}
 
 							if(!content._content_id){
@@ -233,13 +253,13 @@ exports.updateCourse = function(req, res) {
 								console.log(cont)
 							})
 						})
-											
+
 				})
 			})
 		})
 
 		// lessonList.forEach(function(lesson){
-		// 	var lessonData = {				
+		// 	var lessonData = {
 		// 		name: lesson.lessonname,
 		// 		description: lesson.lessondescription,
 		// 		course_id: courseData._id
@@ -253,9 +273,9 @@ exports.updateCourse = function(req, res) {
 		// 		console.log("create$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		// 		Lesson.create(lessonData, function(err, less1){
 		// 			if (err) return console.error(err);
-					
+
 		// 			console.log(lesson.content);
-					
+
 		// 			lesson.content.forEach(function(content){
 		// 				var contentData = {
 		// 					videoOrQuestion: content.videoOrQuestion,
@@ -268,7 +288,7 @@ exports.updateCourse = function(req, res) {
 		// 				    answerC: content.answerC,
 		// 				    trueNumber: content.trueNumber,
 		// 				    answer_text: '',
-		// 				    lesson_id: less1.id, 
+		// 				    lesson_id: less1.id,
 		// 				}
 		// 				Content.create(contentData, function(err, cont){
 		// 					if (err) return console.error(err);
@@ -291,7 +311,7 @@ exports.updateCourse = function(req, res) {
 
 		// 			less.save(function(err){
 		// 				if(err) throw err;
-					
+
 		// 				lesson.content.forEach(function(content){
 		// 					var contentData = {
 		// 						videoOrQuestion: content.videoOrQuestion,
@@ -304,16 +324,16 @@ exports.updateCourse = function(req, res) {
 		// 					    answerC: content.answerC,
 		// 					    trueNumber: content.trueNumber,
 		// 					    answer_text: '',
-		// 					    lesson_id: less._id, 
+		// 					    lesson_id: less._id,
 		// 					}
 
 		// 					console.log(contentData);
 
 		// 					if(content._content_id){
 		// 						Content.create(contentData, function(err, content){
-		// 							if (err) return console.error(err);				
+		// 							if (err) return console.error(err);
 
-		// 							console.log("!!!!!!!!!!!!!!!!!!!!!!! create !!!!!!!!!!!!!!!!!!")					
+		// 							console.log("!!!!!!!!!!!!!!!!!!!!!!! create !!!!!!!!!!!!!!!!!!")
 		// 						})
 		// 					}else{
 		// 						contentData["_id"] = content._id;
@@ -324,12 +344,12 @@ exports.updateCourse = function(req, res) {
 		// 						})
 		// 					}
 		// 				})
-		// 			})						
+		// 			})
 		// 		})
-		// 	}	
+		// 	}
 		// })
 		res.send({success: true});
-	})	
+	})
 }
 
 exports.deleteCourse = function(req, res) {
@@ -378,15 +398,15 @@ exports.deleteCourse = function(req, res) {
 exports.upload = function(req, res){
 	var sampleFile,
 		filename =(new Date%9e6).toString(36);
- 
+
     if (!req.files) {
         res.send('No files were uploaded.');
         return;
     }
- 
+
  	console.log(req.files.uploads);
     sampleFile = req.files.uploads;
-    filename = (filename + sampleFile.name).replace(/ /g, ""); 
+    filename = (filename + sampleFile.name).replace(/ /g, "");
 
     var filePath = path.join(__dirname, '../public/images/upload/' , filename);
 
