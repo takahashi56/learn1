@@ -51,7 +51,7 @@ export class Forgetpwd {
                     this._session.setUser(form.email, 0, "");
                     this._session.setItem('forget_user', form.email);
 											this.button_name = 'Sent';
-                } else if (res.success) {
+                } else if (res.success == false) {
                     this.showClass = "alert alert-danger alert-dismissable";
                     this.sentStatus = "This email was not sent. Please type the email correctly!";
                 }

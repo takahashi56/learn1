@@ -144,7 +144,7 @@ exports.forgetpwd = function(req, res){
 
 			Admin.findOne({email: email}, function(err, admin){
 				if(err || admin == null){
-					data = {fail: true};
+					data = {success: false};
 					res.send(data);
 					return console.error(err);
 				}else{
