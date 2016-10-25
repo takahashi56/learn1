@@ -187,7 +187,7 @@ export class Main implements OnInit {
 	checkAdmin(event, object){
 		console.log(event.currentTarget.checked);
 
-		if(event.currentTarget.checked){
+		if(event.currentTarget.checked && this.admin_id != object._id){
 			this.selectAdmin.push(object._id);
 		}else{
 			this.selectAdmin = this.selectAdmin.filter(function(o){

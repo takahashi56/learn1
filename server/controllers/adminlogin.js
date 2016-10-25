@@ -112,7 +112,7 @@ exports.editAdmin = function(req, res) {
 exports.getAllAdmins = function(req, res){
 	var temp={}, i=0,data = [], admin_id=req.body.admin_id;
 
-	Admin.find({_id: {$ne: mongoose.Types.ObjectId(admin_id)}},null, {sort: 'created_at'}, function(err, results){
+	Admin.find({},null, {sort: 'created_at'}, function(err, results){
 		results.sort(function(a, b){
 			return a.firstName.localeCompare(b.firstName);
 		})
