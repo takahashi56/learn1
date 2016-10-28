@@ -5,12 +5,12 @@
             <div class="panel-heading">
                 <h3 class="text-page m-l-15 m-t-15 m-b-0"><strong></strong></h3>
             </div>
-            
+
             <div class="panel-body">
                 <div class=" form">
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="courseForm" (submit)="SubmitCourse(courseForm.value)">
                         <div class="container-fluid">
-                            
+
                             <div class="form-group" [ngClass]="{ 'has-error' : !coursetitle.valid && submitAttempt }">
                                 <div class="col-lg-2">
                                     <div class="m-l-10 m-r-10">
@@ -40,7 +40,7 @@
                         <hr class="m-t-10 m-b-25">
                         <div class="m-l-5 m-r-5">
                             <div class="row">
-                               
+
                                 <div class="col-xs-12 text-right">
                                     <a  class="btn btn-primary w-sm" (click)="addLesson(courseForm)">Add Lesson</a>
                                 </div>
@@ -57,8 +57,8 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                        
-                                    
+
+
                                     <tr *ngFor="let lesson of lessonData">
                                         <td>
                                             <label class="cr-styled">
@@ -78,7 +78,7 @@
                                     </tr>
                                 </table>
                             </div>
-                                
+
                             <div class="white-space m-t-30 m-b-30">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -89,7 +89,7 @@
                             <div class="m-l-5 m-r-5">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <input type="button" (click)="cancel()"  value="Back" class="btn btn-primary m-b-10 w-sm">
+                                        <a  class="btn btn-primary w-sm" (click)="showBack()" data-toggle="modal" data-target="#show_back">Back</a>
                                     </div>
                                     <div class="col-xs-8 text-right">
                                         <input type="button" (click)="cancel()" value="Cancel" class="btn btn-primary m-b-10 w-sm">
@@ -103,5 +103,32 @@
             </div>
         </div>
     </div>
-        
+
 </section>
+
+
+<div *ngIf="show_back" id="show_back" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>Do you really go back page? You can lose some data which you input </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancel()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

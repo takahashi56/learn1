@@ -94,6 +94,11 @@ exports.getEditCourses = function(req, res){
 		Lesson.find({course_id: course._id},null, {sort: 'created_at'}, function(err, lessons){
 			if (err) return console.error(err);
 
+			if(lessons.length == 0){
+					res.send(data).end();
+					return;
+			}
+
 			var lessonData = {};
 			lessons.forEach(function(lesson){
 				Content.find({lesson_id:lesson._id},null, {sort: 'created_at'}, function(err, contents){

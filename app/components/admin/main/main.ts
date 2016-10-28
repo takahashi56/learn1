@@ -6,302 +6,340 @@ import {AdminService} from '../../../services/admin';
 import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
 
 @Component({
-	selector: 'admin-main',
-	templateUrl: '/components/admin/main/main.html',
-	providers: [Session, AdminService],
-	directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
+    selector: 'admin-main',
+    templateUrl: '/components/admin/main/main.html',
+    providers: [Session, AdminService],
+    directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
 })
 export class Main implements OnInit {
 
-	courseList: any = [];
-	orgList: any = [];
-	adminList: any = [];
-	coursesData: any = [];
-	lessonsData: any = [];
-	contentsData: any = [];
-	selectOrg: any = [];
-	selectCourse: any = [];
-	selectAdmin: any = [];
-	showRemoveOrg: boolean = false;
-	showRemoveCourse: boolean = false;
-	showRemoveAdmin: boolean = false;
-	admin_id: string;
+    courseList: any = [];
+    orgList: any = [];
+    adminList: any = [];
+    coursesData: any = [];
+    lessonsData: any = [];
+    contentsData: any = [];
+    selectOrg: any = [];
+    selectCourse: any = [];
+    selectAdmin: any = [];
+    showRemoveOrg: boolean = false;
+    showRemoveCourse: boolean = false;
+    showRemoveAdmin: boolean = false;
+    admin_id: string;
 
-	SettingForm: ControlGroup;
-	newpwd: Control;
-	oldpwd: Control;
-	newpwdconfirm: Control;
-	validateoldconfirm: boolean = false;
-	validatenewconfirm: boolean = false;
-	changeSuccess: boolean = false;
-	showAlert: boolean = false;
-	validOldPassword: boolean = true;
-	matchedTrue: boolean = false;
-	failure: string = '';
+    SettingForm: ControlGroup;
+    newpwd: Control;
+    oldpwd: Control;
+    newpwdconfirm: Control;
+    validateoldconfirm: boolean = false;
+    validatenewconfirm: boolean = false;
+    changeSuccess: boolean = false;
+    showAlert: boolean = false;
+    validOldPassword: boolean = true;
+    matchedTrue: boolean = false;
+    failure: string = '';
 
-	constructor(private _session: Session, private _adminService: AdminService, private _router: Router, private builder: FormBuilder) {
-		// var admin_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
+    course_tab: string = '';
+    org_tab: string = '';
+    admin_tab: string = '';
+		select_tab_item: number = 1;
 
-		// if(admin_id == '' || parseInt(role) != 0){
-		// 	this._router.navigate(['Login']);
-		// }
-		this.admin_id = this._session.getCurrentId();
+    constructor(private _session: Session, private _adminService: AdminService, private _router: Router, private builder: FormBuilder) {
+        // var admin_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
 
-		this._adminService.getAllCourses().subscribe((res) => {
-			this.courseList = res;
-		});
+        // if(admin_id == '' || parseInt(role) != 0){
+        // 	this._router.navigate(['Login']);
+        // }
+        this.admin_id = this._session.getCurrentId();
 
-		this._adminService.getAllOrgs().subscribe((res)=>{
-			this.orgList = res;
-		})
+        if (this.admin_id == null) {
+            this._router.navigateByUrl('/home');
+        } else {
+            this._adminService.getAllCourses().subscribe((res) => {
+                this.courseList = res;
+            });
 
-		this._adminService.getAllAdmins({admin_id: this.admin_id}).subscribe((res)=>{
-			this.adminList = res;
-		})
+            this._adminService.getAllOrgs().subscribe((res) => {
+                this.orgList = res;
+            })
 
-		this.oldpwd = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
-		this.newpwd = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
-		this.newpwdconfirm = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
+            this._adminService.getAllAdmins({ admin_id: this.admin_id }).subscribe((res) => {
+                this.adminList = res;
+            })
 
-		this.SettingForm = builder.group({
-			newpwd: this.newpwd,
-			newpwdconfirm: this.newpwdconfirm,
-			oldpwd: this.oldpwd
-		})
-	}
+            this.oldpwd = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
+            this.newpwd = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
+            this.newpwdconfirm = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]));
 
-	editCourse(course: any){
-		var lessons = [];
-		console.log(course.course_id);
-		this._adminService.getEditCourses(course.course_id).subscribe((res) => {
-			this._session.setItem('editORadd', JSON.stringify({flag: true}));
-			this._session.setItem('Course', JSON.stringify(res));
-			this._router.navigate(['AdminAddCourse']);
-		})
-	}
+            this.SettingForm = builder.group({
+                newpwd: this.newpwd,
+                newpwdconfirm: this.newpwdconfirm,
+                oldpwd: this.oldpwd
+            })
 
-	gotoEdit(org: any){
-		this._session.setItem('org', JSON.stringify(org));
-		this._router.navigate(['AdminEditOrganization']);
-	}
+						if(this._session.getItem('select_tab') == null){
+							this.onTabClick(1);
+						}else{
+							this.onTabClick(Number(this._session.getItem('select_tab')));
+						}
+        }
 
-	gotoEditAdmin(admin: any){
-		this._session.setItem('admin', JSON.stringify(admin));
-		this._router.navigate(['AdminEditAdmin']);
-	}
+    }
 
-	ngOnInit(){
+    editCourse(course: any) {
+        var lessons = [];
+        console.log(course.course_id);
+        this._adminService.getEditCourses(course.course_id).subscribe((res) => {
+            this._session.setItem('editORadd', JSON.stringify({ flag: true }));
+            this._session.setItem('Course', JSON.stringify(res));
+            this._router.navigate(['AdminAddCourse']);
+        })
+    }
 
-	}
+    gotoEdit(org: any) {
+        this._session.setItem('org', JSON.stringify(org));
+        this._router.navigate(['AdminEditOrganization']);
+    }
 
-	gotoAddCourse(){
-		var data = {
-			course_id: Date.now(),
-			coursetitle: '',
-			coursedescription: '',
-			lesson: [],
-		}
-		this._session.setItem('editORadd', JSON.stringify({flag: false}));
-		this._session.setItem('Course', JSON.stringify(data));
+    gotoEditAdmin(admin: any) {
+        this._session.setItem('admin', JSON.stringify(admin));
+        this._router.navigate(['AdminEditAdmin']);
+    }
 
-		this._router.navigate(['AdminAddCourse']);
-	}
+    ngOnInit() {
 
-	removeCourse(){
-		if(this.selectCourse.length == 0) return false;
-		let instance = this;
-		console.log(this.selectCourse);
-		this.showRemoveCourse = false;
-		this._adminService.removeCourseById(this.selectCourse).subscribe((res)=>{
-			instance.selectCourse.map((id) => {
-				instance.courseList = instance.courseList.filter((course) => {
-					return course.course_id != id;
-				})
-			})
-		})
-	}
+    }
 
-	removeOrg(){
-		if(this.selectOrg.length == 0) return false;
-		let instance = this;
-		console.log(this.selectOrg);
-		this.showRemoveOrg = false;
-		this._adminService.removeOrgById(this.selectOrg).subscribe((res)=>{
-			instance.selectOrg.map(function(id){
-				instance.orgList = instance.orgList.filter(function(org){
-					return org.id != id;
-				})
-			})
-		})
+    gotoAddCourse() {
+        var data = {
+            course_id: Date.now(),
+            coursetitle: '',
+            coursedescription: '',
+            lesson: [],
+        }
+        this._session.setItem('editORadd', JSON.stringify({ flag: false }));
+        this._session.setItem('Course', JSON.stringify(data));
 
-	}
+        this._router.navigate(['AdminAddCourse']);
+    }
 
-	removeAdmin(){
-		if(this.selectAdmin.length == 0) return false;
-		let instance = this;
-		console.log(this.selectAdmin);
-		this.showRemoveAdmin = false;
-		this._adminService.removeAdminById(this.selectAdmin).subscribe((res)=>{
-			if(res.success == false) {
-				return;
-			}
-			else{
-				instance.selectAdmin.map(function(id){
-					instance.adminList = instance.adminList.filter(function(admin){
-						return admin._id != id;
-					})
-				})
-			}
-		})
+    removeCourse() {
+        if (this.selectCourse.length == 0) return false;
+        let instance = this;
+        console.log(this.selectCourse);
+        this.showRemoveCourse = false;
+        this._adminService.removeCourseById(this.selectCourse).subscribe((res) => {
+            instance.selectCourse.map((id) => {
+                instance.courseList = instance.courseList.filter((course) => {
+                    return course.course_id != id;
+                })
+            })
+        })
+    }
 
-	}
+    removeOrg() {
+        if (this.selectOrg.length == 0) return false;
+        let instance = this;
+        console.log(this.selectOrg);
+        this.showRemoveOrg = false;
+        this._adminService.removeOrgById(this.selectOrg).subscribe((res) => {
+            instance.selectOrg.map(function(id) {
+                instance.orgList = instance.orgList.filter(function(org) {
+                    return org.id != id;
+                })
+            })
+        })
 
-	checkCourse(event, object){
-		console.log(event.currentTarget.checked);
-		console.log(`coures  = ${JSON.stringify(object)}`);
+    }
 
-		if(event.currentTarget.checked){
-			this.selectCourse.push(object.course_id);
-		}else{
-			this.selectCourse = this.selectCourse.filter((o) => {
-				return o != object.course_id;
-			})
-		}
-		console.log(this.selectCourse);
-	}
+    removeAdmin() {
+        if (this.selectAdmin.length == 0) return false;
+        let instance = this;
+        console.log(this.selectAdmin);
+        this.showRemoveAdmin = false;
+        this._adminService.removeAdminById(this.selectAdmin).subscribe((res) => {
+            if (res.success == false) {
+                return;
+            }
+            else {
+                instance.selectAdmin.map(function(id) {
+                    instance.adminList = instance.adminList.filter(function(admin) {
+                        return admin._id != id;
+                    })
+                })
+            }
+        })
 
+    }
 
-	checkOrganization(event, object){
-		console.log(event.currentTarget.checked);
+    checkCourse(event, object) {
+        console.log(event.currentTarget.checked);
+        console.log(`coures  = ${JSON.stringify(object)}`);
 
-		if(event.currentTarget.checked){
-			this.selectOrg.push(object.id);
-		}else{
-			this.selectOrg = this.selectOrg.filter(function(o){
-				return o != object.id;
-			})
-		}
-		console.log(this.selectOrg);
-	}
-
-	checkAdmin(event, object){
-		console.log(event.currentTarget.checked);
-
-		if(event.currentTarget.checked && this.admin_id != object._id){
-			this.selectAdmin.push(object._id);
-		}else{
-			this.selectAdmin = this.selectAdmin.filter(function(o){
-				return o != object._id;
-			})
-		}
-		console.log(this.selectAdmin);
-	}
-
-	beforeRemoveOrg(){
-		if(this.selectOrg.length == 0){
-			this.showRemoveOrg = false;
-			return false;
-		}
-		this.showRemoveOrg = true;
-	}
-
-	beforeRemoveAdmin(){
-		if(this.selectAdmin.length == 0){
-			this.showRemoveAdmin = false;
-			return false;
-		}
-		this.showRemoveAdmin = true;
-	}
-
-	beforeRemoveCourse(){
-		if(this.selectCourse.length == 0){
-			this.showRemoveCourse = false;
-			return false;
-		}
-		this.showRemoveCourse = true;
-	}
+        if (event.currentTarget.checked) {
+            this.selectCourse.push(object.course_id);
+        } else {
+            this.selectCourse = this.selectCourse.filter((o) => {
+                return o != object.course_id;
+            })
+        }
+        console.log(this.selectCourse);
+    }
 
 
-	matchedPassword(form: any){
-		var password = form.newpwd,
-			verifiedpassword = form.newpwdconfirm;
-		if(password == verifiedpassword){
-			this.matchedTrue = true;
-			return true;
-		}else{
-			this.matchedTrue = false;
-			return false;
-		}
-	}
+    checkOrganization(event, object) {
+        console.log(event.currentTarget.checked);
 
-	ChangePassowrd(form: any){
-		if(form.oldpwd == "" || form.oldpwd == null || this.validOldPassword == true){
-			this.validateoldconfirm = true;
-			return;
-		}
-		this.validatenewconfirm = true;
-		console.log("abc")
-		if(this.SettingForm.valid && !this.matchedTrue){
-			this.showAlert = true;
-			this.changeSuccess = false;
-			this.failure = 'The Password Must Be Matched';
-		}
+        if (event.currentTarget.checked) {
+            this.selectOrg.push(object.id);
+        } else {
+            this.selectOrg = this.selectOrg.filter(function(o) {
+                return o != object.id;
+            })
+        }
+        console.log(this.selectOrg);
+    }
 
-		if(this.SettingForm.valid && this.matchedTrue){
-			var newPwd = form.newpwd;
-			console.log("abc")
-			console.log(this.SettingForm)
-			this._adminService.changePassword({admin_id: this.admin_id, pwd: newPwd}).subscribe((res) => {
-				this.showAlert = true;
-				if(res.success){
-					this.changeSuccess = true;
-				}else{
-					this.changeSuccess = false;
-					this.failure = 'Your update have been failed.';
-				}
-			});
-		}
-	}
+    checkAdmin(event, object) {
+        console.log(event.currentTarget.checked);
 
-	blurChange(form: any){
-		var oldPwd = form.oldpwd;
-		this.isValidOldPassword(oldPwd);
-		console.log(oldPwd)
-	}
+        if (event.currentTarget.checked && this.admin_id != object._id) {
+            this.selectAdmin.push(object._id);
+        } else {
+            this.selectAdmin = this.selectAdmin.filter(function(o) {
+                return o != object._id;
+            })
+        }
+        console.log(this.selectAdmin);
+    }
 
-	onKey(event: any){
-		if(event.keyCode !== 13) return;
-		var value = event.target.value;
-		console.log(value);
-		this.isValidOldPassword(value);
-	}
+    beforeRemoveOrg() {
+        if (this.selectOrg.length == 0) {
+            this.showRemoveOrg = false;
+            return false;
+        }
+        this.showRemoveOrg = true;
+    }
 
-	isValidOldPassword(pwd: string){
-		this.validateoldconfirm = true;
-		this._adminService.isValidOldPassword({admin_id: this.admin_id, pwd: pwd}).subscribe((res)=>{
-			if(res.success){
-				this.validOldPassword = false;
-			}else{
-				this.validOldPassword = true;
-				this.validateoldconfirm = false;
-			}
-		})
-	}
+    beforeRemoveAdmin() {
+        if (this.selectAdmin.length == 0) {
+            this.showRemoveAdmin = false;
+            return false;
+        }
+        this.showRemoveAdmin = true;
+    }
 
-	cancel(form: any){
-		(<Control>this.SettingForm.controls['oldpwd']).updateValue('');
-		(<Control>this.SettingForm.controls['newpwd']).updateValue('');
-		(<Control>this.SettingForm.controls['newpwdconfirm']).updateValue('');
-	}
+    beforeRemoveCourse() {
+        if (this.selectCourse.length == 0) {
+            this.showRemoveCourse = false;
+            return false;
+        }
+        this.showRemoveCourse = true;
+    }
 
-	getCompleteDate(date: any){
-		if(date == null) return '';
-		var d = new Date(date),
-				datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
-		return datestring;
-	}
 
-	check(control: any){
-		console.log(control)
-	}
+    matchedPassword(form: any) {
+        var password = form.newpwd,
+            verifiedpassword = form.newpwdconfirm;
+        if (password == verifiedpassword) {
+            this.matchedTrue = true;
+            return true;
+        } else {
+            this.matchedTrue = false;
+            return false;
+        }
+    }
+
+    ChangePassowrd(form: any) {
+        if (form.oldpwd == "" || form.oldpwd == null || this.validOldPassword == true) {
+            this.validateoldconfirm = true;
+            return;
+        }
+        this.validatenewconfirm = true;
+        console.log("abc")
+        if (this.SettingForm.valid && !this.matchedTrue) {
+            this.showAlert = true;
+            this.changeSuccess = false;
+            this.failure = 'The Password Must Be Matched';
+        }
+
+        if (this.SettingForm.valid && this.matchedTrue) {
+            var newPwd = form.newpwd;
+            console.log("abc")
+            console.log(this.SettingForm)
+            this._adminService.changePassword({ admin_id: this.admin_id, pwd: newPwd }).subscribe((res) => {
+                this.showAlert = true;
+                if (res.success) {
+                    this.changeSuccess = true;
+                } else {
+                    this.changeSuccess = false;
+                    this.failure = 'Your update have been failed.';
+                }
+            });
+        }
+    }
+
+    blurChange(form: any) {
+        var oldPwd = form.oldpwd;
+        this.isValidOldPassword(oldPwd);
+        console.log(oldPwd)
+    }
+
+    onKey(event: any) {
+        if (event.keyCode !== 13) return;
+        var value = event.target.value;
+        console.log(value);
+        this.isValidOldPassword(value);
+    }
+
+    isValidOldPassword(pwd: string) {
+        this.validateoldconfirm = true;
+        this._adminService.isValidOldPassword({ admin_id: this.admin_id, pwd: pwd }).subscribe((res) => {
+            if (res.success) {
+                this.validOldPassword = false;
+            } else {
+                this.validOldPassword = true;
+                this.validateoldconfirm = false;
+            }
+        })
+    }
+
+    cancel(form: any) {
+        (<Control>this.SettingForm.controls['oldpwd']).updateValue('');
+        (<Control>this.SettingForm.controls['newpwd']).updateValue('');
+        (<Control>this.SettingForm.controls['newpwdconfirm']).updateValue('');
+    }
+
+    getCompleteDate(date: any) {
+        if (date == null || date == '') return '';
+        var d = new Date(date),
+            datestring = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+        return datestring;
+    }
+
+    check(control: any) {
+        console.log(control)
+    }
+
+    onTabClick(num: number) {
+        this.course_tab = "tab-pane";
+        this.org_tab = "tab-pane";
+        this.admin_tab = "tab-pane";
+				this._session.setItem('select_tab', num);
+				this.select_tab_item = num;
+
+        switch (num) {
+            case 1:
+                this.course_tab = "tab-pane active";
+                break;
+            case 2:
+                this.org_tab = "tab-pane active";
+                break;
+            case 3:
+                this.admin_tab = "tab-pane active";
+                break;
+            default:
+                break;
+        }
+    }
 }

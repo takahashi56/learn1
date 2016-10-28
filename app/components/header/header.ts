@@ -20,18 +20,17 @@ export class Header {
 	constructor(private _session: Session, private router:Router, private _tutorService: TutorService) {
 		this.username = _session.getCurrentUsername();
 		this.currentRole = this._session.getCurrentRole();
-		if(this.currentRole == 1){
+		var id = this._session.getCurrentId();
+
+		if(this.username == null || id == null) {
+			this.router.navigate(['Login'])
+			console.log("header header")
+		}else if(this.currentRole == 1){
 			this.creditcount = Number(this._session.getItem("creditcount"));
 		}
 	}
 
 	ngOnInit(){
-		if(this.username == null){
-			console.log(this.username);
-			this.router.navigate(['Login'])
-			console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")
-		}
-
 		setInterval(()=>{
 			this.updateCreditCount()
 		}, 1000);

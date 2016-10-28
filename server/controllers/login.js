@@ -48,6 +48,9 @@ exports.login = function(req, res) {
 			})
 		}else{
 			if(user.authenticate(pwd)){
+				user.logon_date = Date.now();
+				user.save();
+
 				action = 1;
 				data.action = "/home/admin/main";
 				data._id = user._id;
@@ -144,7 +147,7 @@ exports.forgetpwd = function(req, res){
 
 			Admin.findOne({email: email}, function(err, admin){
 				if(err || admin == null){
-					data = {success: false};
+					data = {success: true};
 					res.send(data);
 					return console.error(err);
 				}else{

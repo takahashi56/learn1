@@ -33,33 +33,37 @@ export class StripePayment {
 
 
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router, private _ngZone: NgZone) {
+        if (this._session.getCurrentId() == null) {
+            this._router.navigateByUrl('/login');
+        } else {
+            this.tutor_id = this._session.getCurrentId();
+            this.sentShow = false;
+            this.sentStatus = "";
 
-        this.tutor_id = this._session.getCurrentId();
-        this.sentShow = false;
-        this.sentStatus = "";
+            this._tutorService.getStripeTransactionHistory({ tutor_id: this.tutor_id }).subscribe((res) => {
+                console.log(res);
+                this.trans_history = res;
+            })
 
-        this._tutorService.getStripeTransactionHistory({ tutor_id: this.tutor_id }).subscribe((res) => {
-            console.log(res);
-            this.trans_history = res;
-        })
+            this.card_holder = new Control('', Validators.required);
+            this.email = new Control('', Validators.required);
+            this.card_number = new Control('', Validators.required);
+            this.amount = new Control('', Validators.required);
+            this.expire_month = new Control('', Validators.compose([Validators.required, Validators.maxLength(2)]));
+            this.expire_year = new Control('', Validators.compose([Validators.required, Validators.maxLength(2)]));
+            this.card_cvv = new Control('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(4)]));
 
-        this.card_holder = new Control('', Validators.required);
-        this.email = new Control('', Validators.required);
-        this.card_number = new Control('', Validators.required);
-        this.amount = new Control('', Validators.required);
-        this.expire_month = new Control('', Validators.compose([Validators.required, Validators.maxLength(2)]));
-        this.expire_year = new Control('', Validators.compose([Validators.required, Validators.maxLength(2)]));
-        this.card_cvv = new Control('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(4)]));
+            this.stripe_form = builder.group({
+                card_holder: this.card_holder,
+                email: this.email,
+                card_number: this.card_number,
+                amount: this.amount,
+                expire_month: this.expire_month,
+                expire_year: this.expire_year,
+                card_cvv: this.card_cvv
+            });
 
-        this.stripe_form = builder.group({
-            card_holder: this.card_holder,
-            email: this.email,
-            card_number: this.card_number,
-            amount: this.amount,
-            expire_month: this.expire_month,
-            expire_year: this.expire_year,
-            card_cvv: this.card_cvv
-        });
+        }
 
     }
 

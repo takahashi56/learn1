@@ -13,6 +13,7 @@ module.exports = function() {
     roles: [String],
     created_at: Date,
     updated_at: Date,
+    logon_date: Date,
   });
 
   adminSchema.pre('save', function(next) {

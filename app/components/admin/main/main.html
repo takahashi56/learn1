@@ -2,18 +2,18 @@
     <div class="container">
         <h2 class="text-page m-b-30"><strong>Global Admin</strong></h2>
         <ul class="nav nav-tabs nav-justified">
-            <li class="active">
-                <a href="#courses" data-toggle="tab" aria-expanded="false"><strong class="text-page">Courses</strong></a>
+            <li [ngClass]="{'active': select_tab_item == 1}">
+                <a href="#courses" data-toggle="tab" (click)="onTabClick(1)"><strong class="text-page">Courses</strong></a>
             </li>
-            <li class="">
-                <a href="#organization" data-toggle="tab" aria-expanded="true"><strong class="text-page">Organization</strong></a>
+            <li [ngClass]="{'active': select_tab_item == 2}">
+                <a href="#organization" data-toggle="tab" (click)="onTabClick(2)"><strong class="text-page">Organizations</strong></a>
             </li>
-            <li class="">
-                <a href="#admin" data-toggle="tab" aria-expanded="true"><strong class="text-page">Administrators</strong></a>
-            </li>            
+            <li [ngClass]="{'active': select_tab_item == 3}">
+                <a href="#admin" data-toggle="tab" (click)="onTabClick(3)"><strong class="text-page">Administrators</strong></a>
+            </li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active" id="courses">
+            <div [class]="course_tab" id="courses">
                 <div class="text-right m-b-30">
                     <a class="btn btn-primary w-sm m-r-5" (click)="gotoAddCourse()" >Add Course</a>
                     <a class="btn btn-primary w-sm" (click)="beforeRemoveCourse()"  data-toggle="modal" data-target="#remove-course">Remove Course</a>
@@ -47,7 +47,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane" id="organization">
+            <div [class]="org_tab" id="organization">
                 <div class="text-right m-b-30">
                     <a  class="btn btn-primary w-sm  m-r-5" [routerLink]="['AdminAddOrganization']">Add Organization</a>
                     <a  class="btn btn-primary w-sm" (click)="beforeRemoveOrg()" data-toggle="modal" data-target="#remove-org">Remove Organization</a>
@@ -171,7 +171,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="admin">
+            <div [class]="admin_tab" id="admin">
               <div class="text-right m-b-30">
                   <a  class="btn btn-primary w-sm  m-r-5" [routerLink]="['AdminAddAdmin']">Add Golbal Admin</a>
                   <a  class="btn btn-primary w-sm" (click)="beforeRemoveAdmin()" data-toggle="modal" data-target="#remove-admin">Remove Admin</a>
@@ -198,7 +198,7 @@
                           <td><strong>{{admin.firstName}}</strong></td>
                           <td><strong>{{admin.lastName}}</strong></td>
                           <td><strong>{{admin.email}}</strong></td>
-                          <td><strong>{{getCompleteDate(admin.created_at)}}</strong></td>
+                          <td><strong>{{getCompleteDate(admin.logon_date)}}</strong></td>
                           <td class="text-right"><a class="btn w-xs btn-sm btn-primary" (click)="gotoEditAdmin(admin)">Edit</a></td>
                       </tr>
                   </table>

@@ -41,6 +41,7 @@ export class Forgetpwd {
 
         if (this.ForgetpwdForm.valid) {
             this._adminService.forgetpwd({ email: form.email }).subscribe((res) => {
+                console.log(res);
                 this.sentShow = true;
                 if (res.success) {
                     this.showClass = "alert alert-success alert-dismissable";
@@ -48,12 +49,15 @@ export class Forgetpwd {
 														\n
 														if you did not receive the email, please contact us to recover your account.`;
 
-                    this._session.setUser(form.email, 0, "");
+                    this._session.setUser(form.email, null, "");
                     this._session.setItem('forget_user', form.email);
-											this.button_name = 'Sent';
+                    this.button_name = 'Sent';
                 } else if (res.success == false) {
                     this.showClass = "alert alert-danger alert-dismissable";
                     this.sentStatus = "This email was not sent. Please type the email correctly!";
+                } else if (res.status == 500) {
+                    this.showClass = "alert alert-danger alert-dismissable";
+                    this.sentStatus = "You tried to send to a recipient that has been marked as inactive. Please type the email correctly!";
                 }
             })
         }

@@ -116,6 +116,7 @@ html
 			idleTimer = setTimeout(function () {
 			localStorage.clear();
 			idleState = true;
+			window.location.href = '/#/login';
 			window.location.reload(true);
 			}, 360000);
 			});
@@ -131,6 +132,6 @@ html
 			$('#pass').val('');
 			}
 			$('#remember_me').click(function() {
-			
+
 			});
 			});

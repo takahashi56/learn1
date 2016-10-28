@@ -15,7 +15,12 @@ export class GoCardlessPayment {
     tutor_id: string = "";
 
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
-        this.tutor_id = this._session.getCurrentId();
+        if (this._session.getCurrentId() == null) {
+            this._router.navigateByUrl('/login');
+        } else {
+            this.tutor_id = this._session.getCurrentId();
+
+        }
     }
 
     gotoGoCardlessPage(count, amount) {

@@ -17,15 +17,22 @@ export class Resetpwd {
   verfiedPassword: Control;
 	submitAttempt: boolean = false;
   matched: boolean = false;
+	show_class: string = '';
+	show_string: string = '';
+	length_6: boolean = false;
+
 
 	constructor(private _session: Session, private _adminService: AuthService, private builder: FormBuilder, private _router: Router) {
 		var email = this._session.getItem('forget_user');
-	
+
 		if(email == null){
 			this._router.navigate(['Login']);
 		}else{
 			this.password = new Control('', Validators.required);
 			this.verfiedPassword = new Control('', Validators.required);
+			this.show_class ="alert alert-info alert-dismissable";
+			this.show_string = "Enter your new password and log in again!";
+			this.length_6 = false;
 
 			this.ResetpwdForm = builder.group({
 				password: this.password,
@@ -50,6 +57,19 @@ export class Resetpwd {
 
 	Resetpwd(form: any){
 		this.submitAttempt = true;
+
+		if(form.password.length < 6 || form.verfiedPassword.length < 6){
+			this.show_class = "alert alert-danger alert-dismissable";
+			this.show_string = "The Password Must be At Least 6 characters!";
+			this.length_6 = true;
+			return;
+		}
+
+		if(this.matched = false){
+			this.show_class = "alert alert-danger alert-dismissable";
+			this.show_string = "The Password Must be Matched!";
+			return;
+		}
 
 		if(this.ResetpwdForm.valid && this.matched){
       console.log('valid');

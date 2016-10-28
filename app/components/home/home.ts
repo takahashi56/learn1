@@ -25,11 +25,13 @@ export class Home implements OnInit {
 	constructor(private _router: Router, private _session: Session) {
 		console.log("Via Home")
 		var role = this._session.getCurrentRole(),
+			id = this._session.getCurrentId(),
 			url = this._session.getItem('homeUrl');
 
-		// this._router.navigate(['AdminMain']);
-		if(role == null || isNaN(role)){
-			this._router.navigateByUrl('/login');
+		console.log(id);
+		console.log(url);
+		if(id == null){
+			this._router.navigate(['Login'])
 		}else{
 			this._router.navigateByUrl(url);
 		}

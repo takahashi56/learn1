@@ -21,24 +21,37 @@ export class AddCourse {
 	submitAttempt: boolean = false;
 	courseData: any  = {};
 	lessonData: any  = [];
+	show_back: boolean = false;
 
 	constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
-		this.courseData = JSON.parse(this._session.getItem('Course'));
-		console.log("original");
-		console.log(this.courseData);
-		this.coursetitle = new Control(this.courseData.coursetitle, Validators.required);
-		this.coursedescription = new Control(this.courseData.coursedescription, Validators.required);
-		this.lessonData = this.courseData.lesson;
+		if(this._session.getCurrentId() == null){
+			this._router.navigateByUrl('/login');
+		}else{
+			this.courseData = JSON.parse(this._session.getItem('Course'));
+			console.log("original");
+			console.log(this.courseData);
+			this.coursetitle = new Control(this.courseData.coursetitle, Validators.required);
+			this.coursedescription = new Control(this.courseData.coursedescription, Validators.required);
+			this.lessonData = this.courseData.lesson;
 
-		this.courseForm = builder.group({
-			coursetitle: this.coursetitle,
-			coursedescription: this.coursedescription,
-		});
+			this.courseForm = builder.group({
+				coursetitle: this.coursetitle,
+				coursedescription: this.coursedescription,
+			});
+		}
 	}
 
 	cancel(){
 		this._session.setItem('Course', {});
 		this._router.navigate(['AdminMain']);
+	}
+
+	showBack(){
+		if(Number(this._session.getItem('valid_input')) == 1){
+			this.show_back = true;
+		}else{
+			this.cancel();
+		}
 	}
 
 	getVideoCount(lesson){
@@ -50,12 +63,14 @@ export class AddCourse {
 	}
 
 	gotoEditLesson(lesson){
+		this._session.setItem('valid_input', 0);
 		this._session.setItem('Lesson_new', JSON.stringify(lesson));
 		this._session.setItem('Content', JSON.stringify(lesson.content));
 		this._router.navigate(['AdminAddLesson']);
 	}
 
 	addLesson(form: any){
+		this._session.setItem('valid_input', 0);
 		var data2 = {
 			course_id: this.courseData.course_id,
 			coursetitle: this.courseForm.controls["coursetitle"].value,
