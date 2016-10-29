@@ -21,7 +21,6 @@ export class Forgetpwd {
     button_name: string;
 
     constructor(private _session: Session, private _adminService: AuthService, private builder: FormBuilder) {
-        console.log('in the constructor');
         this.sentShow = false;
         this.sentStatus = "";
         this.email = new Control('', Validators.required);
@@ -41,7 +40,6 @@ export class Forgetpwd {
 
         if (this.ForgetpwdForm.valid) {
             this._adminService.forgetpwd({ email: form.email }).subscribe((res) => {
-                console.log(res);
                 this.sentShow = true;
                 if (res.success) {
                     this.showClass = "alert alert-success alert-dismissable";
@@ -49,7 +47,7 @@ export class Forgetpwd {
 														\n
 														if you did not receive the email, please contact us to recover your account.`;
 
-                    this._session.setUser(form.email, null, "");
+                    // this._session.setUser(form.email, null, "");
                     this._session.setItem('forget_user', form.email);
                     this.button_name = 'Sent';
                 } else if (res.success == false) {

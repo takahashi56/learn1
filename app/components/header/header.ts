@@ -24,7 +24,6 @@ export class Header {
 
 		if(this.username == null || id == null) {
 			this.router.navigate(['Login'])
-			console.log("header header")
 		}else if(this.currentRole == 1){
 			this.creditcount = Number(this._session.getItem("creditcount"));
 		}

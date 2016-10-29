@@ -42,7 +42,7 @@ export class Main implements OnInit {
     course_tab: string = '';
     org_tab: string = '';
     admin_tab: string = '';
-		select_tab_item: number = 1;
+    select_tab_item: number = 1;
 
     constructor(private _session: Session, private _adminService: AdminService, private _router: Router, private builder: FormBuilder) {
         // var admin_id = this._session.getCurrentId(), role=this._session.getCurrentRole();
@@ -77,21 +77,25 @@ export class Main implements OnInit {
                 oldpwd: this.oldpwd
             })
 
-						if(this._session.getItem('select_tab') == null){
-							this.onTabClick(1);
-						}else{
-							this.onTabClick(Number(this._session.getItem('select_tab')));
-						}
+            if (this._session.getItem('select_tab') == null) {
+                this.onTabClick(1);
+            } else {
+                this.onTabClick(Number(this._session.getItem('select_tab')));
+            }
         }
 
     }
 
     editCourse(course: any) {
         var lessons = [];
-        console.log(course.course_id);
         this._adminService.getEditCourses(course.course_id).subscribe((res) => {
             this._session.setItem('editORadd', JSON.stringify({ flag: true }));
-            this._session.setItem('Course', JSON.stringify(res));
+            var course = JSON.parse(this._session.getItem('Course'));
+            if(course.course_id == res.course_id){
+              this._session.setItem('Course', JSON.stringify(course));
+            }else{
+              this._session.setItem('Course', JSON.stringify(res));
+            }
             this._router.navigate(['AdminAddCourse']);
         })
     }
@@ -125,57 +129,51 @@ export class Main implements OnInit {
 
     removeCourse() {
         if (this.selectCourse.length == 0) return false;
-        let instance = this;
-        console.log(this.selectCourse);
         this.showRemoveCourse = false;
         this._adminService.removeCourseById(this.selectCourse).subscribe((res) => {
-            instance.selectCourse.map((id) => {
-                instance.courseList = instance.courseList.filter((course) => {
+            this.selectCourse.map((id) => {
+                this.courseList = this.courseList.filter((course) => {
                     return course.course_id != id;
                 })
             })
+            this.selectCourse = [];
         })
     }
 
     removeOrg() {
         if (this.selectOrg.length == 0) return false;
-        let instance = this;
-        console.log(this.selectOrg);
         this.showRemoveOrg = false;
         this._adminService.removeOrgById(this.selectOrg).subscribe((res) => {
-            instance.selectOrg.map(function(id) {
-                instance.orgList = instance.orgList.filter(function(org) {
+            this.selectOrg.map((id) => {
+                this.orgList = this.orgList.filter((org) => {
                     return org.id != id;
                 })
             })
+            this.selectOrg = [];
         })
+
 
     }
 
     removeAdmin() {
         if (this.selectAdmin.length == 0) return false;
-        let instance = this;
-        console.log(this.selectAdmin);
         this.showRemoveAdmin = false;
         this._adminService.removeAdminById(this.selectAdmin).subscribe((res) => {
             if (res.success == false) {
                 return;
             }
             else {
-                instance.selectAdmin.map(function(id) {
-                    instance.adminList = instance.adminList.filter(function(admin) {
+                this.selectAdmin.map((id) => {
+                    this.adminList = this.adminList.filter((admin) => {
                         return admin._id != id;
                     })
                 })
+                this.selectAdmin = [];
             }
         })
-
     }
 
     checkCourse(event, object) {
-        console.log(event.currentTarget.checked);
-        console.log(`coures  = ${JSON.stringify(object)}`);
-
         if (event.currentTarget.checked) {
             this.selectCourse.push(object.course_id);
         } else {
@@ -183,13 +181,10 @@ export class Main implements OnInit {
                 return o != object.course_id;
             })
         }
-        console.log(this.selectCourse);
     }
 
 
     checkOrganization(event, object) {
-        console.log(event.currentTarget.checked);
-
         if (event.currentTarget.checked) {
             this.selectOrg.push(object.id);
         } else {
@@ -197,12 +192,9 @@ export class Main implements OnInit {
                 return o != object.id;
             })
         }
-        console.log(this.selectOrg);
     }
 
     checkAdmin(event, object) {
-        console.log(event.currentTarget.checked);
-
         if (event.currentTarget.checked && this.admin_id != object._id) {
             this.selectAdmin.push(object._id);
         } else {
@@ -210,7 +202,6 @@ export class Main implements OnInit {
                 return o != object._id;
             })
         }
-        console.log(this.selectAdmin);
     }
 
     beforeRemoveOrg() {
@@ -256,7 +247,6 @@ export class Main implements OnInit {
             return;
         }
         this.validatenewconfirm = true;
-        console.log("abc")
         if (this.SettingForm.valid && !this.matchedTrue) {
             this.showAlert = true;
             this.changeSuccess = false;
@@ -265,8 +255,6 @@ export class Main implements OnInit {
 
         if (this.SettingForm.valid && this.matchedTrue) {
             var newPwd = form.newpwd;
-            console.log("abc")
-            console.log(this.SettingForm)
             this._adminService.changePassword({ admin_id: this.admin_id, pwd: newPwd }).subscribe((res) => {
                 this.showAlert = true;
                 if (res.success) {
@@ -282,13 +270,11 @@ export class Main implements OnInit {
     blurChange(form: any) {
         var oldPwd = form.oldpwd;
         this.isValidOldPassword(oldPwd);
-        console.log(oldPwd)
     }
 
     onKey(event: any) {
         if (event.keyCode !== 13) return;
         var value = event.target.value;
-        console.log(value);
         this.isValidOldPassword(value);
     }
 
@@ -318,15 +304,14 @@ export class Main implements OnInit {
     }
 
     check(control: any) {
-        console.log(control)
     }
 
     onTabClick(num: number) {
         this.course_tab = "tab-pane";
         this.org_tab = "tab-pane";
         this.admin_tab = "tab-pane";
-				this._session.setItem('select_tab', num);
-				this.select_tab_item = num;
+        this._session.setItem('select_tab', num);
+        this.select_tab_item = num;
 
         switch (num) {
             case 1:

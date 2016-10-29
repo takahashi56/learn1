@@ -26,7 +26,6 @@ export class EditAdmin {
             this._router.navigateByUrl('/login');
         } else {
             this.admin = JSON.parse(this._session.getItem('admin'));
-            console.log(this.admin);
 
             this.firstName = new Control(this.admin.firstName, Validators.required);
             this.lastName = new Control(this.admin.lastName, Validators.required);
@@ -58,7 +57,6 @@ export class EditAdmin {
 
             this._adminService.updateAdmin(data)
                 .subscribe((res) => {
-                    console.log(res.success);
                     if (res.success) {
                         this._router.navigate(['AdminMain']);
                     }

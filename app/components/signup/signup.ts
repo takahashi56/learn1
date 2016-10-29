@@ -67,7 +67,6 @@ export class SignUp {
 
 			this._adminService.addTutor(data)
 				.subscribe((res) => {
-					console.log(res);
 					if(res.success){
 						this._session.setUser(data.email, res.role, res._id)
 						this._session.setItem('homeUrl', res.action);

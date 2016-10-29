@@ -35,9 +35,7 @@ export class DetailTutorStudent {
 
             this.student = JSON.parse(this._session.getItem('TutorStudent'));
             this.allStudentData = JSON.parse(this._session.getItem('TutorAllStudent'));
-            console.log(this.allStudentData);
             var id = this.student.student_id;
-            console.log("student id" + id);
 
             this._tutorService.getCoursesByStudentId(id, this._session.getCurrentId()).subscribe((res) => {
                 this.courseList = res;
@@ -123,8 +121,6 @@ export class DetailTutorStudent {
 
             this._tutorService.addStudent(data, flag.flag)
                 .subscribe((res) => {
-                    console.log("aaaa")
-                    console.log(res.success);
                     if (res.success) {
                         this._router.navigate(['TutorMain']);
                     }
@@ -139,13 +135,9 @@ export class DetailTutorStudent {
     }
 
     gotoCertificate(course: any) {
-        console.log("goto certificate");
-        console.log(course)
         if (course.score == 0 || course.isCompleted == false) return false;
         var self = this;
-        console.log("goto certificate +++");
         this._tutorService.getLessonsNameByCourseId({ course_id: course.course_id }).subscribe((res) => {
-            console.log(course);
             var data = {
                 coursename: course.coursetitle,
                 studentname: `${this.student.firstName} ${this.student.lastName}`,
@@ -154,7 +146,6 @@ export class DetailTutorStudent {
                 lessons: res.data.join(', '),
                 organization: this._session.getItem("organization")
             }
-            console.log(`data = ${JSON.stringify(data)}`);
             self._session.setItem('certificate', JSON.stringify(data));
             window.open('/#/certificate');
             // self._router.navigateByUrl('/certificate');

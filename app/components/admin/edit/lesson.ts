@@ -11,7 +11,6 @@ import {CanActivate} from 'angular2/router';
 })
 export class EditLesson {
 	constructor(private _session: Session) {
-		console.log('in the constructor');
 	}
 
 	doLogin(form: any) {

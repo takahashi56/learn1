@@ -21,7 +21,6 @@ export class LessonResult {
         if (this._session.getCurrentId() == null) {
             this.router.navigateByUrl('/login');
         } else {
-            console.log("this is result page");
             this.username = _session.getCurrentUsername();
             this.lessonname = this._session.getItem('LessonName');
 
@@ -35,9 +34,6 @@ export class LessonResult {
             nextlesson = lessonList[lessonIndex];
             count = true;
         }
-
-        console.log(count);
-        console.log(nextlesson);
 
         if (!count) {
             this.router.navigate(['CourseResult']);

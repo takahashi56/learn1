@@ -48,7 +48,6 @@ export class TutorMain implements OnInit {
 
 			this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
 				this.courseList = res;
-				console.log(res);
 			});
 			this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
 				this.studentList = res;
@@ -56,12 +55,10 @@ export class TutorMain implements OnInit {
 			});
 
 			this._tutorService.getAllMatrix({tutor_id: this.tutor_id}).subscribe((res) => {
-	      console.log(res)
 	      this._session.setItem('studentList', JSON.stringify(res));
 	    })
 
 			// this._tutorService.getAlUnCompleted({tutor_id: this.tutor_id}).subscribe((res) => {
-	    //   console.log(res)
 	    //   this._session.setItem('uncompleted', JSON.stringify(res));
 	    // })
 			this._tutorService.updateTutorInfo({tutor_id: this.tutor_id}).subscribe((res) => {
@@ -84,7 +81,6 @@ export class TutorMain implements OnInit {
 	}
 
 	editStudent(student: any){
-		console.log(student.student_id);
 		this._session.setItem('editORadd', JSON.stringify({flag: true}));
 		this._session.setItem('TutorStudent', JSON.stringify(student));
 		this._router.navigate(['AddTutorStudent']);
@@ -118,8 +114,6 @@ export class TutorMain implements OnInit {
 			phone: '',
 		}
 
-		console.log("DDDDDDDDDDDDDDDDDDDDDDDDD" + this.employeecount);
-
 		var studentLength = this.studentList.length;
 		if((studentLength + 1) > this.employeecount){
 			return ;
@@ -148,7 +142,6 @@ export class TutorMain implements OnInit {
 		if(!id) return false;
 
 		if(this.creditcount == 0){
-			console.log("You cannot assign the course to students!");
 			return false;
 		}
 
@@ -159,7 +152,6 @@ export class TutorMain implements OnInit {
 		ids.push(id);
 
 		this._tutorService.setAssignStudentsWithCourse(this.tutor_id, selectedId,ids).subscribe((res)=>{
-			console.log(res);
 			this.creditcount--;
 			this._session.setItem('creditcount', this.creditcount);
 			this._tutorService.event_emitter.emit('decrease_credit');
@@ -173,7 +165,6 @@ export class TutorMain implements OnInit {
 
 			this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
 				this.courseList = res;
-				console.log(res);
 			});
 
 		});;
@@ -184,7 +175,6 @@ export class TutorMain implements OnInit {
 		if(!id) return false;
 
 		if(this.creditcount == 0){
-			console.log("You cannot assign the course to students!");
 			return false;
 		}
 
@@ -194,13 +184,8 @@ export class TutorMain implements OnInit {
 
 		this._tutorService.setAssignStudentsWithCourse(this.tutor_id, id,ids).subscribe((res)=>{
 
-			console.log(res);
 			this.creditcount--;
 			this._session.setItem('creditcount', this.creditcount);
-			console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-			console.log(Number(this._session.getItem('creditcount')))
-			// this._tutorService.event_emitter.emit('decrease');
-			console.log(this._tutorService.event_emitter);
 
 			this._router.navigateByUrl('/home/tutor/main');
 
@@ -211,7 +196,6 @@ export class TutorMain implements OnInit {
 
 			this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
 				this.courseList = res;
-				console.log(res);
 			});
 		});
 
@@ -228,11 +212,9 @@ export class TutorMain implements OnInit {
 	      // as an example i am just splitting strings by spaces
 	      var columns = myReader.result.split(/\r\n|\r|\n/g);
 	      for (var i = 0; i < columns.length; i++) {
-						console.log(columns[i]);
 						if(columns[i].split(',').length < 3) continue;
 	          resultSet.push(columns[i].split(']'));
 	      }
-				console.log(resultSet);
 				var studentLength = this.studentList.length, remainderLength=0;
 				if((studentLength + resultSet.length) > this.employeecount){
 					remainderLength = (studentLength + resultSet.length) - this.employeecount;
@@ -273,8 +255,6 @@ export class TutorMain implements OnInit {
 	}
 
 	checkStudent(event, object){
-		console.log(`coures  = ${JSON.stringify(object)}`);
-
 		if(event.currentTarget.checked){
 			this.selectStudents.push(object.student_id);
 		}else{
@@ -282,13 +262,11 @@ export class TutorMain implements OnInit {
 				return o != object.student_id;
 			})
 		}
-		console.log(this.selectStudents);
 	}
 
 	removeStudent(){
 		if(this.selectStudents.length == 0) return false;
 		let instance = this;
-		console.log(this.selectStudents);
 
 		this._tutorService.removeStudentById(this.selectStudents).subscribe((res)=>{
 			instance.selectStudents.map(function(id){
@@ -311,14 +289,12 @@ export class TutorMain implements OnInit {
 
 		this.selectStudents.map((id) => {
 			var element = this.studentList.filter((student) => { return student.student_id == id});
-			console.log(element);
 			data.push(`${element[0].firstName} ${element[0].lastName}`);
 		});
 		this.selectedStudentsName = data.join(',');
 	}
 
 	gotoMatrix(){
-		console.log(this.courseList)
 		if(this.courseList == [] || this.courseList == null || this.courseList.length == 0) return false;
 
 		this._session.setItem('courseList', JSON.stringify(this.courseList));
@@ -328,7 +304,6 @@ export class TutorMain implements OnInit {
 	}
 
 	gotoUncompleted(){
-		console.log(this.courseList)
 		if(this.courseList == [] || this.courseList == null || this.courseList.length == 0) return false;
 
 		this._session.setItem('courseList', JSON.stringify(this.courseList));
@@ -355,7 +330,6 @@ export class TutorMain implements OnInit {
 			return;
 		}
 		this.validatenewconfirm = true;
-		console.log("abc")
 
 		if(this.SettingForm.valid && !this.matchedTrue){
 			this.showAlert = true;
@@ -366,7 +340,6 @@ export class TutorMain implements OnInit {
 
 		if(this.SettingForm.valid  && this.matchedTrue){
 			var newPwd = form.newpwd;
-			console.log("abc")
 			this._tutorService.changePassword({tutor_id: this.tutor_id, pwd: newPwd}).subscribe((res) => {
 				this.showAlert = true;
 				if(res.success){
@@ -382,13 +355,11 @@ export class TutorMain implements OnInit {
 	blurChange(form: any){
 		var oldPwd = form.oldpwd;
 		this.isValidOldPassword(oldPwd);
-		console.log(oldPwd)
 	}
 
 	onKey(event: any){
 		if(event.keyCode !== 13) return;
 		var value = event.target.value;
-		console.log(value);
 		this.isValidOldPassword(value);
 	}
 
@@ -412,7 +383,6 @@ export class TutorMain implements OnInit {
 
 	/*Stripe Payment*/
 	gotoStripePayment(){
-		console.log("goto Stripe")
 		this._router.navigate(['StripePayment']);
 	}
 

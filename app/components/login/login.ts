@@ -24,7 +24,6 @@ export class Login {
     remember_me: boolean = false;
 
     constructor(private _session: Session, private _authService: AuthService, private _router: Router, private builder: FormBuilder) {
-        console.log('in the constructor');
         this.actionPath = "";
         this.text = "";
 
@@ -59,7 +58,6 @@ export class Login {
             }
             this._authService.Login(data)
                 .subscribe((res) => {
-                    console.log(res);
                     if (res.success) {
                         this._session.setUser(res.name, res.role, res._id)
                         this._session.setItem('homeUrl', res.action);
@@ -73,9 +71,6 @@ export class Login {
                             this._session.setItem("employeecount", res.employeecount);
                             this._session.setItem("stripe_publish_key", res.stripe_publish_key);
                         }
-                        console.log(res.action);
-                        // this._router.navigate(['Home']);
-                        console.log(this._router);
                         this._router.navigateByUrl('/home');
                     } else {
                         this.authFailure = true;
@@ -85,8 +80,6 @@ export class Login {
     }
 
     onClickRemember(remember_me) {
-        console.log(this.remember_me);
-        console.log($('#remember_me'))
         if (this.remember_me == false) {
 						this._session.setItem('usrname', $('#username').val())
 						this._session.setItem('pass', $('#pass').val());

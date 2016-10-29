@@ -77,7 +77,6 @@ export class TutorService {
 	}
 
 	makeFileRequest(files){
-		console.log(files);
 	}
 
 	getCoursesByStudentId(id, tutor_id){

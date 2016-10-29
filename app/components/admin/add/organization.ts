@@ -71,8 +71,6 @@ export class AddOrganization {
 
             this._adminService.addTutor(data)
                 .subscribe((res) => {
-                    console.log("aaaa")
-                    console.log(res.success);
                     if (res.success) {
                         this._router.navigate(['AdminMain']);
                     }

@@ -13,7 +13,7 @@ export class Session {
 	login() {
 		this.lock.show((error: string, profile: Object, id_token: string) => {
 			if (error) {
-				console.log(error);
+				console.error(error);
 			}
 			// We get a profile object for the user from Auth0
 			localStorage.setItem('profile', JSON.stringify(profile));
@@ -44,7 +44,6 @@ export class Session {
 	 }
 
 	 setUser(username, role, id){
-	 	console.log(id);
 	 	localStorage.setItem('username', username);
 	 	localStorage.setItem('role', role);
 	 	localStorage.setItem('id', id);

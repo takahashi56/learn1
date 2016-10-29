@@ -35,7 +35,6 @@ export class AddLesson {
 
     manageContent(value) {
         this.contents = value; //JSON.parse(this._session.getItem('Content'));
-        console.log(this.contents)
     }
 
     cancel() {
@@ -90,7 +89,6 @@ export class AddLesson {
 
     private handleData(form: any): void {
         let contentData = JSON.parse(this._session.getItem('Content'));
-        console.log(contentData);
         contentData = contentData.filter(function(obj) {
             let updated = true;
             if (obj.videoOrQuestion) {
@@ -103,10 +101,8 @@ export class AddLesson {
                             break;
                         case true:
                             if (obj.question == "" || obj.answerA == "" || obj.answerB == "" || obj.answerC == "" || obj.answerD == "" || obj.trueNumber == 0) {
-                                console.log("true");
                                 updated = true;
                             } else {
-                                console.log("false");
                                 updated = false;
                             }
                             break;
@@ -116,18 +112,14 @@ export class AddLesson {
                     }
                 } else {
                     if (obj.question == "" || obj.answerA == "" || obj.answerB == "" || obj.answerC == "" || obj.answerD == "" || obj.trueNumber == 0 || obj.image == '') {
-                        console.log("true");
                         updated = true;
                     } else {
-                        console.log("false");
                         updated = false;
                     }
                 }
             }
             if (!updated) return obj;
         })
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        console.log(contentData)
         let lesson = {
             lesson_id: this.lesson_id,
             lessonname: this.lessonForm.controls['lessonname'].value,
@@ -135,12 +127,9 @@ export class AddLesson {
             content: contentData,
             created_at: this.created_at
         }
-        console.log(lesson)
         this.submitAttempt = false;
         let course = JSON.parse(this._session.getItem('Course')), lessons_copy = [], update_lesson = false, lesson_original = [];
         lesson_original = course.lesson;
-        console.log('course original');
-        console.log(course);
 
         lesson_original.forEach(function(obj) {
             if (obj.lesson_id == lesson.lesson_id) {
@@ -154,8 +143,6 @@ export class AddLesson {
             lessons_copy.push(lesson);
         }
         course.lesson = lessons_copy;
-        console.log('course after');
-        console.log(course)
         this._session.setItem('Course', JSON.stringify(course));
     }
 

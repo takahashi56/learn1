@@ -29,7 +29,6 @@ export class UnCompletedCourse implements AfterViewInit {
       this.courseList = JSON.parse(this._session.getItem('courseList'));
       var tutor_id = this._session.getCurrentId();
       this.studentList = JSON.parse(this._session.getItem('studentList'))
-      console.log(this.studentList)
     }
 	}
 
@@ -43,7 +42,6 @@ export class UnCompletedCourse implements AfterViewInit {
 					onrendered: function (canvas) {
 							var ctx = canvas.getContext("2d");
 							var data = canvas.toDataURL("image/png", 1.5);
-							console.log(data)
 							var docDefinition = {
 									content: [{
 											image: data,
@@ -61,7 +59,6 @@ export class UnCompletedCourse implements AfterViewInit {
 							// para1.appendChild(image);
 							self._tutorService.makePdf({data:para.innerHTML, direction: true}).subscribe((res) => {
 								 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
-								 console.log(res.url);
 							})
 					}
 			});

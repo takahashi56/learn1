@@ -59,27 +59,20 @@ export class SelectedContent implements OnInit {
 
 
     gotoNextContent(event) {
-        console.log(`content length: ${this.contents.length}`)
-        console.log(`current index: ${this.index}`);
         if ((this.index + 1) >= this.contents.length) {
             return this.gotoResultPage();
         } else {
             this.index += 1;
-            console.log(this.index);
             this.currentContent = this.contents[this.index];
-            console.log(this.currentContent);
         }
     }
 
     gotoPreviousContent(event) {
-        console.log(this.index);
-
         if ((this.index - 1) < 0) {
             this._router.navigate(['StudentLesson']);
             return false;
         }
 
-        console.log(this.index);
         this.index -= 1;
         this.currentContent = this.contents[this.index];
     }
@@ -102,12 +95,6 @@ export class SelectedContent implements OnInit {
                 right: rightCount,
                 score: score
             };
-        console.log("goto result page");
-        console.log('total :' + totalCount);
-        console.log('right :' + rightCount);
-        console.log(`score type ${isNaN(score)}`);
-        console.log(' score :' + score);
-        console.log(data);
 
         this._session.setItem(lesson_id, JSON.stringify(status));
         this._studentService.setScoreForLesson(data).subscribe((res) => {

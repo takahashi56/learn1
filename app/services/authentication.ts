@@ -15,7 +15,6 @@ export class AuthService {
 	constructor(private _http: Http) {}
 
 	Login(data) {
-		console.log(data);
 		return this._http.post(this.loginUrl, JSON.stringify(data), HEADER)
 			.map((res) => {
 				return	res.json();

@@ -21,21 +21,17 @@ export class StudentMain implements OnInit {
     constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
         this._session.setItem('editORadd', JSON.stringify({ flag: false }));
         this.studentId = this._session.getItem('MainStudentId');
-        console.log(this.studentId);
-
 
         var role = this._session.getCurrentRole(),
             count = Number(this._session.getItem('CourseCount')),
             id = this._session.getCurrentId();
 
         if (id == null || role == null) {
-            console.log("student");
             this._router.navigateByUrl('/login');
         }else{
           if (role == 2) {
             this._studentService.getCourseListById(this.studentId).subscribe((res) => {
               this.courseList = res;
-              console.log(res);
             })
 
             this._studentService.getStudentInfo(this.studentId).subscribe((res) => {
@@ -48,9 +44,7 @@ export class StudentMain implements OnInit {
               this.empty = false;
             }
           } else {
-            console.log('not student');
             var url = this._session.getItem('homeUrl');
-            console.log(url);
             this._router.navigateByUrl(url);
           }
         }
@@ -58,7 +52,7 @@ export class StudentMain implements OnInit {
 
     ngOnInit() {
       this._studentService.updateCourse(this.studentId).subscribe((res) => {
-        console.log(res)
+        console.log('')
       })
     }
 
@@ -90,7 +84,6 @@ export class StudentMain implements OnInit {
     }
 
     beforeGotoLessonList(course: any) {
-        console.log(course)
         if (course.isCompleted == false) {
             this.gotoLessonList(course);
         }

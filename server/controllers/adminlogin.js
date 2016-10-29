@@ -11,7 +11,6 @@ exports.confirmLogin = function(req, res) {
 }
 
 exports.isAdmin = function(email){
-	console.log("isAdmin");
 	var status = false;
 	return Admin.findOne({email: email}, function(err, user){
 		if(err){
@@ -19,7 +18,6 @@ exports.isAdmin = function(email){
 			return console.error(err);
 		}
 		if(user != null){
-			console.log(user);
 			status = true;
 			return status;
 		}
@@ -33,11 +31,8 @@ exports.authentication = function(email, pwd){
 			console.error(err);
 			status = false;
 		}
-		console.log(user.authenticate(pwd));
 		status = user.authenticate(pwd);
 	})
-	console.log("controller")
-	console.log(status);
 	return status;
 }
 
@@ -78,15 +73,12 @@ exports.addAdmin = function(req, res) {
 	admin["created_at"] = new Date();
 	admin['username'] = admin.email;
 	admin["logon_date"] = '';
-	
-	console.log(req.body);
 
 	Admin.create(admin, function(err, admin){
 		if(err) {
 			console.error(err)
 			res.send(err);
 		}else{
-			console.log("success")
 			var data = {action: "success", text: "", role: 0, success: true, _id: admin._id};
 			res.send(data);
 		}
@@ -97,8 +89,6 @@ exports.editAdmin = function(req, res) {
 	var admin = req.body,
 		salt = encrypt.createSalt();
 
-	console.log("#################################")
-	console.log(admin)
 	admin["salt"] = salt;
 	admin["hashed_pwd"] = encrypt.hashPwd(salt, admin["password"]);
 	admin["updated_at"] = new Date();
@@ -125,13 +115,10 @@ exports.removeAdmin = function(req, res) {
 
 	var list = req.body.list;
 
-	console.log(list);
 	list.forEach(function (l) {
-		console.log(l)
 		Admin.findOneAndRemove({_id: mongoose.Types.ObjectId(l)}, function(err, removed){
 			if(err) console.error(err);
 
-			console.log(removed);
 		})
 	})
 

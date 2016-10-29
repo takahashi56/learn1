@@ -16,7 +16,7 @@ export class StudentVideo {
 	@Input() lessonname: string;
 	@Input() index: number;
 	@Input() total: number;
-	
+
 	@Output() gotoNextContent=new EventEmitter();
 	@Output() gotoPreviousContent=new EventEmitter();
 
@@ -28,14 +28,17 @@ export class StudentVideo {
 		this.gotoNextContent.emit({});
 	}
 	gotoPrevious(){
-		this.gotoPreviousContent.emit({});	
+		this.gotoPreviousContent.emit({});
 	}
 	getEmbedUrl(){
 		let videoNumber = this.content.videoEmbedCode.replace(/\D/g, '');
-		return 'https://player.vimeo.com/video/' + videoNumber;
+		if(this.content.videoEmbedCode.includes('youtube')){
+			return this.content.videoEmbedCode;
+		}else{
+			return 'https://player.vimeo.com/video/' + videoNumber;
+		}
 	}
 	getIndex(){
 		return this.index + 1;
 	}
 }
-

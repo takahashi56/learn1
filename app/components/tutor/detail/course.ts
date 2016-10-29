@@ -60,11 +60,8 @@ export class DetailTutorCourse {
     }
 
     gotoCertificate(student: any) {
-        console.log("goto certificate");
         if (student.score == 0 || student.isCompleted == false) return false;
         var self = this;
-        console.log("goto certificate +++");
-        console.log(this.course)
         this._tutorService.getLessonsNameByCourseId({ course_id: this.course.course_id }).subscribe((res) => {
             var data = {
                 coursename: this.course.coursetitle,
@@ -74,7 +71,6 @@ export class DetailTutorCourse {
                 lessons: res.data.join(','),
                 organization: this._session.getItem("organization")
             }
-            console.log(`data = ${JSON.stringify(data)}`);
             self._session.setItem('certificate', JSON.stringify(data));
             window.open('/#/certificate');
             // self._router.navigateByUrl('/certificate');

@@ -41,7 +41,6 @@ export class StripePayment {
             this.sentStatus = "";
 
             this._tutorService.getStripeTransactionHistory({ tutor_id: this.tutor_id }).subscribe((res) => {
-                console.log(res);
                 this.trans_history = res;
             })
 
@@ -85,7 +84,6 @@ export class StripePayment {
         this.submit_validate = true;
         if (this.stripe_form.valid) {
 
-            console.log(form);
             this.getToken(form);
         }
     }
@@ -118,7 +116,6 @@ export class StripePayment {
             this._session.setItem('creditcount', res.creditcount);
             this.trans_history.push(res.trans);
 
-            console.log(this.sentShow);
             this.showClass = "alert alert-success alert-dismissable";
             this.sentStatus = "Your Payment has been successfully. You have got the new credits " + res.creditcount;
 
@@ -135,7 +132,6 @@ export class StripePayment {
     getToken(form) {
         var creditcount = this._session.getItem('creditcount');
         this._tutorService.performPayment({ tutor_id: this.tutor_id, form: form, creditcount: creditcount }).subscribe((res) => {
-            console.log(res);
             this.updateUI(res.flag, res.data);
         })
     }

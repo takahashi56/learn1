@@ -32,8 +32,6 @@ export class AddTutorStudent {
         } else {
             this.student = JSON.parse(this._session.getItem('TutorStudent'));
             this.allStudentData = JSON.parse(this._session.getItem('TutorAllStudent'));
-            console.log(this.allStudentData);
-
 
             this.firstname = new Control(this.student.firstName, Validators.required);
             this.lastname = new Control(this.student.lastName, Validators.required);
@@ -116,8 +114,6 @@ export class AddTutorStudent {
 
             this._tutorService.addStudent(data, flag.flag)
                 .subscribe((res) => {
-                    console.log("aaaa")
-                    console.log(res.success);
                     if (res.success) {
                         this._router.navigate(['TutorMain']);
                     }

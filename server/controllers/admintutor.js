@@ -61,8 +61,6 @@ exports.editTutor = function(req, res) {
 	var tutor = req.body,
 		salt = encrypt.createSalt();
 
-	console.log("#################################")
-	console.log(tutor)
 	tutor["salt"] = salt;
 	tutor["hashed_pwd"] = encrypt.hashPwd(salt, tutor["password"]);
 	tutor["updated_at"] = new Date();
@@ -81,7 +79,6 @@ exports.deleteTutor = function(req, res) {
 		Tutor.findOneAndRemove({_id: mongoose.Types.ObjectId(l)}, function(err, removed){
 			if(err) console.error(err);
 
-			console.log(removed);
 		})
 	})
 

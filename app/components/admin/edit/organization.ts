@@ -30,7 +30,6 @@ export class EditOrganization {
         } else {
 
             this.org = JSON.parse(this._session.getItem('org'));
-            console.log(this.org);
 
             this.firstName = new Control(this.org.firstName, Validators.required);
             this.lastName = new Control(this.org.lastName, Validators.required);
@@ -71,7 +70,6 @@ export class EditOrganization {
 
             this._adminService.updateTutor(data)
                 .subscribe((res) => {
-                    console.log(res.success);
                     if (res.success) {
                         this._router.navigate(['AdminMain']);
                     }

@@ -56,7 +56,6 @@ export class CertificateView implements OnInit{
             onrendered: function (canvas) {
                 var ctx = canvas.getContext("2d");
                 var data = canvas.toDataURL("image/png", 1.5);
-                console.log(data)
                 var docDefinition = {
                     content: [{
                         image: data,
@@ -74,7 +73,6 @@ export class CertificateView implements OnInit{
                 // para1.appendChild(image);
                 self._tutorService.makePdf({data:para.innerHTML, direction: true}).subscribe((res) => {
                    window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
-                   console.log(res.url);
                 })
             }
         });

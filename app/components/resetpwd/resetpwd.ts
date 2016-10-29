@@ -57,6 +57,7 @@ export class Resetpwd {
 
 	Resetpwd(form: any){
 		this.submitAttempt = true;
+		this.length_6 = false;
 
 		if(form.password.length < 6 || form.verfiedPassword.length < 6){
 			this.show_class = "alert alert-danger alert-dismissable";
@@ -65,7 +66,7 @@ export class Resetpwd {
 			return;
 		}
 
-		if(this.matched = false){
+		if(this.matched == false){
 			this.show_class = "alert alert-danger alert-dismissable";
 			this.show_string = "The Password Must be Matched!";
 			return;
@@ -73,9 +74,9 @@ export class Resetpwd {
 
 		if(this.ResetpwdForm.valid && this.matched){
       console.log('valid');
-      var email = this._session.getCurrentUser();
+      var email = this._session.getItem('forget_user');
       console.log(email);
-			this._adminService.resetpwd({password: form.password, email: email.username}).subscribe((res) => {
+			this._adminService.resetpwd({password: form.password, email: email}).subscribe((res) => {
 				if(res.success){
 					localStorage.clear();
           this._router.navigateByUrl("/login");

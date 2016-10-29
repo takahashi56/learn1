@@ -114,11 +114,13 @@ html
 			}
 			idleState = false;
 			idleTimer = setTimeout(function () {
+			var course = JSON.parse(localStorage.getItem('Course'));
 			localStorage.clear();
+			localStorage.setItem('Course', JSON.stringify(course));
 			idleState = true;
 			window.location.href = '/#/login';
 			window.location.reload(true);
-			}, 360000);
+			}, 10000);
 			});
 			$("body").trigger("mousemove");
 

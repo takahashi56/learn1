@@ -17,12 +17,8 @@ exports.getAllCourse = function(req, res) {
 		}
 		var main_data = [];
 		collection.forEach(function (course) {
-			console.log(course);
-			console.log(course._id);
 			Lesson.find({course_id: course._id},null, {sort: 'created_at'}, function(err, lessons){
 				if (err) return console.error(err);
-				console.log('============lessons====================');
-				console.log(lessons);
 
 				Take.count({course_id: course._id}, function(err, student_count){
 					if (err) return console.error(err);
@@ -61,8 +57,6 @@ exports.getAllCourse = function(req, res) {
 								}
 								main_data.push(data);
 							}
-							console.log(main_data.length)
-							console.log(collection.length)
 							if(main_data.length == collection.length){
 								main_data.sort(function(a, b){
 						            return a.title.localeCompare(b.title);
@@ -83,7 +77,6 @@ exports.getEditCourses = function(req, res){
 
 	Course.findOne({_id: id}, function(err, course){
 		if (err) return console.error(err);
-		console.log(course._id);
 
 		var data = {
 			course_id: course._id,
@@ -161,8 +154,6 @@ exports.addCourse = function(req, res) {
 				if (err) return console.error(err);
 
 				lesson.content.forEach(function(content){
-					console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-					console.log(content.image);
 					var contentData = {
 						videoOrQuestion: content.videoOrQuestion,
 					    videoLabel: content.videoLabel,
@@ -199,12 +190,6 @@ exports.updateCourse = function(req, res) {
 			description: data.coursedescription
 		},
 		lessonList = data.lesson;
-	console.log("data");
-	console.log(data);
-	console.log('courseData');
-	console.log(courseData);
-	console.log("lessonList");
-	console.log(lessonList);
 
 	Course.update({_id: courseData._id}, courseData, function(err, course){
 		if (err) return console.error(err);
@@ -254,8 +239,6 @@ exports.updateCourse = function(req, res) {
 							Content.create(contentData, function(err, cont){
 								if (err) return console.error(err);
 
-								console.log("(((((((((((sucess)))))))))))))))))))");
-								console.log(cont)
 							})
 						})
 
@@ -392,7 +375,6 @@ exports.deleteCourse = function(req, res) {
 					take.remove();
 				});
 			})
-			console.log(removed);
 		})
 	})
 
@@ -409,7 +391,6 @@ exports.upload = function(req, res){
         return;
     }
 
- 	console.log(req.files.uploads);
     sampleFile = req.files.uploads;
     filename = (filename + sampleFile.name).replace(/ /g, "");
 

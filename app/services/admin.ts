@@ -88,14 +88,12 @@ export class AdminService {
 	addCourse(data, flag){
 		if(!flag){
 
-			console.log("add")
 			return this._http.post(this.baseUrl + "course", JSON.stringify(data), HEADER)
 				.map((res) => {
 				return res.json();
 			})
 		}else{
 
-			console.log("edit")
 			return this._http.put(this.baseUrl + "course", JSON.stringify(data), HEADER)
 				.map((res) => {
 				return res.json();
@@ -136,8 +134,6 @@ export class AdminService {
 			xhr.onreadystatechange = () => {
 				if (xhr.readyState === 4) {
 				  	if (xhr.status === 200) {
-				  		console.log("______________________________________________")
-				  		console.log(xhr.response)
 				    	observer.next(JSON.parse(xhr.response));
 				    	observer.complete();
 					} else {

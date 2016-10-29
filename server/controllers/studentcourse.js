@@ -119,8 +119,6 @@ exports.getLessonList = function(req, res) {
     var student_id = req.body.student_id,
         course_id = req.body.course_id,
         return_data = [];
-    console.log("course id" + course_id);
-    console.log("student id" + student_id);
 
     Lesson.find({
         course_id: course_id
@@ -195,7 +193,6 @@ exports.getContentsList = function(req, res) {
 }
 
 exports.setScoreForLesson = function(req, res) {
-    console.log(req.body);
 
     var score = parseInt(req.body.score),
         lesson_id = req.body.lesson_id,
@@ -269,7 +266,6 @@ var sendEmail = function(req, res) {
 }
 
 exports.setCourseScoreWithStudent = function(req, res) {
-    console.log('req.body ' + JSON.stringify(req.body));
     var score = parseInt(req.body.score),
         course_id = req.body.course_id,
         student_id = req.body.student_id,
@@ -294,7 +290,6 @@ exports.setCourseScoreWithStudent = function(req, res) {
         if (err) return console.error(err);
 
         if (take != null) {
-            console.log("take  =  " + take);
             take.score = score;
             take.isCompleted = isCompleted;
             take.completedAt = completedAt;
@@ -346,7 +341,6 @@ exports.setCourseScoreWithStudent = function(req, res) {
 
 exports.updateScore = function(req, res) {
     var student_id = req.body.student_id;
-    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
     scoreUpdate(student_id);
     res.send({
         success: true
@@ -370,7 +364,6 @@ var scoreUpdate = function(student_id) {
                         lesson_id: lesson._id,
                         student_id: student._id
                     }).lean().then(function(err, score) {
-                        console.log(score);
                         if (score == null || Number(score.score) == -1) {
                             courseScore += 0;
                         } else {

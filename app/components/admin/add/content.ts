@@ -37,12 +37,9 @@ export class LessonContent implements OnInit{
 
 	ngOnInit(){
 		this._content_id = this.content._content_id ? this.content._content_id : this.content._id;
-		console.log("this content id");
-		console.log(this._content_id);
 
 		this.videoOrQuestion = this.content.videoOrQuestion;
 		this.singleOrMulti = this.content.singleOrMulti;
-		console.log(this.content.questionType == true);
 
 		this.questionType = this.content.questionType == true ? true : false;
 		this.image = this.content.image;
@@ -54,10 +51,6 @@ export class LessonContent implements OnInit{
 		this.answerC = new Control(this.content.answerC , Validators.required);
 		this.answerD = new Control(this.content.answerD , Validators.required);
 		this.trueNumber = this.content.trueNumber;
-
-		console.log("this.questionType and this.singleMulti");
-		console.log(this.singleOrMulti);
-		console.log(this.questionType);		
 
 		this.contentForm = this.builder.group({
 			videoLabel : this.videoLabel,
@@ -84,8 +77,8 @@ export class LessonContent implements OnInit{
 			case 2:
 				this.questionType = true;
 				this.singleOrMulti = true;
-				break;	
-			default:				
+				break;
+			default:
 				break;
 		}
 	}
@@ -96,7 +89,6 @@ export class LessonContent implements OnInit{
 
 	removeContent(){
 
-		console.log("remove content")
 		var original = JSON.parse(this._session.getItem('Content')),
 			id = this._content_id;
 
@@ -125,10 +117,8 @@ export class LessonContent implements OnInit{
 					break;
 				case true:
 					if(form.question == "" || form.answerA == "" || form.answerB == "" || form.answerC == "" || form.answerD == "" || this.trueNumber == 0 || (this.questionType && this.image == null)) {
-						console.log("true");
 						updated = true;
 					}else{
-						console.log("false");
 						updated = false;
 					}
 					break;
@@ -138,7 +128,6 @@ export class LessonContent implements OnInit{
 			}
 		}
 
-		console.log(form);
 
 		if(!updated){
 			this.content.videoLabel = form.videoLabel;
@@ -158,7 +147,6 @@ export class LessonContent implements OnInit{
 				var first_id = obj._content_id ? obj._content_id : obj._id;
 				var second_id = data._content_id ? data._content_id: data._id;
 
-				console.log(obj);
 				if((first_id == second_id)){
 					original_copy.push(data)
 				}else{
@@ -183,10 +171,8 @@ export class LessonContent implements OnInit{
 					break;
 				case true:
 					if(form.question == "" || form.answerA == "" || form.answerB == "" || form.answerC == "" || form.answerD == "" || (this.questionType && this.image == "") ) {
-						console.log("true");
 						updated = true;
 					}else{
-						console.log("false");
 						updated = false;
 					}
 					break;
@@ -196,7 +182,6 @@ export class LessonContent implements OnInit{
 			}
 		}
 
-		console.log(form);
 
 		if(!updated){
 			this.content.videoLabel = form.videoLabel;
@@ -240,8 +225,6 @@ export class LessonContent implements OnInit{
 				}
 			});
 
-			console.log(this.content.image);
-			console.log(original_copy) 
 			this._session.setItem('Content', JSON.stringify(original_copy));
 			this.manageContent.emit(original_copy);
 		}
@@ -254,9 +237,8 @@ export class LessonContent implements OnInit{
 
 	onFileChange(event, form: any) {
 		var files = event.srcElement.files;
-		console.log(files[0])
 		this._adminService.upload(files).subscribe((res)=>{			
-			this.image = res.image;			
+			this.image = res.image;
 			this.blurChange(form);
 		})
 	}

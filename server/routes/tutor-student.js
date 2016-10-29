@@ -23,7 +23,6 @@ module.exports = function(app) {
 	});
 
 	app.post('/api/tutor/setstudentbycourse', function(req, res) {
-		console.log(req.body);
 		tutorstudent.setStudentByCourse(req, res);
 	});
 

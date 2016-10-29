@@ -23,13 +23,10 @@ import {Student} from '../student/student';
 
 export class Home implements OnInit {
 	constructor(private _router: Router, private _session: Session) {
-		console.log("Via Home")
 		var role = this._session.getCurrentRole(),
 			id = this._session.getCurrentId(),
 			url = this._session.getItem('homeUrl');
 
-		console.log(id);
-		console.log(url);
 		if(id == null){
 			this._router.navigate(['Login'])
 		}else{

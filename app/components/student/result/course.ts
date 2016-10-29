@@ -34,7 +34,6 @@ export class CourseResult {
 
             lessonList.forEach((lesson) => {
                 var status = JSON.parse(this._session.getItem(lesson.lesson_id)), s = 0;
-                console.log(status.score);
                 if (Number(status.score) == -1) {
                     flag = false;
                     progress--;
@@ -54,14 +53,9 @@ export class CourseResult {
             this.showOrFalse = flag;
 
             this.score = Math.floor(right / total * 100);
-            console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
-            console.log(total);
-            console.log(right);
             var student_id = this._session.getCurrentId(), coures_id = this._session.getItem('CourseId'), score = this.score;
 
-            console.log(`student id = ${student_id}`);
             this._studentService.setCourseScoreWithStudent({ student_id: student_id, course_id: coures_id, score: score, isCompleted: flag, progress: progress }).subscribe((res) => {
-                console.log(res)
                 if (flag == false) {
                     this.router.navigate(['StudentCourse'])
                 }

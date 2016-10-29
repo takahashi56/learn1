@@ -54,10 +54,6 @@ require('./server/models/Tutor')();
 
 require('./server/routes/routes')(app);
 
-console.log(env);
-console.log(process.env.NODE_ENV);
-console.log(config);
-
 app.listen(port, function(err) {
 	console.log('running server on port: ' + port);
 });

@@ -32,7 +32,6 @@ exports.getAllStudents = function(req, res) {
         tutor_id = data.tutor_id,
         total = 0,
         complete = 0;
-    console.log(tutor_id);
 
     Student.find({
         tutor_id: tutor_id
@@ -80,7 +79,6 @@ exports.getAllStudents = function(req, res) {
 
 exports.getAllCourses = function(req, res) {
     var tutor_id = req.body.tutor_id;
-    console.log("tutor id" + tutor_id);
     var main_data = [];
     Course.find({}, null, {
         sort: 'created_at'
@@ -122,13 +120,10 @@ exports.getAllCourses = function(req, res) {
                             if (err) return console.error(err);
 
                             i++;
-                            console.log(i);
-                            console.log(takes.length);
                             if (student != null && take.score > 0) past++;
                             if (student != null && take.score == 0) count++;
 
                             if (i == takes.length) {
-                                console.log(course);
                                 var data = {
                                     course_id: course._id,
                                     coursetitle: course.name,
@@ -182,7 +177,6 @@ exports.addStudentCSV = function(req, res) {
                 header: true
             })
             .on("data", function(data) {
-                console.log(data);
                 var student = {
                     firstName: data[0],
                     lastName: data[1],
@@ -206,7 +200,6 @@ exports.addStudentCSV = function(req, res) {
                         count = true;
 
                         if (ii == students.length && flag == true) {
-                            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++")
                             flag = false
                             res.send({
                                 success: true
@@ -224,9 +217,6 @@ exports.addStudentCSV = function(req, res) {
 
 exports.editStudent = function(req, res) {
     var student = req.body;
-
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++")
-    console.log(student);
 
     Student.update({
         _id: student._id
@@ -284,11 +274,9 @@ exports.setStudentByCourse = function(req, res) {
                     completedAt: '',
                     certificate: ''
                 }
-                console.log(data);
                 Take.create(data, function(err, take) {
                     if (err) return console.log(err);
 
-                    console.log(take);
                 });
             }
         })
@@ -313,9 +301,6 @@ exports.getCoursesByStudentId = function(req, res) {
         var courses = [];
         var count = 0,
             i = 0;
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        console.log(takes.length);
-        console.log(takes);
 
         takes.forEach(function(take) {
             Course.findOne({
@@ -327,8 +312,6 @@ exports.getCoursesByStudentId = function(req, res) {
                     take.remove();
                 }
                 i++;
-                console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
-                console.log(course)
                 if (course != null) {
                     var data = {
                         course_id: course._id,
@@ -354,7 +337,6 @@ exports.getCoursesByStudentId = function(req, res) {
 exports.getStudentsByCourseId = function(req, res) {
     var id = req.body.course_id,
         tutor_id = req.body.tutor_id;
-    console.log(id);
 
     // Take.find({course_id: id}, function(err, takes){
     // 	if(err) return console.log(err);
@@ -427,7 +409,6 @@ exports.getStudentsByCourseId = function(req, res) {
 
 exports.removeStudent = function(req, res) {
     var list = req.body.list;
-    console.log(list);
     list.forEach(function(id) {
         Student.findOne({
             _id: id
@@ -461,8 +442,6 @@ exports.getLessonsNameByCourseId = function(req, res) {
                 $gte: date
             }
         }, function(err, lessons) {
-            console.log("DDDDDDDDDDDDDDDD")
-            console.log(lessons)
 
             lessons.forEach(function(lesson) {
                 data.push(lesson.name);
@@ -645,15 +624,11 @@ exports.performPayment = function(req, res) {
             }).end();
             return;
         }
-        console.log(token)
-        console.log(token.id)
         stripe.charges.create({
             amount: amount * 100,
             currency: 'gbp',
             source: token.id
         }, function(err, charge) {
-            console.log(err);
-            console.log(charge);
             if (err && err.type === 'StripeCardError') {
                 // card decline
                 console.log(err);
@@ -703,13 +678,8 @@ exports.getGoCardlessRedirectUrl = function(req, res) {
         sessionToken = tutor_id,
         successUrl = req.protocol + '://' + req.get('host') + '/api/tutor/getGoCardlessCompleteUrl';
 
-    console.log(description);
-    console.log(sessionToken);
-    console.log(successUrl);
-        
     goCardless.startRedirectFlow(description, sessionToken, successUrl)
         .then(function(response) {
-            console.log(response);
             subscribe_data.amount = req.body.amount * 100;
             subscribe_data.count = req.body.count;
             subscribe_data.session_id = tutor_id;
@@ -722,24 +692,17 @@ exports.getGoCardlessRedirectUrl = function(req, res) {
 
 exports.getGoCardlessCompleteUrl = function(req, response) {
     var redirect_flow_id = req.query.redirect_flow_id;
-    console.log(redirect_flow_id);
 
     goCardless.completeRedirectFlow(redirect_flow_id, subscribe_data.session_id)
         .then(function(res) {
-            console.log(res);
             var creditor = res.redirect_flows.links.creditor,
                 mandate = res.redirect_flows.links.mandate,
                 customer = res.redirect_flows.links.customer,
                 customer_bank_account = res.redirect_flows.links.customer_bank_account,
                 day_of_month = (new Date()).getDay() >= 28 ? 28 : (new Date()).getDay();
 
-            console.log(subscribe_data)
-            console.log(mandate);
-            console.log(day_of_month);
-
             goCardless.subscriptions(mandate, subscribe_data.amount, 'GBP', null, null, null, null, 'monthly', day_of_month, null)
                 .then(function(charge) {
-                    console.log(charge.body)
                     if (charge.body.subscriptions.status == 'active') {
                         Tutor.findOne({
                             _id: subscribe_data.session_id

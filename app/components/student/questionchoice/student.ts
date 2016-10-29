@@ -34,8 +34,6 @@ export class QuestionChoice implements OnInit {
 	}
 
 	chooseAnswer(n: number){
-		console.log(`checked radio before: ${this.checkedRadio}`);
-
 		switch(n){
 			case 1: this.checkedRadio = 'first'; break;
 			case 2: this.checkedRadio = 'second'; break;
@@ -45,26 +43,21 @@ export class QuestionChoice implements OnInit {
 		}
 
 		this.answerNumber = n;
-		console.log(`checked radio after: ${this.checkedRadio}`)
 	}
 
 	gotoNext(){
-		console.log(`checked radio next before: ${this.checkedRadio}`)
 
 		if(this.checkedRadio == 'fifth') return;
 
 		if(this.answerNumber == 0) return false;
 
 		this.checkedRadio = 'fifth';
-		console.log(this.content.trueNumber);
 		if(this.content.trueNumber == this.answerNumber){
 			var count = parseInt(this._session.getItem('rightQuestionCount'));
 			count++;
-			console.log("Count :"+ count);
 
 			this._session.setItem('rightQuestionCount', count);
 		}
-		console.log(`checked radio next after: ${this.checkedRadio}`)
 		this.gotoNextContent.emit({});
 	}
 

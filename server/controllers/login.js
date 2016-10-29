@@ -132,7 +132,6 @@ var sendEmail = function(req, res){
 					res.status(500).send({success: false}).end()
 					return;
 			}else{
-				console.info("Sent to postmark for delivery")
 				res.status(200).send({success: true}).end()
 			}
 	});

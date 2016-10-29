@@ -43,6 +43,7 @@
 
                                 <div class="col-xs-12 text-right">
                                     <a  class="btn btn-primary w-sm" (click)="addLesson(courseForm)">Add Lesson</a>
+                                    <a  class="btn btn-primary w-sm" (click)="beforeRemoveLesson()" data-toggle="modal" data-target="#show_remove_lesson">Remove Lesson</a>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +63,7 @@
                                     <tr *ngFor="let lesson of lessonData">
                                         <td>
                                             <label class="cr-styled">
-                                                <input type="checkbox">
+                                                <input type="checkbox"  (change)="checkLesson($event, lesson)">
                                                 <i class="fa"></i>
                                             </label>
                                         </td>
@@ -128,6 +129,33 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancel()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="show_remove_lesson" id="show_remove_lesson" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Remove Lesson</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p> Are you sure to remove this lesson? </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeLesson()">Yes</button>
             </div>
         </div>
     </div>

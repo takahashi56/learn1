@@ -24,28 +24,23 @@ export class StudentLesson {
             this.course = JSON.parse(this._session.getItem('selectedCourse'));
             this.student_id = this._session.getItem('MainStudentId');
             var self = this;
-            console.log(this.course);
             this.htmlstring = "";
 
             this._studentService.getLessonListById(this.course.course_id, this.student_id).subscribe((res) => {
                 this.lessonList = res;
                 this._session.setItem('lessonList', JSON.stringify(res));
                 this.lessonList.forEach((lesson) => {
-                    console.log(lesson.score);
                     this._session.setItem(lesson.lesson_id, JSON.stringify({
                         total: lesson.count,
                         right: 0,
                         score: lesson.score
                     }));
                 })
-                console.log(this.lessonList);
             })
         }
 
         // this._studentService.getScoreListByCourse({course_id: this.course.course_id, student_id: this.student_id}).subscribe((res)=>{
         // 	res.forEach(function(score){
-        // 		console.log(score.lesson_id);
-        // 		console.log(score);
         // 		self._session.setItem(score.lesson_id, score.score);
         // 	})
         // })
@@ -70,12 +65,7 @@ export class StudentLesson {
         this._router.navigate(['StudentLesson']);
     }
     getCurrentLessonStatus(lesson: any) {
-        console.log(lesson)
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
         var score = lesson.score;
-        console.log(score);
-        console.log(Number(score.toString()));
         if (Number(score) == -1 && lesson.lock == false) {
             return `
 				<div class="col-sm-7 text-right">
@@ -105,8 +95,6 @@ export class StudentLesson {
     }
     gotoLessonVideo(lesson: any, i: number) {
         var score = lesson.score;
-        console.log(typeof score);
-        console.log(Number(score));
         if (Number(score) == -1 && lesson.lock == false) {
             return false;
         }
