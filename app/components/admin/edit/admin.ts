@@ -58,6 +58,9 @@ export class EditAdmin {
             this._adminService.updateAdmin(data)
                 .subscribe((res) => {
                     if (res.success) {
+                        if(data._id == this._session.getCurrentId()){
+                          this._session.setItem('username', data.firstName + ' ' + data.lastName);
+                        }
                         this._router.navigate(['AdminMain']);
                     }
                 })

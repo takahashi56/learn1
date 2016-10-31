@@ -8,12 +8,12 @@
 
             <div class="panel-body">
                 <div class=" form">
-                    <form class="cmxform form-horizontal tasi-form"  [ngFormModel]="StudentForm" (submit)="AddStudent(StudentForm.value)">
+                    <form class="cmxform form-horizontal tasi-form" [ngFormModel]="StudentForm" (submit)="AddStudent(StudentForm.value)">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <div class=""  [ngClass]="{ 'has-error' : !firstname.valid && submitAttempt }">
+                                        <div class="" [ngClass]="{ 'has-error' : !firstname.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
                                                     <label for="fname" class="control-label text-left text-page">First Name</label>
@@ -21,11 +21,11 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="fname" name="name" type="text" ngControl="firstname"  placeholder="First Name" (blur)="getValue(StudentForm.value)">
+                                                    <input class=" form-control" id="fname" name="name" type="text" ngControl="firstname" placeholder="First Name" (blur)="getValue(StudentForm.value)">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class=""  [ngClass]="{ 'has-error' : !lastname.valid && submitAttempt }">
+                                        <div class="" [ngClass]="{ 'has-error' : !lastname.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
                                                     <label for="lname" class="control-label text-left text-page">Last Name</label>
@@ -33,7 +33,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="lname" name="name" type="text" ngControl="lastname"  placeholder="Last Name" (blur)="getValue(StudentForm.value)">
+                                                    <input class=" form-control" id="lname" name="name" type="text" ngControl="lastname" placeholder="Last Name" (blur)="getValue(StudentForm.value)">
                                                 </div>
                                             </div>
                                         </div>
@@ -48,11 +48,11 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username"  placeholder="Username(Logon name)" readonly >
+                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username" placeholder="Username(Logon name)" readonly>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" >
+                            <div class="form-group">
                                 <div [ngClass]="{ 'has-error' : !password.valid && submitAttempt }">
                                     <div class="col-lg-2">
                                         <div class="m-l-10 m-r-10">
@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="col-lg-10">
                                         <div class="m-l-10 m-r-10">
-                                            <input class=" form-control" id="password" name="name" type="text" ngControl="password"  placeholder="">
+                                            <input class=" form-control" id="password" name="name" type="text" ngControl="password" placeholder="">
                                         </div>
                                     </div>
                                 </div>
@@ -75,12 +75,12 @@
                                     </div>
                                     <div class="col-lg-10">
                                         <div class="m-l-10 m-r-10">
-                                            <input class=" form-control" id="text" name="name" type="text" ngControl="verifiedpassword"  placeholder="">
+                                            <input class=" form-control" id="text" name="name" type="text" ngControl="verifiedpassword" placeholder="">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" >
+                            <div class="form-group">
                                 <div class="col-lg-2">
                                     <div class="m-l-10 m-r-10">
                                         <label for="dob" class="control-label text-left text-page">DOB</label>
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="dob" name="name" type="date"  ngControl="dob"  placeholder="date of birth">
+                                        <input class=" form-control" id="dob" name="name" type="date" ngControl="dob" placeholder="date of birth">
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="dob" name="name" type="text" ngControl="phone" maxlength="20" size="20" placeholder="Telephone Number (optional)" (keyup)="onKey($event)" >
+                                        <input class=" form-control" id="dob" name="name" type="text" ngControl="phone" maxlength="20" size="20" placeholder="Telephone Number (optional)" (keyup)="onKey($event)">
                                     </div>
                                 </div>
                             </div>
@@ -114,11 +114,11 @@
                             <div class="m-l-5 m-r-5">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <input type="button" (click)="cancel()" value="Back" class="btn btn-primary m-b-10 w-sm">
+                                        <a class="btn btn-primary m-b-10 w-sm" data-toggle="modal" data-target="#back-from-edit-student" (click)="beforeGotoBack(StudentForm.value)">Back</a>
                                     </div>
                                     <div class="col-xs-8 text-right">
                                         <input type="button" (click)="cancel()" value="Cancel" class="btn btn-primary m-b-10 w-sm">
-                                        <input type="submit"  value="Save" class="btn btn-primary m-b-10 w-sm m-l-15">
+                                        <input type="submit" value="Save" class="btn btn-primary m-b-10 w-sm m-l-15">
                                     </div>
                                 </div>
                             </div>
@@ -130,3 +130,30 @@
     </div>
 
 </section>
+
+
+<div *ngIf="showGotoBack" id="back-from-edit-student" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>Are you sure to go back to page? </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancel()">Assign</button>
+            </div>
+        </div>
+    </div>
+</div>

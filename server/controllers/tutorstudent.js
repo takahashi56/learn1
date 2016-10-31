@@ -530,12 +530,7 @@ exports.makePdf = function(req, res) {
 
     var client = new pdf.Pdfcrowd('Pedro19880417', 'd5e42b4e5df7e4a921f52e6aefeda841');
     if (direction == true) {
-        client.convertHtml(url, pdf.saveToFile(pdf_path), {
-            width: "8.267in",
-            height: "11.692in",
-            vmargin: ".4in",
-            footer_html: ''
-        });
+        client.convertHtml(url, pdf.saveToFile(pdf_path));
     } else {
         client.convertHtml(url, pdf.saveToFile(pdf_path), {
             width: "11.692in",

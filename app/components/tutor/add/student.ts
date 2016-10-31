@@ -24,6 +24,7 @@ export class AddTutorStudent {
     phone: Control;
     dob: Control;
     submitAttempt: boolean = false;
+    showGotoBack: boolean = false;
 
 
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
@@ -37,9 +38,9 @@ export class AddTutorStudent {
             this.lastname = new Control(this.student.lastName, Validators.required);
             this.username = new Control(this.student.username);
             this.phone = new Control(this.student.phone);
-            this.password = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
-            this.verifiedpassword = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
-            this.dob = new Control(this.student.DOB);
+            this.password = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
+            this.verifiedpassword = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
+            console.log(this.student.DOB);
 
             this.StudentForm = builder.group({
                 firstname: this.firstname,
@@ -58,7 +59,7 @@ export class AddTutorStudent {
 
     generatePassword() {
         var pwd = this.randomString();
-
+        if (this.student.hashed_pwd != '') return;
         (<Control>this.StudentForm.controls['password']).updateValue(pwd);
         (<Control>this.StudentForm.controls['verifiedpassword']).updateValue(pwd);
     }
@@ -96,7 +97,7 @@ export class AddTutorStudent {
 
     AddStudent(form: any) {
         this.submitAttempt = true;
-        if (this.StudentForm.valid) {
+        if (this.StudentForm.valid && this.matchedPassword(form)) {
             var data = {
                 firstName: form.firstname,
                 lastName: form.lastname,
@@ -124,6 +125,21 @@ export class AddTutorStudent {
         var value = event.target.value;
         value = value.replace(/\D/g, '');
         (<Control>this.StudentForm.controls['phone']).updateValue(value);
+    }
+
+    beforeGotoBack(form: any){
+      console.log(form.password != this.student.hashed_pwd);
+      console.log(form.firstname != this.student.firstName);
+      console.log(form.lastname != this.student.lastName);
+      console.log(form.phone != this.student.phone);
+      console.log(this.student);
+      console.log(form);
+      
+      if(form.password != this.student.hashed_pwd || form.firstname != this.student.firstName || form.lastname != this.student.lastName || form.username != this.student.username || form.phone != this.student.phone){
+        this.showGotoBack = true;
+      } else {
+        this.showGotoBack = false;
+        this.cancel();      }
     }
 
     private randomString(): string {

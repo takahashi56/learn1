@@ -44,7 +44,7 @@ export class AddCourse {
     }
 
     cancel() {
-        this._session.setItem('Course', {});
+        this._session.setItem('Course', null);
         this._router.navigate(['AdminMain']);
     }
 
@@ -123,9 +123,9 @@ export class AddCourse {
             this._adminService.addCourse(data, editORadd.flag)
                 .subscribe((res) => {
                     if (res.success) {
-                        this._session.setItem('Course', {});
-                        this._session.setItem('Lesson_new', {});
-                        this._session.setItem('Content', {});
+                        this._session.setItem('Course', null);
+                        this._session.setItem('Lesson_new', null);
+                        this._session.setItem('Content', null);
                         this._router.navigate(['AdminMain']);
                     } else {
                         console.log("");

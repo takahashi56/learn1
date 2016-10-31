@@ -16,6 +16,7 @@ module.exports = function() {
     updated_at: Date,
     creditcount: Number,
     employeecount: Number,
+    logon_date: Date,
   });
 
 

@@ -2,24 +2,24 @@
     <div class="container">
         <h2 class="text-page m-b-30"><strong></strong></h2>
         <ul class="nav nav-tabs nav-justified">
-            <li class="active">
-                <a href="#students" data-toggle="tab" aria-expanded="true"><strong class="text-page">All Employees</strong></a>
+            <li [ngClass]="{'active': select_tab_item == 1}">
+                <a href="#students" data-toggle="tab"  (click)="onTabClick(1)"><strong class="text-page">All Employees</strong></a>
             </li>
-            <li class="">
-                <a href="#courses" data-toggle="tab" aria-expanded="false"><strong class="text-page">All Courses</strong></a>
+            <li [ngClass]="{'active': select_tab_item == 2}">
+                <a href="#courses" data-toggle="tab"  (click)="onTabClick(2)"><strong class="text-page">All Courses</strong></a>
             </li>
-            <li class="">
-                <a href="#settings" data-toggle="tab" aria-expanded="false"><strong class="text-page">Settings</strong></a>
+            <li [ngClass]="{'active': select_tab_item == 3}">
+                <a href="#settings" data-toggle="tab"  (click)="onTabClick(3)"><strong class="text-page">Settings</strong></a>
             </li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active" id="students">
+            <div [class]="employee_tab" id="students">
                 <div class="text-right m-b-30">
                     <a  class="btn btn-primary w-sm m-r-5" (click)="gotoAddStudent()" >Add Employee</a>
                     <a  class="btn btn-primary w-sm m-r-5" (click)="beforeRemoveStudent()"  data-toggle="modal" data-target="#remove-student" >Remove Employee</a>
                     <a class="btn btn-primary w-sm m-r-5" onClick="$('#file-uploader').click()">Import Employees</a>
                     <input type="file" id="file-uploader" (change)="importAddStudent($event)" style="display: none;"/>
-                    <a  class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#select-course">Assign Course</a>
+                    <a  class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#select-course" (click)="beforeAssign()">Assign Course</a>
 
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Training Matrix <span class="caret"></span></button>
@@ -62,7 +62,7 @@
                 </div>
 
             </div>
-            <div class="tab-pane" id="courses">
+            <div [class]="course_tab" id="courses">
                 <div class="table-responsive">
                     <table class="table text-page">
                         <thead>
@@ -82,7 +82,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane" id="settings">
+            <div [class]="setting_tab" id="settings">
               <div class="">
                 <div class="panel-heading p-b-0">
                     <h4 class="text-page m-l-15 m-t-15"><strong>Credits</strong></h4>
@@ -162,7 +162,7 @@
                           </div>
                           <div class="row">
                             <div class="col-xs-12">
-                              <div class="form-group" [ngClass]="{ 'has-error' : !newpwd.valid && validatenewconfirm }">
+                              <div class="form-group" [ngClass]="{ 'has-error' : validateNewPwd(newpwd.value) && validatenewconfirm }">
                                 <div class="col-lg-3">
                                     <div class="m-l-10 m-r-10">
                                         <label for="newpwd" class="control-label text-left text-page">New Password</label>
@@ -221,7 +221,7 @@
 </section>
             <!--  Header Ends -->
 
-<div id="select-course" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div *ngIf="showAssignCourse" id="select-course" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
    <div class="modal-dialog">
        <div class="modal-content">
            <div class="modal-header">
@@ -255,7 +255,7 @@
    </div>
 </div>
 
-<div id="select-student" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div *ngIf="showAssignStudent" id="select-student" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

@@ -53,7 +53,7 @@
                           <div class="row">
                               <div class="col-xs-12">
                                   <div class="form-group">
-                                      <div class=""  [ngClass]="{ 'has-error' : !card_number.valid && submit_validate }">
+                                      <div class=""  [ngClass]="{ 'has-error' : validateCardNumber(card_number.value) && submit_validate }">
                                           <div class="col-lg-2">
                                               <div class="m-l-10 m-r-10">
                                                   <label for="cardnumber" class="control-label text-left text-page"><strong>Card Number</strong></label>
@@ -61,7 +61,7 @@
                                           </div>
                                           <div class="col-lg-4">
                                               <div class="m-l-10 m-r-10">
-                                              <input class=" form-control" id="cardnumber" name="cardnumber" type="text" ngControl="card_number" placeholder="4242 4242 4242 4242">
+                                              <input class=" form-control" id="cardnumber" name="cardnumber"  (keypress)="isCreditNumber(event)" type="text" ngControl="card_number" placeholder="4242 4242 4242 4242">
                                               </div>
                                           </div>
                                       </div>
@@ -165,7 +165,7 @@
                                           </div>
                                           <div class="col-lg-4">
                                               <div class="m-l-10 m-r-10">
-                                                <input type="submit" value="Purchase" class="btn btn-primary m-b-10 w-sm" style="padding: 6px 35%;">
+                                                <input type="submit" value="Purchase" class="btn btn-primary m-b-10 w-sm" style="padding: 6px 35%;" [disabled]='submit_disabled'>
                                               </div>
                                           </div>
                                       </div>

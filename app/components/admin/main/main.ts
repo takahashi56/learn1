@@ -90,7 +90,10 @@ export class Main implements OnInit {
         var lessons = [];
         this._adminService.getEditCourses(course.course_id).subscribe((res) => {
             this._session.setItem('editORadd', JSON.stringify({ flag: true }));
+            console.log('abc')
+            console.log(JSON.parse(this._session.getItem('Course')));
             var course = JSON.parse(this._session.getItem('Course'));
+            console.log('dbd')
             if(course == null){
               this._session.setItem('Course', JSON.stringify(res));
             }else if(course.course_id == res.course_id){

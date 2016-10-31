@@ -30,6 +30,9 @@ exports.login = function(req, res) {
 					return console.error(err);
 				}else{
 					if(tutor.authenticate(pwd)){
+						tutor.logon_date = Date.now();
+						tutor.save();
+						
 						action = 2;
 						data._id = tutor._id;
 						data.action = "/home/tutor/main";

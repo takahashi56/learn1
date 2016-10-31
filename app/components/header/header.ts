@@ -42,6 +42,7 @@ export class Header {
 
 	updateCreditCount(){
 		this.creditcount = Number(this._session.getItem('creditcount'));
+		this.username = this._session.getCurrentUsername();
 	}
 
 	doLogout(){

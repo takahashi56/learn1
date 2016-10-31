@@ -30,6 +30,7 @@ export class StripePayment {
     sentShow: boolean = false;
     showClass: string = "";
     credits: any = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+    submit_disabled: boolean = false;
 
 
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router, private _ngZone: NgZone) {
@@ -75,6 +76,15 @@ export class StripePayment {
         return true;
     }
 
+    isCreditNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
     isValidateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
@@ -82,22 +92,38 @@ export class StripePayment {
 
     getPaid(form: any) {
         this.submit_validate = true;
-        if (this.stripe_form.valid) {
+        if (this.stripe_form.valid && !this.validateExpireDate(form) && !this.validateCardNumber(form.card_number) && !this.isValidateEmail(form.email)) {
 
             this.getToken(form);
         }
     }
 
-    validateExpireDate(form) {
-        var date = new Date();
-        if (Number(form.expire_year) > (date.getFullYear() - 2000)) {
-            return false;
-        } else if (Number(form.expire_year) == (date.getFullYear() - 2000)) {
-            if (Number(form.expire_month) > (date.getMonth())) {
-                return false;
-            }
+    validateCardNumber(card_number) {
+        console.log(card_number);
+        if (this.submit_validate == true && (card_number == '' || card_number == null || card_number.length != 16)) {
+            this.sentShow = true;
+
+            this.showClass = "alert alert-danger alert-dismissable";
+            this.sentStatus = "Your Card Number Must be Correct. Please type card number again";
+            return true;
         }
-        return true;
+
+        return false;
+    }
+
+    validateExpireDate(form) {
+        console.log("LLLLLLL")
+        var date = new Date();
+        if (this.submit_validate == true && (Number(form.expire_year) < (date.getFullYear() - 2000) || (Number(form.expire_month) < (date.getMonth()) || Number(form.expire_month) > 12))) {
+
+            this.sentShow = true;
+
+            this.showClass = "alert alert-danger alert-dismissable";
+            this.sentStatus = "Expire Information Must be Correct. Please type expire month and year again";
+            return true;
+
+        }
+        return false;
     }
 
     getCreatedPaidDate(dateString) {
@@ -112,6 +138,7 @@ export class StripePayment {
 
     updateUI(flag, res) {
         this.sentShow = true;
+        this.submit_disabled = false;
         if (flag == true) {
             this._session.setItem('creditcount', res.creditcount);
             this.trans_history.push(res.trans);
@@ -130,6 +157,7 @@ export class StripePayment {
     }
 
     getToken(form) {
+        this.submit_disabled = true;
         var creditcount = this._session.getItem('creditcount');
         this._tutorService.performPayment({ tutor_id: this.tutor_id, form: form, creditcount: creditcount }).subscribe((res) => {
             this.updateUI(res.flag, res.data);

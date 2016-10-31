@@ -31,9 +31,17 @@ export class TutorMain implements OnInit {
 	validatenewconfirm: boolean = false;
 	changeSuccess: boolean = false;
 	showAlert: boolean = false;
-	validOldPassword: boolean = true;
+	validOldPassword: boolean = false;
 	failure: string = '';
 	matchedTrue: boolean = false;
+
+	select_tab_item: number = 1;
+	employee_tab: string = '';
+	course_tab: string = '';
+	setting_tab: string = '';
+	showAssignCourse: boolean = false;
+	showAssignStudent: boolean = false;
+
 
 	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router, private builder: FormBuilder) {
 		this.tutor_id = this._session.getCurrentId()
@@ -77,6 +85,13 @@ export class TutorMain implements OnInit {
 				newpwdconfirm: this.newpwdconfirm,
 				oldpwd: this.oldpwd
 			})
+
+			if (this._session.getItem('select_tutor_tab') == null) {
+					this.onTabClick(1);
+			} else {
+					this.onTabClick(Number(this._session.getItem('select_tutor_tab')));
+			}
+
 		}
 	}
 
@@ -125,8 +140,21 @@ export class TutorMain implements OnInit {
 		}
 	}
 
+	beforeAssign(){
+		if(this.selectStudents.length != 0 && this.creditcount != 0){
+			this.showAssignCourse = true;
+		}else{
+			this.showAssignCourse = false;
+		}
+	}
+
 	beforeAssignStudent(course){
-		this._session.setItem('AssignCourse', course.course_id)
+		if(this.creditcount != 0){
+			this.showAssignStudent = true;
+			this._session.setItem('AssignCourse', course.course_id)
+		}else{
+			this.showAssignStudent = false;
+		}
 	}
 
 	onSelectCourse(value){
@@ -154,19 +182,17 @@ export class TutorMain implements OnInit {
 		this._tutorService.setAssignStudentsWithCourse(this.tutor_id, selectedId,ids).subscribe((res)=>{
 			this.creditcount--;
 			this._session.setItem('creditcount', this.creditcount);
-			this._tutorService.event_emitter.emit('decrease_credit');
 
 			this._router.navigateByUrl('/home/tutor/main');
-
-			this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
-				this.studentList = res;
-				this._session.setItem('TutorAllStudent', JSON.stringify(res))
-			});
 
 			this._tutorService.getAllCourses({tutor_id: this.tutor_id}).subscribe((res)=>{
 				this.courseList = res;
 			});
 
+			this._tutorService.getAllStudents({tutor_id: this.tutor_id}).subscribe((res)=>{
+				this.studentList = res;
+				this._session.setItem('TutorAllStudent', JSON.stringify(res))
+			});
 		});;
 	}
 
@@ -262,6 +288,7 @@ export class TutorMain implements OnInit {
 				return o != object.student_id;
 			})
 		}
+		console.log(this.selectStudents);
 	}
 
 	removeStudent(){
@@ -315,7 +342,7 @@ export class TutorMain implements OnInit {
 	matchedPassword(form: any){
 		var password = form.newpwd,
 			verifiedpassword = form.newpwdconfirm;
-		if(password == verifiedpassword){
+		if(this.validatenewconfirm == true && password == verifiedpassword){
 			this.matchedTrue = true;
 			return true;
 		}else{
@@ -331,7 +358,9 @@ export class TutorMain implements OnInit {
 		}
 		this.validatenewconfirm = true;
 
-		if(this.SettingForm.valid && !this.matchedTrue){
+		if(this.validateNewPwd(form.newpwd)) return;
+
+		if(!this.matchedTrue){
 			this.showAlert = true;
 			this.changeSuccess = false;
 			this.failure = 'The Password Must Be Matched';
@@ -355,6 +384,22 @@ export class TutorMain implements OnInit {
 	blurChange(form: any){
 		var oldPwd = form.oldpwd;
 		this.isValidOldPassword(oldPwd);
+	}
+
+	validateNewPwd(newpassword){
+		if(this.validatenewconfirm == true && newpassword == ""){
+			this.showAlert = true;
+			this.changeSuccess = false;
+			this.failure = 'New Password is Required!';
+			return true;
+		}else if(this.validatenewconfirm == true && newpassword.length < 6){
+			this.showAlert = true;
+			this.changeSuccess = false;
+			this.failure = 'New Password Must Be At least 6 characters!';
+			return true;
+		}
+		this.showAlert = false;
+		return false;
 	}
 
 	onKey(event: any){
@@ -389,5 +434,27 @@ export class TutorMain implements OnInit {
 	/*GoCardless Payment*/
 	gotoGoCardlessPayment(){
 		this._router.navigate(['GoCardlessPayment']);
+	}
+
+	onTabClick(num: number) {
+			this.course_tab = "tab-pane";
+			this.employee_tab = "tab-pane";
+			this.setting_tab = "tab-pane";
+			this._session.setItem('select_tutor_tab', num);
+			this.select_tab_item = num;
+
+			switch (num) {
+					case 1:
+							this.employee_tab = "tab-pane active";
+							break;
+					case 2:
+							this.course_tab = "tab-pane active";
+							break;
+					case 3:
+							this.setting_tab = "tab-pane active";
+							break;
+					default:
+							break;
+			}
 	}
 }
