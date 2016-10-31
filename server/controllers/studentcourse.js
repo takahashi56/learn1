@@ -298,10 +298,11 @@ exports.setCourseScoreWithStudent = function(req, res) {
             take.save(function(err, saved) {
                 if (err) {
                     res.status(500).send(err).end();
-                }
-                res.status(200).send({
+                }else{
+                  res.status(200).send({
                     sucess: true
-                }).end();
+                  }).end();
+                }
             });
 
         }
