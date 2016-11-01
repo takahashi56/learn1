@@ -31,7 +31,7 @@ export class TutorMain implements OnInit {
 	validatenewconfirm: boolean = false;
 	changeSuccess: boolean = false;
 	showAlert: boolean = false;
-	validOldPassword: boolean = false;
+	validOldPassword: boolean = true;
 	failure: string = '';
 	matchedTrue: boolean = false;
 
@@ -342,10 +342,19 @@ export class TutorMain implements OnInit {
 	matchedPassword(form: any){
 		var password = form.newpwd,
 			verifiedpassword = form.newpwdconfirm;
-		if(this.validatenewconfirm == true && password == verifiedpassword){
+		if(this.validatenewconfirm ==true && password == verifiedpassword){
 			this.matchedTrue = true;
 			return true;
-		}else{
+		}else if(verifiedpassword !='' && password != verifiedpassword && this.validatenewconfirm == true){
+			this.showAlert = true;
+			this.changeSuccess = false;
+			this.failure = 'The Password Must Be Matched';
+			this.matchedTrue = false;
+			return false;
+		}else if(password !=''&& password.length > 5 && verifiedpassword =='' && this.validatenewconfirm == true){
+			this.showAlert = true;
+			this.changeSuccess = false;
+			this.failure = 'The Confirm Password is Required';
 			this.matchedTrue = false;
 			return false;
 		}
@@ -359,11 +368,11 @@ export class TutorMain implements OnInit {
 		this.validatenewconfirm = true;
 
 		if(this.validateNewPwd(form.newpwd)) return;
-
+		console.log(this.matchedTrue)
 		if(!this.matchedTrue){
-			this.showAlert = true;
-			this.changeSuccess = false;
-			this.failure = 'The Password Must Be Matched';
+			// this.showAlert = true;
+			// this.changeSuccess = false;
+			// this.failure = 'The Password Must Be Matched';
 		}
 
 
