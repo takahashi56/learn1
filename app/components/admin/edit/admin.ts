@@ -46,7 +46,7 @@ export class EditAdmin {
 
     update(form: any) {
         this.submitAttempt = true;
-        if (this.AdminForm.valid) {
+        if (form.firstName != this.admin.firstName || form.lastName != this.admin.lastName || form.email != this.admin.email || form.password != '') {
             var data = {
                 _id: this.admin._id,
                 firstName: form.firstName,
