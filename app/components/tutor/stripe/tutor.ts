@@ -92,8 +92,8 @@ export class StripePayment {
 
     getPaid(form: any) {
         this.submit_validate = true;
-        if (this.stripe_form.valid && !this.validateExpireDate(form) && !this.validateCardNumber(form.card_number) && !this.isValidateEmail(form.email)) {
-
+        if (this.stripe_form.valid && !this.validateExpireDate(form) && !this.validateCardNumber(form.card_number) && this.isValidateEmail(form.email)) {
+            console.log('paid')
             this.getToken(form);
         }
     }
@@ -107,14 +107,18 @@ export class StripePayment {
             this.sentStatus = "Your Card Number Must be Correct. Please type card number again";
             return true;
         }
-
+        this.sentShow = false;
         return false;
     }
 
     validateExpireDate(form) {
         console.log("LLLLLLL")
         var date = new Date();
-        if (this.submit_validate == true && (Number(form.expire_year) < (date.getFullYear() - 2000) || (Number(form.expire_month) < (date.getMonth()) || Number(form.expire_month) > 12))) {
+
+        if ( this.submit_validate == true &&
+              ( (Number(form.expire_year) < (date.getFullYear() - 2000)) ||
+                (Number(form.expire_year) == (date.getFullYear() - 2000) && Number(form.expire_month) < (date.getMonth())) ||
+                (Number(form.expire_year) > (date.getFullYear() - 2000) && Number(form.expire_month) > 12) )) {
 
             this.sentShow = true;
 
@@ -123,6 +127,7 @@ export class StripePayment {
             return true;
 
         }
+        this.sentShow = false;
         return false;
     }
 
