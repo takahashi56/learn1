@@ -60,7 +60,7 @@ export class DetailTutorCourse {
     }
 
     gotoCertificate(student: any) {
-        if (student.score == 0 || student.isCompleted == false) return false;
+        if (student.isCompleted == false) return false;
         var self = this;
         this._tutorService.getLessonsNameByCourseId({ course_id: this.course.course_id }).subscribe((res) => {
             var data = {
