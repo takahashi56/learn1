@@ -131,6 +131,8 @@ export class TutorMain implements OnInit {
 
 		var studentLength = this.studentList.length;
 		if((studentLength + 1) > this.employeecount){
+			var message = `Your subscription allows you to add up to ${this.employeecount} employees. To add a new employee remove an existing employee or upgrade your subscription.`;
+			alert(message);
 			return ;
 		}else{
 			this._session.setItem('editORadd', JSON.stringify({flag: false}));
