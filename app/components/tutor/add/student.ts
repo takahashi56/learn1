@@ -40,7 +40,6 @@ export class AddTutorStudent {
             this.phone = new Control(this.student.phone);
             this.password = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
             this.verifiedpassword = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
-            console.log(this.student.DOB);
 
             this.StudentForm = builder.group({
                 firstname: this.firstname,
@@ -128,13 +127,6 @@ export class AddTutorStudent {
     }
 
     beforeGotoBack(form: any){
-      console.log(form.password != this.student.hashed_pwd);
-      console.log(form.firstname != this.student.firstName);
-      console.log(form.lastname != this.student.lastName);
-      console.log(form.phone != this.student.phone);
-      console.log(this.student);
-      console.log(form);
-      
       if(form.password != this.student.hashed_pwd || form.firstname != this.student.firstName || form.lastname != this.student.lastName || form.username != this.student.username || form.phone != this.student.phone){
         this.showGotoBack = true;
       } else {

@@ -26,6 +26,7 @@ export class DetailTutorStudent {
     dob: Control;
     courseList: any;
     submitAttempt: boolean = false;
+    valid_username: boolean = false;
 
 
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
@@ -45,8 +46,8 @@ export class DetailTutorStudent {
             this.lastname = new Control(this.student.lastName, Validators.required);
             this.username = new Control(this.student.username);
             this.phone = new Control(this.student.phone);
-            this.password = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
-            this.verifiedpassword = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
+            this.password = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
+            this.verifiedpassword = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
             this.dob = new Control(this.student.DOB);
 
             this.StudentDetailForm = builder.group({
@@ -88,6 +89,26 @@ export class DetailTutorStudent {
         if (i != 0) username = username + i;
 
         (<Control>this.StudentDetailForm.controls['username']).updateValue(username);
+    }
+
+    validUserName(form: any){
+      var username = form.username, flag:boolean = false;
+      if(username == ''){
+        this.valid_username = true;
+        return;
+      }
+      this.allStudentData.forEach(function(student) {
+          if (student.username == username) flag = true;
+      });
+
+      if(flag){
+        this.valid_username = true;
+        alert("Username cannot be used!");
+        (<Control>this.StudentDetailForm.controls['username']).updateValue('');
+        return;
+      }
+      this.valid_username = false;
+      return;
     }
 
     matchedPassword(form: any) {

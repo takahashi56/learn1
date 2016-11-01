@@ -93,13 +93,11 @@ export class StripePayment {
     getPaid(form: any) {
         this.submit_validate = true;
         if (this.stripe_form.valid && !this.validateExpireDate(form) && !this.validateCardNumber(form.card_number) && this.isValidateEmail(form.email)) {
-            console.log('paid')
             this.getToken(form);
         }
     }
 
     validateCardNumber(card_number) {
-        console.log(card_number);
         if (this.submit_validate == true && (card_number == '' || card_number == null || card_number.length != 16)) {
             this.sentShow = true;
 
@@ -112,7 +110,6 @@ export class StripePayment {
     }
 
     validateExpireDate(form) {
-        console.log("LLLLLLL")
         var date = new Date();
 
         if ( this.submit_validate == true &&

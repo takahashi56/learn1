@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" [ngClass]="{ 'has-error' : !username.valid && submitAttempt }">
+                            <div class="form-group" [ngClass]="{ 'has-error' : valid_username && submitAttempt }">
                                 <div class="col-lg-2">
                                     <div class="m-l-10 m-r-10">
                                         <label for="uname" class="control-label text-left text-page">Username</label>
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username"  placeholder="Some text value..." readonly >
+                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username"  placeholder="Some text value..." (blur)="validUserName(StudentDetailForm.value)" >
                                     </div>
                                 </div>
                             </div>
