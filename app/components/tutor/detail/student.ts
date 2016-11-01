@@ -135,7 +135,7 @@ export class DetailTutorStudent {
     }
 
     gotoCertificate(course: any) {
-        if (course.score == 0 || course.isCompleted == false) return false;
+        if (course.isCompleted == false) return false;
         var self = this;
         this._tutorService.getLessonsNameByCourseId({ course_id: course.course_id }).subscribe((res) => {
             var data = {
