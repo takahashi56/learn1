@@ -76,13 +76,21 @@ export class StripePayment {
         return true;
     }
 
-    isCreditNumber(evt) {
+    isCreditNumber(evt, form: any) {
         evt = (evt) ? evt : window.event;
         var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        if (charCode > 31 && (charCode < 48 || charCode > 57) ) {
             return false;
         }
-        return true;
+        var val = form.card_number;
+        if(val.length >= 19) return false;
+        var newval = '';
+        val = val.replace(/\D+/g, '');
+        for (var i = 0; i < val.length; i++) {
+            if (i % 4 == 0 && i > 0) newval = newval.concat(' ');
+            newval = newval.concat(val[i]);
+        }
+        (<Control>this.stripe_form.controls['card_number']).updateValue(newval);
     }
 
     isValidateEmail(email) {
@@ -98,7 +106,7 @@ export class StripePayment {
     }
 
     validateCardNumber(card_number) {
-        if (this.submit_validate == true && (card_number == '' || card_number == null || card_number.length != 16)) {
+        if (this.submit_validate == true && (card_number == '' || card_number == null || card_number.length != 19)) {
             this.sentShow = true;
 
             this.showClass = "alert alert-danger alert-dismissable";
@@ -112,10 +120,10 @@ export class StripePayment {
     validateExpireDate(form) {
         var date = new Date();
 
-        if ( this.submit_validate == true &&
-              ( (Number(form.expire_year) < (date.getFullYear() - 2000)) ||
+        if (this.submit_validate == true &&
+            ((Number(form.expire_year) < (date.getFullYear() - 2000)) ||
                 (Number(form.expire_year) == (date.getFullYear() - 2000) && Number(form.expire_month) < (date.getMonth())) ||
-                (Number(form.expire_year) > (date.getFullYear() - 2000) && Number(form.expire_month) > 12) )) {
+                (Number(form.expire_year) > (date.getFullYear() - 2000) && Number(form.expire_month) > 12))) {
 
             this.sentShow = true;
 

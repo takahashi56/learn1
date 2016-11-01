@@ -61,7 +61,7 @@
                                           </div>
                                           <div class="col-lg-4">
                                               <div class="m-l-10 m-r-10">
-                                              <input class=" form-control" id="cardnumber" name="cardnumber"  (keypress)="isCreditNumber(event)" type="text" ngControl="card_number" placeholder="4242 4242 4242 4242">
+                                              <input class=" form-control" id="cardnumber" name="cardnumber"  (keypress)="isCreditNumber(event, stripe_form.value)" type="text" ngControl="card_number" placeholder="4242 4242 4242 4242">
                                               </div>
                                           </div>
                                       </div>
