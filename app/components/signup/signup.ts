@@ -63,6 +63,8 @@ export class SignUp {
 				email: form.email,
 				password: form.password,
 				phone: form.phone,
+				employeecount: 0,
+				creditcount: 0
 			};
 
 			this._adminService.addTutor(data)
