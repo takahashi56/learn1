@@ -2194,3 +2194,13 @@ input.alert-page{
     overflow-y: hidden;
   }
 }
+
+.dateclass{
+    width:100%;
+}
+
+.dateclass.placeholderclass::before{
+    width:100%;
+    content:attr(placeholder);
+    background-color:#FFFFFF;
+}
