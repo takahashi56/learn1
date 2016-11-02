@@ -614,6 +614,7 @@ exports.performPayment = function(req, res) {
         }
     }, function(err, token) {
         if (err) {
+            console.error(err);
             res.status(500).send({
                 flag: false,
                 data: null

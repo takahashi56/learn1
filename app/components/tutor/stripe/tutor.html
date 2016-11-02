@@ -17,6 +17,10 @@
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     {{sentStatus}}
                 </div>
+                <div [class]="showClass" *ngIf="sentSuccessShow">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{sentStatus}}
+                </div>
                   <form class="cmxform form-horizontal tasi-form" [ngFormModel]="stripe_form" (submit)="getPaid(stripe_form.value)">
                       <div class="container-fluid">
                           <div class="row">

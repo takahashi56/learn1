@@ -28,6 +28,7 @@ export class StripePayment {
     trans_history: any[] = [];
     sentStatus: string = "";
     sentShow: boolean = false;
+    sentSuccessShow: boolean = false;
     showClass: string = "";
     credits: any = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
     submit_disabled: boolean = false;
@@ -79,11 +80,11 @@ export class StripePayment {
     isCreditNumber(evt, form: any) {
         evt = (evt) ? evt : window.event;
         var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57) ) {
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }
         var val = form.card_number;
-        if(val.length >= 19) return false;
+        if (val.length >= 19) return false;
         var newval = '';
         val = val.replace(/\D+/g, '');
         for (var i = 0; i < val.length; i++) {
@@ -99,6 +100,7 @@ export class StripePayment {
     }
 
     getPaid(form: any) {
+        this.sentSuccessShow = false;
         this.submit_validate = true;
         if (this.stripe_form.valid && !this.validateExpireDate(form) && !this.validateCardNumber(form.card_number) && this.isValidateEmail(form.email)) {
             this.getToken(form);
@@ -147,7 +149,7 @@ export class StripePayment {
     }
 
     updateUI(flag, res) {
-        this.sentShow = true;
+        this.sentSuccessShow = true;
         this.submit_disabled = false;
         if (flag == true) {
             this._session.setItem('creditcount', res.creditcount);
@@ -155,14 +157,9 @@ export class StripePayment {
 
             this.showClass = "alert alert-success alert-dismissable";
             this.sentStatus = "Your Payment has been successfully. You have got the new credits " + res.creditcount;
-
-            setTimeout(() => {
-                this._router.navigate(['TutorMain'])
-            }, 2000)
         } else {
             this.showClass = "alert alert-danger alert-dismissable";
             this.sentStatus = "Your Payment has not been failed. Please type your card information correctly!";
-
         }
     }
 
