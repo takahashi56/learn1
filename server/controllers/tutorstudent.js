@@ -22,7 +22,8 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
     config = require('../config/config')[env],
     stripe = require('stripe')(config.stripe_secret_key),
     gc_config = {
-        sandbox: false,
+        // sandbox: false,
+        sandbox: true,
         token: config.gc_access_token
     },
     goCardless = new GoCardless(gc_config);
@@ -675,16 +676,16 @@ exports.getGoCardlessRedirectUrl = function(req, res) {
 
     console.log(goCardless);
 
-    // goCardless.startRedirectFlow(description, sessionToken, successUrl)
-    //     .then(function(response) {
-    //         subscribe_data.amount = req.body.amount * 100;
-    //         subscribe_data.count = req.body.count;
-    //         subscribe_data.session_id = tutor_id;
-    //
-    //         res.send({
-    //             redirect_url: response.redirect_flows.redirect_url
-    //         }).end();
-    //     })
+    goCardless.startRedirectFlow(description, sessionToken, successUrl)
+        .then(function(response) {
+            subscribe_data.amount = req.body.amount * 100;
+            subscribe_data.count = req.body.count;
+            subscribe_data.session_id = tutor_id;
+
+            res.send({
+                redirect_url: response.redirect_flows.redirect_url
+            }).end();
+        })
 }
 
 exports.getGoCardlessCompleteUrl = function(req, response) {

@@ -14,7 +14,10 @@ var request = require('request');
 var pRequest = function pRequest(options) {
     return new Promise(function (resolve, reject) {
         request(options, function (err, response, body) {
-            if (err) reject(err);
+            console.log(response);
+            if (err) {
+              console.error(err);
+              reject(err);}
             resolve({ response: response, body: body });
         });
     });
