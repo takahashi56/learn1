@@ -132,7 +132,7 @@ export class AddTutorStudent implements AfterViewInit {
     }
 
     beforeGotoBack(form: any) {
-        if (form.password != this.student.hashed_pwd || form.firstname != this.student.firstName || form.lastname != this.student.lastName || form.username != this.student.username || form.phone != this.student.phone) {
+        if (form.firstname != this.student.firstName || form.lastname != this.student.lastName || form.username != this.student.username || form.phone != this.student.phone) {
             this.showGotoBack = true;
         } else {
             this.showGotoBack = false;
