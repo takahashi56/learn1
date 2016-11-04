@@ -299,12 +299,17 @@ export class Main implements OnInit {
         (<Control>this.SettingForm.controls['newpwdconfirm']).updateValue('');
     }
 
-    getCompleteDate(date: any) {
+    getCompleteDate(date){
         if (date == null || date == '') return '';
+
         var d = new Date(date),
-            datestring = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+            day = d.getDate().toString().length == 1 ? '0' + d.getDate() : d.getDate(),
+            month = (d.getMonth() + 1 ).toString().length == 1 ? '0' + (d.getMonth() + 1 ) : (d.getMonth() + 1 ),
+                datestring = day  + "/" + month + "/" + d.getFullYear();
+
         return datestring;
     }
+
 
     check(control: any) {
     }

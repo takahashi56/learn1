@@ -77,9 +77,10 @@ export class StripePayment {
         return true;
     }
 
-    isCreditNumber(evt, form: any) {
-        evt = (evt) ? evt : window.event;
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
+    isCreditNumber(event, form: any) {
+        console.log(form.card_number)
+        event = (event) ? event : window.event;
+        var charCode = (event.which) ? event.which : event.keyCode;
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }
@@ -88,7 +89,7 @@ export class StripePayment {
         var newval = '';
         val = val.replace(/\D+/g, '');
         for (var i = 0; i < val.length; i++) {
-            if (i % 4 == 0 && i > 0) newval = newval.concat(' ');
+            if (i % 4 == 0 && i > 0) newval = newval.concat(" ");
             newval = newval.concat(val[i]);
         }
         (<Control>this.stripe_form.controls['card_number']).updateValue(newval);
@@ -149,15 +150,16 @@ export class StripePayment {
     }
 
     updateUI(flag, res) {
-        this.sentSuccessShow = true;
+
         this.submit_disabled = false;
         if (flag == true) {
             this._session.setItem('creditcount', res.creditcount);
-            this.trans_history.push(res.trans);
+            this.trans_history.unshift(res.trans);
 
             this.showClass = "alert alert-success alert-dismissable";
             this.sentStatus = "Your Payment has been successfully. You have got the new credits " + res.creditcount;
         } else {
+            this.sentSuccessShow = true;
             this.showClass = "alert alert-danger alert-dismissable";
             this.sentStatus = "Your Payment has not been failed. Please type your card information correctly!";
         }

@@ -65,7 +65,7 @@
                                           </div>
                                           <div class="col-lg-4">
                                               <div class="m-l-10 m-r-10">
-                                              <input class=" form-control" id="cardnumber" name="cardnumber"  (keypress)="isCreditNumber(event, stripe_form.value)" type="text" ngControl="card_number" placeholder="4242 4242 4242 4242">
+                                              <input class=" form-control" id="cardnumber" name="cardnumber"  (keypress)="isCreditNumber($event, stripe_form.value)" type="text" ngControl="card_number" placeholder="4242 4242 4242 4242">
                                               </div>
                                           </div>
                                       </div>
@@ -78,7 +78,7 @@
                                           <div class="col-lg-2">
                                               <div class="m-l-10 m-r-10">
                                                 <select class="form-control" ngControl="amount">
-                                                  <option *ngFor="let c of credits" [value]="c">{{c}}</option>
+                                                  <option *ngFor="let c of credits" [value]="c">{{c}} ({{c * 4}}£)</option>
                                               </select>
                                               </div>
                                           </div>
@@ -97,7 +97,7 @@
                                           </div>
                                           <div class="col-lg-2" style="display: flex">
                                               <div class="m-l-10 m-r-10" style="display:inline-block">
-                                                <input class=" form-control" id="cardexpire1" name="cardexpire1" type="text" ngControl="expire_month" maxlength="2" (keypress)="isNumberKey(event)" placeholder="Month">
+                                                <input class=" form-control" id="cardexpire1" name="cardexpire1" type="text" ngControl="expire_month" maxlength="2" (keypress)="isNumberKey($event)" placeholder="Month">
                                               </div>
                                           </div>
                                           <div style="">
@@ -105,7 +105,7 @@
                                           </div>
                                           <div class="col-lg-2">
                                               <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="cardexpir2" name="cardexpire2" type="text" ngControl="expire_year" maxlength="2" (keypress)="isNumberKey(event)" placeholder="Year(2 digits)">
+                                                <input class=" form-control" id="cardexpir2" name="cardexpire2" type="text" ngControl="expire_year" maxlength="2" (keypress)="isNumberKey($event)" placeholder="Year(2 digits)">
                                               </div>
                                           </div>
                                       </div>
@@ -137,7 +137,7 @@
                                           </div>
                                           <div class="col-lg-2">
                                               <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="cardcvv" name="cardcvv" type="text" maxlength="4" ngControl="card_cvv"  (keypress)="isNumberKey(event)" placeholder="123">
+                                                <input class=" form-control" id="cardcvv" name="cardcvv" type="text" maxlength="4" ngControl="card_cvv"  (keypress)="isNumberKey($event)" placeholder="123">
                                               </div>
                                           </div>
                                       </div>

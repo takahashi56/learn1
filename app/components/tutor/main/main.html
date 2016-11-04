@@ -17,9 +17,10 @@
                 <div class="text-right m-b-30">
                     <a  class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#show_not_assign" (click)="gotoAddStudent()">Add Employee</a>
                     <a  class="btn btn-primary w-sm m-r-5" (click)="beforeRemoveStudent()"  data-toggle="modal" data-target="#remove-student" >Remove Employee</a>
-                    <a class="btn btn-primary w-sm m-r-5" onClick="$('#file-uploader').click()">Import Employees</a>
+
+                    <a  class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#import-student" >Import Employee</a>
                     <input type="file" id="file-uploader" (change)="importAddStudent($event)" style="display: none;"/>
-                    <a  class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#select-course" (click)="beforeAssign()">Assign Course</a>
+                    <button  class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#select-course" (click)="beforeAssign()" [disabled]="isAssign()">Assign Course</button>
 
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Training Matrix <span class="caret"></span></button>
@@ -140,7 +141,7 @@
                         <div class="container-fluid">
                           <div class="row">
                             <div class="col-xs-12">
-                              <div class="alert alert-info" *ngIf="changeSuccess && showAlert">
+                              <div class="alert alert-info" *ngIf="changePasswordSuccess">
                                 Your password has been updated successfully!
                               </div>
                               <div class="alert alert-danger" *ngIf="!changeSuccess && showAlert">
@@ -154,7 +155,7 @@
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="oldpwd" name="oldpwd" type="password" ngControl="oldpwd"  placeholder="Old Password" (blur)="blurChange(SettingForm.value)" (keyup)="onKey($event)" >
+                                        <input class=" form-control" id="oldpwd" name="oldpwd" type="password" ngControl="oldpwd"  placeholder="Old Password" (blur)="blurChange(SettingForm.value)" (keyup)="onKey($event)" (focus)="focusEvent()">
                                     </div>
                                 </div>
                               </div>
@@ -170,7 +171,7 @@
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="newpwd" name="newpwd" type="password" ngControl="newpwd"  placeholder="New Password" [disabled]="validOldPassword" >
+                                        <input class=" form-control" id="newpwd" name="newpwd" type="password" ngControl="newpwd"  placeholder="New Password" [disabled]="validOldPassword"  (focus)="focusEvent()">
                                     </div>
                                 </div>
                               </div>
@@ -186,7 +187,7 @@
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="newpwdconfirm" name="newpwdconfirm" type="password" ngControl="newpwdconfirm"  placeholder="Retype New Password"  [disabled]="validOldPassword" >
+                                        <input class=" form-control" id="newpwdconfirm" name="newpwdconfirm" type="password" ngControl="newpwdconfirm"  placeholder="Retype New Password"  [disabled]="validOldPassword" (focus)="focusEvent()" >
                                     </div>
                                 </div>
                               </div>
@@ -231,8 +232,11 @@
            <div class="modal-body assign-text">
                <div class="row">
                    <div class="col-md-12">
-                       <div class="form-group">
+                       <div *ngIf="!disaplyCanAssign" class="form-group">
                            <p>Click the arrow below to select a course and then click Assign.</p>
+                       </div>
+                       <div *ngIf="disaplyCanAssign" class="form-group">
+                           <p> You should purchase credit or subscribe for assign to course. </p>
                        </div>
                    </div>
                </div>
@@ -240,7 +244,7 @@
            </div>
 
            <div class="modal-footer">
-			         	<div class="row">
+			         	<div class="row" *ngIf="!disaplyCanAssign">
                    <div class="col-md-12">
                       <select class="course-select" (change)="onSelectCourse($event.target.value)">
                         <option *ngFor="let course of courseList" [value]="course.course_id">{{course.coursetitle}}</option>
@@ -249,7 +253,7 @@
                </div>
 
                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-               <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="courseAssign()">Assign</button>
+               <button *ngIf="!disaplyCanAssign" type="button" class="btn btn-primary" data-dismiss="modal" (click)="courseAssign()">Assign</button>
            </div>
        </div>
    </div>
@@ -336,6 +340,46 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="import-student" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Import Employee</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>Rather than add employees one by one you can import employees from a CSV formatted file.</p>
+                            <p>
+                              The file should be a text file with following columns each seperated with a comman:
+                            </p>
+                            <p>
+                              First Name, SurName, DOB, Mobile, Username, Password
+                            </p>
+                            <p>
+                              Example text file format:
+                            </p>
+                            <p>
+                              John, Smith, 20/12/1970, 07882770123, jsmith, Pass88 <br/>
+                              George, Jones, 18/06/1985, 0312740123, gjones, Pass12 <br/>
+                              Harry, Flow, 30/10/1959, 0771551123, hflow, Pass44
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                <a class="btn btn-primary w-sm m-r-5" onClick="$('#file-uploader').click()">Select File</a>
             </div>
         </div>
     </div>

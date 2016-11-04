@@ -29,27 +29,27 @@
                     <tr>
                         <td>1 to 15 Employees</td>
                         <td>{{41.05 | currency:'GBP':true:'1.2-2'}}  + VAT per month</td>
-                        <td class="text-right"><a class="btn btn-primary" (click)="gotoGoCardlessPage(15, 41.05)">Click to Subscribe</a></td>
+                        <td class="text-right"><button class="btn btn-primary" (click)="gotoGoCardlessPage(15, 41.05)" [disabled]="getStatus(15)">Click to Subscribe</button></td>
                     </tr>
                     <tr>
                         <td>16 to 25 Employees</td>
                         <td>{{58.00 | currency:'GBP':true:'1.2-2'}} + VAT per month</td>
-                        <td class="text-right"><a class="btn btn-primary"  (click)="gotoGoCardlessPage(25, 58.00)">Click to Subscribe</a></td>
+                        <td class="text-right"><button class="btn btn-primary"  (click)="gotoGoCardlessPage(25, 58.00)" [disabled]="getStatus(25)">Click to Subscribe</button></td>
                     </tr>
                     <tr>
                         <td>26 to 40 Employees</td>
                         <td>{{83.00 | currency:'GBP':true:'1.2-2'}} + VAT per month</td>
-                        <td class="text-right"><a class="btn btn-primary"  (click)="gotoGoCardlessPage(40, 83.00)">Click to Subscribe</a></td>
+                        <td class="text-right"><button class="btn btn-primary"  (click)="gotoGoCardlessPage(40, 83.00)" [disabled]="getStatus(40)">Click to Subscribe</button></td>
                     </tr>
                     <tr>
                         <td>41 to 65 Employees</td>
                         <td>{{99.50 | currency:'GBP':true:'1.2-2'}} + VAT per month</td>
-                        <td class="text-right"><a class="btn btn-primary"  (click)="gotoGoCardlessPage(65, 99.50)">Click to Subscribe</a></td>
+                        <td class="text-right"><button class="btn btn-primary"  (click)="gotoGoCardlessPage(65, 99.50)" [disabled]="getStatus(65)">Click to Subscribe</button></td>
                     </tr>
                     <tr>
                         <td>66 to 80 Employees</td>
                         <td>{{116.25 | currency:'GBP':true:'1.2-2'}} + VAT per month</td>
-                        <td class="text-right"><a class="btn btn-primary"  (click)="gotoGoCardlessPage(80, 116.25)">Click to Subscribe</a></td>
+                        <td class="text-right"><button class="btn btn-primary"  (click)="gotoGoCardlessPage(80, 116.25)" [disabled]="getStatus(80)">Click to Subscribe</button></td>
                     </tr>
                 </table>
             </div>

@@ -13,13 +13,17 @@ import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'a
 })
 export class GoCardlessPayment {
     tutor_id: string = "";
+    employeecount: number = 0;
 
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
         if (this._session.getCurrentId() == null) {
             this._router.navigateByUrl('/login');
         } else {
             this.tutor_id = this._session.getCurrentId();
-
+            this.employeecount = Number(this._session.getItem('employeecount'));
+            if(Number(this._session.getItem('subscribing')) == 0){
+              this.employeecount = (JSON.parse(this._session.getItem('TutorAllStudent'))).length;
+            }
         }
     }
 
@@ -30,5 +34,13 @@ export class GoCardlessPayment {
     }
     cancel() {
         this._router.navigate(['TutorMain']);
+    }
+
+    getStatus(num: number){
+      if(num > this.employeecount){
+        return false;
+      }else{
+        return true;
+      }
     }
 }

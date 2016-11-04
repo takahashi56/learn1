@@ -65,6 +65,13 @@ export class TutorService {
 			})
 	}
 
+  unAssign(data){
+    return this._http.post(this.baseUrl + 'unassign', JSON.stringify(data), HEADER)
+			.map((res)=>{
+				return res.json();
+			})
+  }
+
 	setAssignStudentsWithCourse(tutor_id, id, ids){
 		var data = {
       tutor_id: tutor_id,
@@ -164,4 +171,6 @@ export class TutorService {
       return res.json();
 		})
   }
+
+
 }

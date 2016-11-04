@@ -39,10 +39,10 @@
                 </div>
             </div>
 
-            <div class="form-group ">
-                <div class="col-xs-12">
+            <div class="form-group " [ngClass]="{ 'has-error' : !check_accept && submitAttempt }">
+                <div class="form-control col-xs-12">
                     <label class="cr-styled">
-                        <input type="checkbox" checked>
+                        <input type="checkbox"  (change)="checkAccept($event)">
                         <i class="fa"></i>
                          I accept <strong><a href="#">Terms and Conditions</a></strong>
                     </label>

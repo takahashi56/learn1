@@ -66,7 +66,8 @@ export class AddOrganization {
                 department: form.department,
                 phone: form.phone,
                 employeecount: 0,
-                creditcount: 0
+                creditcount: 0,
+                subscribing: false,
             };
 
             this._adminService.addTutor(data)

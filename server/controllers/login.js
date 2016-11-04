@@ -32,7 +32,7 @@ exports.login = function(req, res) {
 					if(tutor.authenticate(pwd)){
 						tutor.logon_date = Date.now();
 						tutor.save();
-						
+
 						action = 2;
 						data._id = tutor._id;
 						data.action = "/home/tutor/main";
@@ -40,6 +40,7 @@ exports.login = function(req, res) {
 						data.success = true;
 						data["organization"] = tutor.organization;
 						data["creditcount"] = tutor.creditcount;
+						data["subscribing"] = tutor.subscribing ? 1: 0;
 						data["employeecount"] = tutor.employeecount;
 						data["name"] = tutor.firstName + " " + tutor.lastName;
 						data["stripe_publish_key"] = config.stripe_publish_key;

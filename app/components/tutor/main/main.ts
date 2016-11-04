@@ -40,9 +40,10 @@ export class TutorMain implements OnInit {
 	course_tab: string = '';
 	setting_tab: string = '';
 	showAssignCourse: boolean = false;
+	disaplyCanAssign: boolean = false;
 	showAssignStudent: boolean = false;
 	show_not_assign: boolean = false;
-
+	changePasswordSuccess: boolean = false;
 
 	constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router, private builder: FormBuilder) {
 		this.tutor_id = this._session.getCurrentId()
@@ -67,11 +68,9 @@ export class TutorMain implements OnInit {
 	      this._session.setItem('studentList', JSON.stringify(res));
 	    })
 
-			// this._tutorService.getAlUnCompleted({tutor_id: this.tutor_id}).subscribe((res) => {
-	    //   this._session.setItem('uncompleted', JSON.stringify(res));
-	    // })
 			this._tutorService.updateTutorInfo({tutor_id: this.tutor_id}).subscribe((res) => {
 				this._session.setItem('employeecount', res.employeecount);
+				this._session.setItem('subscribing', res.subscribing == true? 1 : 0);
 				this._session.setItem('creditcount', res.creditcount);
 				this.creditcount = Number(this._session.getItem('creditcount'));
 				this.employeecount = Number(this._session.getItem('employeecount'));
@@ -131,7 +130,7 @@ export class TutorMain implements OnInit {
 		}
 
 		var studentLength = this.studentList.length;
-		if((studentLength + 1) > this.employeecount){
+		if((studentLength + 1) > Number(this._session.getItem('employeecount')) && Number(this._session.getItem('subscribing')) == 1){
 			this.show_not_assign = true;
 			return ;
 		}else{
@@ -144,15 +143,25 @@ export class TutorMain implements OnInit {
 	}
 
 	beforeAssign(){
-		if(this.selectStudents.length != 0 && this.creditcount != 0){
+		if(this.selectStudents.length != 0 && Number(this._session.getItem('creditcount')) != 0){
 			this.showAssignCourse = true;
+			this.disaplyCanAssign = false;
 		}else{
 			this.showAssignCourse = false;
+			this.disaplyCanAssign = true;
+		}
+	}
+
+	isAssign(){
+		if(Number(this._session.getItem('subscribing')) == 1 && Number(this._session.getItem('employeecount')) <= this.studentList.length){
+			return true;
+		}else{
+			return false;
 		}
 	}
 
 	beforeAssignStudent(course){
-		if(this.creditcount != 0){
+		if(Number(this._session.getItem('creditcount')) != 0 || Number(this._session.getItem('subscribing')) == 1){
 			this.showAssignStudent = true;
 			this._session.setItem('AssignCourse', course.course_id)
 		}else{
@@ -172,7 +181,7 @@ export class TutorMain implements OnInit {
 		var id = this._session.getItem('SelectStudentWithId');
 		if(!id) return false;
 
-		if(this.creditcount == 0){
+		if(Number(this._session.getItem('creditcount')) == 0){
 			return false;
 		}
 
@@ -183,8 +192,7 @@ export class TutorMain implements OnInit {
 		ids.push(id);
 
 		this._tutorService.setAssignStudentsWithCourse(this.tutor_id, selectedId,ids).subscribe((res)=>{
-			this.creditcount--;
-			this._session.setItem('creditcount', this.creditcount);
+			this._session.setItem('creditcount', res.creditcount);
 
 			this._router.navigateByUrl('/home/tutor/main');
 
@@ -203,7 +211,7 @@ export class TutorMain implements OnInit {
 		var id = this._session.getItem('SelectCourseWithId');
 		if(!id) return false;
 
-		if(this.creditcount == 0){
+		if(Number(this._session.getItem('creditcount')) == 0){
 			return false;
 		}
 
@@ -213,8 +221,7 @@ export class TutorMain implements OnInit {
 
 		this._tutorService.setAssignStudentsWithCourse(this.tutor_id, id,ids).subscribe((res)=>{
 
-			this.creditcount--;
-			this._session.setItem('creditcount', this.creditcount);
+			this._session.setItem('creditcount', res.creditcount);
 
 			this._router.navigateByUrl('/home/tutor/main');
 
@@ -382,10 +389,11 @@ export class TutorMain implements OnInit {
 		if(this.SettingForm.valid  && this.matchedTrue){
 			var newPwd = form.newpwd;
 			this._tutorService.changePassword({tutor_id: this.tutor_id, pwd: newPwd}).subscribe((res) => {
-				this.showAlert = true;
+				this.changePasswordSuccess = false;
 				if(res.success){
-					this.changeSuccess = true;
+					this.changePasswordSuccess = true;
 				}else{
+					this.showAlert = true;
 					this.changeSuccess = false;
 					this.failure = 'Your update have been failed.';
 				}
@@ -394,8 +402,13 @@ export class TutorMain implements OnInit {
 	}
 
 	blurChange(form: any){
+		this.changePasswordSuccess = false;
 		var oldPwd = form.oldpwd;
 		this.isValidOldPassword(oldPwd);
+	}
+
+	focusEvent(){
+		this.changePasswordSuccess = false;
 	}
 
 	validateNewPwd(newpassword){

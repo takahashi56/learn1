@@ -14,6 +14,8 @@ export class DetailTutorCourse {
 
     course: any;
     studentList: any;
+    selectStudents: any = [];
+    show_un_assign:boolean = false;
 
 
     constructor(private _session: Session, private _tutorService: TutorService, private _router: Router) {
@@ -53,9 +55,13 @@ export class DetailTutorCourse {
 
     getCompleteDate(student: any) {
         var date = student.completedAt, isCompleted = student.isCompleted;
-        if (date == null || isCompleted == false) return '';
+        if (date == null || date == '') return '';
+
         var d = new Date(date),
-            datestring = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+            day = d.getDate().toString().length == 1 ? '0' + d.getDate() : d.getDate(),
+            month = (d.getMonth() + 1 ).toString().length == 1 ? '0' + (d.getMonth() + 1 ) : (d.getMonth() + 1 ),
+                datestring = day  + "/" + month + "/" + d.getFullYear();
+
         return datestring;
     }
 
@@ -75,5 +81,43 @@ export class DetailTutorCourse {
             window.open('/#/certificate');
             // self._router.navigateByUrl('/certificate');
         });
+    }
+
+    checkStudent(event, object){
+  		if(event.currentTarget.checked){
+  			this.selectStudents.push(object.student_id);
+  		}else{
+  			this.selectStudents = this.selectStudents.filter((o) => {
+  				return o != object.student_id;
+  			})
+  		}
+  		console.log(this.selectStudents);
+  	}
+
+    unassign(){
+      var student_ids = [];
+      if(this.selectStudents.length == 0) return;
+      this.selectStudents.forEach((id) => {
+        this.studentList.forEach((student) => {
+          if(student.student_id == id)
+            if(student.isCompleted == false){
+              student_ids.push(id);
+            }else{
+              this.show_un_assign = true;
+              return;
+            }
+        })
+      });
+      if(this.show_un_assign == false && student_ids.length != 0){
+        this._tutorService.unAssign({course_id: this.course.course_id, student_ids: student_ids, tutor_id: this._session.getCurrentId(), creditcount: Number(this._session.getItem('creditcount'))}).subscribe((res) => {
+            this.studentList = this.studentList.filter((student) => {
+              return !this.selectStudents.includes(student.student_id);
+            });
+            this.selectStudents = [];
+            this._session.setItem('creditcount', res.creditcount);
+        })
+      }
+
+      this.show_un_assign = false;
     }
 }

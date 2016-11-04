@@ -9,6 +9,10 @@
             <div class="panel-body">
                 <div class=" form">
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="courseForm" (submit)="SubmitCourse(courseForm.value)">
+                      <div [class]="showClass" *ngIf="showMessage">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                          The fields are required.
+                      </div>
                         <div class="container-fluid">
 
                             <div class="form-group" [ngClass]="{ 'has-error' : !coursetitle.valid && submitAttempt }">
@@ -19,7 +23,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class="text-page form-control" id="ctitle" name="ctitle" type="text" value="Fire Safety" ngControl="coursetitle">
+                                        <input class="text-page form-control" id="ctitle" name="ctitle" type="text" value="Fire Safety" ngControl="coursetitle" (focus)="inputFocus()">
                                     </div>
                                 </div>
                             </div>
@@ -31,7 +35,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <textarea class="page-color text-page form-control" id="cdescription" name="cdescription" type="text" ngControl="coursedescription" value="A course regarding fire safety in the work place.">A course regarding fire safety in the work place.</textarea>
+                                        <textarea class="page-color text-page form-control" id="cdescription" name="cdescription" type="text" ngControl="coursedescription" value="A course regarding fire safety in the work place."  (focus)="inputFocus()">A course regarding fire safety in the work place.</textarea>
                                     </div>
                                 </div>
 
@@ -90,7 +94,7 @@
                             <div class="m-l-5 m-r-5">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <a  class="btn btn-primary w-sm" (click)="showBack()" data-toggle="modal" data-target="#show_back">Back</a>
+                                        <a  class="btn btn-primary w-sm" (click)="showBack(courseForm.value)" data-toggle="modal" data-target="#show_back">Back</a>
                                     </div>
                                     <div class="col-xs-8 text-right">
                                         <input type="button" (click)="cancel()" value="Cancel" class="btn btn-primary m-b-10 w-sm">

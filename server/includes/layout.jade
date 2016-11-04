@@ -77,10 +77,15 @@ html
 		//- endinject
 
 		link(rel="stylesheet", href="//fonts.googleapis.com/css?family=Open+Sans")
+		link(rel="stylesheet", href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css")
+
 		script(src="https://js.stripe.com/v2/")
+		script(src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js")
+
 		script(type="text/javascript").
 			PDFJS.workerSrc = '/vendor/pdfjs-dist/build/pdf.worker.js';
 			Stripe.setPublishableKey('pk_test_We45bLO76vdmkYnW7Lr5KIpa');
+
 			System.config( {
 				  defaultJSExtensions: true,
 								packages: {
@@ -105,6 +110,7 @@ html
 
 		script(type="text/javascript").
 			$(document).ready(function () {
+			
 			var idleState = false;
 			var idleTimer = null;
 			$('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {

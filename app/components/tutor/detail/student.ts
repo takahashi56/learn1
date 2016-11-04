@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, AfterViewInit} from 'angular2/core';
 import {Session} from '../../../services/session';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
@@ -12,7 +12,7 @@ import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'a
     providers: [Session, TutorService],
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES]
 })
-export class DetailTutorStudent {
+export class DetailTutorStudent implements AfterViewInit {
 
     student: any;
     allStudentData: any;
@@ -60,6 +60,10 @@ export class DetailTutorStudent {
                 verifiedpassword: this.verifiedpassword
             })
         }
+    }
+
+    ngAfterViewInit() {
+        $("input.datepicker").datepicker({ dateFormat: 'dd/mm/yy' });
     }
 
     getUserFullName() {
@@ -175,9 +179,19 @@ export class DetailTutorStudent {
 
     getCompleteDate(course: any) {
         var date = course.completedAt, isCompleted = course.isCompleted;
-        if (date == null || isCompleted == false) return '';
+        if (date == null || date == '') return '';
+
         var d = new Date(date),
-            datestring = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+            day = d.getDate().toString().length == 1 ? '0' + d.getDate() : d.getDate(),
+            month = (d.getMonth() + 1 ).toString().length == 1 ? '0' + (d.getMonth() + 1 ) : (d.getMonth() + 1 ),
+                datestring = day  + "/" + month + "/" + d.getFullYear();
+
         return datestring;
+    }
+
+    onKey(event: any) {
+        var value = event.target.value;
+        value = value.replace(/\D/g, '');
+        (<Control>this.StudentDetailForm.controls['phone']).updateValue(value);
     }
 }

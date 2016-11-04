@@ -28,7 +28,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="m-l-10 m-r-10">
-                                            <input class=" form-control" id="fname" name="name" readonly="" type="text" placeholder="Course Name" [value]="course.coursetitle">
+                                                <input class=" form-control" id="fname" name="name" readonly="" type="text" placeholder="Course Name" [value]="course.coursetitle">
                                             </div>
                                         </div>
                                         <div class="col-lg-2">
@@ -38,7 +38,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="m-l-10 m-r-10">
-				<textarea class="page-color text-page form-control" id="cdescription" name="cdescription" type="text" readonly="">{{course.coursedescription}}</textarea>
+                                                <textarea class="page-color text-page form-control" id="cdescription" name="cdescription" type="text" readonly="">{{course.coursedescription}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -67,6 +67,7 @@
                     <table class="table text-page">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Employee Name</th>
                                 <th class="text-center">Completed</th>
                                 <th class="text-center">Score</th>
@@ -75,6 +76,12 @@
                             </tr>
                         </thead>
                         <tr *ngFor="let student of studentList">
+                            <td>
+                                <label class="cr-styled">
+                                  <input type="checkbox" (change)="checkStudent($event,student)">
+                                  <i class="fa"></i>
+                              </label>
+                            </td>
                             <td><strong>{{student.firstName + " " + student.lastName}}</strong></td>
                             <td class="text-center"><strong>{{getComplete(student.isCompleted)}}</strong></td>
                             <td class="text-center"><strong>{{student.isCompleted ? student.score + '%' : ''}}</strong></td>
@@ -84,22 +91,50 @@
                         </tr>
                     </table>
                 </div>
-                            <div class="white-space m-t-30 m-b-30">
-                                <div class="row">
-                                    <div class="col-xs-10">
-                                        <span class="sr-only">Empty Space</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="m-l-0 m-r-0">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <input type="submit" (click)="gotoTutorMain()" value="Back" class="btn btn-primary m-b-10 w-sm">
-                                    </div>
-                                </div>
-                            </div>
+                <div class="white-space m-t-30 m-b-30">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <span class="sr-only">Empty Space</span>
                         </div>
+                    </div>
+                </div>
+                <div class="m-l-0 m-r-0">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <input type="submit" (click)="gotoTutorMain()" value="Back" class="btn btn-primary m-b-10 w-sm">
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <a class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#show_un_assign" (click)="unassign()">Unassign</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
 
 </section>
+
+<div *ngIf="show_un_assign" id="show_un_assign" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>This course can not be unassigned as it has been started. </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

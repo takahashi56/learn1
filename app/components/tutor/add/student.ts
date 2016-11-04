@@ -1,9 +1,11 @@
-import {Component} from 'angular2/core';
+import {Component, AfterViewInit} from 'angular2/core';
 import {Session} from '../../../services/session';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
 import {TutorService} from '../../../services/tutor';
 import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
+
+declare var $: JQueryStatic;
 
 @Component({
     selector: 'tutor-add-student',
@@ -11,7 +13,7 @@ import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'a
     providers: [Session, TutorService],
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES]
 })
-export class AddTutorStudent {
+export class AddTutorStudent implements AfterViewInit {
 
     student: any;
     allStudentData: any;
@@ -55,6 +57,9 @@ export class AddTutorStudent {
         }
     }
 
+    ngAfterViewInit() {
+        $("input.datepicker").datepicker({ dateFormat: 'dd/mm/yy' });
+    }
 
     generatePassword() {
         var pwd = this.randomString();
@@ -126,12 +131,13 @@ export class AddTutorStudent {
         (<Control>this.StudentForm.controls['phone']).updateValue(value);
     }
 
-    beforeGotoBack(form: any){
-      if(form.password != this.student.hashed_pwd || form.firstname != this.student.firstName || form.lastname != this.student.lastName || form.username != this.student.username || form.phone != this.student.phone){
-        this.showGotoBack = true;
-      } else {
-        this.showGotoBack = false;
-        this.cancel();      }
+    beforeGotoBack(form: any) {
+        if (form.password != this.student.hashed_pwd || form.firstname != this.student.firstName || form.lastname != this.student.lastName || form.username != this.student.username || form.phone != this.student.phone) {
+            this.showGotoBack = true;
+        } else {
+            this.showGotoBack = false;
+            this.cancel();
+        }
     }
 
     private randomString(): string {

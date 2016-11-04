@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username" placeholder="Username(Logon name)">
+                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username" placeholder="Username(Logon Name)">
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input type="date" placeholder="Choose a Date ( Optional )" ngControl="dob" onClick="$(this).removeClass('placeholderclass')" class="form-control dateclass placeholderclass">
+                                        <input type="text" placeholder="Choose a Date ( Optional )" ngControl="dob" class="form-control datepicker">
                                     </div>
                                 </div>
                             </div>
@@ -151,8 +151,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancel()">Assign</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancel()">Yes</button>
             </div>
         </div>
     </div>

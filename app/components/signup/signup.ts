@@ -23,6 +23,7 @@ export class SignUp {
 	password: Control;
 	submitAttempt: boolean = false;
 	registerFailure: boolean = false;
+	check_accept: boolean = false;
 
 	constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
 
@@ -52,10 +53,18 @@ export class SignUp {
 			return true;
 	}
 
+	checkAccept(event){
+			if(event.currentTarget.checked){
+				this.check_accept = true;
+			}else{
+				this.check_accept = false;
+			}
+	}
+
 	AddOrgs(form: any) {
 		this.registerFailure = false;
 		this.submitAttempt = true;
-		if(this.OrganizeForm.valid){
+		if(this.OrganizeForm.valid && this.check_accept){
 			var data = {
 				firstName: form.firstName,
 				lastName: form.lastName,
@@ -64,7 +73,8 @@ export class SignUp {
 				password: form.password,
 				phone: form.phone,
 				employeecount: 0,
-				creditcount: 0
+				creditcount: 0,
+				subscribing: false,
 			};
 
 			this._adminService.addTutor(data)

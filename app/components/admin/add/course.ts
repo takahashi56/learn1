@@ -22,6 +22,8 @@ export class AddCourse {
     courseData: any = {};
     lessonData: any = [];
     show_back: boolean = false;
+    showMessage: boolean = false;
+    showClass: string="alert alert-danger alert-dismissable";
 
     show_remove_lesson: boolean = false;
     selectLesson: any = [];
@@ -48,8 +50,8 @@ export class AddCourse {
         this._router.navigate(['AdminMain']);
     }
 
-    showBack() {
-        if (Number(this._session.getItem('valid_input')) == 1) {
+    showBack(form: any) {
+        if (Number(this._session.getItem('valid_input')) == 1 || form.coursetitle != this.courseData.coursetitle || form.coursedescription != this.courseData.coursedescription) {
             this.show_back = true;
         } else {
             this.cancel();
@@ -111,9 +113,11 @@ export class AddCourse {
     }
 
     SubmitCourse(form: any) {
-        var submitAttempt = true;
+        console.log('fdsa')
+        this.submitAttempt = true;
         var editORadd = JSON.parse(this._session.getItem('editORadd'));
         if (this.courseForm.valid) {
+            console.log(this.courseForm.valid)
             var data = JSON.parse(this._session.getItem('Course'));
 
             data.coursetitle = form.coursetitle;
@@ -131,6 +135,8 @@ export class AddCourse {
                         console.log("");
                     }
                 })
+        }else{
+          this.showMessage = true;
         }
     }
 
@@ -176,5 +182,9 @@ export class AddCourse {
                 return o != object.lesson_id;
             })
         }
+    }
+
+    inputFocus(){
+      this.showMessage = false;
     }
 }

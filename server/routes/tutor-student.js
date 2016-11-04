@@ -78,7 +78,12 @@ module.exports = function(app) {
 		tutorstudent.getGoCardlessCompleteUrl(req, res);
 	})
 
+	app.post('/api/tutor/unassign', function(req,res){
+		tutorstudent.unassign(req, res);
+	})
+
 	app.post('/api/tutor/updatetutorinfo', function(req,res){
 		tutorstudent.getTutorInfo(req, res);
 	})
+
 }
