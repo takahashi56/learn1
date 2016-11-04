@@ -15,10 +15,10 @@
     startOnPageLoad: true,
     restartOnPushState: true,
     restartOnRequestAfter: 500,
-    target: '#loading',
+    target: 'body',
     elements: {
       checkInterval: 100,
-      selectors: ['#loading']
+      selectors: ['body']
     },
     eventLag: {
       minSamples: 10,
@@ -245,7 +245,7 @@
         }
         f++;
         if(f>1){
-          document.getElementById('image_logo').style.display = 'none'          
+          document.getElementById('loading').style.display = 'none'
         }
         this.el = document.createElement('div');
         this.el.className = "pace pace-active";

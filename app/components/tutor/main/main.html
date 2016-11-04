@@ -3,24 +3,31 @@
         <h2 class="text-page m-b-30"><strong></strong></h2>
         <ul class="nav nav-tabs nav-justified">
             <li [ngClass]="{'active': select_tab_item == 1}">
-                <a href="#students" data-toggle="tab"  (click)="onTabClick(1)"><strong class="text-page">All Employees</strong></a>
+                <a href="#students" data-toggle="tab" (click)="onTabClick(1)"><strong class="text-page">All Employees</strong></a>
             </li>
             <li [ngClass]="{'active': select_tab_item == 2}">
-                <a href="#courses" data-toggle="tab"  (click)="onTabClick(2)"><strong class="text-page">All Courses</strong></a>
+                <a href="#courses" data-toggle="tab" (click)="onTabClick(2)"><strong class="text-page">All Courses</strong></a>
             </li>
             <li [ngClass]="{'active': select_tab_item == 3}">
-                <a href="#settings" data-toggle="tab"  (click)="onTabClick(3)"><strong class="text-page">Settings</strong></a>
+                <a href="#settings" data-toggle="tab" (click)="onTabClick(3)"><strong class="text-page">Settings</strong></a>
             </li>
         </ul>
         <div class="tab-content">
             <div [class]="employee_tab" id="students">
                 <div class="text-right m-b-30">
-                    <a  class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#show_not_assign" (click)="gotoAddStudent()">Add Employee</a>
-                    <a  class="btn btn-primary w-sm m-r-5" (click)="beforeRemoveStudent()"  data-toggle="modal" data-target="#remove-student" >Remove Employee</a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Employees <span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a class="" data-toggle="modal" data-target="#show_not_assign" (click)="gotoAddStudent()">Add Employee</a></li>
+                            <li><a class="" (click)="beforeRemoveStudent()" data-toggle="modal" data-target="#remove-student">Remove Employee</a></li>
+                            <li>
+                              <a class="" data-toggle="modal" data-target="#import-student">Import Employee</a>
+                            </li>
+                        </ul>
+                    </div>
 
-                    <a  class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#import-student" >Import Employee</a>
-                    <input type="file" id="file-uploader" (change)="importAddStudent($event)" style="display: none;"/>
-                    <button  class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#select-course" (click)="beforeAssign()" [disabled]="isAssign()">Assign Course</button>
+                    <input type="file" id="file-uploader" (change)="importAddStudent($event)" style="display: none;" />
+                    <button class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#select-course" (click)="beforeAssign()" [disabled]="isAssign()">Assign Course</button>
 
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Training Matrix <span class="caret"></span></button>
@@ -51,13 +58,13 @@
                                     <i class="fa"></i>
                                 </label>
                             </td>
-                            <td (click)="gotoStudentDetail(student)" style="cursor: pointer;" ><strong>{{student.firstName}}</strong></td>
-                            <td  (click)="gotoStudentDetail(student)" style="cursor: pointer;" ><strong>{{student.lastName}}</strong></td>
+                            <td (click)="gotoStudentDetail(student)" style="cursor: pointer;"><strong>{{student.firstName}}</strong></td>
+                            <td (click)="gotoStudentDetail(student)" style="cursor: pointer;"><strong>{{student.lastName}}</strong></td>
                             <td><strong>{{student.DOB}}</strong></td>
-                            <td  (click)="gotoStudentDetail(student)" style="cursor: pointer;" ><strong>{{student.username}}</strong></td>
+                            <td (click)="gotoStudentDetail(student)" style="cursor: pointer;"><strong>{{student.username}}</strong></td>
                             <td><strong>{{student.hashed_pwd}}</strong></td>
                             <td><strong>{{student.other}}</strong></td>
-                            <td class="text-right"><a  class="btn w-xs btn-sm btn-primary" (click)="editStudent(student)">Edit</a></td>
+                            <td class="text-right"><a class="btn w-xs btn-sm btn-primary" (click)="editStudent(student)">Edit</a></td>
                         </tr>
                     </table>
                 </div>
@@ -75,223 +82,221 @@
                             </tr>
                         </thead>
                         <tr *ngFor="let course of courseList">
-                            <td (click)="gotoDetail(course)" style="cursor: pointer;" ><strong>{{course.coursetitle}}</strong></td>
-                            <td (click)="gotoDetail(course)" style="cursor: pointer;" > <strong>{{course.enrolled}}</strong></td>
-                            <td class="" >{{course.past}}</td>
-                            <td class="text-right"><a  class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-student" (click)="beforeAssignStudent(course)">Assign Employee</a></td>
+                            <td (click)="gotoDetail(course)" style="cursor: pointer;"><strong>{{course.coursetitle}}</strong></td>
+                            <td (click)="gotoDetail(course)" style="cursor: pointer;"> <strong>{{course.enrolled}}</strong></td>
+                            <td class="">{{course.past}}</td>
+                            <td class="text-right"><a class="btn btn-primary w-sm" data-toggle="modal" data-target="#select-student" (click)="beforeAssignStudent(course)">Assign Employee</a></td>
                         </tr>
                     </table>
                 </div>
             </div>
             <div [class]="setting_tab" id="settings">
-              <div class="">
-                <div class="panel-heading p-b-0">
-                    <h4 class="text-page m-l-15 m-t-15"><strong>Credits</strong></h4>
-                </div>
-
-                <div class="panel-body">
-                  <div style="max-width: 90%;">
-                    Each course you assign an employee will require 1 credit.<br/>
-                    For example if you have 15 employees and want each employee to completed the Health and Safety course this will require 15 credits
-                  </div>
-                  <div class="m-l-5 m-r-5 m-t-30">
-                      <div class="row">
-                          <div class="col-xs-4">
-                          </div>
-                          <div class="col-xs-8 text-right">
-                            <input type="button"  value="Purchase Credits" class="btn btn-primary m-b-10 w-sm m-l-15" (click)="gotoStripePayment()" />
-                          </div>
-                      </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="">
-                <div class="panel-heading p-b-0">
-                    <h4 class="text-page m-l-15 m-t-15"><strong>Subscribe and Save</strong></h4>
-                </div>
-
-                <div class="panel-body">
-                  <div style="max-width: 90%;">
-                    If you are using Correct Care on a regular basis you can save money by subscribing<br/>
-                    A subscription to Correct Care includes full access to all courses
-                  </div>
-
-                  <div class="m-l-5 m-r-5  m-t-30">
-                      <div class="row">
-                          <div class="col-xs-4">
-                          </div>
-                          <div class="col-xs-8 text-right">
-                              <input type="button"  value="Subscribe" class="btn btn-primary m-b-10 w-sm m-l-15" style="padding:6px 33px;"  (click)="gotoGoCardlessPayment()" >
-                          </div>
-                      </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="">
                 <div class="">
-                  <div class="panel-heading p-b-0">
-                      <h4 class="text-page m-l-15 m-t-15"><strong>Change Password</strong></h4>
-                  </div>
-
-                  <div class="panel-body m-t-30">
-                    <div class="form">
-                      <form class="cmxform form-horizontal tasi-form"  [ngFormModel]="SettingForm" (submit)="ChangePassowrd(SettingForm.value)">
-                        <div class="container-fluid">
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <div class="alert alert-info" *ngIf="changePasswordSuccess">
-                                Your password has been updated successfully!
-                              </div>
-                              <div class="alert alert-danger" *ngIf="!changeSuccess && showAlert">
-                                {{failure}}
-                              </div>
-                              <div class="form-group" [ngClass]="{ 'has-error' : !oldpwd.valid && validateoldconfirm && validOldPassword }">
-                                <div class="col-lg-3">
-                                    <div class="m-l-10 m-r-10">
-                                        <label for="oldpwd" class="control-label text-left text-page">Current Password</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-9">
-                                    <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="oldpwd" name="oldpwd" type="password" ngControl="oldpwd"  placeholder="Old Password" (blur)="blurChange(SettingForm.value)" (keyup)="onKey($event)" (focus)="focusEvent()">
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <div class="form-group" [ngClass]="{ 'has-error' : validateNewPwd(newpwd.value) && validatenewconfirm }">
-                                <div class="col-lg-3">
-                                    <div class="m-l-10 m-r-10">
-                                        <label for="newpwd" class="control-label text-left text-page">New Password</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-9">
-                                    <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="newpwd" name="newpwd" type="password" ngControl="newpwd"  placeholder="New Password" [disabled]="validOldPassword"  (focus)="focusEvent()">
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <div class="form-group" [ngClass]="{ 'has-error' : !matchedPassword(SettingForm.value) && validatenewconfirm }">
-                                <div class="col-lg-3">
-                                    <div class="m-l-10 m-r-10">
-                                        <label for="newpwdconfirm" class="control-label text-left text-page">Confirm New Password</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-9">
-                                    <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="newpwdconfirm" name="newpwdconfirm" type="password" ngControl="newpwdconfirm"  placeholder="Retype New Password"  [disabled]="validOldPassword" (focus)="focusEvent()" >
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <div class="form-group">
-                                <div class="col-lg-3">
-                                    <div class="m-l-10 m-r-10">
-                                        <label for="newpwdconfirm" class="control-label text-left text-page"></label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-9 text-right">
-                                    <div class="m-l-10 m-r-10">
-                                      <input type="button" (click)="cancel(SettingForm.value)" value="Cancel" class="btn btn-primary m-b-10 w-sm">
-                                      <input type="submit"  value="Save" class="btn btn-primary m-b-10 w-sm m-l-15">
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </form>
+                    <div class="panel-heading p-b-0">
+                        <h4 class="text-page m-l-15 m-t-15"><strong>Credits</strong></h4>
                     </div>
-                  </div>
+
+                    <div class="panel-body">
+                        <div style="max-width: 90%;">
+                            Each course you assign an employee will require 1 credit.<br/> For example if you have 15 employees and want each employee to completed the Health and Safety course this will require 15 credits
+                        </div>
+                        <div class="m-l-5 m-r-5 m-t-30">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <input type="button" value="Purchase Credits" class="btn btn-primary m-b-10 w-sm m-l-15" (click)="gotoStripePayment()" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+
+                <div class="">
+                    <div class="panel-heading p-b-0">
+                        <h4 class="text-page m-l-15 m-t-15"><strong>Subscribe and Save</strong></h4>
+                    </div>
+
+                    <div class="panel-body">
+                        <div style="max-width: 90%;">
+                            If you are using Correct Care on a regular basis you can save money by subscribing<br/> A subscription to Correct Care includes full access to all courses
+                        </div>
+
+                        <div class="m-l-5 m-r-5  m-t-30">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <input type="button" value="Subscribe" class="btn btn-primary m-b-10 w-sm m-l-15" style="padding:6px 33px;" (click)="gotoGoCardlessPayment()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="">
+                    <div class="">
+                        <div class="panel-heading p-b-0">
+                            <h4 class="text-page m-l-15 m-t-15"><strong>Change Password</strong></h4>
+                        </div>
+
+                        <div class="panel-body m-t-30">
+                            <div class="form">
+                                <form class="cmxform form-horizontal tasi-form" [ngFormModel]="SettingForm" (submit)="ChangePassowrd(SettingForm.value)">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="alert alert-info" *ngIf="changePasswordSuccess">
+                                                    Your password has been updated successfully!
+                                                </div>
+                                                <div class="alert alert-danger" *ngIf="!changeSuccess && showAlert">
+                                                    {{failure}}
+                                                </div>
+                                                <div class="form-group" [ngClass]="{ 'has-error' : !oldpwd.valid && validateoldconfirm && validOldPassword }">
+                                                    <div class="col-lg-3">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <label for="oldpwd" class="control-label text-left text-page">Current Password</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-9">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <input class=" form-control" id="oldpwd" name="oldpwd" type="password" ngControl="oldpwd" placeholder="Old Password" (blur)="blurChange(SettingForm.value)" (keyup)="onKey($event)" (focus)="focusEvent()">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="form-group" [ngClass]="{ 'has-error' : validateNewPwd(newpwd.value) && validatenewconfirm }">
+                                                    <div class="col-lg-3">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <label for="newpwd" class="control-label text-left text-page">New Password</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-9">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <input class=" form-control" id="newpwd" name="newpwd" type="password" ngControl="newpwd" placeholder="New Password" [disabled]="validOldPassword" (focus)="focusEvent()">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="form-group" [ngClass]="{ 'has-error' : !matchedPassword(SettingForm.value) && validatenewconfirm }">
+                                                    <div class="col-lg-3">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <label for="newpwdconfirm" class="control-label text-left text-page">Confirm New Password</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-9">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <input class=" form-control" id="newpwdconfirm" name="newpwdconfirm" type="password" ngControl="newpwdconfirm" placeholder="Retype New Password" [disabled]="validOldPassword" (focus)="focusEvent()">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="form-group">
+                                                    <div class="col-lg-3">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <label for="newpwdconfirm" class="control-label text-left text-page"></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-9 text-right">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <input type="button" (click)="cancel(SettingForm.value)" value="Cancel" class="btn btn-primary m-b-10 w-sm">
+                                                            <input type="submit" value="Save" class="btn btn-primary m-b-10 w-sm m-l-15">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
-            <!--  Header Ends -->
+<!--  Header Ends -->
 
 <div *ngIf="showAssignCourse" id="select-course" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-   <div class="modal-dialog">
-       <div class="modal-content">
-           <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-               <h4 class="modal-title">Assign a Course</h4>
-           </div>
-           <div class="modal-body assign-text">
-               <div class="row">
-                   <div class="col-md-12">
-                       <div *ngIf="!disaplyCanAssign" class="form-group">
-                           <p>Click the arrow below to select a course and then click Assign.</p>
-                       </div>
-                       <div *ngIf="disaplyCanAssign" class="form-group">
-                           <p> You should purchase credit or subscribe for assign to course. </p>
-                       </div>
-                   </div>
-               </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Assign a Course</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div *ngIf="!disaplyCanAssign" class="form-group">
+                            <p>Click the arrow below to select a course and then click Assign.</p>
+                        </div>
+                        <div *ngIf="disaplyCanAssign" class="form-group">
+                            <p> You should purchase credit or subscribe for assign to course. </p>
+                        </div>
+                    </div>
+                </div>
 
-           </div>
+            </div>
 
-           <div class="modal-footer">
-			         	<div class="row" *ngIf="!disaplyCanAssign">
-                   <div class="col-md-12">
-                      <select class="course-select" (change)="onSelectCourse($event.target.value)">
+            <div class="modal-footer">
+                <div class="row" *ngIf="!disaplyCanAssign">
+                    <div class="col-md-12">
+                        <select class="course-select" (change)="onSelectCourse($event.target.value)">
                         <option *ngFor="let course of courseList" [value]="course.course_id">{{course.coursetitle}}</option>
                       </select>
-                   </div>
-               </div>
-
-               <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-               <button *ngIf="!disaplyCanAssign" type="button" class="btn btn-primary" data-dismiss="modal" (click)="courseAssign()">Assign</button>
-           </div>
-       </div>
-   </div>
-</div>
-
-<div *ngIf="showAssignStudent" id="select-student" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Assign a Employee</h4>
-                </div>
-                <div class="modal-body assign-text">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <p>Click the arrow below to select a Employee and then click Assign.</p>
-                            </div>
-                        </div>
                     </div>
-
                 </div>
 
-                <div class="modal-footer">
-					<div class="row">
-                        <div class="col-md-12">
-                            <select class="course-select"  (change)="onSelectStudent($event.target.value)">
-                            <option *ngFor="let student of studentList" [value]="student.student_id">{{student.firstName+ " " + student.lastName}}</option>
-              							</select>
-                        </div>
-                    </div>
-
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="studentAssign()">Assign</button>
-                </div>
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                <button *ngIf="!disaplyCanAssign" type="button" class="btn btn-primary" data-dismiss="modal" (click)="courseAssign()">Assign</button>
             </div>
         </div>
     </div>
+</div>
+
+<div *ngIf="showAssignStudent" id="select-student" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Assign a Employee</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>Click the arrow below to select a Employee and then click Assign.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <select class="course-select" (change)="onSelectStudent($event.target.value)">
+                            <option *ngFor="let student of studentList" [value]="student.student_id">{{student.firstName+ " " + student.lastName}}</option>
+              							</select>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="studentAssign()">Assign</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div *ngIf="showRemoveStudent" id="remove-student" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -358,18 +363,16 @@
                         <div class="form-group">
                             <p>Rather than add employees one by one you can import employees from a CSV formatted file.</p>
                             <p>
-                              The file should be a text file with following columns each seperated with a comman:
+                                The file should be a text file with following columns each seperated with a comman:
                             </p>
                             <p>
-                              First Name, SurName, DOB, Mobile, Username, Password
+                                First Name, SurName, DOB, Mobile, Username, Password
                             </p>
                             <p>
-                              Example text file format:
+                                Example text file format:
                             </p>
                             <p>
-                              John, Smith, 20/12/1970, 07882770123, jsmith, Pass88 <br/>
-                              George, Jones, 18/06/1985, 0312740123, gjones, Pass12 <br/>
-                              Harry, Flow, 30/10/1959, 0771551123, hflow, Pass44
+                                John, Smith, 20/12/1970, 07882770123, jsmith, Pass88 <br/> George, Jones, 18/06/1985, 0312740123, gjones, Pass12 <br/> Harry, Flow, 30/10/1959, 0771551123, hflow, Pass44
                             </p>
                         </div>
                     </div>
