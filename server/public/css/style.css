@@ -2291,15 +2291,3 @@ div#loading img {
     position: relative;
     top: 30%;
 }
-body div#loading img{
-  z-index: -1000;
-  opacity: 0;
-}
-
-body.pace-done div#loading img{
-  display: none;
-}
-
-body.pace-running div#loading img{
-  opacity: 1;
-}
