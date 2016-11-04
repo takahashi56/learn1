@@ -15,10 +15,10 @@
     startOnPageLoad: true,
     restartOnPushState: true,
     restartOnRequestAfter: 500,
-    target: 'body',
+    target: '#loading',
     elements: {
       checkInterval: 100,
-      selectors: ['body']
+      selectors: ['#loading']
     },
     eventLag: {
       minSamples: 10,
@@ -229,6 +229,7 @@
     return NoTargetError;
 
   })(Error);
+  var f = 0;
 
   Bar = (function() {
     function Bar() {
@@ -241,6 +242,10 @@
         targetElement = document.querySelector(options.target);
         if (!targetElement) {
           throw new NoTargetError;
+        }
+        f++;
+        if(f>1){
+          document.getElementById('image_logo').style.display = 'none'          
         }
         this.el = document.createElement('div');
         this.el.className = "pace pace-active";

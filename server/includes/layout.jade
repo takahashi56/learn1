@@ -57,6 +57,8 @@ html
 		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 
 	body
+		div(id="loading")
+			img(src="images/imgpsh_fullsize.png", id="image_logo")
 		div(id="wrapper")
 			block main-content
 
@@ -110,7 +112,7 @@ html
 
 		script(type="text/javascript").
 			$(document).ready(function () {
-			
+
 			var idleState = false;
 			var idleTimer = null;
 			$('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
