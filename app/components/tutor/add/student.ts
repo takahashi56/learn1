@@ -25,8 +25,12 @@ export class AddTutorStudent implements AfterViewInit {
     verifiedpassword: Control;
     phone: Control;
     dob: Control;
+    dob_day: Control;
+    dob_month: Control;
+    dob_year: Control;
     submitAttempt: boolean = false;
     showGotoBack: boolean = false;
+    months: any = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
@@ -47,7 +51,9 @@ export class AddTutorStudent implements AfterViewInit {
                 firstname: this.firstname,
                 lastname: this.lastname,
                 username: this.username,
-                dob: this.dob,
+                dob_day: this.dob_day,
+                dob_month: this.dob_month,
+                dob_year: this.dob_year,
                 phone: this.phone,
                 password: this.password,
                 verifiedpassword: this.verifiedpassword
@@ -107,7 +113,7 @@ export class AddTutorStudent implements AfterViewInit {
                 lastName: form.lastname,
                 username: form.username,
                 hashed_pwd: form.password,
-                DOB: form.dob,
+                DOB: `${form.dob_day}/${form.dob_month}/${form.dob_year}`,
                 phone: form.phone,
                 isCompleted: false,
                 completedAt: '',
@@ -138,6 +144,24 @@ export class AddTutorStudent implements AfterViewInit {
             this.showGotoBack = false;
             this.cancel();
         }
+    }
+
+    isNumberKey(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+    isDayKey(evt, value) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
     }
 
     private randomString(): string {

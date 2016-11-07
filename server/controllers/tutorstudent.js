@@ -155,6 +155,9 @@ exports.addStudent = function(req, res) {
     var student = req.body;
 
     student["created_at"] = new Date();
+    if(student.DOB != '' || student.DOB != null){
+      student.DOB = new Date(student.DOB);
+    }
 
     Student.create(student, function(err, student) {
         if (err) return console.error(err);
@@ -218,6 +221,10 @@ exports.addStudentCSV = function(req, res) {
 
 exports.editStudent = function(req, res) {
     var student = req.body;
+
+    if(student.DOB != '' || student.DOB != null){
+      student.DOB = new Date(student.DOB);
+    }
 
     Student.update({
         _id: student._id

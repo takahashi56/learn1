@@ -40,6 +40,17 @@ header {
 .p-0 {
     padding: 0px !important;
 }
+
+.p-l-r-0{
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.p-l-r-30{
+  padding-right: 20px !important;
+  padding-left: 20px !important;
+}
+
 .p-t-0 {
     padding-top: 0px !important;
 }

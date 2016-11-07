@@ -2291,3 +2291,10 @@ div#loading img {
     position: relative;
     top: 30%;
 }
+
+.col-lg-1-5 {
+    width: 13%;
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+}
