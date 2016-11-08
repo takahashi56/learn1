@@ -212,7 +212,7 @@
                         </tr>
                     </thead>
                     <tr *ngFor="let trans of trans_history">
-                        <td>{{trans.credits}} Credits Purchased</td>
+                        <td>{{trans.credits / 4}} Credits Purchased</td>
                         <td>{{trans.credits | currency:'GBP':true:'1.2-2'}}</td>
                         <td>{{getCreatedPaidDate(trans.created_at)}}</td>
                     </tr>

@@ -155,8 +155,8 @@ exports.addStudent = function(req, res) {
     var student = req.body;
 
     student["created_at"] = new Date();
-    if(student.DOB != '' || student.DOB != null){
-      student.DOB = new Date(student.DOB);
+    if (student.DOB != '' || student.DOB != null) {
+        student.DOB = new Date(student.DOB);
     }
 
     Student.create(student, function(err, student) {
@@ -222,8 +222,8 @@ exports.addStudentCSV = function(req, res) {
 exports.editStudent = function(req, res) {
     var student = req.body;
 
-    if(student.DOB != '' || student.DOB != null){
-      student.DOB = new Date(student.DOB);
+    if (student.DOB != '' || student.DOB != null) {
+        student.DOB = new Date(student.DOB);
     }
 
     Student.update({
@@ -256,57 +256,61 @@ exports.setStudentByCourse = function(req, res) {
                 error: "you cannot assign the course to students!"
             }).end();
         }
-        var creditcount = tutor.creditcount, i = 0;
+        var creditcount = tutor.creditcount,
+            i = 0;
 
         students_ids.map(function(id) {
-          Take.find({
-            student_id: id
-          }, function(err, takes) {
-            if (err) return console.log(err);
-
-            var confirm = takes.filter(function(x) {
-              return x.course_id == course_id
-            });
-
-            i++;
-            console.log('confirm = ' + JSON.stringify(confirm));
-
-            if (confirm.length == 0) {
-              var data = {
-                student_id: id,
-                course_id: course_id,
-                score: 0,
-                isCompleted: false,
-                completedAt: '',
-                certificate: ''
-              }
-              if(tutor.subscribing == false){
-                creditcount--;
-                if(creditcount < 0){
-                  tutor.creditcount = 0;
-                  tutor.save();
-                  res.send({
-                    success: true,
-                    creditcount: 0
-                  }).end();
-                  return console.error("creditcount = 0");
-
-                }else{
-                  tutor.creditcount = creditcount;
-                  tutor.save();
-                }
-              }
-
-              Take.create(data, function(err, take) {
+            Take.find({
+                student_id: id
+            }, function(err, takes) {
                 if (err) return console.log(err);
-              });
-            }
 
-            if(i == student_ids.length){
-              res.send({success: true, creditcount: creditcount});
-              return;
-            }
-          })
+                var confirm = takes.filter(function(x) {
+                    return x.course_id == course_id
+                });
+
+                i++;
+                console.log('confirm = ' + JSON.stringify(confirm));
+
+                if (confirm.length == 0) {
+                    var data = {
+                        student_id: id,
+                        course_id: course_id,
+                        score: 0,
+                        isCompleted: false,
+                        completedAt: '',
+                        certificate: ''
+                    }
+                    if (tutor.subscribing == false) {
+                        creditcount--;
+                        if (creditcount < 0) {
+                            tutor.creditcount = 0;
+                            tutor.save();
+                            res.send({
+                                success: true,
+                                creditcount: 0
+                            }).end();
+                            return console.error("creditcount = 0");
+
+                        } else {
+                            tutor.creditcount = creditcount;
+                            tutor.save();
+                        }
+                    }
+
+                    Take.create(data, function(err, take) {
+                        if (err) return console.log(err);
+                    });
+                }
+
+                if (i == students_ids.length) {
+                    res.send({
+                        success: true,
+                        creditcount: creditcount
+                    });
+                    return;
+                }
+            })
         })
     });
 }
@@ -442,12 +446,12 @@ exports.removeStudent = function(req, res) {
             if (err) console.error(err);
 
             Take.find({
-              student_id: student._id
-            }, function(err, takes){
-              takes.forEach(function(take){
-                take.remove();
-              })
-              student.remove()
+                student_id: student._id
+            }, function(err, takes) {
+                takes.forEach(function(take) {
+                    take.remove();
+                })
+                student.remove()
             });
         })
     })
@@ -667,15 +671,15 @@ exports.performPayment = function(req, res) {
                 }).end();
             } else {
                 if (charge.status == 'succeeded' && charge.paid == true) {
-                    var credits = Number(charge.amount / 100) + Number(creditcount),
+                    var credits = Number(charge.amount / 400) + Number(creditcount),
                         created = new Date(charge.created),
                         transaction_id = charge.id,
                         transaction = new StripeTransaction();
 
                     transaction.credits = charge.amount / 100;
                     transaction.email = email;
-                    transaction.created_paid = created,
-                        transaction.transaction_id = transaction_id;
+                    transaction.created_paid = created;
+                    transaction.transaction_id = transaction_id;
                     transaction.holder = holder;
                     transaction.tutor_id = tutor_id;
 
@@ -758,9 +762,9 @@ exports.getStripeHistory = function(req, res) {
     StripeTransaction.find({
         tutor_id: tutor_id
     }, function(err, trans) {
-      trans.sort(function(a, b) {
-          return new Date(b.created_at) - new Date(a.created_at);
-      })
+        trans.sort(function(a, b) {
+            return new Date(b.created_at) - new Date(a.created_at);
+        })
         res.status(200).send(trans).end();
     })
 }
@@ -776,28 +780,33 @@ exports.getTutorInfo = function(req, res) {
 }
 
 
-exports.unassign = function(req, res){
-  var course_id = req.body.course_id,
-      student_ids = req.body.student_ids,
-      tutor_id = req.body.tutor_id,
-      creditcount = req.body.creditcount;
+exports.unassign = function(req, res) {
+    var course_id = req.body.course_id,
+        student_ids = req.body.student_ids,
+        tutor_id = req.body.tutor_id,
+        creditcount = req.body.creditcount;
 
-  student_ids.forEach(function(id){
-    Take.findOne({
-      course_id: course_id,
-      student_id: id
-    }, function(err, take) {
-        if (err) return console.log(err);
+    student_ids.forEach(function(id) {
+        Take.findOne({
+            course_id: course_id,
+            student_id: id
+        }, function(err, take) {
+            if (err) return console.log(err);
 
-        take.remove();
-    });
-  })
+            take.remove();
+        });
+    })
 
-  Tutor.findOne({_id: tutor_id},function(err, tutor){
-    tutor.creditcount = Number(creditcount) + student_ids.length;
+    Tutor.findOne({
+        _id: tutor_id
+    }, function(err, tutor) {
+        tutor.creditcount = Number(creditcount) + student_ids.length;
 
-    tutor.save();
-    res.send({sucess: true, creditcount: tutor.creditcount}).end();
-  })
+        tutor.save();
+        res.send({
+            sucess: true,
+            creditcount: tutor.creditcount
+        }).end();
+    })
 
 }

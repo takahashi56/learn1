@@ -150,16 +150,16 @@ export class StripePayment {
     }
 
     updateUI(flag, res) {
-
         this.submit_disabled = false;
         if (flag == true) {
             this._session.setItem('creditcount', res.creditcount);
             this.trans_history.unshift(res.trans);
+            this.sentSuccessShow = true;
 
             this.showClass = "alert alert-success alert-dismissable";
             this.sentStatus = "Your Payment has been successfully. You have got the new credits " + res.creditcount;
         } else {
-            this.sentSuccessShow = true;
+            this.sentShow = true;
             this.showClass = "alert alert-danger alert-dismissable";
             this.sentStatus = "Your Payment has not been failed. Please type your card information correctly!";
         }
