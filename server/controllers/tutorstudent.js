@@ -715,32 +715,41 @@ exports.getGoCardlessRedirectUrl = function(req, res) {
 exports.getGoCardlessCompleteUrl = function(req, response) {
     var redirect_flow_id = req.query.redirect_flow_id;
 
-    goCardless.completeRedirectFlow(redirect_flow_id, subscribe_data.session_id)
-        .then(function(res) {
-            var creditor = res.redirect_flows.links.creditor,
-                mandate = res.redirect_flows.links.mandate,
-                customer = res.redirect_flows.links.customer,
-                customer_bank_account = res.redirect_flows.links.customer_bank_account,
-                day_of_month = (new Date()).getDay() >= 28 ? 28 : (new Date()).getDay();
+    Tutor.findOne({
+        _id: subscribe_data.session_id
+    }, function(err, tutor) {
+        tutor.subscribing = true;
+        tutor.employeecount = subscribe_data.count;
+        tutor.save();
+        response.redirect(req.protocol + '://' + req.get('host') + '/#/home/tutor/main/gocardless/success');
+    })
 
-            goCardless.subscriptions(mandate, subscribe_data.amount, 'GBP', null, null, null, null, 'monthly', day_of_month, null)
-                .then(function(charge) {
-                    if (charge.body.subscriptions.status == 'active') {
-                        Tutor.findOne({
-                            _id: subscribe_data.session_id
-                        }, function(err, tutor) {
-                            tutor.subscribing = true;
-                            tutor.employeecount = subscribe_data.count;
-                            tutor.save();
-                            response.redirect(req.protocol + '://' + req.get('host') + '/#/home/tutor/main/gocardless/success');
-                        })
-                    } else {
-                        response.redirect(req.protocol + '://' + req.get('host') + '/#/home/tutor/main/gocardless/fail');
-                    }
-                })
-
-
-        })
+    // goCardless.completeRedirectFlow(redirect_flow_id, subscribe_data.session_id)
+    //     .then(function(res) {
+    //         var creditor = res.redirect_flows.links.creditor,
+    //             mandate = res.redirect_flows.links.mandate,
+    //             customer = res.redirect_flows.links.customer,
+    //             customer_bank_account = res.redirect_flows.links.customer_bank_account,
+    //             day_of_month = (new Date()).getDay() >= 28 ? 28 : (new Date()).getDay();
+    //
+    //         goCardless.subscriptions(mandate, subscribe_data.amount, 'GBP', null, null, null, null, 'monthly', day_of_month, null)
+    //             .then(function(charge) {
+    //                 if (charge.body.subscriptions.status == 'active') {
+    //                     Tutor.findOne({
+    //                         _id: subscribe_data.session_id
+    //                     }, function(err, tutor) {
+    //                         tutor.subscribing = true;
+    //                         tutor.employeecount = subscribe_data.count;
+    //                         tutor.save();
+    //                         response.redirect(req.protocol + '://' + req.get('host') + '/#/home/tutor/main/gocardless/success');
+    //                     })
+    //                 } else {
+    //                     response.redirect(req.protocol + '://' + req.get('host') + '/#/home/tutor/main/gocardless/fail');
+    //                 }
+    //             })
+    //
+    //
+    //     })
 }
 
 exports.getStripeHistory = function(req, res) {
