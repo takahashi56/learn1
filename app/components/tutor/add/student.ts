@@ -113,7 +113,7 @@ export class AddTutorStudent implements AfterViewInit {
                 lastName: form.lastname,
                 username: form.username,
                 hashed_pwd: form.password,
-                DOB: `${form.dob_day}/${form.dob_month}/${form.dob_year}`,
+                DOB: `${form.dob_day.length == 2? form.dob_day : '0'+form.dob_day}/${form.dob_month.length == 2? form.dob_month : '0'+form.dob_month}/${form.dob_year}`,
                 phone: form.phone,
                 isCompleted: false,
                 completedAt: '',
@@ -155,13 +155,34 @@ export class AddTutorStudent implements AfterViewInit {
         return true;
     }
 
-    isDayKey(evt, value) {
+    isDayKey(evt, form: any) {
         evt = (evt) ? evt : window.event;
         var charCode = (evt.which) ? evt.which : evt.keyCode;
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }
+        var val = form.dob_day == null ? '': form.dob_day;
+        if(val.length < 2){
+          val = val + (charCode - 48);
+        }
+        if(Number(val) > 31) return false;
+
         return true;
+    }
+
+    isYearKey(evt, form: any){
+      evt = (evt) ? evt : window.event;
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+          return false;
+      }
+      var val = form.dob_year == null ? '': form.dob_year;
+      if(val.length < 4){
+        val = val + (charCode - 48);
+      }
+      if(Number(val) > (new Date()).getFullYear()) return false;
+
+      return true;
     }
 
     private randomString(): string {
