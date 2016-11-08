@@ -15,6 +15,14 @@ export class GoCardlessPayment {
     tutor_id: string = "";
     employeecount: number = 0;
 
+    redirect_url: any = [
+      'https://pay-sandbox.gocardless.com/AL00002P3VZFPJ',
+      'https://pay-sandbox.gocardless.com/AL00002P3W7CSR',
+      'https://pay-sandbox.gocardless.com/AL00002P3XTTRW',
+      'https://pay-sandbox.gocardless.com/AL00002P3ZJ64C',
+      'https://pay-sandbox.gocardless.com/AL00002P405VDM'
+    ];
+
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
         if (this._session.getCurrentId() == null) {
             this._router.navigateByUrl('/login');
@@ -27,11 +35,13 @@ export class GoCardlessPayment {
         }
     }
 
-    gotoGoCardlessPage(count, amount) {
+    gotoGoCardlessPage(num, count, amount) {
         this._tutorService.getRedirectUrl({ tutor_id: this.tutor_id, count: count, amount: amount }).subscribe((res) => {
-            window.open(res.redirect_url, '_blank');
+            console.log(res);
         });
+        window.open(this.redirect_url[num], '_blank');
     }
+    
     cancel() {
         this._router.navigate(['TutorMain']);
     }

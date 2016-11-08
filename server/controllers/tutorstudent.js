@@ -218,7 +218,7 @@ exports.addStudentCSV = function(req, res) {
 
 exports.editStudent = function(req, res) {
     var student = req.body;
-    
+
     Student.update({
         _id: student._id
     }, student, function(err, student) {
@@ -705,17 +705,11 @@ exports.getGoCardlessRedirectUrl = function(req, res) {
         successUrl = req.protocol + '://' + req.get('host') + '/api/tutor/getGoCardlessCompleteUrl';
 
     console.log(goCardless);
+    subscribe_data.amount = req.body.amount * 100;
+    subscribe_data.count = req.body.count;
+    subscribe_data.session_id = tutor_id;
 
-    goCardless.startRedirectFlow(description, sessionToken, successUrl)
-        .then(function(response) {
-            subscribe_data.amount = req.body.amount * 100;
-            subscribe_data.count = req.body.count;
-            subscribe_data.session_id = tutor_id;
-
-            res.send({
-                redirect_url: response.redirect_flows.redirect_url
-            }).end();
-        })
+    res.send({success: true});
 }
 
 exports.getGoCardlessCompleteUrl = function(req, response) {
