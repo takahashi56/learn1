@@ -30,7 +30,8 @@ export class AddTutorStudent implements AfterViewInit {
     dob_year: Control;
     submitAttempt: boolean = false;
     showGotoBack: boolean = false;
-    months: any = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    months: any = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
@@ -46,6 +47,13 @@ export class AddTutorStudent implements AfterViewInit {
             this.phone = new Control(this.student.phone);
             this.password = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
             this.verifiedpassword = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
+
+
+            let [day, month, year] = ['', '', ''];
+
+            this.dob_day = new Control(day);
+            this.dob_month = new Control(month);
+            this.dob_year = new Control(year);
 
             this.StudentForm = builder.group({
                 firstname: this.firstname,
@@ -110,10 +118,10 @@ export class AddTutorStudent implements AfterViewInit {
         if (this.StudentForm.valid && this.matchedPassword(form)) {
             console.log('submit')
             var dob = "";
-            if(form.dob_day == null || form.dob_month == null || form.dob_year == null){
-              dob = ''
-            }else{
-              dob = `${form.dob_day.length == 2? form.dob_day : '0'+form.dob_day}/${form.dob_month.length == 2? form.dob_month : '0'+form.dob_month}/${form.dob_year}`
+            if (form.dob_day == null || form.dob_month == null || form.dob_year == null) {
+                dob = ''
+            } else {
+                dob = `${form.dob_day.length == 2 ? form.dob_day : '0' + form.dob_day}/${form.dob_month.length == 2 ? form.dob_month : '0' + form.dob_month}/${form.dob_year}`
             }
             var data = {
                 firstName: form.firstname,
@@ -170,28 +178,28 @@ export class AddTutorStudent implements AfterViewInit {
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }
-        var val = form.dob_day == null ? '': form.dob_day;
-        if(val.length < 2){
-          val = val + (charCode - 48);
+        var val = form.dob_day == null ? '' : form.dob_day;
+        if (val.length < 2) {
+            val = val + (charCode - 48);
         }
-        if(Number(val) > 31) return false;
+        if (Number(val) > 31) return false;
 
         return true;
     }
 
-    isYearKey(evt, form: any){
-      evt = (evt) ? evt : window.event;
-      var charCode = (evt.which) ? evt.which : evt.keyCode;
-      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-          return false;
-      }
-      var val = form.dob_year == null ? '': form.dob_year;
-      if(val.length < 4){
-        val = val + (charCode - 48);
-      }
-      if(Number(val) > (new Date()).getFullYear()) return false;
+    isYearKey(evt, form: any) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        var val = form.dob_year == null ? '' : form.dob_year;
+        if (val.length < 4) {
+            val = val + (charCode - 48);
+        }
+        if (Number(val) > (new Date()).getFullYear()) return false;
 
-      return true;
+        return true;
     }
 
     private randomString(): string {

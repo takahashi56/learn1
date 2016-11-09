@@ -88,15 +88,28 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" >
+                            <div class="form-group">
                                 <div class="col-lg-2">
                                     <div class="m-l-10 m-r-10">
                                         <label for="dob" class="control-label text-left text-page">DOB</label>
                                     </div>
                                 </div>
-                                <div class="col-lg-10">
+                                <div class="col-lg-1-5">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control datepicker" id="dob" name="name" type="text" placeholder="Choose a Date ( Optional )" ngControl="dob">
+                                        <input type="text" placeholder="Day" ngControl="dob_day" class="p-l-r-30 form-control" maxlength="2"  (keypress)="isDayKey($event, StudentForm.value)">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1-5">
+                                    <div class="">
+                                      <select class="p-l-r-0 form-control" ngControl="dob_month" [(ngModel)]="selectedObject">
+                                          <option value="" disabled>Month</option>
+                                          <option *ngFor="let c of months;let i = index" [value]="i + 1" >{{c}}</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1-5">
+                                    <div class="m-l-10 m-r-10">
+                                        <input type="text" placeholder="Year" ngControl="dob_year" class="p-l-r-30 form-control" maxlength="4" minlength="4" (keypress)="isYearKey($event, StudentForm.value)">
                                     </div>
                                 </div>
                             </div>

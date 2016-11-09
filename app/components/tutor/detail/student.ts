@@ -24,10 +24,16 @@ export class DetailTutorStudent implements AfterViewInit {
     verifiedpassword: Control;
     phone: Control;
     dob: Control;
+    dob_day: Control;
+    dob_month: Control;
+    dob_year: Control;
     courseList: any;
     submitAttempt: boolean = false;
     valid_username: boolean = false;
+    selectedMonth: boolean = false;
+    selectedObject: number = 0;
 
+    months: any = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
         if (this._session.getCurrentId() == null) {
@@ -49,12 +55,27 @@ export class DetailTutorStudent implements AfterViewInit {
             this.password = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
             this.verifiedpassword = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
             this.dob = new Control(this.student.DOB);
+            this.selectedMonth = JSON.parse(this._session.getItem('editORadd'))
 
+
+
+            let [day, month, year] = ['', '', ''];
+            if (this.student.DOB != '' || this.student.DOB != null)
+                [day, month, year] = this.student.DOB.split('/');
+
+            this.dob_day = new Control(day);
+            this.dob_month = new Control(month);
+            this.dob_year = new Control(year);
+            this.selectedObject = Number(month);
+            console.log(month);
+            
             this.StudentDetailForm = builder.group({
                 firstname: this.firstname,
                 lastname: this.lastname,
                 username: this.username,
-                dob: this.dob,
+                dob_day: this.dob_day,
+                dob_month: this.dob_month,
+                dob_year: this.dob_year,
                 phone: this.phone,
                 password: this.password,
                 verifiedpassword: this.verifiedpassword
@@ -95,24 +116,24 @@ export class DetailTutorStudent implements AfterViewInit {
         (<Control>this.StudentDetailForm.controls['username']).updateValue(username);
     }
 
-    validUserName(form: any){
-      var username = form.username, flag:boolean = false;
-      if(username == ''){
-        this.valid_username = true;
-        return;
-      }
-      this.allStudentData.forEach(function(student) {
-          if (student.username == username) flag = true;
-      });
+    validUserName(form: any) {
+        var username = form.username, flag: boolean = false;
+        if (username == '') {
+            this.valid_username = true;
+            return;
+        }
+        this.allStudentData.forEach(function(student) {
+            if (student.username == username) flag = true;
+        });
 
-      if(flag){
-        this.valid_username = true;
-        alert("Username cannot be used!");
-        (<Control>this.StudentDetailForm.controls['username']).updateValue('');
+        if (flag) {
+            this.valid_username = true;
+            alert("Username cannot be used!");
+            (<Control>this.StudentDetailForm.controls['username']).updateValue('');
+            return;
+        }
+        this.valid_username = false;
         return;
-      }
-      this.valid_username = false;
-      return;
     }
 
     matchedPassword(form: any) {
@@ -183,8 +204,8 @@ export class DetailTutorStudent implements AfterViewInit {
 
         var d = new Date(date),
             day = d.getDate().toString().length == 1 ? '0' + d.getDate() : d.getDate(),
-            month = (d.getMonth() + 1 ).toString().length == 1 ? '0' + (d.getMonth() + 1 ) : (d.getMonth() + 1 ),
-                datestring = day  + "/" + month + "/" + d.getFullYear();
+            month = (d.getMonth() + 1).toString().length == 1 ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1),
+            datestring = day + "/" + month + "/" + d.getFullYear();
 
         return datestring;
     }
@@ -193,5 +214,12 @@ export class DetailTutorStudent implements AfterViewInit {
         var value = event.target.value;
         value = value.replace(/\D/g, '');
         (<Control>this.StudentDetailForm.controls['phone']).updateValue(value);
+    }
+
+    getNumber(num:number, str: string='') {
+        if(num == 1){ console.log("true");return true;}
+        console.log("false");
+        return false;
+        // return Number(str) == num;
     }
 }
