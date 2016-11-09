@@ -24,14 +24,14 @@ export class AddTutorStudent implements AfterViewInit {
     password: Control;
     verifiedpassword: Control;
     phone: Control;
-    dob: Control;
     dob_day: Control;
     dob_month: Control;
     dob_year: Control;
     submitAttempt: boolean = false;
     showGotoBack: boolean = false;
-
-    months: any = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    selectedNew: boolean = false;
+    selectedMonth: number = 0;
+    months: any = ['Month','January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
@@ -48,8 +48,8 @@ export class AddTutorStudent implements AfterViewInit {
             this.password = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
             this.verifiedpassword = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
 
-
-            let [day, month, year] = ['', '', ''];
+            let [day, month, year] = this.student.DOB.split('/');
+            this.selectedMonth = Number(month);
 
             this.dob_day = new Control(day);
             this.dob_month = new Control(month);

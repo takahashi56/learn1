@@ -122,7 +122,7 @@ export class TutorMain implements OnInit {
 			student_id: Date.now(),
 			firstName: '',
 			lastName: '',
-			DOB: '',
+			DOB: ' /00/ ',
 			username: '',
 			hashed_pwd: '',
 			other: '',

@@ -93,9 +93,8 @@
                                 </div>
                                 <div class="col-lg-1-5">
                                     <div class="">
-                                      <select class="p-l-r-0 form-control" ngControl="dob_month">
-                                          <option value="" disabled [selected]="true">Month</option>
-                                          <option *ngFor="let c of months;let i = index" [value]="i + 1">{{c}}</option>
+                                      <select class="p-l-r-0 form-control" ngControl="dob_month" [(ngModel)]="selectedMonth">
+                                          <option *ngFor="let c of months;let i = index" [value]="i" [disabled]="i == 0">{{c}}</option>
                                       </select>
                                     </div>
                                 </div>
