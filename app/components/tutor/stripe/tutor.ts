@@ -162,7 +162,7 @@ export class StripePayment {
             this.showClass = "alert alert-success alert-dismissable";
             this.sentStatus = "Your Payment has been successfully. You have got the new credits " + res.creditcount;
         } else {
-            this.sentShow = true;
+            this.sentSuccessShow = true;
             this.showClass = "alert alert-danger alert-dismissable";
             this.sentStatus = "Your Payment has not been failed. Please type your card information correctly!";
         }

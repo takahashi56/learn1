@@ -96,6 +96,7 @@ export class DetailTutorCourse {
 
     unassign(){
       var student_ids = [];
+      this.show_un_assign = false;
       if(this.selectStudents.length == 0) return;
       this.selectStudents.forEach((id) => {
         this.studentList.forEach((student) => {
@@ -118,6 +119,6 @@ export class DetailTutorCourse {
         })
       }
 
-      this.show_un_assign = false;
+
     }
 }

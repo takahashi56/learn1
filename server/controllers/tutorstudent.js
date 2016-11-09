@@ -643,8 +643,8 @@ exports.performPayment = function(req, res) {
         }
     }, function(err, token) {
         if (err) {
-            console.error(err);
-            res.status(500).send({
+            console.log(err.raw);
+            res.send({
                 flag: false,
                 data: null
             }).end();
@@ -709,7 +709,9 @@ exports.getGoCardlessRedirectUrl = function(req, res) {
     subscribe_data.count = req.body.count;
     subscribe_data.session_id = tutor_id;
 
-    res.send({success: true});
+    res.send({
+        success: true
+    });
 }
 
 exports.getGoCardlessCompleteUrl = function(req, response) {

@@ -108,12 +108,19 @@ export class AddTutorStudent implements AfterViewInit {
     AddStudent(form: any) {
         this.submitAttempt = true;
         if (this.StudentForm.valid && this.matchedPassword(form)) {
+            console.log('submit')
+            var dob = "";
+            if(form.dob_day == null || form.dob_month == null || form.dob_year == null){
+              dob = ''
+            }else{
+              dob = `${form.dob_day.length == 2? form.dob_day : '0'+form.dob_day}/${form.dob_month.length == 2? form.dob_month : '0'+form.dob_month}/${form.dob_year}`
+            }
             var data = {
                 firstName: form.firstname,
                 lastName: form.lastname,
                 username: form.username,
+                DOB: dob,
                 hashed_pwd: form.password,
-                DOB: `${form.dob_day.length == 2? form.dob_day : '0'+form.dob_day}/${form.dob_month.length == 2? form.dob_month : '0'+form.dob_month}/${form.dob_year}`,
                 phone: form.phone,
                 isCompleted: false,
                 completedAt: '',
@@ -130,6 +137,8 @@ export class AddTutorStudent implements AfterViewInit {
                     }
                 })
         }
+
+        console.log('cancel')
     }
     onKey(event: any) {
         var value = event.target.value;
