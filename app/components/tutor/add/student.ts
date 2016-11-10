@@ -94,12 +94,22 @@ export class AddTutorStudent implements AfterViewInit {
             username = firstname.charAt(0).toLowerCase() + lastname.toLowerCase(),
             i = 0;
 
-        this.allStudentData.forEach(function(student) {
+        this.allStudentData.forEach((student) => {
             if (student.username.includes(username)) i++;
         })
         if (i != 0) username = username + i;
 
         (<Control>this.StudentForm.controls['username']).updateValue(username);
+    }
+
+    getUserName(form: any){
+      var username = form.username.toLowerCase(), i =0;
+      this.allStudentData.forEach((student) => {
+          if (student.username.includes(username)) i++;
+      })
+      if (i != 0) username = username + i;
+
+      (<Control>this.StudentForm.controls['username']).updateValue(username);
     }
 
     matchedPassword(form: any) {

@@ -55,8 +55,8 @@ export class EditOrganization {
     }
 
     update(form: any) {
-        this.submitAttempt = true;
-        if (this.OrganizeForm.valid) {
+        // this.submitAttempt = true;
+        if (form.firstName != this.org.firstName || form.lastName != this.org.lastName || form.password != this.org.password || form.email != this.org.email || form.organization != this.org.organization || form.phone != this.org.phone || form.department != this.org.department) {
             var data = {
                 _id: this.org.id,
                 firstName: form.firstName,
