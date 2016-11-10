@@ -37,7 +37,6 @@ export class LessonContent implements OnInit{
 
 	ngOnInit(){
 		this._content_id = this.content._content_id ? this.content._content_id : this.content._id;
-
 		this.videoOrQuestion = this.content.videoOrQuestion;
 		this.singleOrMulti = this.content.singleOrMulti;
 
@@ -237,7 +236,7 @@ export class LessonContent implements OnInit{
 
 	onFileChange(event, form: any) {
 		var files = event.srcElement.files;
-		this._adminService.upload(files).subscribe((res)=>{			
+		this._adminService.upload(files).subscribe((res)=>{
 			this.image = res.image;
 			this.blurChange(form);
 		})

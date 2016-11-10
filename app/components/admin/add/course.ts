@@ -51,7 +51,15 @@ export class AddCourse {
     }
 
     showBack(form: any) {
-        if (Number(this._session.getItem('valid_input')) == 1 || form.coursetitle != this.courseData.coursetitle || form.coursedescription != this.courseData.coursedescription) {
+        var data = JSON.parse(this._session.getItem('Course')), flag:boolean = false;
+        console.log(data);
+        data.lesson.forEach((lesson) => {
+          if(lesson.lesson_id.length < 14) {
+            flag = true;
+            return;
+          }
+        })
+        if (flag || form.coursetitle != this.courseData.coursetitle || form.coursedescription != this.courseData.coursedescription) {
             this.show_back = true;
         } else {
             this.cancel();
@@ -67,14 +75,28 @@ export class AddCourse {
     }
 
     gotoEditLesson(lesson) {
-        this._session.setItem('valid_input', 0);
         this._session.setItem('Lesson_new', JSON.stringify(lesson));
+        var data = {
+            _content_id: (Date.now()).toString(),
+            videoOrQuestion: true,
+            questionType: false,
+            videoLabel: '',
+            videoEmbedCode: '',
+            singleOrMulti: false,
+            question: '',
+            answerA: '',
+            answerB: '',
+            answerC: '',
+            answerD: '',
+            image: '',
+            trueNumber: '',
+        };
+        lesson.content.push(data);
         this._session.setItem('Content', JSON.stringify(lesson.content));
         this._router.navigate(['AdminAddLesson']);
     }
 
     addLesson(form: any) {
-        this._session.setItem('valid_input', 0);
         var data2 = {
             course_id: this.courseData.course_id,
             coursetitle: this.courseForm.controls["coursetitle"].value,
