@@ -57,9 +57,9 @@ export class UnCompletedCourse implements AfterViewInit {
 							para.appendChild(image);
 							// self.makeHighResScreenshot(image, image1, 200);
 							// para1.appendChild(image);
-							// self._tutorService.makePdf({data:para.innerHTML, direction: true}).subscribe((res) => {
-							// 	 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
-							// })
+							self._tutorService.makePdf({data:para.innerHTML, direction: true}).subscribe((res) => {
+								 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+							})
 					}
 			});
 	}
