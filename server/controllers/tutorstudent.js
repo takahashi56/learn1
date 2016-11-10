@@ -431,8 +431,8 @@ exports.getStudentsByCourseId = function(req, res) {
 
 
 exports.removeStudent = function(req, res) {
-    var list = req.body.list;
-    list.forEach(function(id) {
+    var list = req.body.list, i=0;
+    list.forEach(function(id, index, arr) {
         Student.findOne({
             _id: id
         }, function(err, student) {
@@ -445,13 +445,16 @@ exports.removeStudent = function(req, res) {
                     take.remove();
                 })
                 student.remove()
+
+                if((index + 1) == arr.length) {
+                  res.send({
+                    success: true
+                  });
+                }
             });
         })
     })
 
-    res.send({
-        success: true
-    });
 }
 
 exports.getLessonsNameByCourseId = function(req, res) {

@@ -51,9 +51,9 @@ export class AddTutorStudent implements AfterViewInit {
             let [day, month, year] = this.student.DOB.split('/');
             this.selectedMonth = Number(month);
 
-            this.dob_day = new Control(day);
+            this.dob_day = new Control(day.trim());
             this.dob_month = new Control(month);
-            this.dob_year = new Control(year);
+            this.dob_year = new Control(year.trim());
 
             this.StudentForm = builder.group({
                 firstname: this.firstname,

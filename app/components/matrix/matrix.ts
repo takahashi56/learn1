@@ -31,13 +31,15 @@ export class Matrix  implements AfterViewInit {
 			this.courseList = JSON.parse(this._session.getItem('courseList'));
 			var tutor_id = this._session.getCurrentId();
 			this.studentList = JSON.parse(this._session.getItem('studentList'))
+
 			console.log(this.studentList)
 		}
 	}
 
   ngAfterViewInit() {
       $(this.el.nativeElement).bootgrid({
-        navigation: 0
+        navigation: 0,
+				rowCount: -1
       });
 			this.downloadpdf();
   }
@@ -64,10 +66,10 @@ export class Matrix  implements AfterViewInit {
 							para.appendChild(image);
 							// self.makeHighResScreenshot(image, image1, 200);
 							// para1.appendChild(image);
-							self._tutorService.makePdf({data:para.innerHTML, direction: false}).subscribe((res) => {
-								 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
-								 console.log(res.url);
-							})
+							// self._tutorService.makePdf({data:para.innerHTML, direction: false}).subscribe((res) => {
+							// 	 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+							// 	 console.log(res.url);
+							// })
 					}
 			});
 	}
