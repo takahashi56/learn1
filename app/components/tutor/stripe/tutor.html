@@ -78,7 +78,7 @@
                                           <div class="col-lg-2">
                                               <div class="m-l-10 m-r-10">
                                                 <select class="form-control" ngControl="amount">
-                                                  <option *ngFor="let c of credits" [value]="c">{{c}} ({{c * 4}}£)</option>
+                                                  <option *ngFor="let c of credits" [value]="c">{{c}} (£{{c * 4}})</option>
                                               </select>
                                               </div>
                                           </div>
@@ -201,7 +201,16 @@
                   </form>
               </div>
             </div>
-
+            
+            <div class="m-l-5 m-r-5">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <input type="button" (click)="cancel()" value="Back" class="btn btn-primary m-b-10 w-sm">
+                    </div>
+                    <div class="col-xs-8 text-right">
+                    </div>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table text-page">
                     <thead>
@@ -218,15 +227,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="m-l-5 m-r-5">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <input type="button" (click)="cancel()" value="Back" class="btn btn-primary m-b-10 w-sm">
-                    </div>
-                    <div class="col-xs-8 text-right">
-                    </div>
-                </div>
-            </div>
+
           </div>
         </div>
     </div>

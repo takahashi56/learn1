@@ -44,6 +44,7 @@ export class TutorMain implements OnInit {
     showAssignStudent: boolean = false;
     show_not_assign: boolean = false;
     changePasswordSuccess: boolean = false;
+    show_password: boolean = false;
 
     constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router, private builder: FormBuilder) {
         this.tutor_id = this._session.getCurrentId()
@@ -478,5 +479,9 @@ export class TutorMain implements OnInit {
             default:
                 break;
         }
+    }
+
+    showPassword(){
+      this.show_password = !this.show_password;
     }
 }

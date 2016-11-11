@@ -16,6 +16,7 @@ export class Header {
 	username: string = "";
 	creditcount: Number = 0;
 	currentRole: Number = Infinity;
+	show_credits: boolean = true;
 
 	constructor(private _session: Session, private router:Router, private _tutorService: TutorService) {
 		this.username = _session.getCurrentUsername();
@@ -43,6 +44,7 @@ export class Header {
 	updateCreditCount(){
 		this.creditcount = Number(this._session.getItem('creditcount'));
 		this.username = this._session.getCurrentUsername();
+		this.show_credits = Number(this._session.getItem('subscribing')) == 0 ? true : false;
 	}
 
 	doLogout(){

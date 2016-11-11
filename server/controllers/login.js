@@ -133,7 +133,7 @@ var sendEmail = function(req, res){
 	}, function(error, success) {
 			if(error) {
 					console.error("Unable to send via postmark: " + error.message);
-					res.status(500).send({success: false}).end()
+					res.send({success: false}).end()
 					return;
 			}else{
 				res.status(200).send({success: true}).end()

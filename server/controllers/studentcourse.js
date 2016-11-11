@@ -297,7 +297,7 @@ exports.setCourseScoreWithStudent = function(req, res) {
 
             take.save(function(err, saved) {
                 if (err) {
-                    res.status(500).send(err).end();
+                    res.send(err).end();
                 }else{
                   res.status(200).send({
                     sucess: true

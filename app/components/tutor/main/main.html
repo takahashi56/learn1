@@ -23,6 +23,7 @@
                             <li>
                               <a class="" data-toggle="modal" data-target="#import-student">Import Employees</a>
                             </li>
+                            <li><a class="" (click)="showPassword()">{{show_password? 'Hide Password' : 'Reveal Password'}}</a></li>
                         </ul>
                     </div>
 
@@ -33,7 +34,7 @@
                         <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Training Matrix <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a (click)="gotoMatrix()" target="_blank">Training Matrix</a></li>
-                            <li><a (click)="gotoUncompleted()" target="_blank">Uncompleted Course</a></li>
+                            <li><a (click)="gotoUncompleted()" target="_blank">Uncompleted Courses</a></li>
                         </ul>
                     </div>
                 </div>
@@ -62,7 +63,7 @@
                             <td (click)="gotoStudentDetail(student)" style="cursor: pointer;"><strong>{{student.lastName}}</strong></td>
                             <td><strong>{{student.DOB}}</strong></td>
                             <td (click)="gotoStudentDetail(student)" style="cursor: pointer;"><strong>{{student.username}}</strong></td>
-                            <td><strong>{{student.hashed_pwd}}</strong></td>
+                            <td><strong>{{show_password? student.hashed_pwd : '******'}}</strong></td>
                             <td><strong>{{student.other}}</strong></td>
                             <td class="text-right"><a class="btn w-xs btn-sm btn-primary" (click)="editStudent(student)">Edit</a></td>
                         </tr>
@@ -98,7 +99,7 @@
 
                     <div class="panel-body">
                         <div style="max-width: 90%;">
-                            Each course you assign an employee will require 1 credit.<br/> For example if you have 15 employees and want each employee to completed the Health and Safety course this will require 15 credits
+                            Each course you assign an employee will require 1 credit.<br/> For example if you have 15 employees and want each employee to complete the Health and Safety course this will require 15 credits
                         </div>
                         <div class="m-l-5 m-r-5 m-t-30">
                             <div class="row">

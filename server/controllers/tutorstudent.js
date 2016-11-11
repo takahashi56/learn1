@@ -437,12 +437,12 @@ exports.removeStudent = function(req, res) {
             _id: id
         }, function(err, student) {
             if (err) console.error(err);
-
-            Take.find({
+            if(student._id != null){
+              Take.find({
                 student_id: student._id
-            }, function(err, takes) {
+              }, function(err, takes) {
                 takes.forEach(function(take) {
-                    take.remove();
+                  take.remove();
                 })
                 student.remove()
 
@@ -451,7 +451,8 @@ exports.removeStudent = function(req, res) {
                     success: true
                   });
                 }
-            });
+              });
+            }
         })
     })
 
@@ -566,7 +567,7 @@ exports.makePdf = function(req, res) {
         client.convertHtml(url, pdf.saveToFile(pdf_path));
     } else {
         client.convertHtml(url, pdf.saveToFile(pdf_path), {
-            width: "12.692in",
+            width: "13.692in",
             height: "7.267in",
             vmargin: ".2in",
             footer_html: ''
@@ -661,7 +662,7 @@ exports.performPayment = function(req, res) {
             if (err && err.type === 'StripeCardError') {
                 // card decline
                 console.log(err);
-                res.status(500).send({
+                res.send({
                     flag: false,
                     data: null
                 }).end();
@@ -801,7 +802,11 @@ exports.unassign = function(req, res) {
     Tutor.findOne({
         _id: tutor_id
     }, function(err, tutor) {
-        tutor.creditcount = Number(creditcount) + student_ids.length;
+        if(tutor.subscribing == true){
+            tutor.creditcount = Number(creditcount)
+        }else{
+          tutor.creditcount = Number(creditcount) + student_ids.length;
+        }
 
         tutor.save();
         res.send({
