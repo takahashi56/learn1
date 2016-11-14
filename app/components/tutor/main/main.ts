@@ -39,6 +39,7 @@ export class TutorMain implements OnInit {
     employee_tab: string = '';
     course_tab: string = '';
     setting_tab: string = '';
+    credits_tab: string = '';
     showAssignCourse: boolean = false;
     disaplyCanAssign: boolean = false;
     showAssignStudent: boolean = false;
@@ -77,11 +78,14 @@ export class TutorMain implements OnInit {
                 oldpwd: this.oldpwd
             })
 
-            if (this._session.getItem('select_tutor_tab') == null) {
+            setInterval(()=>{
+              if (this._session.getItem('select_tutor_tab') == null) {
                 this.onTabClick(1);
-            } else {
+              } else {
                 this.onTabClick(Number(this._session.getItem('select_tutor_tab')));
-            }
+              }
+            }, 100);
+
 
         }
     }
@@ -463,6 +467,7 @@ export class TutorMain implements OnInit {
         this.course_tab = "tab-pane";
         this.employee_tab = "tab-pane";
         this.setting_tab = "tab-pane";
+        this.credits_tab = "tab-pane";
         this._session.setItem('select_tutor_tab', num);
         this.select_tab_item = num;
 
@@ -476,12 +481,15 @@ export class TutorMain implements OnInit {
             case 3:
                 this.setting_tab = "tab-pane active";
                 break;
+            case 4:
+                this.credits_tab = "tab-pane active";
+                break;
             default:
                 break;
         }
     }
 
-    showPassword(){
-      this.show_password = !this.show_password;
+    showPassword() {
+        this.show_password = !this.show_password;
     }
 }

@@ -51,4 +51,9 @@ export class Header {
 		localStorage.clear();
 		this.router.navigate(['Login'])
 	}
+
+	gotoCreditsTab(){
+		this.router.navigateByUrl('/home/tutor/main');
+		this._session.setItem('select_tutor_tab', 4)
+	}
 }

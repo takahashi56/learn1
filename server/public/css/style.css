@@ -2298,3 +2298,7 @@ div#loading img {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.modal-footer{
+  border-top: none !important;
+}

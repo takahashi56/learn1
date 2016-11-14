@@ -11,6 +11,9 @@
             <li [ngClass]="{'active': select_tab_item == 3}">
                 <a href="#settings" data-toggle="tab" (click)="onTabClick(3)"><strong class="text-page">Settings</strong></a>
             </li>
+            <li [ngClass]="{'active': select_tab_item == 4}">
+                <a href="#credits" data-toggle="tab" (click)="onTabClick(4)"><strong class="text-page">Credits</strong></a>
+            </li>
         </ul>
         <div class="tab-content">
             <div [class]="employee_tab" id="students">
@@ -92,49 +95,6 @@
                 </div>
             </div>
             <div [class]="setting_tab" id="settings">
-                <div class="">
-                    <div class="panel-heading p-b-0">
-                        <h4 class="text-page m-l-15 m-t-15"><strong>Credits</strong></h4>
-                    </div>
-
-                    <div class="panel-body">
-                        <div style="max-width: 90%;">
-                            Each course you assign an employee will require 1 credit.<br/> For example if you have 15 employees and want each employee to complete the Health and Safety course this will require 15 credits
-                        </div>
-                        <div class="m-l-5 m-r-5 m-t-30">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                </div>
-                                <div class="col-xs-8 text-right">
-                                    <input type="button" value="Purchase Credits" class="btn btn-primary m-b-10 w-sm m-l-15" (click)="gotoStripePayment()" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="">
-                    <div class="panel-heading p-b-0">
-                        <h4 class="text-page m-l-15 m-t-15"><strong>Subscribe and Save</strong></h4>
-                    </div>
-
-                    <div class="panel-body">
-                        <div style="max-width: 90%;">
-                            If you are using Correct Care on a regular basis you can save money by subscribing<br/> A subscription to Correct Care includes full access to all courses
-                        </div>
-
-                        <div class="m-l-5 m-r-5  m-t-30">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                </div>
-                                <div class="col-xs-8 text-right">
-                                    <input type="button" value="Subscribe" class="btn btn-primary m-b-10 w-sm m-l-15" style="padding:6px 33px;" (click)="gotoGoCardlessPayment()">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="">
                     <div class="">
                         <div class="panel-heading p-b-0">
@@ -222,6 +182,52 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div [class]="credits_tab" id="credits">
+                <div class="">
+                    <div class="panel-heading p-b-0">
+                        <h4 class="text-page m-l-15 m-t-15"><strong>Credits</strong></h4>
+                    </div>
+
+                    <div class="panel-body">
+                        <div style="max-width: 90%;">
+                            Each course you assign an employee will require 1 credit.<br/> For example if you have 15 employees and want each employee to complete the Health and Safety course this will require 15 credits
+                        </div>
+                        <div class="m-l-5 m-r-5 m-t-30">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <input type="button" value="Purchase Credits" class="btn btn-primary m-b-10 w-sm m-l-15" (click)="gotoStripePayment()" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="">
+                    <div class="panel-heading p-b-0">
+                        <h4 class="text-page m-l-15 m-t-15"><strong>Subscribe and Save</strong></h4>
+                    </div>
+
+                    <div class="panel-body">
+                        <div style="max-width: 90%;">
+                            If you are using Correct Care on a regular basis you can save money by subscribing<br/> A subscription to Correct Care includes full access to all courses
+                        </div>
+
+                        <div class="m-l-5 m-r-5  m-t-30">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <input type="button" value="Subscribe" class="btn btn-primary m-b-10 w-sm m-l-15" style="padding:6px 33px;" (click)="gotoGoCardlessPayment()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

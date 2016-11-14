@@ -9,10 +9,13 @@
                 <a>{{username}}</a>
             </li>
             <li>|</li>
-            <li *ngIf="currentRole == 1 && show_credits == true">
+            <li *ngIf="currentRole == 1 && show_credits == true" (click)="gotoCreditsTab()">
               <a>Credits {{creditcount}}</a>
             </li>
-            <li *ngIf="currentRole == 1 && show_credits == true">
+            <li *ngIf="currentRole == 1 && show_credits == false"  (click)="gotoCreditsTab()">
+              <a>Subscription</a>
+            </li>
+            <li>
               |
             </li>
             <li *ngIf="currentRole == 1">

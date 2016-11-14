@@ -87,7 +87,8 @@ export class StudentMain implements OnInit {
         if (course.isCompleted == false) {
             this.gotoLessonList(course);
         }
-        this.course = course;
+        return;
+        // this.course = course;
     }
 
     retakeCourse() {
