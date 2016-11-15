@@ -362,7 +362,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Import Employee</h4>
+                <h4 class="modal-title">Import Employees</h4>
             </div>
             <div class="modal-body assign-text">
                 <div class="row">
@@ -370,17 +370,14 @@
                         <div class="form-group">
                             <p>Rather than add employees one by one you can import employees from a CSV formatted file.</p>
                             <p>
-                                The file should be a text file with following columns each seperated with a commas:
+                                The file should be a text file with following columns each seperated with a comma:
                             </p>
                             <p>
                                 First Name,Last Name,DOB,Mobile,Username,Password
                             </p>
                             <p>
-                                Example text file format:
+                              <a class="btn btn-primary w-sm m-r-5" (click)="downloadSampleFile()">Download Sample File</a>
                             </p>
-                            <p>
-                            </p>
-                            John,Smith,20/12/1970,07882770123,jsmith,Pass88 <br/> George,Jones,18/06/1985,0312740123,gjones,Pass12 <br/> Harry,Flow,30/10/1959,0771551123,hflow,Pass44
                         </div>
                     </div>
                 </div>

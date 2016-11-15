@@ -21,6 +21,7 @@ export class EditOrganization {
     email: Control;
     phone: Control;
     password: Control;
+    notes: Control;
     submitAttempt: boolean = false;
     org: any;
 
@@ -37,6 +38,7 @@ export class EditOrganization {
             this.email = new Control(this.org.email, Validators.required);
             this.password = new Control(this.org.password, Validators.compose([Validators.required, Validators.minLength(6)]))
             this.phone = new Control(this.org.phone);
+            this.notes = new Control(this.org.notes);
             this.department = new Control(this.org.department);
 
             this.OrganizeForm = builder.group({
@@ -46,7 +48,8 @@ export class EditOrganization {
                 email: this.email,
                 phone: this.phone,
                 department: this.department,
-                password: this.password
+                password: this.password,
+                notes: this.notes
             })
         }
     }
@@ -56,7 +59,7 @@ export class EditOrganization {
 
     update(form: any) {
         // this.submitAttempt = true;
-        if (form.firstName != this.org.firstName || form.lastName != this.org.lastName || form.password != this.org.password || form.email != this.org.email || form.organization != this.org.organization || form.phone != this.org.phone || form.department != this.org.department) {
+        if (form.firstName != this.org.firstName || form.lastName != this.org.lastName || form.password != this.org.password || form.email != this.org.email || form.organization != this.org.organization || form.phone != this.org.phone || form.department != this.org.department || form.notes != this.org.notes) {
             var data = {
                 _id: this.org.id,
                 firstName: form.firstName,
@@ -66,6 +69,7 @@ export class EditOrganization {
                 password: form.password,
                 department: form.department,
                 phone: form.phone,
+                notes: form.notes
             };
 
             this._adminService.updateTutor(data)

@@ -22,6 +22,7 @@ export class AddOrganization {
     email: Control;
     phone: Control;
     password: Control;
+    notes: Control;
     submitAttempt: boolean = false;
 
 
@@ -33,6 +34,7 @@ export class AddOrganization {
             this.lastName = new Control('', Validators.required);
             this.organization = new Control('', Validators.required);
             this.email = new Control('', Validators.required);
+            this.notes = new Control('');
             this.password = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
 
             this.OrganizeForm = builder.group({
@@ -42,7 +44,8 @@ export class AddOrganization {
                 email: this.email,
                 phone: this.phone,
                 department: this.department,
-                password: this.password
+                password: this.password,
+                notes: this.notes
             })
 
         }
@@ -68,6 +71,7 @@ export class AddOrganization {
                 employeecount: 0,
                 creditcount: 0,
                 subscribing: false,
+                notes: form.notes
             };
 
             this._adminService.addTutor(data)

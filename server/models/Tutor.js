@@ -18,6 +18,7 @@ module.exports = function() {
     employeecount: Number,
     subscribing: Boolean,
     logon_date: Date,
+    notes: String,
   });
 
 

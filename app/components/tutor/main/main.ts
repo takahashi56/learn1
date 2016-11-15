@@ -78,12 +78,12 @@ export class TutorMain implements OnInit {
                 oldpwd: this.oldpwd
             })
 
-            setInterval(()=>{
-              if (this._session.getItem('select_tutor_tab') == null) {
-                this.onTabClick(1);
-              } else {
-                this.onTabClick(Number(this._session.getItem('select_tutor_tab')));
-              }
+            setInterval(() => {
+                if (this._session.getItem('select_tutor_tab') == null) {
+                    this.onTabClick(1);
+                } else {
+                    this.onTabClick(Number(this._session.getItem('select_tutor_tab')));
+                }
             }, 100);
 
 
@@ -491,5 +491,16 @@ export class TutorMain implements OnInit {
 
     showPassword() {
         this.show_password = !this.show_password;
+    }
+
+    downloadSampleFile() {
+      console.log('dfafds')
+        window.location.href='/csv/SampleEmployeeImport.csv';
+    }
+
+    downloadFile(data: any) {
+        var blob = new Blob([data], { type: 'text/csv' });
+        var url = window.URL.createObjectURL(blob);
+        window.open(url);
     }
 }

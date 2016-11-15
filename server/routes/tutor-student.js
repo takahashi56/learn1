@@ -86,4 +86,8 @@ module.exports = function(app) {
 		tutorstudent.getTutorInfo(req, res);
 	})
 
+	app.get('/api/tutor/getCSVFile', function(req, res){
+		tutorstudent.getCSVFile(req, res);
+	})
+
 }
