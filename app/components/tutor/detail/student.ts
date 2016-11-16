@@ -17,8 +17,8 @@ export class DetailTutorStudent implements AfterViewInit {
     student: any;
     allStudentData: any;
     StudentDetailForm: ControlGroup;
-    firstname: Control;
-    lastname: Control;
+    firstName: Control;
+    lastName: Control;
     username: Control;
     password: Control;
     verifiedpassword: Control;
@@ -32,6 +32,7 @@ export class DetailTutorStudent implements AfterViewInit {
     valid_username: boolean = false;
     selectedMonth: boolean = false;
     selectedObject: number = 0;
+    show_un_save: boolean = false;
 
     months: any = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -48,8 +49,8 @@ export class DetailTutorStudent implements AfterViewInit {
                 this.courseList = res;
             })
 
-            this.firstname = new Control(this.student.firstName, Validators.required);
-            this.lastname = new Control(this.student.lastName, Validators.required);
+            this.firstName = new Control(this.student.firstName, Validators.required);
+            this.lastName = new Control(this.student.lastName, Validators.required);
             this.username = new Control(this.student.username);
             this.phone = new Control(this.student.phone);
             this.password = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
@@ -68,10 +69,10 @@ export class DetailTutorStudent implements AfterViewInit {
             this.dob_year = new Control(year);
             this.selectedObject = Number(month);
             console.log(month);
-            
+
             this.StudentDetailForm = builder.group({
-                firstname: this.firstname,
-                lastname: this.lastname,
+                firstName: this.firstName,
+                lastName: this.lastName,
                 username: this.username,
                 dob_day: this.dob_day,
                 dob_month: this.dob_month,
@@ -101,11 +102,11 @@ export class DetailTutorStudent implements AfterViewInit {
     }
 
     getValue(form: any) {
-        if (form.firstname == "" || form.lastname == "") return '';
+        if (form.firstName == "" || form.lastName == "") return '';
 
-        var firstname = form.firstname,
-            lastname = form.lastname,
-            username = firstname.charAt(0).toLowerCase() + lastname.toLowerCase(),
+        var firstName = form.firstName,
+            lastName = form.lastName,
+            username = firstName.charAt(0).toLowerCase() + lastName.toLowerCase(),
             i = 0;
 
         this.allStudentData.forEach(function(student) {
@@ -149,21 +150,33 @@ export class DetailTutorStudent implements AfterViewInit {
 
     AddStudent(form: any) {
         this.submitAttempt = true;
-        if (this.StudentDetailForm.valid) {
+        if (this.StudentDetailForm.valid && this.matchedPassword(form)) {
+            console.log('submit')
+            var dob = "";
+            console.log(form.dob_day);
+
+            console.log(form.dob_month);
+
+            console.log(form.dob_year);
+            if (form.dob_day == null || Number(form.dob_day) == 0 || Number(form.dob_year) == 0 || Number(form.dob_month) == 0 || form.dob_month == null || form.dob_year == null) {
+                dob = ''
+            } else {
+                dob = `${form.dob_day.length == 2 ? form.dob_day : '0' + form.dob_day}/${form.dob_month.length == 2 ? form.dob_month : '0' + form.dob_month}/${form.dob_year}`
+            }
             var data = {
                 firstName: form.firstname,
                 lastName: form.lastname,
                 username: form.username,
+                DOB: dob,
                 hashed_pwd: form.password,
-                DOB: form.dob,
                 phone: form.phone,
                 isCompleted: false,
                 completedAt: '',
                 certificate: '',
-                tutor_id: ''
+                tutor_id: this._session.getCurrentId()
             };
             var flag = JSON.parse(this._session.getItem('editORadd'))
-            if (flag.flag) data["_id"] = this.student._id;
+            if (flag.flag) data["_id"] = this.student.student_id;
 
             this._tutorService.addStudent(data, flag.flag)
                 .subscribe((res) => {
@@ -172,6 +185,8 @@ export class DetailTutorStudent implements AfterViewInit {
                     }
                 })
         }
+
+        console.log('cancel')
     }
 
     private titleCase(str: string): string {
@@ -221,5 +236,17 @@ export class DetailTutorStudent implements AfterViewInit {
         console.log("false");
         return false;
         // return Number(str) == num;
+    }
+
+    beforeGotoBack(form: any) {
+        var dob = `${form.dob_day.length == 2 ? form.dob_day : '0' + form.dob_day}/${form.dob_month.length == 2 ? form.dob_month : '0' + form.dob_month}/${form.dob_year}`;
+        console.log(form);
+        console.log(this.student)
+        if (form.firstName != this.student.firstName || form.lastName != this.student.lastName || form.username != this.student.username || form.phone != this.student.phone || form.password != this.student.hashed_pwd || dob != this.student.DOB) {
+            this.show_un_save = true;
+        } else {
+            this.show_un_save = false;
+            this.cancel();
+        }
     }
 }

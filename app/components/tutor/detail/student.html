@@ -2,15 +2,15 @@
     <div class="container">
         <h2 class="text-page m-b-30"><strong>{{getUserFullName()}}</strong></h2>
         <ul class="nav nav-tabs nav-justified">
-            <li class="">
+            <li class="active">
                 <a href="#profile" data-toggle="tab" aria-expanded="false"><strong class="text-page">Profile</strong></a>
             </li>
-            <li class="active">
+            <li class="">
                 <a href="#courses" data-toggle="tab" aria-expanded="true"><strong class="text-page">Courses</strong></a>
             </li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane" id="profile">
+            <div class="tab-pane active" id="profile">
                 <h3 class="text-page m-b-10 m-l-10 m-t-0">
                     <strong>Employee Details</strong>
                 </h3>
@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <div class=""  [ngClass]="{ 'has-error' : !firstname.valid && submitAttempt }">
+                                        <div class=""  [ngClass]="{ 'has-error' : !firstName.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
                                                     <label for="fname" class="control-label text-left text-page">First Name</label>
@@ -29,11 +29,11 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="fname" name="name" type="text" ngControl="firstname"  placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
+                                                <input class=" form-control" id="fname" name="name" type="text" ngControl="firstName"  placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class=""  [ngClass]="{ 'has-error' : !lastname.valid && submitAttempt }">
+                                        <div class=""  [ngClass]="{ 'has-error' : !lastName.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
                                                     <label for="lname" class="control-label text-left text-page">Last Name</label>
@@ -41,7 +41,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="lname" name="name" type="text" ngControl="lastname"  placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
+                                                <input class=" form-control" id="lname" name="name" type="text" ngControl="lastName"  placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
                                                 </div>
                                             </div>
                                         </div>
@@ -135,7 +135,7 @@
                             <div class="m-l-5 m-r-5">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <input type="button" (click)="cancel()" value="Back" class="btn btn-primary m-b-10 w-sm">
+                                        <a class="btn btn-primary m-b-10 w-sm" data-toggle="modal" data-target="#show_un_save" (click)="beforeGotoBack(StudentDetailForm.value)">Back</a>
                                     </div>
                                     <div class="col-xs-8 text-right">
                                         <input type="button" (click)="cancel()" value="Cancel" class="btn btn-primary m-b-10 w-sm">
@@ -147,7 +147,7 @@
                     </form>
                 </div>
             </div>
-            <div class="tab-pane active" id="courses">
+            <div class="tab-pane " id="courses">
                 <div class="table-responsive">
                     <table class="table text-page">
                         <thead>
@@ -189,3 +189,29 @@
             </div>
 
 </section>
+
+<div *ngIf="show_un_save" id="show_un_save" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>Are you sure to go back to page? </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancel()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -15,7 +15,7 @@
             <li *ngIf="currentRole == 1 && show_credits == false"  (click)="gotoCreditsTab()">
               <a>Subscription</a>
             </li>
-            <li>
+            <li *ngIf="currentRole == 1">
               |
             </li>
             <li *ngIf="currentRole == 1">

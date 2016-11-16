@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, AfterViewInit} from 'angular2/core';
 import {Session} from '../../../services/session';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
@@ -11,7 +11,7 @@ import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'a
     providers: [Session, AdminService],
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
 })
-export class Main implements OnInit {
+export class Main implements OnInit, AfterViewInit {
 
     courseList: any = [];
     orgList: any = [];
@@ -84,6 +84,12 @@ export class Main implements OnInit {
             }
         }
 
+    }
+
+    ngAfterViewInit(){
+      setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+      }, 10)
     }
 
     editCourse(course: any) {

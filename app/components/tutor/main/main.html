@@ -68,7 +68,7 @@
                             <td (click)="gotoStudentDetail(student)" style="cursor: pointer;"><strong>{{student.username}}</strong></td>
                             <td><strong>{{show_password? student.hashed_pwd : '******'}}</strong></td>
                             <td><strong>{{student.other}}</strong></td>
-                            <td class="text-right"><a class="btn w-xs btn-sm btn-primary" (click)="editStudent(student)">Edit</a></td>
+                            <td class="text-right"><a class="btn w-xs btn-sm btn-primary" (click)="gotoStudentDetail(student)">Edit</a></td>
                         </tr>
                     </table>
                 </div>

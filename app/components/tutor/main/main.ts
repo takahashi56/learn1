@@ -118,6 +118,7 @@ export class TutorMain implements OnInit {
     }
 
     gotoStudentDetail(student: any) {
+        this._session.setItem('editORadd', JSON.stringify({ flag: true }));
         this._session.setItem('TutorStudent', JSON.stringify(student));
         this._router.navigate(['DetailTutorStudent']);
     }
@@ -494,8 +495,8 @@ export class TutorMain implements OnInit {
     }
 
     downloadSampleFile() {
-      console.log('dfafds')
-        window.location.href='/csv/SampleEmployeeImport.csv';
+        console.log('dfafds')
+        window.location.href = '/csv/SampleEmployeeImport.csv';
     }
 
     downloadFile(data: any) {
