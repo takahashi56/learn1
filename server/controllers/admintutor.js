@@ -27,7 +27,8 @@ exports.getAllTutors = function(req, res) {
                     email: tutor.email,
                     student: count,
                     department: tutor.department,
-                    lastlogon: tutor.logon_date //.toString().slice(0,10).replace(/-/g,""),
+                    lastlogon: tutor.logon_date, //.toString().slice(0,10).replace(/-/g,""),
+                    notes: tutor.notes
                 }
 
                 data.push(temp);

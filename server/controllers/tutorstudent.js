@@ -299,6 +299,7 @@ exports.setStudentByCourse = function(req, res) {
                 if (i == students_ids.length) {
                     res.send({
                         success: true,
+                        confirm: confirm.length == 0 ? false : true,
                         creditcount: creditcount
                     });
                     return;

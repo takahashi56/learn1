@@ -24,7 +24,7 @@
                             <li><a class="" data-toggle="modal" data-target="#show_not_assign" (click)="gotoAddStudent()">Add Employee</a></li>
                             <li><a class="" (click)="beforeRemoveStudent()" data-toggle="modal" data-target="#remove-student">Remove Employee</a></li>
                             <li>
-                              <a class="" data-toggle="modal" data-target="#import-student">Import Employees</a>
+                                <a class="" data-toggle="modal" data-target="#import-student">Import Employees</a>
                             </li>
                             <li><a class="" (click)="showPassword()">{{show_password? 'Hide Password' : 'Reveal Password'}}</a></li>
                         </ul>
@@ -259,7 +259,10 @@
                 <div class="row" *ngIf="!disaplyCanAssign">
                     <div class="col-md-12">
                         <select class="course-select" (change)="onSelectCourse($event.target.value)">
-                        <option *ngFor="let course of courseList" [value]="course.course_id">{{course.coursetitle}}</option>
+                          <option value="" [selected]="true" [disabled]="true">
+                            Please Click the Course...
+                          </option>
+                          <option *ngFor="let course of courseList" [value]="course.course_id">{{course.coursetitle}}</option>
                       </select>
                     </div>
                 </div>
@@ -293,13 +296,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <select class="course-select" (change)="onSelectStudent($event.target.value)">
+                          <option value="" [selected]="true" [disabled]="true">
+                            Please Click Student...
+                          </option>
                             <option *ngFor="let student of studentList" [value]="student.student_id">{{student.firstName+ " " + student.lastName}}</option>
               							</select>
                     </div>
                 </div>
 
                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="studentAssign()">Assign</button>
+                <a data-toggle="modal" data-target="#showNotAssign" class="btn btn-primary" data-dismiss="modal" (click)="studentAssign()">Assign</a>
             </div>
         </div>
     </div>
@@ -376,7 +382,7 @@
                                 First Name,Last Name,DOB,Mobile,Username,Password
                             </p>
                             <p>
-                              <a class="btn btn-primary w-sm m-r-5" (click)="downloadSampleFile()">Download Sample File</a>
+                                <a class="btn btn-primary w-sm m-r-5" (click)="downloadSampleFile()">Download Sample File</a>
                             </p>
                         </div>
                     </div>
@@ -387,6 +393,32 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
                 <a class="btn btn-primary w-sm m-r-5" onClick="$('#file-uploader').click()">Select File</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="showNotAssign" id="showNotAssign" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>This employee is already assigned to this course.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>

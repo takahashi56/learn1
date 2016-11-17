@@ -46,6 +46,7 @@ export class TutorMain implements OnInit {
     show_not_assign: boolean = false;
     changePasswordSuccess: boolean = false;
     show_password: boolean = false;
+    showNotAssign: boolean = false;
 
     constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router, private builder: FormBuilder) {
         this.tutor_id = this._session.getCurrentId()
@@ -203,6 +204,8 @@ export class TutorMain implements OnInit {
 
         this._tutorService.setAssignStudentsWithCourse(this.tutor_id, selectedId, ids).subscribe((res) => {
             this._session.setItem('creditcount', res.creditcount);
+            console.log(res);
+            if(res.confirm) alert("This employee is already assigned to this course.")
 
             this._router.navigateByUrl('/home/tutor/main');
 
