@@ -31,6 +31,8 @@ export class AddTutorStudent implements AfterViewInit {
     showGotoBack: boolean = false;
     selectedNew: boolean = false;
     selectedMonth: number = 0;
+    saving: boolean = false;
+    showNotSave: boolean = false;
     months: any = ['Month', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 
@@ -137,6 +139,7 @@ export class AddTutorStudent implements AfterViewInit {
 
     AddStudent(form: any) {
         this.submitAttempt = true;
+        this.showNotSave = false;
         if (this.StudentForm.valid && this.matchedPassword(form) && this.validDob(form)) {
             console.log('submit')
             var dob = "";
@@ -166,10 +169,14 @@ export class AddTutorStudent implements AfterViewInit {
             var flag = JSON.parse(this._session.getItem('editORadd'))
             if (flag.flag) data["_id"] = this.student.student_id;
 
+            this.saving = true;
             this._tutorService.addStudent(data, flag.flag)
                 .subscribe((res) => {
+                    this.saving = false;
                     if (res.success) {
                         this._router.navigate(['TutorMain']);
+                    }else{
+                      this.showNotSave = true;
                     }
                 })
         }

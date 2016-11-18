@@ -8,6 +8,10 @@
 
             <div class="panel-body">
                 <div class=" form">
+                  <div class="alert alert-danger alert-dismissable" *ngIf="showNotSave">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      This username was already used. Can you use another username?
+                  </div>
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="StudentForm" (submit)="AddStudent(StudentForm.value)">
                         <div class="container-fluid">
                             <div class="row">
@@ -130,7 +134,7 @@
                                     </div>
                                     <div class="col-xs-8 text-right">
                                         <input type="button" (click)="cancel()" value="Cancel" class="btn btn-primary m-b-10 w-sm">
-                                        <input type="submit" value="Save" class="btn btn-primary m-b-10 w-sm m-l-15">
+                                        <input type="submit" value="Save" class="btn btn-primary m-b-10 w-sm m-l-15" [disabled]="saving">
                                     </div>
                                 </div>
                             </div>

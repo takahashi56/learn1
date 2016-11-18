@@ -157,11 +157,17 @@ exports.addStudent = function(req, res) {
     student["created_at"] = new Date();
 
     Student.create(student, function(err, student) {
-        if (err) return console.error(err);
-
-        res.send({
+        if (err) {
+          console.log(err);
+          res.send({
+            sucess: false
+          })
+        }else{
+          res.send({
             success: true
-        });
+          });          
+        }
+
     })
 }
 
@@ -305,7 +311,7 @@ exports.setStudentByCourse = function(req, res) {
                 }
 
                 if (i == students_ids.length) {
-                  console.log('send')    
+                  console.log('send')
                   console.log(creditcount)
                     res.send({
                         success: true,
