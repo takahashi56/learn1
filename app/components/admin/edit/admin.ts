@@ -20,6 +20,7 @@ export class EditAdmin {
     password: Control;
     submitAttempt: boolean = false;
     admin: any;
+    showNotSave: boolean = false;
 
     constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
         if (this._session.getCurrentId() == null) {
@@ -46,6 +47,7 @@ export class EditAdmin {
 
     update(form: any) {
         this.submitAttempt = true;
+        this.showNotSave = false;
         if (form.firstName != this.admin.firstName || form.lastName != this.admin.lastName || form.email != this.admin.email || form.password != '') {
             var data = {
                 _id: this.admin._id,
@@ -62,6 +64,8 @@ export class EditAdmin {
                           this._session.setItem('username', data.firstName + ' ' + data.lastName);
                         }
                         this._router.navigate(['AdminMain']);
+                    }else{
+                      this.showNotSave = true;
                     }
                 })
         }

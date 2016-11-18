@@ -4,10 +4,14 @@ var mongoose = require('mongoose'),
     encrypt = require('../utilities/encryption');
 
 exports.login = function(req, res) {
-    res.send({data: "admin login"});
+    res.send({
+        data: "admin login"
+    });
 }
 exports.confirmLogin = function(req, res) {
-    res.send({data: "confirm Login"});
+    res.send({
+        data: "confirm Login"
+    });
 }
 
 exports.isAdmin = function(email) {
@@ -48,12 +52,16 @@ exports.changePassword = function(req, res) {
         _id: admin_id
     }, function(err, admin) {
         if (err)
-            res.send({success: false}).end();
+            res.send({
+                success: false
+            }).end();
 
         var newpwd = admin.getHashPwd(pwd.toString());
         admin.hashed_pwd = newpwd;
         admin.save();
-        res.status(200).send({success: true}).end();
+        res.status(200).send({
+            success: true
+        }).end();
     })
 }
 
@@ -65,12 +73,18 @@ exports.isValidOldPwd = function(req, res) {
         _id: admin_id
     }, function(err, admin) {
         if (err)
-            res.send({success: false}).end();
+            res.send({
+                success: false
+            }).end();
 
         if (admin.authenticate(pwd)) {
-            res.status(200).send({success: true}).end();
+            res.status(200).send({
+                success: true
+            }).end();
         } else {
-            res.status(200).send({success: false}).end();
+            res.status(200).send({
+                success: false
+            }).end();
         }
     })
 }
@@ -86,8 +100,11 @@ exports.addAdmin = function(req, res) {
 
     Admin.create(admin, function(err, admin) {
         if (err) {
-            console.error(err)
-            res.send(err);
+            console.log(err)
+            res.send({
+                sucess: false,
+                error: err
+            });
         } else {
             var data = {
                 action: "success",
@@ -105,22 +122,30 @@ exports.editAdmin = function(req, res) {
     var admin = req.body,
         salt = encrypt.createSalt();
 
-		console.log(admin);
+    console.log(admin);
 
-		if(admin['password'] != ''){
-			admin["salt"] = salt;
-			admin["hashed_pwd"] = encrypt.hashPwd(salt, admin["password"]);
-		}
+    if (admin['password'] != '') {
+        admin["salt"] = salt;
+        admin["hashed_pwd"] = encrypt.hashPwd(salt, admin["password"]);
+    }
 
     admin["updated_at"] = new Date();
 
     Admin.update({
         _id: admin._id
     }, admin, function(err, admin) {
-        if (err)
-            return console.error(err);
+        if (err) {
+            console.log(err)
+            res.send({
+                sucess: false,
+                error: err
+            });
+        }else{
+          res.send({
+            success: true
+          });          
+        }
 
-        res.send({success: true});
     })
 }
 
@@ -151,10 +176,11 @@ exports.removeAdmin = function(req, res) {
             if (err)
                 console.error(err);
 
-            }
-        )
+        })
     })
 
-    res.send({success: true});
+    res.send({
+        success: true
+    });
 
 }

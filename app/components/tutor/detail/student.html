@@ -16,7 +16,7 @@
                 </h3>
                 <hr class="m-b-30">
                 <div class=" form">
-                    <form class="cmxform form-horizontal tasi-form"  [ngFormModel]="StudentDetailForm" (submit)="AddStudent(StudentDetailForm.value)">
+                    <form class="cmxform form-horizontal tasi-form"  [ngFormModel]="StudentDetailForm">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12">
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="col-lg-1-5">
                                     <div class="m-l-10 m-r-10">
-                                        <input type="text" placeholder="Day" ngControl="dob_day" class="p-l-r-30 form-control" maxlength="2"  (keypress)="isDayKey($event, StudentForm.value)">
+                                        <input type="text" placeholder="Day" ngControl="dob_day" class="p-l-r-30 form-control" maxlength="2"  (keypress)="isDayKey($event, StudentDetailForm.value)">
                                     </div>
                                 </div>
                                 <div class="col-lg-1-5">
@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="col-lg-1-5">
                                     <div class="m-l-10 m-r-10">
-                                        <input type="text" placeholder="Year" ngControl="dob_year" class="p-l-r-30 form-control" maxlength="4" minlength="4" (keypress)="isYearKey($event, StudentForm.value)">
+                                        <input type="text" placeholder="Year" ngControl="dob_year" class="p-l-r-30 form-control" maxlength="4" minlength="4" (keypress)="isYearKey($event, StudentDetailForm.value)">
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +139,7 @@
                                     </div>
                                     <div class="col-xs-8 text-right">
                                         <input type="button" (click)="cancel()" value="Cancel" class="btn btn-primary m-b-10 w-sm">
-                                        <input type="submit"  value="Save" class="btn btn-primary m-b-10 w-sm m-l-15">
+                                        <input type="submit"  value="Save" class="btn btn-primary m-b-10 w-sm m-l-15" (click)= "AddStudent(StudentDetailForm.value)">
                                     </div>
                                 </div>
                             </div>

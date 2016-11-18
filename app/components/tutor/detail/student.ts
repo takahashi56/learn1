@@ -66,9 +66,9 @@ export class DetailTutorStudent implements AfterViewInit {
 
             this.dob_day = new Control(day);
             this.dob_month = new Control(month);
+
             this.dob_year = new Control(year);
             this.selectedObject = Number(month);
-            console.log(month);
 
             this.StudentDetailForm = builder.group({
                 firstName: this.firstName,
@@ -148,24 +148,27 @@ export class DetailTutorStudent implements AfterViewInit {
 
     }
 
+    validDob(form: any) {
+        if (form.dob_day == '' && isNaN(form.dob_month) && form.dob_year == null) return true;
+
+        if (form.dob_day > 31) return false;
+        if (form.dob_month > 12 || form.dob_month < 0) return false;
+        if (form.dob_year.length < 4) return false;
+        return true;
+    }
+
     AddStudent(form: any) {
         this.submitAttempt = true;
-        if (this.StudentDetailForm.valid && this.matchedPassword(form)) {
-            console.log('submit')
+        if (this.StudentDetailForm.valid && this.matchedPassword(form) && this.validDob(form)) {
             var dob = "";
-            console.log(form.dob_day);
-
-            console.log(form.dob_month);
-
-            console.log(form.dob_year);
             if (form.dob_day == null || Number(form.dob_day) == 0 || Number(form.dob_year) == 0 || Number(form.dob_month) == 0 || form.dob_month == null || form.dob_year == null) {
                 dob = ''
             } else {
                 dob = `${form.dob_day.length == 2 ? form.dob_day : '0' + form.dob_day}/${form.dob_month.length == 2 ? form.dob_month : '0' + form.dob_month}/${form.dob_year}`
             }
             var data = {
-                firstName: form.firstname,
-                lastName: form.lastname,
+                firstName: form.firstName,
+                lastName: form.lastName,
                 username: form.username,
                 DOB: dob,
                 hashed_pwd: form.password,
@@ -248,5 +251,37 @@ export class DetailTutorStudent implements AfterViewInit {
             this.show_un_save = false;
             this.cancel();
         }
+    }
+
+    isYearKey(evt, form: any) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        var val = form.dob_year == null ? '' : form.dob_year;
+        if (val.length < 4) {
+            val = val + (charCode - 48);
+        }
+        if (val.length == 4) {
+            if (Number(val) < 1950) return false;
+        }
+        if (Number(val) > (new Date()).getFullYear()) return false;
+
+        return true;
+    }
+    isDayKey(evt, form: any) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        var val = form.dob_day == null ? '' : form.dob_day;
+        if (val.length < 2) {
+            val = val + (charCode - 48);
+        }
+        if (Number(val) > 31) return false;
+
+        return true;
     }
 }

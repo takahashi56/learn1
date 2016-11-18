@@ -141,14 +141,7 @@ export class AddTutorStudent implements AfterViewInit {
         this.submitAttempt = true;
         this.showNotSave = false;
         if (this.StudentForm.valid && this.matchedPassword(form) && this.validDob(form)) {
-            console.log('submit')
             var dob = "";
-            console.log(form.dob_day);
-
-            console.log(form.dob_month);
-
-            console.log(form.dob_year);
-
             if (form.dob_day == '' || Number(form.dob_day) == 0 || Number(form.dob_year) == 0 || Number(form.dob_month) == 0 || form.dob_month == '' || form.dob_year == '') {
                 dob = ''
             } else {

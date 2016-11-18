@@ -57,6 +57,15 @@ export class EditOrganization {
         this._router.navigate(['AdminMain']);
     }
 
+    isNumberKey(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
     update(form: any) {
         // this.submitAttempt = true;
         if (form.firstName != this.org.firstName || form.lastName != this.org.lastName || form.password != this.org.password || form.email != this.org.email || form.organization != this.org.organization || form.phone != this.org.phone || form.department != this.org.department || form.notes != this.org.notes) {

@@ -20,6 +20,7 @@ export class AddAdmin {
     email: Control;
     password: Control;
     submitAttempt: boolean = false;
+    showNotSave: boolean = false;
 
 
     constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
@@ -47,6 +48,7 @@ export class AddAdmin {
 
     AddAdmin(form: any) {
         // this._session.login(form.username, form.password);
+        this.showNotSave = false;
         this.submitAttempt = true;
         if (this.AdminForm.valid) {
             var data = {
@@ -60,6 +62,8 @@ export class AddAdmin {
                 .subscribe((res) => {
                     if (res.success) {
                         this._router.navigate(['AdminMain']);
+                    }else{
+                      this.showNotSave = true;
                     }
                 })
         }

@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="phone" name="name" type="text"   placeholder="Some text value..." ngControl="phone">
+                                        <input class=" form-control" id="phone" name="name" type="text"   placeholder="Some text value..." ngControl="phone" (keypress)="isNumberKey($event)">
                                     </div>
                                 </div>
                             </div>

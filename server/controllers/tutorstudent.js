@@ -165,7 +165,7 @@ exports.addStudent = function(req, res) {
         }else{
           res.send({
             success: true
-          });          
+          });
         }
 
     })
@@ -224,6 +224,8 @@ exports.addStudentCSV = function(req, res) {
 
 exports.editStudent = function(req, res) {
     var student = req.body;
+
+    console.log(student);
 
     Student.update({
         _id: student._id
