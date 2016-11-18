@@ -244,10 +244,10 @@
             <div class="modal-body assign-text">
                 <div class="row">
                     <div class="col-md-12">
-                        <div *ngIf="!disaplyCanAssign" class="form-group">
+                        <div *ngIf="!displayCanAssign" class="form-group">
                             <p>Click the arrow below to select a course and then click Assign.</p>
                         </div>
-                        <div *ngIf="disaplyCanAssign" class="form-group">
+                        <div *ngIf="displayCanAssign" class="form-group">
                             <p> You should purchase credit or subscribe for assign to course. </p>
                         </div>
                     </div>
@@ -256,7 +256,7 @@
             </div>
 
             <div class="modal-footer">
-                <div class="row" *ngIf="!disaplyCanAssign">
+                <div class="row" *ngIf="!displayCanAssign">
                     <div class="col-md-12">
                         <select class="course-select" (change)="onSelectCourse($event.target.value)">
                           <option value="" [selected]="true" [disabled]="true">
@@ -268,7 +268,7 @@
                 </div>
 
                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                <button *ngIf="!disaplyCanAssign" type="button" class="btn btn-primary" data-dismiss="modal" (click)="courseAssign()">Assign</button>
+                <button *ngIf="!displayCanAssign" type="button" class="btn btn-primary" data-dismiss="modal" (click)="courseAssign()">Assign</button>
             </div>
         </div>
     </div>

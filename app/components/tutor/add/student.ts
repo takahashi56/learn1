@@ -18,8 +18,8 @@ export class AddTutorStudent implements AfterViewInit {
     student: any;
     allStudentData: any;
     StudentForm: ControlGroup;
-    firstname: Control;
-    lastname: Control;
+    firstName: Control;
+    lastName: Control;
     username: Control;
     password: Control;
     verifiedpassword: Control;
@@ -31,7 +31,7 @@ export class AddTutorStudent implements AfterViewInit {
     showGotoBack: boolean = false;
     selectedNew: boolean = false;
     selectedMonth: number = 0;
-    months: any = ['Month','January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    months: any = ['Month', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 
     constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
@@ -41,8 +41,8 @@ export class AddTutorStudent implements AfterViewInit {
             this.student = JSON.parse(this._session.getItem('TutorStudent'));
             this.allStudentData = JSON.parse(this._session.getItem('TutorAllStudent'));
 
-            this.firstname = new Control(this.student.firstName, Validators.required);
-            this.lastname = new Control(this.student.lastName, Validators.required);
+            this.firstName = new Control(this.student.firstName, Validators.required);
+            this.lastName = new Control(this.student.lastName, Validators.required);
             this.username = new Control(this.student.username);
             this.phone = new Control(this.student.phone);
             this.password = new Control(this.student.hashed_pwd, Validators.compose([Validators.required, Validators.minLength(6)]))
@@ -56,8 +56,8 @@ export class AddTutorStudent implements AfterViewInit {
             this.dob_year = new Control(year.trim());
 
             this.StudentForm = builder.group({
-                firstname: this.firstname,
-                lastname: this.lastname,
+                firstName: this.firstName,
+                lastName: this.lastName,
                 username: this.username,
                 dob_day: this.dob_day,
                 dob_month: this.dob_month,
@@ -87,29 +87,33 @@ export class AddTutorStudent implements AfterViewInit {
     }
 
     getValue(form: any) {
-        if (form.firstname == "" || form.lastname == "") return '';
+        if (form.firstName == "" || form.lastName == "") return '';
 
-        var firstname = form.firstname,
-            lastname = form.lastname,
-            username = firstname.charAt(0).toLowerCase() + lastname.toLowerCase(),
+        var firstName = form.firstName,
+            lastName = form.lastName,
+            username = firstName.charAt(0).toLowerCase() + lastName.toLowerCase(),
             i = 0;
 
+        if (this.allStudentData == null) {
+            i = 0;
+        } else {
+            this.allStudentData.forEach((student) => {
+                if (student.username.includes(username)) i++;
+            })
+        }
+        if (i != 0) username = username + i;
+
+        (<Control>this.StudentForm.controls['username']).updateValue(username);
+    }
+
+    getUserName(form: any) {
+        var username = form.username.toLowerCase(), i = 0;
         this.allStudentData.forEach((student) => {
             if (student.username.includes(username)) i++;
         })
         if (i != 0) username = username + i;
 
         (<Control>this.StudentForm.controls['username']).updateValue(username);
-    }
-
-    getUserName(form: any){
-      var username = form.username.toLowerCase(), i =0;
-      this.allStudentData.forEach((student) => {
-          if (student.username.includes(username)) i++;
-      })
-      if (i != 0) username = username + i;
-
-      (<Control>this.StudentForm.controls['username']).updateValue(username);
     }
 
     matchedPassword(form: any) {
@@ -123,9 +127,17 @@ export class AddTutorStudent implements AfterViewInit {
 
     }
 
+    validDob(form: any) {
+        if (form.dob_day == '' && Number(form.dob_month) == 0 && form.dob_year == '') return true;
+        if (form.dob_day > 31) return false;
+        if (form.dob_month > 12 || form.dob_month < 0) return false;
+        if (form.dob_year.length < 4) return false;
+        return true;
+    }
+
     AddStudent(form: any) {
         this.submitAttempt = true;
-        if (this.StudentForm.valid && this.matchedPassword(form)) {
+        if (this.StudentForm.valid && this.matchedPassword(form) && this.validDob(form)) {
             console.log('submit')
             var dob = "";
             console.log(form.dob_day);
@@ -133,14 +145,15 @@ export class AddTutorStudent implements AfterViewInit {
             console.log(form.dob_month);
 
             console.log(form.dob_year);
-            if (form.dob_day == null || Number(form.dob_day) == 0 || Number(form.dob_year) == 0 || Number(form.dob_month) == 0 || form.dob_month == null || form.dob_year == null) {
+
+            if (form.dob_day == '' || Number(form.dob_day) == 0 || Number(form.dob_year) == 0 || Number(form.dob_month) == 0 || form.dob_month == '' || form.dob_year == '') {
                 dob = ''
             } else {
                 dob = `${form.dob_day.length == 2 ? form.dob_day : '0' + form.dob_day}/${form.dob_month.length == 2 ? form.dob_month : '0' + form.dob_month}/${form.dob_year}`
             }
             var data = {
-                firstName: form.firstname,
-                lastName: form.lastname,
+                firstName: form.firstName,
+                lastName: form.lastName,
                 username: form.username,
                 DOB: dob,
                 hashed_pwd: form.password,
@@ -170,7 +183,7 @@ export class AddTutorStudent implements AfterViewInit {
     }
 
     beforeGotoBack(form: any) {
-        if (form.firstname != this.student.firstName || form.lastname != this.student.lastName || form.username != this.student.username || form.phone != this.student.phone) {
+        if (form.firstName != this.student.firstName || form.lastName != this.student.lastName || form.username != this.student.username || form.phone != this.student.phone) {
             this.showGotoBack = true;
         } else {
             this.showGotoBack = false;
@@ -211,6 +224,9 @@ export class AddTutorStudent implements AfterViewInit {
         var val = form.dob_year == null ? '' : form.dob_year;
         if (val.length < 4) {
             val = val + (charCode - 48);
+        }
+        if (val.length == 4) {
+            if (Number(val) < 1950) return false;
         }
         if (Number(val) > (new Date()).getFullYear()) return false;
 

@@ -41,7 +41,7 @@ export class TutorMain implements OnInit {
     setting_tab: string = '';
     credits_tab: string = '';
     showAssignCourse: boolean = false;
-    disaplyCanAssign: boolean = false;
+    displayCanAssign: boolean = false;
     showAssignStudent: boolean = false;
     show_not_assign: boolean = false;
     changePasswordSuccess: boolean = false;
@@ -92,6 +92,8 @@ export class TutorMain implements OnInit {
     }
 
     loadData() {
+        this.showAssignCourse = false;
+        this.selectStudents = [];
         this._tutorService.getAllCourses({ tutor_id: this.tutor_id }).subscribe((res) => {
             this.courseList = res;
         });
@@ -154,12 +156,13 @@ export class TutorMain implements OnInit {
     }
 
     beforeAssign() {
+        if (this.selectStudents.length == 0) return false;
         if (this.selectStudents.length != 0 && Number(this._session.getItem('creditcount')) != 0) {
             this.showAssignCourse = true;
-            this.disaplyCanAssign = false;
+            this.displayCanAssign = false;
         } else {
-            this.showAssignCourse = false;
-            this.disaplyCanAssign = true;
+            this.showAssignCourse = true;
+            this.displayCanAssign = true;
         }
     }
 

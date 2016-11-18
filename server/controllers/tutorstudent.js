@@ -251,7 +251,9 @@ exports.setStudentByCourse = function(req, res) {
         }
         var creditcount = tutor.creditcount,
             i = 0;
-
+            console.log(tutor)
+        console.log('start')
+        console.log(creditcount)
         students_ids.map(function(id) {
             Take.find({
                 student_id: id
@@ -274,8 +276,12 @@ exports.setStudentByCourse = function(req, res) {
                         completedAt: '',
                         certificate: ''
                     }
+                    console.log('subscribe')
+                    console.log(creditcount)
                     if (tutor.subscribing == false) {
                         creditcount--;
+                        console.log('end')
+                        console.log(creditcount)
                         if (creditcount < 0) {
                             tutor.creditcount = 0;
                             tutor.save();
@@ -283,9 +289,11 @@ exports.setStudentByCourse = function(req, res) {
                                 success: true,
                                 creditcount: 0
                             }).end();
-                            return console.error("creditcount = 0");
+                            return console.log("creditcount = 0");
 
                         } else {
+                          console.log('save')
+                          console.log(creditcount)
                             tutor.creditcount = creditcount;
                             tutor.save();
                         }
@@ -297,6 +305,8 @@ exports.setStudentByCourse = function(req, res) {
                 }
 
                 if (i == students_ids.length) {
+                  console.log('send')    
+                  console.log(creditcount)
                     res.send({
                         success: true,
                         confirm: confirm.length == 0 ? false : true,

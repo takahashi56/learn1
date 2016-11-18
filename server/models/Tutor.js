@@ -28,6 +28,9 @@ module.exports = function() {
 
     // change the updated_at field to current date
     this.updated_at = currentDate;
+    if(this.subscribing == null){
+      this.subscribing = false;
+    }
 
     // if created_at doesn't exist, add to that field
     if (!this.created_at)

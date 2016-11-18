@@ -13,7 +13,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <div class="" [ngClass]="{ 'has-error' : !firstname.valid && submitAttempt }">
+                                        <div class="" [ngClass]="{ 'has-error' : !firstName.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
                                                     <label for="fname" class="control-label text-left text-page">First Name</label>
@@ -21,11 +21,11 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                    <input class=" form-control" id="fname" name="name" type="text" ngControl="firstname" placeholder="First Name" (blur)="getValue(StudentForm.value)">
+                                                    <input class=" form-control" id="fname" name="name" type="text" ngControl="firstName" placeholder="First Name" (blur)="getValue(StudentForm.value)">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="" [ngClass]="{ 'has-error' : !lastname.valid && submitAttempt }">
+                                        <div class="" [ngClass]="{ 'has-error' : !lastName.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
                                                     <label for="lname" class="control-label text-left text-page">Last Name</label>
@@ -33,7 +33,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                    <input class=" form-control" id="lname" name="name" type="text" ngControl="lastname" placeholder="Last Name" (blur)="getValue(StudentForm.value)">
+                                                    <input class=" form-control" id="lname" name="name" type="text" ngControl="lastName" placeholder="Last Name" (blur)="getValue(StudentForm.value)">
                                                 </div>
                                             </div>
                                         </div>
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username" placeholder="Logon Name" (blur)="getUserName(StudentForm.value)">
+                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username" placeholder="Logon Name" (blur)="getValue(StudentForm.value)">
                                     </div>
                                 </div>
                             </div>
