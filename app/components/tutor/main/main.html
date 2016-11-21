@@ -31,7 +31,7 @@
                     </div>
 
                     <input type="file" id="file-uploader" (change)="importAddStudent($event)" style="display: none;" />
-                    <button class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#select-course" (click)="beforeAssign()" [disabled]="isAssign()">Assign Course</button>
+                    <button class="btn btn-primary w-sm m-r-5" data-toggle="modal" data-target="#select-course" (click)="beforeAssign()">Assign Course</button>
 
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Training Matrix <span class="caret"></span></button>
@@ -189,7 +189,9 @@
                     <div class="panel-heading p-b-0">
                         <h4 class="text-page m-l-15 m-t-15"><strong>Credits</strong></h4>
                     </div>
-
+                    <div class="alert alert-info" *ngIf="success_subscription">
+                        Your Subscription has been successfully!
+                    </div>
                     <div class="panel-body">
                         <div style="max-width: 90%;">
                             Each course you assign an employee will require 1 credit.<br/> For example if you have 15 employees and want each employee to complete the Health and Safety course this will require 15 credits
@@ -284,16 +286,19 @@
             <div class="modal-body assign-text">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <p>Click the arrow below to select a Employee and then click Assign.</p>
-                        </div>
+                      <div *ngIf="!displayCanAssign" class="form-group">
+                          <p>Click the arrow below to select a course and then click Assign.</p>
+                      </div>
+                      <div *ngIf="displayCanAssign" class="form-group">
+                          <p> You should purchase credit or subscribe for assign to course. </p>
+                      </div>
                     </div>
                 </div>
 
             </div>
 
             <div class="modal-footer">
-                <div class="row">
+                <div class="row"  *ngIf="!displayCanAssign">
                     <div class="col-md-12">
                         <select class="course-select" (change)="onSelectStudent($event.target.value)">
                           <option value="" [selected]="true" [disabled]="true">
@@ -305,7 +310,7 @@
                 </div>
 
                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                <a data-toggle="modal" data-target="#showNotAssign" class="btn btn-primary" data-dismiss="modal" (click)="studentAssign()">Assign</a>
+                <a data-toggle="modal" *ngIf="!displayCanAssign"  data-target="#showNotAssign" class="btn btn-primary" data-dismiss="modal" (click)="studentAssign()">Assign</a>
             </div>
         </div>
     </div>

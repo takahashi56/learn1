@@ -47,6 +47,7 @@ export class TutorMain implements OnInit {
     changePasswordSuccess: boolean = false;
     show_password: boolean = false;
     showNotAssign: boolean = false;
+    success_subscription: boolean = false;
 
     constructor(private _location: Location, private _session: Session, private _tutorService: TutorService, private _router: Router, private builder: FormBuilder) {
         this.tutor_id = this._session.getCurrentId()
@@ -80,6 +81,14 @@ export class TutorMain implements OnInit {
             })
 
             setInterval(() => {
+                if(JSON.parse(this._session.getItem('success_subscription')) == true){
+                  this.success_subscription = true;
+                  setTimeout(() => {
+                    this.success_subscription = false;
+                  }, 4000);
+                }else{
+                  this.success_subscription = false;
+                }
                 if (this._session.getItem('select_tutor_tab') == null) {
                     this.onTabClick(1);
                 } else {
@@ -157,7 +166,7 @@ export class TutorMain implements OnInit {
 
     beforeAssign() {
         if (this.selectStudents.length == 0) return false;
-        if (this.selectStudents.length != 0 && Number(this._session.getItem('creditcount')) != 0) {
+        if (this.selectStudents.length != 0 && (Number(this._session.getItem('creditcount')) != 0  || Number(this._session.getItem('subscribing')) == 1)) {
             this.showAssignCourse = true;
             this.displayCanAssign = false;
         } else {
@@ -178,8 +187,10 @@ export class TutorMain implements OnInit {
         if (Number(this._session.getItem('creditcount')) != 0 || Number(this._session.getItem('subscribing')) == 1) {
             this.showAssignStudent = true;
             this._session.setItem('AssignCourse', course.course_id)
+            this.displayCanAssign = false;
         } else {
-            this.showAssignStudent = false;
+            this.showAssignStudent = true;
+            this.displayCanAssign = true;
         }
     }
 
@@ -195,7 +206,7 @@ export class TutorMain implements OnInit {
         var id = this._session.getItem('SelectStudentWithId');
         if (!id) return false;
 
-        if (Number(this._session.getItem('creditcount')) == 0) {
+        if (Number(this._session.getItem('creditcount')) == 0 && Number(this._session.getItem('subscribing')) == 0) {
             return false;
         }
 
@@ -207,7 +218,9 @@ export class TutorMain implements OnInit {
 
         this._tutorService.setAssignStudentsWithCourse(this.tutor_id, selectedId, ids).subscribe((res) => {
             this._session.setItem('creditcount', res.creditcount);
+
             console.log(res);
+
             if(res.confirm) alert("This employee is already assigned to this course.")
 
             this._router.navigateByUrl('/home/tutor/main');
@@ -220,7 +233,7 @@ export class TutorMain implements OnInit {
         var id = this._session.getItem('SelectCourseWithId');
         if (!id) return false;
 
-        if (Number(this._session.getItem('creditcount')) == 0) {
+        if (Number(this._session.getItem('creditcount')) == 0 && Number(this._session.getItem('subscribing')) == 0) {
             return false;
         }
 
@@ -231,7 +244,9 @@ export class TutorMain implements OnInit {
         this._tutorService.setAssignStudentsWithCourse(this.tutor_id, id, ids).subscribe((res) => {
 
             this._session.setItem('creditcount', res.creditcount);
+            console.log(res);
 
+            if(res.confirm) alert("This employee is already assigned to this course.")
             this._router.navigateByUrl('/home/tutor/main');
             this.loadData()
         });

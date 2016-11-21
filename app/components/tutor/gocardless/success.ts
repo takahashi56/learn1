@@ -16,6 +16,7 @@ export class GoCardlessPaymentSuccess implements OnInit{
 
 	constructor(private _session: Session, private _tutorService: TutorService, private builder: FormBuilder, private _router: Router) {
 			this.tutor_id = this._session.getCurrentId();
+			this._session.setItem('success_subscription', true);
 	}
 
 	ngOnInit(){

@@ -252,78 +252,79 @@ exports.setStudentByCourse = function(req, res) {
     Tutor.findOne({
         _id: tutor_id
     }, function(err, tutor) {
-        if (tutor.creditcount == 0) {
-            res.send(500).send({
+        if (tutor.creditcount == 0 && tutor.subscribing == false) {
+            res.send({
                 error: "you cannot assign the course to students!"
             }).end();
-        }
-        var creditcount = tutor.creditcount,
-            i = 0;
-            console.log(tutor)
-        console.log('start')
-        console.log(creditcount)
-        students_ids.map(function(id) {
+        }else{
+          var creditcount = tutor.creditcount,
+          i = 0;
+          console.log(tutor)
+          console.log('start')
+          console.log(creditcount)
+          students_ids.map(function(id) {
             Take.find({
-                student_id: id
+              student_id: id
             }, function(err, takes) {
-                if (err) return console.log(err);
+              if (err) return console.log(err);
 
-                var confirm = takes.filter(function(x) {
-                    return x.course_id == course_id
-                });
+              var confirm = takes.filter(function(x) {
+                return x.course_id == course_id
+              });
 
-                i++;
-                console.log('confirm = ' + JSON.stringify(confirm));
+              i++;
+              console.log('confirm = ' + JSON.stringify(confirm));
 
-                if (confirm.length == 0) {
-                    var data = {
-                        student_id: id,
-                        course_id: course_id,
-                        score: 0,
-                        isCompleted: false,
-                        completedAt: '',
-                        certificate: ''
-                    }
-                    console.log('subscribe')
-                    console.log(creditcount)
-                    if (tutor.subscribing == false) {
-                        creditcount--;
-                        console.log('end')
-                        console.log(creditcount)
-                        if (creditcount < 0) {
-                            tutor.creditcount = 0;
-                            tutor.save();
-                            res.send({
-                                success: true,
-                                creditcount: 0
-                            }).end();
-                            return console.log("creditcount = 0");
-
-                        } else {
-                          console.log('save')
-                          console.log(creditcount)
-                            tutor.creditcount = creditcount;
-                            tutor.save();
-                        }
-                    }
-
-                    Take.create(data, function(err, take) {
-                        if (err) return console.log(err);
-                    });
+              if (confirm.length == 0) {
+                var data = {
+                  student_id: id,
+                  course_id: course_id,
+                  score: 0,
+                  isCompleted: false,
+                  completedAt: '',
+                  certificate: ''
                 }
-
-                if (i == students_ids.length) {
-                  console.log('send')
+                console.log('subscribe')
+                console.log(creditcount)
+                if (tutor.subscribing == false) {
+                  creditcount--;
+                  console.log('end')
                   console.log(creditcount)
+                  if (creditcount < 0) {
+                    tutor.creditcount = 0;
+                    tutor.save();
                     res.send({
-                        success: true,
-                        confirm: confirm.length == 0 ? false : true,
-                        creditcount: creditcount
-                    });
-                    return;
+                      success: true,
+                      creditcount: 0
+                    }).end();
+                    return console.log("creditcount = 0");
+
+                  } else {
+                    console.log('save')
+                    console.log(creditcount)
+                    tutor.creditcount = creditcount;
+                    tutor.save();
+                  }
                 }
+
+                Take.create(data, function(err, take) {
+                  if (err) return console.log(err);
+                });
+              }
+
+              if (i == students_ids.length && (tutor.creditcount != 0 || tutor.subscribing == true)) {
+                console.log('send')
+                console.log(creditcount)
+                res.send({
+                  success: true,
+                  confirm: confirm.length == 0 ? false : true,
+                  creditcount: creditcount
+                });
+                return;
+              }
             })
-        })
+          })
+        }
     });
 }
 

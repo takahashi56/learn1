@@ -55,7 +55,7 @@ export class DetailTutorCourse {
 
     getCompleteDate(student: any) {
         var date = student.completedAt, isCompleted = student.isCompleted;
-        if (date == null || date == '') return '';
+        if (date == null || date == '' || isCompleted == false) return '';
 
         var d = new Date(date),
             day = d.getDate().toString().length == 1 ? '0' + d.getDate() : d.getDate(),
