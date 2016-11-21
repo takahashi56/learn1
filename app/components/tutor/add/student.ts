@@ -226,7 +226,7 @@ export class AddTutorStudent implements AfterViewInit {
             val = val + (charCode - 48);
         }
         if (val.length == 4) {
-            if (Number(val) < 1950) return false;
+            if (Number(val) < 1916) return false;
         }
         if (Number(val) > (new Date()).getFullYear()) return false;
 

@@ -30,7 +30,8 @@ export class GoCardlessPayment {
             this.tutor_id = this._session.getCurrentId();
             this.employeecount = Number(this._session.getItem('employeecount'));
             if(Number(this._session.getItem('subscribing')) == 0){
-              this.employeecount = (JSON.parse(this._session.getItem('TutorAllStudent'))).length;
+              let students = JSON.parse(this._session.getItem('TutorAllStudent')) || [];
+              this.employeecount = students.length;
             }
         }
     }
@@ -41,7 +42,7 @@ export class GoCardlessPayment {
         });
         window.open(this.redirect_url[num], '_blank');
     }
-    
+
     cancel() {
         this._router.navigate(['TutorMain']);
     }
