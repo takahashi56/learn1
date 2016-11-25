@@ -1,12 +1,17 @@
 var express = require('express'),
-	bodyParser = require('body-parser'),
-	cookieParser = require('cookie-parser'),
-	session = require('express-session'),
-	passport = require('passport'),
-	cors = require('cors');
+    bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
+    passport = require('passport'),
+    cors = require('cors');
+
+var favicon = require('serve-favicon');
+
 
 var fileUpload = require('express-fileupload');
 var app = express();
+
+app.use(favicon(__dirname + '/favicon.png'));
 
 var port = process.env.PORT || 5000;
 
@@ -23,8 +28,13 @@ app.use(fileUpload());
 app.set('views', './server/views');
 app.set('view engine', 'jade');
 
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({
+    limit: '50mb'
+}));
+app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    extended: true
+}));
 
 app.use(cookieParser());
 
@@ -55,5 +65,5 @@ require('./server/models/Tutor')();
 require('./server/routes/routes')(app);
 
 app.listen(port, function(err) {
-	console.log('running server on port: ' + port);
+    console.log('running server on port: ' + port);
 });
