@@ -80,15 +80,16 @@ export class TutorMain implements OnInit {
                 oldpwd: this.oldpwd
             })
 
+            if(JSON.parse(this._session.getItem('success_subscription')) == true){
+              this.success_subscription = true;
+              setTimeout(() => {
+                this.success_subscription = false;
+              }, 4000);
+            }else{
+              this.success_subscription = false;
+            }
+            
             setInterval(() => {
-                if(JSON.parse(this._session.getItem('success_subscription')) == true){
-                  this.success_subscription = true;
-                  setTimeout(() => {
-                    this.success_subscription = false;
-                  }, 4000);
-                }else{
-                  this.success_subscription = false;
-                }
                 if (this._session.getItem('select_tutor_tab') == null) {
                     this.onTabClick(1);
                 } else {
