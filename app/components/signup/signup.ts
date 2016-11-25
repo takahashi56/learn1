@@ -84,7 +84,7 @@ export class SignUp {
 						this._session.setItem('homeUrl', res.action);
 						this._router.navigateByUrl('/home/tutor/main');
 					}
-					if(res.errmsg){
+					if(res.errmsg || res.success == false){
 						this.registerFailure = true
 					}
 				})

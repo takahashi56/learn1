@@ -28,6 +28,7 @@
     "express-session": "^1.13.0",
     "fast-csv": "^2.1.0",
     "jade": "^1.11.0",
+    "lodash": "^4.17.2",
     "moment": "^2.12.0",
     "mongoose": "^4.4.7",
     "ng2-idle": "^1.0.0-alpha.11",

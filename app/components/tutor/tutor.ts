@@ -9,6 +9,7 @@ import {StripePayment} from './stripe/tutor';
 import {GoCardlessPayment} from './gocardless/tutor';
 import {GoCardlessPaymentSuccess} from './gocardless/success';
 import {GoCardlessPaymentFailure} from './gocardless/failure';
+import {PastTutorStudent} from './past/tutor';
 
 
 @Component({
@@ -26,6 +27,7 @@ import {GoCardlessPaymentFailure} from './gocardless/failure';
 	new Route({ path: '/add/student', component: AddTutorStudent,  name: 'AddTutorStudent'}),
 	new Route({ path: '/detail/student', component: DetailTutorStudent, name: 'DetailTutorStudent' }),
 	new Route({ path: '/detail/course', component: DetailTutorCourse, name: 'DetailTutorCourse' }),
+	new Route({ path: '/main/past', component: PastTutorStudent, name: 'PastTutorStudent' })
 ])
 
 export class Tutor {

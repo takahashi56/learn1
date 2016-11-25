@@ -35,7 +35,8 @@ exports.getAllStudents = function(req, res) {
         complete = 0;
 
     Student.find({
-        tutor_id: tutor_id
+        tutor_id: tutor_id,
+        archOrReal: true
     }, null, {
         sort: 'created_at'
     }, function(err, students) {
@@ -51,6 +52,11 @@ exports.getAllStudents = function(req, res) {
                 for (var i = 0, len = takes.length; i !== len; i++) {
                     if (takes[i].isCompleted) complete++;
                 }
+                // console.log(student.archOrReal);
+                // if(student.archOrReal == undefined){
+                //   student['archOrReal'] = true;
+                //   student.save();
+                // }
 
                 var s = {
                     student_id: student._id,
@@ -116,7 +122,8 @@ exports.getAllCourses = function(req, res) {
                     takes.forEach(function(take) {
                         Student.findOne({
                             _id: take.student_id,
-                            tutor_id: tutor_id
+                            tutor_id: tutor_id,
+                            archOrReal: true
                         }, function(err, student) {
                             if (err) return console.error(err);
 
@@ -155,17 +162,18 @@ exports.addStudent = function(req, res) {
     var student = req.body;
 
     student["created_at"] = new Date();
+    student["archOrReal"] = true;
 
     Student.create(student, function(err, student) {
         if (err) {
-          console.log(err);
-          res.send({
-            sucess: false
-          })
-        }else{
-          res.send({
-            success: true
-          });
+            console.log(err);
+            res.send({
+                sucess: false
+            })
+        } else {
+            res.send({
+                success: true
+            });
         }
 
     })
@@ -192,9 +200,12 @@ exports.addStudentCSV = function(req, res) {
                     username: data[4],
                     hashed_pwd: data[5],
                     tutor_id: tutor_id,
+                    archOrReal: true
                 }
 
-                Student.find({}, function(err, sCollection) {
+                Student.find({
+                    archOrReal: true
+                }, function(err, sCollection) {
                     if (err) throw err;
 
                     i = 0;
@@ -224,14 +235,11 @@ exports.addStudentCSV = function(req, res) {
 
 exports.editStudent = function(req, res) {
     var student = req.body;
-
-    console.log(student);
-
     Student.update({
         _id: student._id
     }, student, function(err, student) {
         if (err) return console.error(err);
-
+        console.log(err);
         res.send({
             success: true
         });
@@ -247,7 +255,9 @@ exports.deleteStudent = function(req, res) {
 exports.setStudentByCourse = function(req, res) {
     var course_id = req.body.course_id,
         students_ids = req.body.ids,
-        tutor_id = req.body.tutor_id;
+        tutor_id = req.body.tutor_id,
+        not_assign = 0,
+        is_credit = false;
 
     Tutor.findOne({
         _id: tutor_id
@@ -256,74 +266,76 @@ exports.setStudentByCourse = function(req, res) {
             res.send({
                 error: "you cannot assign the course to students!"
             }).end();
-        }else{
-          var creditcount = tutor.creditcount,
-          i = 0;
-          console.log(tutor)
-          console.log('start')
-          console.log(creditcount)
-          students_ids.map(function(id) {
-            Take.find({
-              student_id: id
-            }, function(err, takes) {
-              if (err) return console.log(err);
+        } else {
+            var creditcount = tutor.creditcount,
+                i = 0;
+            students_ids.map(function(id) {
+                Take.find({
+                    student_id: id
+                }, function(err, takes) {
+                    if (err) return console.log(err);
 
-              var confirm = takes.filter(function(x) {
-                return x.course_id == course_id
-              });
+                    var confirm = takes.filter(function(x) {
+                        return x.course_id == course_id
+                    });
 
-              i++;
-              console.log('confirm = ' + JSON.stringify(confirm));
+                    i++;
+                    if (confirm.length > 0) {
+                        if (confirm[0]['isCompleted'] == true) {
+                            confirm.remove();
+                        } else {
+                            not_assign++;
+                        }
+                    } else {
+                        confirm = [{}];
+                        confirm[0]['isCompleted'] = true;
+                    }
 
-              if (confirm.length == 0) {
-                var data = {
-                  student_id: id,
-                  course_id: course_id,
-                  score: 0,
-                  isCompleted: false,
-                  completedAt: '',
-                  certificate: ''
-                }
-                console.log('subscribe')
-                console.log(creditcount)
-                if (tutor.subscribing == false) {
-                  creditcount--;
-                  console.log('end')
-                  console.log(creditcount)
-                  if (creditcount < 0) {
-                    tutor.creditcount = 0;
-                    tutor.save();
-                    res.send({
-                      success: true,
-                      creditcount: 0
-                    }).end();
-                    return console.log("creditcount = 0");
+                    if (confirm.length == 0 || confirm[0]['isCompleted'] == true) {
+                        is_credit = false;
+                        if (tutor.subscribing == false) {
+                            creditcount--;
+                            if (creditcount < 0) {
+                                tutor.creditcount = 0;
+                                tutor.save();
+                                res.send({
+                                    success: true,
+                                    creditcount: 0
+                                }).end();
+                                i--;
+                                is_credit = true;
+                                return console.log("creditcount = 0");
+                            } else {
+                                tutor.creditcount = creditcount;
+                                tutor.save();
+                            }
+                        }
+                        if (is_credit == false) {
+                            var data = {
+                                student_id: id,
+                                course_id: course_id,
+                                score: 0,
+                                isCompleted: false,
+                                completedAt: '',
+                                certificate: ''
+                            }
+                            Take.create(data, function(err, take) {
+                                if (err) return console.log(err);
+                            });
+                        }
+                    }
 
-                  } else {
-                    console.log('save')
-                    console.log(creditcount)
-                    tutor.creditcount = creditcount;
-                    tutor.save();
-                  }
-                }
-
-                Take.create(data, function(err, take) {
-                  if (err) return console.log(err);
-                });
-              }
-
-              if (i == students_ids.length && (tutor.creditcount != 0 || tutor.subscribing == true)) {
-                console.log('send')
-                console.log(creditcount)
-                res.send({
-                  success: true,
-                  confirm: confirm.length == 0 ? false : true,
-                  creditcount: creditcount
-                });
-                return;
-              }
+                    if (i == students_ids.length && (tutor.creditcount != 0 || tutor.subscribing == true)) {
+                        res.send({
+                            success: true,
+                            confirm: confirm.length == 0 ? false : true,
+                            creditcount: creditcount,
+                            notAssign: not_assign
+                        });
+                        return;
+                    }
+                })
             })
-          })
         }
     });
 }
@@ -366,9 +378,24 @@ exports.getCoursesByStudentId = function(req, res) {
                     courses.push(data);
                 }
                 if (i == takes.length) {
-                    courses.sort(function(a, b) {
+                    var completeArray = [],
+                        unCompleteArray = [];
+
+                    courses.forEach(function(course) {
+                        if (course.isCompleted) {
+                            completeArray.push(course);
+                        } else {
+                            unCompleteArray.push(course)
+                        }
+                    });
+
+                    completeArray.sort(function(a, b) {
+                        return new Date(b.completedAt) - new Date(a.completedAt);
+                    })
+                    unCompleteArray.sort(function(a, b) {
                         return a.coursetitle.localeCompare(b.coursetitle);
                     })
+                    courses = unCompleteArray.concat(completeArray);
                     res.send(courses);
                 }
             })
@@ -421,7 +448,8 @@ exports.getStudentsByCourseId = function(req, res) {
         takes.forEach(function(take) {
             Student.findOne({
                 _id: take.student_id,
-                tutor_id: tutor_id
+                tutor_id: tutor_id,
+                archOrReal: true
             }, function(err, student) {
                 if (err) return console.error(err);
                 i++;
@@ -451,27 +479,29 @@ exports.getStudentsByCourseId = function(req, res) {
 
 
 exports.removeStudent = function(req, res) {
-    var list = req.body.list, i=0;
+    var list = req.body.list,
+        i = 0;
     list.forEach(function(id, index, arr) {
         Student.findOne({
-            _id: id
+            _id: id,
+            archOrReal: false
         }, function(err, student) {
             if (err) console.error(err);
-            if(student._id != null){
-              Take.find({
-                student_id: student._id
-              }, function(err, takes) {
-                takes.forEach(function(take) {
-                  take.remove();
-                })
-                student.remove()
+            if (student._id != null) {
+                Take.find({
+                    student_id: student._id
+                }, function(err, takes) {
+                    takes.forEach(function(take) {
+                        take.remove();
+                    })
+                    student.remove()
 
-                if((index + 1) == arr.length) {
-                  res.send({
-                    success: true
-                  });
-                }
-              });
+                    if ((index + 1) == arr.length) {
+                        res.send({
+                            success: true
+                        });
+                    }
+                });
             }
         })
     })
@@ -513,7 +543,8 @@ exports.getAllMatrix = function(req, res) {
     var tutor_id = req.body.tutor_id,
         data = [];
     Student.find({
-        tutor_id: tutor_id
+        tutor_id: tutor_id,
+        archOrReal: true
     }, null, {
         sort: 'created_at'
     }, function(err, students) {
@@ -546,7 +577,8 @@ exports.getAllUnCompleted = function(req, res) {
         data = [];
 
     Student.find({
-        tutor_id: tutor_id
+        tutor_id: tutor_id,
+        archOrReal: true
     }, null, {
         sort: 'created_at'
     }, function(err, students) {
@@ -728,7 +760,6 @@ exports.getGoCardlessRedirectUrl = function(req, res) {
         sessionToken = tutor_id,
         successUrl = req.protocol + '://' + req.get('host') + '/api/tutor/getGoCardlessCompleteUrl';
 
-    console.log(goCardless);
     subscribe_data.amount = req.body.amount * 100;
     subscribe_data.count = req.body.count;
     subscribe_data.session_id = tutor_id;
@@ -822,10 +853,10 @@ exports.unassign = function(req, res) {
     Tutor.findOne({
         _id: tutor_id
     }, function(err, tutor) {
-        if(tutor.subscribing == true){
+        if (tutor.subscribing == true) {
             tutor.creditcount = Number(creditcount)
-        }else{
-          tutor.creditcount = Number(creditcount) + student_ids.length;
+        } else {
+            tutor.creditcount = Number(creditcount) + student_ids.length;
         }
 
         tutor.save();
@@ -835,4 +866,62 @@ exports.unassign = function(req, res) {
         }).end();
     })
 
+}
+
+
+exports.getArchivedStudents = function(req, res) {
+    var tutor_id = req.body.tutor_id;
+
+    Student.find({
+        tutor_id: tutor_id,
+        archOrReal: false
+    }, function(err, students) {
+        if (err) return console.error(err)
+        res.send(students).end();
+        return false;
+    })
+}
+
+exports.setArchivedStudents = function(req, res) {
+    var list = req.body.list,
+        i = 0;
+    list.forEach(function(id, index, arr) {
+        Student.findOne({
+            _id: id,
+        }, function(err, student) {
+            if (err) console.error(err);
+            if (student._id != null) {
+                student['archOrReal'] = false;
+                student['archivedDate'] = Date.now();
+                student.save();
+                if ((index + 1) == arr.length) {
+                    res.send({
+                        success: true
+                    });
+                }
+            }
+        })
+    })
+}
+
+exports.restoreStudentById = function(req, res) {
+    var list = req.body.list,
+        i = 0;
+    list.forEach(function(id, index, arr) {
+        Student.findOne({
+            _id: id,
+        }, function(err, student) {
+            if (err) console.error(err);
+            if (student._id != null) {
+                student['archOrReal'] = true;
+                student['archivedDate'] = '';
+                student.save();
+                if ((index + 1) == arr.length) {
+                    res.send({
+                        success: true
+                    });
+                }
+            }
+        })
+    })
 }

@@ -28,6 +28,7 @@ export class DetailTutorStudent implements AfterViewInit {
     dob_month: Control;
     dob_year: Control;
     courseList: any;
+    totalCourseList: any;
     submitAttempt: boolean = false;
     valid_username: boolean = false;
     selectedMonth: boolean = false;
@@ -46,7 +47,8 @@ export class DetailTutorStudent implements AfterViewInit {
             var id = this.student.student_id;
 
             this._tutorService.getCoursesByStudentId(id, this._session.getCurrentId()).subscribe((res) => {
-                this.courseList = res;
+                this.totalCourseList = res;
+                this.courseList = this.totalCourseList.slice(0, 30);
             })
 
             this.firstName = new Control(this.student.firstName, Validators.required);
@@ -93,7 +95,11 @@ export class DetailTutorStudent implements AfterViewInit {
     }
 
     cancel() {
-        this._router.navigate(['TutorMain']);
+        if(JSON.parse(this._session.getItem('pastRoute')) == true){
+            this._router.navigate(['PastTutorStudent']);
+        }else{
+          this._router.navigate(['TutorMain']);
+        }
     }
 
 
@@ -283,5 +289,13 @@ export class DetailTutorStudent implements AfterViewInit {
         if (Number(val) > 31) return false;
 
         return true;
+    }
+
+    getPastEmployees(num: number){
+      if(num == -1){
+        this.courseList = this.totalCourseList;
+      }else{
+        this.courseList = this.totalCourseList.slice(0, num);
+      }
     }
 }

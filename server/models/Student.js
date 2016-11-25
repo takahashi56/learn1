@@ -14,6 +14,8 @@ module.exports = function() {
     tutor_id: String,
     created_at: Date,
     updated_at: Date,
+    archOrReal: Boolean,
+    archivedDate: Date
   });
 
   studentSchema.pre('save', function(next) {
@@ -22,6 +24,10 @@ module.exports = function() {
 
     // change the updated_at field to current date
     this.updated_at = currentDate;
+
+    if(this.archOrReal == null || this.archOrReal == undefined){
+      this.archOrReal = true;
+    }
 
     // if created_at doesn't exist, add to that field
     if (!this.created_at)
@@ -32,10 +38,13 @@ module.exports = function() {
 
   studentSchema.methods = {
     authenticate: function(pwdToMatch) {
-      return pwdToMatch === this.hashed_pwd;
+      return pwdToMatch === this.hashed_pwd && this.archOrReal == true;
     },
     hasRole: function(role) {
       return this.roles.indexOf(role) > -1;
+    },
+    isArchived: function(){
+      return this.archOrReal == false;
     }
   };
 

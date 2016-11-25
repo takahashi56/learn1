@@ -90,4 +90,17 @@ module.exports = function(app) {
 		tutorstudent.getCSVFile(req, res);
 	})
 
+	app.post('/api/tutor/getArchivedStudents', function(req, res){
+		tutorstudent.getArchivedStudents(req, res);
+	})
+
+	app.post('/api/tutor/restoreStudentById', function(req, res){
+		tutorstudent.restoreStudentById(req, res);
+	})
+
+	app.post('/api/tutor/archiveStudentById', function(req, res){
+		tutorstudent.setArchivedStudents(req, res);
+	})
+
+
 }

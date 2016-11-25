@@ -18,7 +18,7 @@ export class TutorMain implements OnInit {
     courseList: any = [];
     tutor_id: string;
     selectStudents: any = [];
-    showRemoveStudent: boolean = false;
+    showArchiveStudent: boolean = false;
     selectedStudentsName: string = '';
     creditcount: number = 0;
     employeecount: number = 0;
@@ -132,6 +132,7 @@ export class TutorMain implements OnInit {
     gotoStudentDetail(student: any) {
         this._session.setItem('editORadd', JSON.stringify({ flag: true }));
         this._session.setItem('TutorStudent', JSON.stringify(student));
+        this._session.setItem('pastRoute', false);
         this._router.navigate(['DetailTutorStudent']);
     }
     gotoDetail(course: any) {
@@ -205,17 +206,12 @@ export class TutorMain implements OnInit {
     studentAssign() {
         var id = this._session.getItem('SelectStudentWithId');
         if (!id) return false;
-
-        if (Number(this._session.getItem('creditcount')) == 0 && Number(this._session.getItem('subscribing')) == 0) {
-            return false;
-        }
-
+        if (Number(this._session.getItem('creditcount')) == 0 && Number(this._session.getItem('subscribing')) == 0) return false;
         let selectedId = this._session.getItem('AssignCourse');
         if (!selectedId) return false;
 
         let ids = [];
         ids.push(id);
-
         this._tutorService.setAssignStudentsWithCourse(this.tutor_id, selectedId, ids).subscribe((res) => {
             this._session.setItem('creditcount', res.creditcount);
 
@@ -232,21 +228,16 @@ export class TutorMain implements OnInit {
     courseAssign() {
         var id = this._session.getItem('SelectCourseWithId');
         if (!id) return false;
-
-        if (Number(this._session.getItem('creditcount')) == 0 && Number(this._session.getItem('subscribing')) == 0) {
-            return false;
-        }
-
+        if (Number(this._session.getItem('creditcount')) == 0 && Number(this._session.getItem('subscribing')) == 0) return false;
         if (this.selectStudents.length == 0) return false;
 
         let ids = this.selectStudents;
-
         this._tutorService.setAssignStudentsWithCourse(this.tutor_id, id, ids).subscribe((res) => {
 
             this._session.setItem('creditcount', res.creditcount);
             console.log(res);
 
-            if(res.confirm) alert("This employee is already assigned to this course.")
+            if(res.notAssign > 0 ) alert(`${res.notAssign} employees cannot be assigned to this course.`)
             this._router.navigateByUrl('/home/tutor/main');
             this.loadData()
         });
@@ -322,16 +313,16 @@ export class TutorMain implements OnInit {
         console.log(this.selectStudents);
     }
 
-    removeStudent() {
+    archiveStudent() {
         if (this.selectStudents.length == 0) return false;
         let instance = this;
 
-        this._tutorService.removeStudentById(this.selectStudents).subscribe((res) => {
-            instance.selectStudents.map((id) => {
-                instance.studentList = instance.studentList.filter((student) => {
+        this._tutorService.archiveStudentById({list: this.selectStudents}).subscribe((res) => {
+            this.selectStudents.map((id) => {
+                this.studentList = this.studentList.filter((student) => {
                     return student.student_id != id;
                 })
-                instance._session.setItem('TutorAllStudent', JSON.stringify(instance.studentList))
+                this._session.setItem('TutorAllStudent', JSON.stringify(this.studentList))
                 this._tutorService.getAllMatrix({ tutor_id: this.tutor_id }).subscribe((res) => {
                     this._session.setItem('studentList', JSON.stringify(res));
                 })
@@ -339,12 +330,12 @@ export class TutorMain implements OnInit {
         })
     }
 
-    beforeRemoveStudent() {
+    beforeArchiveStudent() {
         if (this.selectStudents.length == 0) {
-            this.showRemoveStudent = false;
+            this.showArchiveStudent = false;
             return false;
         }
-        this.showRemoveStudent = true;
+        this.showArchiveStudent = true;
         let instance = this;
         var data = [];
 
@@ -524,5 +515,9 @@ export class TutorMain implements OnInit {
         var blob = new Blob([data], { type: 'text/csv' });
         var url = window.URL.createObjectURL(blob);
         window.open(url);
+    }
+
+    pastEmployees(){
+      this._router.navigate(['PastTutorStudent']);
     }
 }

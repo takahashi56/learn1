@@ -16,12 +16,12 @@
                 </h3>
                 <hr class="m-b-30">
                 <div class=" form">
-                    <form class="cmxform form-horizontal tasi-form"  [ngFormModel]="StudentDetailForm">
+                    <form class="cmxform form-horizontal tasi-form" [ngFormModel]="StudentDetailForm">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <div class=""  [ngClass]="{ 'has-error' : !firstName.valid && submitAttempt }">
+                                        <div class="" [ngClass]="{ 'has-error' : !firstName.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
                                                     <label for="fname" class="control-label text-left text-page">First Name</label>
@@ -29,11 +29,11 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="fname" name="name" type="text" ngControl="firstName"  placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
+                                                    <input class=" form-control" id="fname" name="name" type="text" ngControl="firstName" placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class=""  [ngClass]="{ 'has-error' : !lastName.valid && submitAttempt }">
+                                        <div class="" [ngClass]="{ 'has-error' : !lastName.valid && submitAttempt }">
                                             <div class="col-lg-2">
                                                 <div class="m-l-10 m-r-10">
                                                     <label for="lname" class="control-label text-left text-page">Last Name</label>
@@ -41,7 +41,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="m-l-10 m-r-10">
-                                                <input class=" form-control" id="lname" name="name" type="text" ngControl="lastName"  placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
+                                                    <input class=" form-control" id="lname" name="name" type="text" ngControl="lastName" placeholder="Some text value..." (blur)="getValue(StudentDetailForm.value)">
                                                 </div>
                                             </div>
                                         </div>
@@ -56,11 +56,11 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username"  placeholder="Logon Name" (blur)="validUserName(StudentDetailForm.value)" >
+                                        <input class=" form-control" id="uname" name="name" type="text" ngControl="username" placeholder="Logon Name" (blur)="validUserName(StudentDetailForm.value)">
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" >
+                            <div class="form-group">
                                 <div [ngClass]="{ 'has-error' : !password.valid && submitAttempt }">
                                     <div class="col-lg-2">
                                         <div class="m-l-10 m-r-10">
@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="col-lg-10">
                                         <div class="m-l-10 m-r-10">
-                                            <input class=" form-control" id="password" name="name" type="password" ngControl="password"  placeholder="">
+                                            <input class=" form-control" id="password" name="name" type="password" ngControl="password" placeholder="">
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="col-lg-10">
                                         <div class="m-l-10 m-r-10">
-                                            <input class=" form-control" id="password" name="name" type="password" ngControl="verifiedpassword"  placeholder="">
+                                            <input class=" form-control" id="password" name="name" type="password" ngControl="verifiedpassword" placeholder="">
                                         </div>
                                     </div>
                                 </div>
@@ -96,12 +96,12 @@
                                 </div>
                                 <div class="col-lg-1-5">
                                     <div class="m-l-10 m-r-10">
-                                        <input type="text" placeholder="Day" ngControl="dob_day" class="p-l-r-30 form-control" maxlength="2"  (keypress)="isDayKey($event, StudentDetailForm.value)">
+                                        <input type="text" placeholder="Day" ngControl="dob_day" class="p-l-r-30 form-control" maxlength="2" (keypress)="isDayKey($event, StudentDetailForm.value)">
                                     </div>
                                 </div>
                                 <div class="col-lg-1-5">
                                     <div class="">
-                                      <select class="p-l-r-0 form-control" ngControl="dob_month" [(ngModel)]="selectedObject">
+                                        <select class="p-l-r-0 form-control" ngControl="dob_month" [(ngModel)]="selectedObject">
                                           <option value="" disabled>Month</option>
                                           <option *ngFor="let c of months;let i = index" [value]="i + 1" >{{c}}</option>
                                       </select>
@@ -139,7 +139,7 @@
                                     </div>
                                     <div class="col-xs-8 text-right">
                                         <input type="button" (click)="cancel()" value="Cancel" class="btn btn-primary m-b-10 w-sm">
-                                        <input type="submit"  value="Save" class="btn btn-primary m-b-10 w-sm m-l-15" (click)= "AddStudent(StudentDetailForm.value)">
+                                        <input type="submit" value="Save" class="btn btn-primary m-b-10 w-sm m-l-15" (click)="AddStudent(StudentDetailForm.value)">
                                     </div>
                                 </div>
                             </div>
@@ -148,6 +148,23 @@
                 </div>
             </div>
             <div class="tab-pane " id="courses">
+                <div class="m-l-5 m-r-5">
+                    <div class="row">
+                        <div class="col-xs-4">
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Display <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a (click)="getPastEmployees(10)">10</a></li>
+                                    <li><a (click)="getPastEmployees(20)">20</a></li>
+                                    <li><a (click)="getPastEmployees(30)">30</a></li>
+                                    <li><a (click)="getPastEmployees(-1)">All</a></li>                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table text-page">
                         <thead>
@@ -170,23 +187,23 @@
                         </tr>
                     </table>
                 </div>
-                            <div class="white-space m-t-30 m-b-30">
-                                <div class="row">
-                                    <div class="col-xs-10">
-                                        <span class="sr-only">Empty Space</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="m-l-0 m-r-0">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <input type="submit" (click)="cancel()" value="Back" class="btn btn-primary m-b-10 w-sm">
-                                    </div>
-                                </div>
-                            </div>
+                <div class="white-space m-t-30 m-b-30">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <span class="sr-only">Empty Space</span>
                         </div>
+                    </div>
+                </div>
+                <div class="m-l-0 m-r-0">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <input type="submit" (click)="cancel()" value="Back" class="btn btn-primary m-b-10 w-sm">
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
 
 </section>
 
@@ -209,8 +226,8 @@
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancel()">Yes</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancel()">Yes</button>
             </div>
         </div>
     </div>

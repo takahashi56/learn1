@@ -22,11 +22,12 @@
                         <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Employees <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a class="" data-toggle="modal" data-target="#show_not_assign" (click)="gotoAddStudent()">Add Employee</a></li>
-                            <li><a class="" (click)="beforeRemoveStudent()" data-toggle="modal" data-target="#remove-student">Remove Employee</a></li>
-                            <li>
-                                <a class="" data-toggle="modal" data-target="#import-student">Import Employees</a>
-                            </li>
-                            <li><a class="" (click)="showPassword()">{{show_password? 'Hide Password' : 'Reveal Password'}}</a></li>
+                            <li><a class="" data-toggle="modal" data-target="#import-student">Import Employees</a></li>
+                            <li class="divider"></li>
+                            <li><a class="" (click)="showPassword()">{{show_password? 'Hide Passwords' : 'Reveal Passwords'}}</a></li>
+                            <li class="divider"></li>
+                            <li><a class="" (click)="beforeArchiveStudent()" data-toggle="modal" data-target="#archive-student">Archive Employee</a></li>
+                            <li><a class="" (click)="pastEmployees()">Past Employees</a></li>
                         </ul>
                     </div>
 
@@ -189,9 +190,6 @@
                     <div class="panel-heading p-b-0">
                         <h4 class="text-page m-l-15 m-t-15"><strong>Credits</strong></h4>
                     </div>
-                    <div class="alert alert-info" *ngIf="success_subscription">
-                        Your Subscription has been successfully!
-                    </div>
                     <div class="panel-body">
                         <div style="max-width: 90%;">
                             Each course you assign an employee will require 1 credit.<br/> For example if you have 15 employees and want each employee to complete the Health and Safety course this will require 15 credits
@@ -212,7 +210,9 @@
                     <div class="panel-heading p-b-0">
                         <h4 class="text-page m-l-15 m-t-15"><strong>Subscribe and Save</strong></h4>
                     </div>
-
+                    <div class="alert alert-info" *ngIf="success_subscription">
+                        Your Subscription has been successfully!
+                    </div>
                     <div class="panel-body">
                         <div style="max-width: 90%;">
                             If you are using Correct Care on a regular basis you can save money by subscribing<br/> A subscription to Correct Care includes full access to all courses
@@ -317,18 +317,18 @@
 </div>
 
 
-<div *ngIf="showRemoveStudent" id="remove-student" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div *ngIf="showArchiveStudent" id="archive-student" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Remove Employee</h4>
+                <h4 class="modal-title">Archive Employee</h4>
             </div>
             <div class="modal-body assign-text">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <p>This action cannot be undone, this will delete the employees record. <br> Are you sure you want to proceed? </p>
+                            <p> Are you sure you want to proceed? </p>
                         </div>
                     </div>
                 </div>
@@ -337,7 +337,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeStudent()">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="archiveStudent()">Yes</button>
             </div>
         </div>
     </div>

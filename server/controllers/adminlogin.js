@@ -1,6 +1,8 @@
 // src/controllers/adminlogin.js
 var mongoose = require('mongoose'),
     Admin = mongoose.model('Admin'),
+    Tutor = mongoose.model('Tutor'),
+    _ = require('lodash'),
     encrypt = require('../utilities/encryption');
 
 exports.login = function(req, res) {
@@ -98,24 +100,36 @@ exports.addAdmin = function(req, res) {
     admin['username'] = admin.email;
     admin["logon_date"] = '';
 
-    Admin.create(admin, function(err, admin) {
-        if (err) {
+    Tutor.findOne({
+      email: admin.email
+    }, function(err, tutor) {
+      if(err) console.log(err)
+      if(_.isEmpty(tutor) || _.isNil(tutor)){
+        Admin.create(admin, function(err, admin) {
+          if (err) {
             console.log(err)
             res.send({
-                sucess: false,
-                error: err
+              sucess: false,
+              error: err
             });
-        } else {
+          } else {
             var data = {
-                action: "success",
-                text: "",
-                role: 0,
-                success: true,
-                _id: admin._id
+              action: "success",
+              text: "",
+              role: 0,
+              success: true,
+              _id: admin._id
             };
             res.send(data);
-        }
-    });
+          }
+        });
+      }else{
+        res.send({
+          sucess: false,
+          error: ''
+        });
+      }
+    })
 }
 
 exports.editAdmin = function(req, res) {
@@ -143,7 +157,7 @@ exports.editAdmin = function(req, res) {
         }else{
           res.send({
             success: true
-          });          
+          });
         }
 
     })

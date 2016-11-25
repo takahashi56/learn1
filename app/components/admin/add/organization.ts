@@ -24,7 +24,7 @@ export class AddOrganization {
     password: Control;
     notes: Control;
     submitAttempt: boolean = false;
-
+    showNotSave: boolean = false;
 
     constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
         if (this._session.getCurrentId() == null) {
@@ -68,6 +68,7 @@ export class AddOrganization {
     AddOrgs(form: any) {
         // this._session.login(form.username, form.password);
         this.submitAttempt = true;
+        this.showNotSave = false;
         if (this.OrganizeForm.valid) {
             var data = {
                 firstName: form.firstName,
@@ -87,6 +88,9 @@ export class AddOrganization {
                 .subscribe((res) => {
                     if (res.success) {
                         this._router.navigate(['AdminMain']);
+                    } else {
+                      // alert("This email was already used for another user. please use other email!");
+                      this.showNotSave = true;
                     }
                 })
         }

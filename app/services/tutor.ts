@@ -178,4 +178,22 @@ export class TutorService {
         return this._http.get("/csv/SampleEmployeeImport.csv")
             .map(res => new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }))
     }
+
+    getArchivedStudents(data) {
+      return this._http.post(this.baseUrl + 'getArchivedStudents', JSON.stringify(data), HEADER).map((res) => {
+          return res.json();
+      })
+    }
+
+    restoreStudentById(data){
+      return this._http.post(this.baseUrl + 'restoreStudentById', JSON.stringify(data), HEADER).map((res) => {
+          return res.json();
+      })
+    }
+
+    archiveStudentById(data){
+      return this._http.post(this.baseUrl + 'archiveStudentById', JSON.stringify(data), HEADER).map((res) => {
+          return res.json();
+      })
+    }
 }

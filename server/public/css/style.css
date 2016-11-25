@@ -2060,7 +2060,7 @@ ul.p-social-link li a {
 }
 
 .custom-header .top-right-menu>li {
-    line-height: 65px;
+    line-height: 80px;
 }
 
 .custom-header .top-right-menu>li>a {
@@ -2230,7 +2230,8 @@ input.alert-page {
 }
 
 .logoPadding {
-    padding: 10px 0;
+    /*padding: 10px 0;*/
+    height: 80px;
 }
 
 .matrix-container {
@@ -2301,4 +2302,14 @@ div#loading img {
 
 .modal-footer{
   border-top: none !important;
+}
+
+
+.v-button{
+  padding-left: 48px;
+  padding-right: 48px;
+}
+
+.v-button a{
+  width: 365px;
 }

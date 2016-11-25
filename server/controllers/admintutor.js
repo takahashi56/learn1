@@ -3,7 +3,8 @@ var mongoose = require('mongoose'),
     Admin = mongoose.model('Admin'),
     Tutor = mongoose.model('Tutor'),
     Student = mongoose.model('Student'),
-    encrypt = require('../utilities/encryption');
+    encrypt = require('../utilities/encryption'),
+    _ = require('lodash');
 
 exports.getAllTutors = function(req, res) {
     var temp = {},
@@ -52,20 +53,37 @@ exports.addTutor = function(req, res) {
     tutor["hashed_pwd"] = encrypt.hashPwd(salt, tutor["password"]);
     tutor["created_at"] = new Date();
 
-    Tutor.create(tutor, function(err, tutor) {
-        if (err) {
+    Admin.findOne({
+      email: tutor.email
+    }, function(err, admin){
+      if(err) console.log(err);
+      if(_.isEmpty(admin) || _.isNil(admin)) {
+        Tutor.create(tutor, function(err, tutor) {
+          if (err) {
             res.send(err);
-        } else {
+          } else {
             var data = {
-                action: "success",
-                text: "",
-                role: 1,
-                success: true,
-                _id: tutor._id
+              action: "success",
+              text: "",
+              role: 1,
+              success: true,
+              _id: tutor._id
             };
             res.send(data);
-        }
+          }
+        })
+      }else{
+        var data = {
+          action: "fail",
+          text: "This email was already used for another user. please use other email.",
+          role: 1,
+          success: false,
+          _id: null,
+        };
+        res.send(data);
+      }
     })
+
 
 }
 

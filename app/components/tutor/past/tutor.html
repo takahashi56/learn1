@@ -1,0 +1,87 @@
+<section class="m-t-20 m-b-30">
+    <div class="container">
+        <h3 class="text-page m-b-30"><strong></strong></h3>
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="text-page m-l-15 m-t-15"><strong>Past Employees</strong></h3>
+            </div>
+
+            <div class="panel-body">
+                <div class="m-l-5 m-r-5">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <input type="button" (click)="cancel()" value="Back" class="btn btn-primary m-b-10 w-sm">
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Past Employees <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a (click)="restoreEmployee()">Restore Employee</a></li>
+                                    <li class="divider"></li>
+                                    <li><a (click)="beforeRemoveStudent()" data-toggle="modal" data-target="#remove-student">Permanently Remove</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-page">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>DOB</th>
+                                <th>Username</th>
+                                <th>Archived</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tr *ngFor="let student of pastStudents">
+                            <td>
+                                <label class="cr-styled">
+                                    <input type="checkbox" (change)="checkStudent($event,student)">
+                                    <i class="fa"></i>
+                                </label>
+                            </td>
+                            <td (click)="gotoStudentDetail(student)" style="cursor: pointer;"><strong>{{student.firstName}}</strong></td>
+                            <td (click)="gotoStudentDetail(student)" style="cursor: pointer;"><strong>{{student.lastName}}</strong></td>
+                            <td (click)="gotoStudentDetail(student)" style="cursor: pointer;"><strong>{{student.DOB}}</strong></td>
+                            <td (click)="gotoStudentDetail(student)" style="cursor: pointer;"><strong>{{student.username}}</strong></td>
+                            <td  (click)="gotoStudentDetail(student)" style="cursor: pointer;"><strong>{{getCompleteDate(student)}}</strong></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<div *ngIf="showRemoveStudent" id="remove-student" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Remove Employee</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p>This action cannot be undone, this will delete the employees record. <br> Are you sure you want to proceed? </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="fullyRemove()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

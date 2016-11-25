@@ -7,6 +7,10 @@
             </div>
 
             <div class="panel-body">
+              <div class="alert alert-danger alert-dismissable" *ngIf="showNotSave">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  This email was already used. Can you use another email?
+              </div>
                 <div class=" form">
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="OrganizeForm" (submit)="AddOrgs(OrganizeForm.value)">
                         <div class="container-fluid">

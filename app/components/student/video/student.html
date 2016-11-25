@@ -1,19 +1,23 @@
 <section class="m-t-20 m-b-30">
     <div class="container v-container">
         <div class="row vertical-align">
-			<h2 class="text-page col-md-10"><strong></strong></h2>
-			<h4 class="text-page col-md-2"><span class="pull-right"></span></h4>
-		</div>
+            <h2 class="text-page col-md-10"><strong></strong></h2>
+            <h4 class="text-page col-md-2"><span class="pull-right"></span></h4>
+        </div>
     </div>
     <div class="text-center">
         <div class="v-container container m-b-10" style="line-height: 1px;    text-align: center;padding: 0;">
-        <iframe src="{{getEmbedUrl()}}" width="960" height="540" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen autoplay></iframe>
+            <iframe src="{{getEmbedUrl()}}" width="896" height="504" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen autoplay></iframe>
         </div>
     </div>
-    <div class="container">
-		<div class="container p-0">
-			<div class="col-md-6 p-0"><a  class="btn btn-primary m-b-10 col-sm-11 p-t-10 p-b-10" (click)="gotoPrevious()"> < PREVIOUS </a></div>
-			<div class="col-md-6 p-0"><h4 class="text-page pull-right"></h4><a  class="btn btn-primary m-b-10 col-sm-11 pull-right p-t-10 p-b-10"(click)="gotoNext()" > NEXT > </a></div>
-		</div>
-	</div>
+    <div class="container v-button">
+        <div class="row">
+            <div class="col-md-6">
+                <a class="btn btn-primary m-b-10 col-sm-11 p-t-10 p-b-10" (click)="gotoPrevious()">
+                    < PREVIOUS </a>
+            </div>
+            <div class="col-md-6">
+                <h4 class="text-page pull-right"></h4><a class="btn btn-primary m-b-10 col-sm-11 pull-right p-t-10 p-b-10" (click)="gotoNext()"> NEXT > </a></div>
+        </div>
+    </div>
 </section>
