@@ -27,7 +27,7 @@ export class GoCardlessPaymentSuccess implements OnInit{
 
         setTimeout(()=>{
           this._router.navigate(['TutorMain']);
-        }, 5000)
+        }, 1000)
 		});
 	}
 }

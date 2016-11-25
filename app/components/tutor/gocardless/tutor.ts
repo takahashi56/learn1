@@ -40,7 +40,7 @@ export class GoCardlessPayment {
         this._tutorService.getRedirectUrl({ tutor_id: this.tutor_id, count: count, amount: amount }).subscribe((res) => {
             console.log(res);
         });
-        window.open(this.redirect_url[num], '_blank');
+        window.open(this.redirect_url[num]);
     }
 
     cancel() {
