@@ -83,12 +83,13 @@ export class TutorMain implements OnInit {
             if(JSON.parse(this._session.getItem('success_subscription')) == true){
               this.success_subscription = true;
               setTimeout(() => {
+                this._session.setItem('success_subscription', false);
                 this.success_subscription = false;
               }, 4000);
             }else{
               this.success_subscription = false;
             }
-            
+
             setInterval(() => {
                 if (this._session.getItem('select_tutor_tab') == null) {
                     this.onTabClick(1);
