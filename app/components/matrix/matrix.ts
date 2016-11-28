@@ -41,7 +41,7 @@ export class Matrix  implements AfterViewInit {
         navigation: 0,
 				rowCount: -1
       });
-			// this.downloadpdf();
+			this.downloadpdf();
   }
 
 	downloadpdf(){
@@ -74,7 +74,7 @@ export class Matrix  implements AfterViewInit {
 	}
 
   getCompleteDatefromCourse(course, student_course){
-    let coString = "", date = new Date('1970.1.1');
+    let coString = "", date = '1970.1.1';
     student_course.forEach(c => {
         if(c.course_id === course.course_id && c.completedAt != null){
 					date = new Date(c.completedAt) > new Date(date) ? c.completedAt : date;
