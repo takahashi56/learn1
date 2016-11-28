@@ -34,6 +34,13 @@ exports.getAllStudents = function(req, res) {
         total = 0,
         complete = 0;
 
+    // Take.find({}, function(err, takes) {
+    //   takes.forEach(function(take) {
+    //     take["already"] = false;
+    //     take.save();
+    //   })
+    // })
+
     Student.find({
         tutor_id: tutor_id,
         archOrReal: true
@@ -44,8 +51,10 @@ exports.getAllStudents = function(req, res) {
         var students_copy = [];
 
         students.forEach(function(student) {
+
             Take.find({
-                student_id: student._id
+                student_id: student._id,
+                already: false
             }).lean().exec(function(err, takes) {
                 complete = 0;
                 total = takes.length;
@@ -96,7 +105,8 @@ exports.getAllCourses = function(req, res) {
         courses.forEach(function(course) {
 
             Take.find({
-                course_id: course._id
+                course_id: course._id,
+                already: false
             }, function(err, takes) {
                 if (err) return console.error(err)
 
@@ -271,7 +281,8 @@ exports.setStudentByCourse = function(req, res) {
                 i = 0;
             students_ids.map(function(id) {
                 Take.find({
-                    student_id: id
+                    student_id: id,
+                    already: false
                 }, function(err, takes) {
                     if (err) return console.log(err);
 
@@ -282,7 +293,8 @@ exports.setStudentByCourse = function(req, res) {
                     i++;
                     if (confirm.length > 0) {
                         if (confirm[0]['isCompleted'] == true) {
-                            confirm[0].remove();
+                            confirm[0]['already'] = true;
+                            confirm[0].save();
                         } else {
                             not_assign++;
                         }
@@ -347,7 +359,8 @@ exports.getCoursesByStudentId = function(req, res) {
         tutor_id = req.body.tutor_id;
 
     Take.find({
-        student_id: id
+        student_id: id,
+        already: false
     }, null, {
         sort: 'created_at'
     }, function(err, takes) {
@@ -436,7 +449,8 @@ exports.getStudentsByCourseId = function(req, res) {
 
 
     Take.find({
-        course_id: id
+        course_id: id,
+        already: false
     }, null, {
         sort: 'created_at'
     }, function(err, takes) {
@@ -552,7 +566,8 @@ exports.getAllMatrix = function(req, res) {
 
         students.forEach(function(student) {
             Take.find({
-                student_id: student._id
+                student_id: student._id,
+                already: false,
             }, function(err, takes) {
                 if (err) return console.error(err);
 
@@ -586,7 +601,8 @@ exports.getAllUnCompleted = function(req, res) {
 
         students.forEach(function(student) {
             Take.find({
-                student_id: student._id
+                student_id: student._id,
+                already: false
             }, function(err, takes) {
                 if (err) return console.error(err);
 
@@ -842,7 +858,8 @@ exports.unassign = function(req, res) {
     student_ids.forEach(function(id) {
         Take.findOne({
             course_id: course_id,
-            student_id: id
+            student_id: id,
+            already: false
         }, function(err, take) {
             if (err) return console.log(err);
 

@@ -20,7 +20,8 @@ exports.getCourseList = function(req, res) {
     var i = 0;
 
     Take.find({
-        student_id: student_id
+        student_id: student_id,
+        already: false
     }, null, {
         sort: 'created_at'
     }, function(err, takes) {
@@ -285,7 +286,8 @@ exports.setCourseScoreWithStudent = function(req, res) {
 
     Take.findOne({
         course_id: course_id,
-        student_id: student_id
+        student_id: student_id,
+        already: false
     }, function(err, take) {
         if (err) return console.error(err);
 
