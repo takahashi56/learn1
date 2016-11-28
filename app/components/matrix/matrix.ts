@@ -46,10 +46,10 @@ export class Matrix  implements AfterViewInit {
 
 	downloadpdf(){
 			let self = this;
-			document.getElementById('gridbasic').parentNode.style.overflow = 'visible';
+			document.getElementById('gridbasic').parentNode['style'].overflow = 'visible';
 			html2canvas( [ document.getElementById('gridbasic') ], {
 			 onrendered: function(canvas) {
-					 document.getElementById('gridbasic').parentNode.style.overflow = 'hidden';
+					 document.getElementById('gridbasic').parentNode['style'].overflow = 'hidden';
 					 var ctx = canvas.getContext("2d");
 					 var data = canvas.toDataURL("image/png", 1.5);
 					 console.log(data)
