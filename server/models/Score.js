@@ -12,7 +12,7 @@ module.exports = function() {
 		completedAt: Date,
 		certificate: String,
 		created_at: Date,
-    	updated_at: Date,
+    updated_at: Date,
 	});
 
 	 scoreSchema.pre('save', function(next) {

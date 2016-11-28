@@ -4,8 +4,9 @@ var mongoose = require('mongoose'),
     Student = mongoose.model('Student'),
     Course = mongoose.model('Course'),
     Take = mongoose.model('Take'),
-    Lesson = mongoose.model('Lesson'),
     StripeTransaction = mongoose.model('StripeTransaction'),
+    Lesson = mongoose.model('Lesson'),
+    Score = mongoose.model('Score'),
     encrypt = require('../utilities/encryption'),
     csv = require('fast-csv'),
     pdf = require('pdfcrowd'),
@@ -327,6 +328,19 @@ exports.setStudentByCourse = function(req, res) {
                             Take.create(data, function(err, take) {
                                 if (err) return console.log(err);
                             });
+                            Lesson.find({
+                                course_id: course_id
+                            }, function(err, lessons) {
+                                lessons.forEach(function(lesson) {
+                                    Score.findOne({
+                                        lesson_id: lesson._id,
+                                        student_id: id
+                                    }, function(err, score) {
+                                        if (err) return console.log(err);
+                                        if(score.length != 0 ) score.remove();
+                                    });
+                                });
+                            })
                         }
                     }
 
