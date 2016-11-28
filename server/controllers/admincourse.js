@@ -6,11 +6,60 @@ var mongoose = require('mongoose'),
 	Content = mongoose.model('Content'),
 	Take = mongoose.model('Take'),
 	Score = mongoose.model('Score'),
-	encrypt = require('../utilities/encryption');
+	_ = require('lodash'),
+	encrypt = require('../utilities/encryption'),
+	Promise = require('bluebird');
 
 const path = require('path');
 
+Promise.promisifyAll(mongoose);
+
 exports.getAllCourse = function(req, res) {
+	// var courses = [], lessons = [], takes = [], contents = [], main_data = [];
+	//
+	// Promise.props({
+  //   courses: Course.find().execAsync(),
+  //   lessons: Lesson.find().execAsync(),
+	// 	takes: Take.find().execAsync(),
+	// 	contents: Content.find().execAsync()
+  // })
+  // .then(function(results) {
+	//
+	// 	_.forEach(results.courses, function(course) {
+	// 		var take_count = _.countBy(results.takes, function(o) {return o.course_id == course._id });
+	//
+	// 		if(results.lessons.length == 0){
+	// 			main_data.push({
+	// 				course_id: course._id,
+	// 				title: course.name,
+	// 				lesson: 0,
+	// 				video: 0,
+	// 				student: 0
+	// 			})
+	// 		}else{
+	// 			_.forEach(results.lessons, function(lesson) {
+	// 				var video_count = _.countBy(results.contents, function(o) { return o.lesson_id == lesson._id && o.videoOrQuestion == true});
+	//
+	// 				main_data.push({
+	// 					course_id: course._id,
+	// 					title: course.name,
+	// 					lesson: i,
+	// 					video: video_count,
+	// 					student: take_count
+	// 				});
+	// 			});
+	// 		}
+	// 	});
+	//
+	// 	main_data = _.orderBy(main_data, ['title']);
+	// 	res.send(main_data);
+  // })
+  // .catch(function(err) {
+	//
+  //   res.send(err); // oops - we're even handling errors!
+  // });
+
+
 	Course.find({},null, {sort: 'created_at'}, function(err, collection) {
 		if(err) {
 			return console.error(err);

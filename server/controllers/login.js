@@ -8,7 +8,8 @@ var mongoose = require('mongoose'),
 	encrypt = require('../utilities/encryption'),
 	nodemailer = require('nodemailer'),
 	smtpTransport = require('nodemailer-smtp-transport'),
-	postmark = require('postmark');
+	postmark = require('postmark'),
+	Rx = require('rxjs/Rx');
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
 		config = require('../config/config')[env],
@@ -68,25 +69,7 @@ exports.login = function(req, res) {
 		}
 	});
 
-	// setTimeout(function(){
-	// 	if(action != 1){
-	// 		Tutor.findOne({email: email}, function(err, tutor){
-	// 			if(tutor == null) {
-	// 				res.send(data);
-	// 				return console.error(err);
-	// 			}
-	// 			if(tutor.authenticate(pwd)){
-	// 				action = 2;
-	// 				data.action = "tutor-course";
-	// 				data.role = 1;
-	// 				data.success = true;
-	// 				return res.send(data);
-	// 			}else{
-	// 				res.send(data);
-	// 			}
-	// 		})
-	// 	}
-	// }, 2000);
+
 
 }
 
@@ -115,6 +98,7 @@ exports.studentLogin = function(req, res) {
 			res.send(data);
 		}
 	})
+
 }
 
 

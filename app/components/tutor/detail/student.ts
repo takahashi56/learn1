@@ -45,10 +45,12 @@ export class DetailTutorStudent implements AfterViewInit {
             this.student = JSON.parse(this._session.getItem('TutorStudent'));
             this.allStudentData = JSON.parse(this._session.getItem('TutorAllStudent'));
             var id = this.student.student_id;
-
+            console.log(this.student);
             this._tutorService.getCoursesByStudentId(id, this._session.getCurrentId()).subscribe((res) => {
                 this.totalCourseList = res;
+                console.log(res);
                 this.courseList = this.totalCourseList.slice(0, 30);
+                console.log(this.courseList);
             })
 
             this.firstName = new Control(this.student.firstName, Validators.required);

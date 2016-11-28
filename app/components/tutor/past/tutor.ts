@@ -89,6 +89,7 @@ export class PastTutorStudent implements AfterViewInit {
     }
 
     gotoStudentDetail(student) {
+        student["student_id"] = student._id;
         this._session.setItem('editORadd', JSON.stringify({ flag: true }));
         this._session.setItem('TutorStudent', JSON.stringify(student));
         this._session.setItem('pastRoute', true);
