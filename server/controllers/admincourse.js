@@ -441,7 +441,8 @@ exports.upload = function(req, res){
     }
 
     sampleFile = req.files.uploads;
-    filename = (filename + sampleFile.name).replace(/\s+/g, "");
+		console.log(sampleFile);
+    filename = (filename + sampleFile.name).replace(/\s+/g, '_');
 
     var filePath = path.join(__dirname, '../public/images/upload/' , filename);
 
