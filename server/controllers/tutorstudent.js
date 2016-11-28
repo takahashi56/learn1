@@ -560,7 +560,7 @@ exports.getAllMatrix = function(req, res) {
         students.forEach(function(student) {
             Take.find({
                 student_id: student._id,
-                already: false,
+                // already: false,
             }, function(err, takes) {
                 if (err) return console.error(err);
 
