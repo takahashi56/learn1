@@ -282,7 +282,7 @@ exports.setStudentByCourse = function(req, res) {
                     i++;
                     if (confirm.length > 0) {
                         if (confirm[0]['isCompleted'] == true) {
-                            confirm.remove();
+                            confirm[0].remove();
                         } else {
                             not_assign++;
                         }
