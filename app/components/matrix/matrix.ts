@@ -41,7 +41,7 @@ export class Matrix  implements AfterViewInit {
         navigation: 0,
 				rowCount: -1
       });
-			// this.downloadpdf();
+			this.downloadpdf();
   }
 
 	downloadpdf(){
