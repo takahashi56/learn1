@@ -34,13 +34,6 @@ exports.getAllStudents = function(req, res) {
         total = 0,
         complete = 0;
 
-    // Take.find({}, function(err, takes) {
-    //   takes.forEach(function(take) {
-    //     take["already"] = false;
-    //     take.save();
-    //   })
-    // })
-
     Student.find({
         tutor_id: tutor_id,
         archOrReal: true
@@ -360,7 +353,7 @@ exports.getCoursesByStudentId = function(req, res) {
 
     Take.find({
         student_id: id,
-        already: false
+        // already: false
     }, null, {
         sort: 'created_at'
     }, function(err, takes) {
