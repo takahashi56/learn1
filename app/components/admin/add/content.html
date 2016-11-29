@@ -90,7 +90,7 @@
                     </div>
                     <div class="col-lg-10" [ngClass]="{ 'has-error' : !question.valid && submitAttempt }">
                         <div class="m-l-10 m-r-10">
-                            <input class="form-control alert alert-question text-page questionText" role="alert" value="" ngControl="question" (blur)="blurChange(contentForm.value)">
+                            <input class="form-control alert alert-question text-page questionText" role="alert" value="" ngControl="question" (blur)="blurChange(contentForm.value)" (change)="blurChange(contentForm.value)">
                         </div>
                     </div>
                     <div *ngIf="singleOrMulti">
@@ -108,7 +108,7 @@
 
                                                 <a class='btn btn-primary' href='javascript:;'>
                                                     Choose File...
-                                                    <input type="file" class="" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' accept="image/*" name="file_source" size="40"  (blur)="blurChange(contentForm.value)" (change)="onFileChange($event,contentForm.value)">
+                                                    <input type="file" class="" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' accept="image/*" name="file_source" size="40"  (blur)="blurChange(contentForm.value)" (change)="onFileChange($event,contentForm.value)"  (blur)="blurChange(contentForm.value)">
                                                 </a>
                                                 &nbsp;
                                                 <span class='label label-info' id="upload-file-info">{{image}}</span>
@@ -125,10 +125,10 @@
                                     <div class="col-lg-10">
                                         <div class="m-l-10 m-r-10 answer-section">
                                             <div [ngClass]="{ 'has-error' : !answerA.valid && submitAttempt }">
-                                                <input class="form-control alert alert-page text-page answerA" role="alert" ngControl="answerA" value="" (blur)="blurChange(contentForm.value)">
+                                                <input class="form-control alert alert-page text-page answerA" role="alert" ngControl="answerA" value="" (blur)="blurChange(contentForm.value)"  (change)="blurChange(contentForm.value)">
                                             </div>
                                             <label class="cr-styled">
-                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="1" (click)="choiceAnswer(contentForm.value, 1)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 1">
+                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="1" (click)="choiceAnswer(contentForm.value, 1)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 1"  (click)="blurChange(contentForm.value)">
                                                 <i class="fa"></i>
                                             </label>
                                         </div>
@@ -143,10 +143,10 @@
                                     <div class="col-lg-10">
                                         <div class="m-l-10 m-r-10 answer-section">
                                             <div [ngClass]="{ 'has-error' : !answerB.valid && submitAttempt }">
-                                                <input class="form-control alert alert-page text-page answerB" role="alert" value="" ngControl="answerB" (blur)="blurChange(contentForm.value)">
+                                                <input class="form-control alert alert-page text-page answerB" role="alert" value="" ngControl="answerB" (blur)="blurChange(contentForm.value)"  (change)="blurChange(contentForm.value)">
                                             </div>
                                             <label class="cr-styled">
-                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="2" (click)="choiceAnswer(contentForm.value ,2)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 2">
+                                                <input type="radio" required  name="choosenAnswer" class="multipleChoiceAnswer" value="2" (click)="choiceAnswer(contentForm.value ,2)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 2"  (click)="blurChange(contentForm.value)">
                                                 <i class="fa"></i>
                                             </label>
                                         </div>
@@ -161,10 +161,10 @@
                                     <div class="col-lg-10">
                                         <div class="m-l-10 m-r-10 answer-section">
                                             <div [ngClass]="{ 'has-error' : !answerC.valid && submitAttempt }">
-                                                <input class="form-control alert alert-page text-page answerC" role="alert" value="" ngControl="answerC" (blur)="blurChange(contentForm.value)">
+                                                <input class="form-control alert alert-page text-page answerC" role="alert" value="" ngControl="answerC" (blur)="blurChange(contentForm.value)"  (change)="blurChange(contentForm.value)">
                                             </div>
                                             <label class="cr-styled" >
-                                                <input type="radio"  name="choosenAnswer" class="multipleChoiceAnswer" required value="3" (click)="choiceAnswer(contentForm.value, 3)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 3">
+                                                <input type="radio"  name="choosenAnswer" class="multipleChoiceAnswer" required value="3" (click)="choiceAnswer(contentForm.value, 3)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 3"  (click)="blurChange(contentForm.value)">
                                                 <i class="fa"></i>
                                             </label>
                                         </div>
@@ -179,10 +179,10 @@
                                     <div class="col-lg-10">
                                         <div class="m-l-10 m-r-10 answer-section">
                                             <div [ngClass]="{ 'has-error' : !answerD.valid && submitAttempt }">
-                                                <input class="form-control alert alert-page text-page answerD" role="alert" value="" ngControl="answerD" (blur)="blurChange(contentForm.value)">
+                                                <input class="form-control alert alert-page text-page answerD" role="alert" value="" ngControl="answerD" (blur)="blurChange(contentForm.value)"  (change)="blurChange(contentForm.value)">
                                             </div>
                                             <label class="cr-styled" >
-                                                <input type="radio"  name="choosenAnswer" class="multipleChoiceAnswer" required value="4" (click)="choiceAnswer(contentForm.value, 4)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 4">
+                                                <input type="radio"  name="choosenAnswer" class="multipleChoiceAnswer" required value="4" (click)="choiceAnswer(contentForm.value, 4)" (blur)="blurChange(contentForm.value)"  [checked]="trueNumber == 4"  (click)="blurChange(contentForm.value)">
                                                 <i class="fa"></i>
                                             </label>
                                         </div>

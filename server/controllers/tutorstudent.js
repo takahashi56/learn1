@@ -17,7 +17,8 @@ var mongoose = require('mongoose'),
         session_id: '',
         amount: 0,
         count: 0
-    };
+    },
+    _ = require('lodash');
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
     config = require('../config/config')[env],
@@ -337,6 +338,7 @@ exports.setStudentByCourse = function(req, res) {
                                         student_id: id
                                     }, function(err, score) {
                                         if (err) return console.log(err);
+                                        if (_.isEmpty(score)) return ;
                                         if(score.length != 0 ) score.remove();
                                     });
                                 });

@@ -219,8 +219,11 @@ export class DetailTutorStudent implements AfterViewInit {
                 organization: this._session.getItem("organization")
             }
             self._session.setItem('certificate', JSON.stringify(data));
-            window.open('/#/certificate');
-            // self._router.navigateByUrl('/certificate');
+            var url = window.location.href
+            var arr = url.split("/");
+            var result = arr[0] + "//" + arr[2] + '/#/certificate';
+            window.open(result, '_blank');
+            // window.open('/#/certificate', '_blank');
         });
     }
 
