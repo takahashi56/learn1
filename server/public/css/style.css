@@ -13,6 +13,11 @@ html {
 body, html {
     overflow-x: hidden;
 }
+
+textarea {
+   resize: none;
+}
+
 .pace {
     -webkit-pointer-events: none;
     pointer-events: none;

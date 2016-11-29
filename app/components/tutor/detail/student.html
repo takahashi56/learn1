@@ -88,7 +88,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" [ngClass]="{ 'has-error' : !validDob(StudentDetailForm.value) && submitAttempt }">
                                 <div class="col-lg-2">
                                     <div class="m-l-10 m-r-10">
                                         <label for="dob" class="control-label text-left text-page">DOB</label>
@@ -159,7 +159,7 @@
                                     <li><a (click)="getPastEmployees(10)">10</a></li>
                                     <li><a (click)="getPastEmployees(20)">20</a></li>
                                     <li><a (click)="getPastEmployees(30)">30</a></li>
-                                    <li><a (click)="getPastEmployees(-1)">All</a></li>                                    
+                                    <li><a (click)="getPastEmployees(-1)">All</a></li>
                                 </ul>
                             </div>
                         </div>

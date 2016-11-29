@@ -3,7 +3,6 @@ import {Session} from '../../../services/session';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
 import {TutorService} from '../../../services/tutor';
-
 import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
 
 @Component({
@@ -159,6 +158,10 @@ export class DetailTutorStudent implements AfterViewInit {
     validDob(form: any) {
         if (form.dob_day == '' && isNaN(form.dob_month) && form.dob_year == null) return true;
 
+        if (form.dob_day == '' || form.dob_day == null) return false;
+        if (form.dob_month == null || isNaN(form.dob_month)) return false;
+        if (form.dob_year == '' || form.dob_year == null ) return false;
+
         if (form.dob_day > 31) return false;
         if (form.dob_month > 12 || form.dob_month < 0) return false;
         if (form.dob_year.length < 4) return false;
@@ -167,9 +170,11 @@ export class DetailTutorStudent implements AfterViewInit {
 
     AddStudent(form: any) {
         this.submitAttempt = true;
+
         if (this.StudentDetailForm.valid && this.matchedPassword(form) && this.validDob(form)) {
             var dob = "";
-            if (form.dob_day == null || Number(form.dob_day) == 0 || Number(form.dob_year) == 0 || Number(form.dob_month) == 0 || form.dob_month == null || form.dob_year == null) {
+
+            if (form.dob_day == null || Number(form.dob_day) == 0 || Number(form.dob_year) == 0 || Number(form.dob_month) == 0 || isNaN(Number(form.dob_month)) || form.dob_year == null || form.dob_year == '') {
                 dob = ''
             } else {
                 dob = `${form.dob_day.length == 2 ? form.dob_day : '0' + form.dob_day}/${form.dob_month.length == 2 ? form.dob_month : '0' + form.dob_month}/${form.dob_year}`
@@ -195,9 +200,11 @@ export class DetailTutorStudent implements AfterViewInit {
                         this._router.navigate(['TutorMain']);
                     }
                 })
+        }else{
+          console.log('cancel')
+
         }
 
-        console.log('cancel')
     }
 
     private titleCase(str: string): string {
