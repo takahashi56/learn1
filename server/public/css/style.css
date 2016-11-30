@@ -1755,3 +1755,10 @@ div#loading img {
 .v-button a {
     width: 80%;
 }
+
+@media (min-width: 768px){
+  .v-container.container, .container.v-button {
+    width: 904px;    
+    padding: 7px;
+  }
+}

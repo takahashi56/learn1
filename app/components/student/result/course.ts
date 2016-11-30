@@ -52,7 +52,7 @@ export class CourseResult {
             if (!flag) progress = progress / lessonList.length * 100;
             this.showOrFalse = flag;
 
-            this.score = Math.floor(right / total * 100);
+            this.score = isNaN(Math.floor(right / total * 100)) ? 0 : Math.floor(right / total * 100);
             var student_id = this._session.getCurrentId(), coures_id = this._session.getItem('CourseId'), score = this.score;
 
             this._studentService.setCourseScoreWithStudent({ student_id: student_id, course_id: coures_id, score: score, isCompleted: flag, progress: progress }).subscribe((res) => {
