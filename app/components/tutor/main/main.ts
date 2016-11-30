@@ -239,7 +239,8 @@ export class TutorMain implements OnInit {
             this._session.setItem('creditcount', res.creditcount);
             console.log(res);
 
-            if(res.notAssign > 0 ) alert(`${res.notAssign} employees cannot be assigned to this course.`)
+            // if(res.notAssign > 0 ) alert(`${res.notAssign} employees cannot be assigned to this course.`)
+            if(res.notAssign > 0 ) alert(`This employee is already assigned to this course.`)
             this._router.navigateByUrl('/home/tutor/main');
             this.loadData()
         });
