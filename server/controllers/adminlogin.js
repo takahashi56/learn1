@@ -34,6 +34,8 @@ exports.isAdmin = function(email) {
 
 exports.authentication = function(email, pwd) {
     var status = false;
+    email = email.toLowerCase();
+    
     Admin.findOne({
         email: email
     }, function(err, user) {
@@ -99,36 +101,37 @@ exports.addAdmin = function(req, res) {
     admin["created_at"] = new Date();
     admin['username'] = admin.email;
     admin["logon_date"] = '';
+    admin.email = admin.email.toLowerCase()
 
     Tutor.findOne({
-      email: admin.email
+        email: admin.email
     }, function(err, tutor) {
-      if(err) console.log(err)
-      if(_.isEmpty(tutor) || _.isNil(tutor)){
-        Admin.create(admin, function(err, admin) {
-          if (err) {
-            console.log(err)
-            res.send({
-              sucess: false,
-              error: err
+        if (err) console.log(err)
+        if (_.isEmpty(tutor) || _.isNil(tutor)) {
+            Admin.create(admin, function(err, admin) {
+                if (err) {
+                    console.log(err)
+                    res.send({
+                        sucess: false,
+                        error: err
+                    });
+                } else {
+                    var data = {
+                        action: "success",
+                        text: "",
+                        role: 0,
+                        success: true,
+                        _id: admin._id
+                    };
+                    res.send(data);
+                }
             });
-          } else {
-            var data = {
-              action: "success",
-              text: "",
-              role: 0,
-              success: true,
-              _id: admin._id
-            };
-            res.send(data);
-          }
-        });
-      }else{
-        res.send({
-          sucess: false,
-          error: ''
-        });
-      }
+        } else {
+            res.send({
+                sucess: false,
+                error: ''
+            });
+        }
     })
 }
 
@@ -142,7 +145,7 @@ exports.editAdmin = function(req, res) {
         admin["salt"] = salt;
         admin["hashed_pwd"] = encrypt.hashPwd(salt, admin["password"]);
     }
-
+    admin.email = admin.email.toLowerCase()
     admin["updated_at"] = new Date();
 
     Admin.update({
@@ -154,10 +157,10 @@ exports.editAdmin = function(req, res) {
                 sucess: false,
                 error: err
             });
-        }else{
-          res.send({
-            success: true
-          });
+        } else {
+            res.send({
+                success: true
+            });
         }
 
     })

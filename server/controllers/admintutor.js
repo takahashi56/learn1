@@ -52,9 +52,10 @@ exports.addTutor = function(req, res) {
     tutor["salt"] = salt;
     tutor["hashed_pwd"] = encrypt.hashPwd(salt, tutor["password"]);
     tutor["created_at"] = new Date();
+    tutor.email = tutor.email.toLowerCase()
 
     Admin.findOne({
-      email: tutor.email
+      email: tutor.email.toLowerCase()
     }, function(err, admin){
       if(err) console.log(err);
       if(_.isEmpty(admin) || _.isNil(admin)) {
@@ -98,6 +99,7 @@ exports.editTutor = function(req, res) {
     }
 
     tutor["updated_at"] = new Date();
+    tutor.email = tutor.email.toLowerCase()
 
     Tutor.update({
         _id: tutor._id

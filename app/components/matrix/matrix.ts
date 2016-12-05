@@ -66,9 +66,9 @@ export class Matrix  implements AfterViewInit {
 							para.appendChild(image);
 							// self.makeHighResScreenshot(image, image1, 200);
 							// para1.appendChild(image);
-							self._tutorService.makePdf({data:para.innerHTML, direction: false}).subscribe((res) => {
-								 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
-							})
+							// self._tutorService.makePdf({data:para.innerHTML, direction: false}).subscribe((res) => {
+							// 	 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+							// })
 					}
 			});
 	}
@@ -85,9 +85,12 @@ export class Matrix  implements AfterViewInit {
   }
 
   getCompleteDate(date){
-		if(date == null || new Date(date) == new Date('1970.1.1')) return '';
+		console.log(date);
+
+		if(date == null || date == '1970.1.1') return '';
 		var d = new Date(date),
 		datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
+		console.log(datestring);
 		return datestring;
 	}
 }
