@@ -217,9 +217,7 @@ export class TutorMain implements OnInit {
         this._tutorService.setAssignStudentsWithCourse(this.tutor_id, selectedId, ids).subscribe((res) => {
             this._session.setItem('creditcount', res.creditcount);
 
-            console.log(res);
-
-            if(res.confirm) alert("This employee is already assigned to this course.")
+            if(res.notAssign > 0 ) alert(`This employee is already assigned to this course.`)
 
             this._router.navigateByUrl('/home/tutor/main');
 
@@ -237,8 +235,6 @@ export class TutorMain implements OnInit {
         this._tutorService.setAssignStudentsWithCourse(this.tutor_id, id, ids).subscribe((res) => {
 
             this._session.setItem('creditcount', res.creditcount);
-            console.log(res);
-
             // if(res.notAssign > 0 ) alert(`${res.notAssign} employees cannot be assigned to this course.`)
             if(res.notAssign > 0 ) alert(`This employee is already assigned to this course.`)
             this._router.navigateByUrl('/home/tutor/main');
