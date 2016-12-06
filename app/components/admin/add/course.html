@@ -11,11 +11,11 @@
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="courseForm" (submit)="SubmitCourse(courseForm.value)">
                       <div [class]="showClass" *ngIf="showMessage">
                           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                          The fields are required.
+                          {{showText}}
                       </div>
                         <div class="container-fluid">
 
-                            <div class="form-group" [ngClass]="{ 'has-error' : !coursetitle.valid && submitAttempt }">
+                            <div class="form-group" [ngClass]="{ 'has-error' : validTitle(coursetitle.value) && submitAttempt }">
                                 <div class="col-lg-2">
                                     <div class="m-l-10 m-r-10">
                                         <label for="ctitle" class="control-label text-left text-page">Course Title</label>

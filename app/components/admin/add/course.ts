@@ -23,10 +23,12 @@ export class AddCourse {
     lessonData: any = [];
     show_back: boolean = false;
     showMessage: boolean = false;
-    showClass: string="alert alert-danger alert-dismissable";
+    titles: any = [];
+    showClass: string = "alert alert-danger alert-dismissable";
 
     show_remove_lesson: boolean = false;
     selectLesson: any = [];
+    showText: string = '';
 
     constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
         if (this._session.getCurrentId() == null) {
@@ -37,6 +39,7 @@ export class AddCourse {
             this.coursedescription = new Control(this.courseData.coursedescription, Validators.required);
             this.lessonData = this.courseData.lesson;
             this.show_remove_lesson = false;
+            this.titles = JSON.parse(this._session.getItem('titles'));
 
             this.courseForm = builder.group({
                 coursetitle: this.coursetitle,
@@ -51,13 +54,13 @@ export class AddCourse {
     }
 
     showBack(form: any) {
-        var data = JSON.parse(this._session.getItem('Course')), flag:boolean = false;
+        var data = JSON.parse(this._session.getItem('Course')), flag: boolean = false;
         console.log(data);
         data.lesson.forEach((lesson) => {
-          if(lesson.lesson_id.length < 14) {
-            flag = true;
-            return;
-          }
+            if (lesson.lesson_id.length < 14) {
+                flag = true;
+                return;
+            }
         })
         if (flag || form.coursetitle != this.courseData.coursetitle || form.coursedescription != this.courseData.coursedescription) {
             this.show_back = true;
@@ -138,7 +141,7 @@ export class AddCourse {
         console.log('fdsa')
         this.submitAttempt = true;
         var editORadd = JSON.parse(this._session.getItem('editORadd'));
-        if (this.courseForm.valid) {
+        if (this.courseForm.valid && !this.validTitle(form.coursetitle)) {
             console.log(this.courseForm.valid)
             var data = JSON.parse(this._session.getItem('Course'));
 
@@ -157,8 +160,10 @@ export class AddCourse {
                         console.log("");
                     }
                 })
-        }else{
-          this.showMessage = true;
+        } else {
+            this.showMessage = true;
+            if (!this.courseForm.valid) { this.showText = "This fields are required!"; return; }
+            if (this.validTitle(form.coursetitle)) { this.showText = "This field is already in use."; return; }
         }
     }
 
@@ -187,7 +192,7 @@ export class AddCourse {
                 return lesson.lesson_id != id;
             })
         });
-				this.selectLesson = [];
+        this.selectLesson = [];
 
         this.courseData.lesson = this.lessonData;
 
@@ -206,7 +211,12 @@ export class AddCourse {
         }
     }
 
-    inputFocus(){
-      this.showMessage = false;
+    inputFocus() {
+        this.showMessage = false;
+    }
+
+    validTitle(course_title) {
+        if(course_title == '') return true;
+        return this.titles.includes(course_title) == true;
     }
 }

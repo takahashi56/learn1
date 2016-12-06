@@ -4,6 +4,7 @@ import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {CanActivate} from 'angular2/router';
 import {AdminService} from '../../../services/admin';
 import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
+// import * as moment from 'moment';
 
 @Component({
     selector: 'admin-main',
@@ -57,6 +58,11 @@ export class Main implements OnInit, AfterViewInit {
         } else {
             this._adminService.getAllCourses().subscribe((res) => {
                 this.courseList = res;
+                let titles = [];
+                this.courseList.forEach((c) => {
+                    titles.push(c.title);
+                })
+                this._session.setItem('titles', JSON.stringify(titles));
             });
 
             this._adminService.getAllOrgs().subscribe((res) => {
