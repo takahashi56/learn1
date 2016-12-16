@@ -29,7 +29,7 @@
                             </div>
                             <div class="form-group" [ngClass]="{ 'has-error' : !coursedescription.valid && submitAttempt }">
                                 <div class="col-lg-2">
-                                    <div class="m-l-10 m-r-10">
+                                    <div class="">
                                         <label for="cdescription" class="control-label text-left text-page">Course Description</label>
                                     </div>
                                 </div>
@@ -38,7 +38,26 @@
                                         <textarea class="page-color text-page form-control" id="cdescription" name="cdescription" type="text" ngControl="coursedescription" value="A course regarding fire safety in the work place."  (focus)="inputFocus()">A course regarding fire safety in the work place.</textarea>
                                     </div>
                                 </div>
-
+                            </div>
+                            
+                            <div class="form-group m-t-10">
+                                <div class="col-sm-4 col-md-3 col-lg-2">
+                                    <label class="text-left text-page">Course Status</label>
+                                </div>
+                                <div class="col-sm-4 col-md-3 col-lg-3">
+                                    <label class="cr-styled text-page">
+                                        <strong class="m-r-5">Live</strong>
+                                        <input type="radio" name="multiChoice" value="1" class="r-question multipleChoice" (click)="choiceChange(true)" [checked] = "draftORLive" (blur)="blurChange(contentForm.value)">
+                                        <i class="fa"></i>
+                                    </label>
+                                </div>
+                                <div class="col-sm-4 col-md-3 col-lg-3">
+                                    <label class="cr-styled text-page">
+                                        <strong class="m-r-5">Draft</strong>
+                                        <input type="radio"  name="multiChoice" value="0" (click)="choiceChange(false)" [checked] = "!draftORLive" class="r-question textResponce">
+                                        <i class="fa"></i>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <hr class="m-t-10 m-b-25">
@@ -58,7 +77,6 @@
                                         <tr>
                                             <th></th>
                                             <th>Lesson Name</th>
-                                            <th>Video Count</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -73,9 +91,6 @@
                                         </td>
                                         <td>
                                             <strong>{{lesson.lessonname}}</strong>
-                                        </td>
-                                        <td>
-                                            <strong>{{getVideoCount(lesson)}}</strong>
                                         </td>
                                         <td class="text-right">
                                             <a  class="btn w-sm btn-md btn-primary" (click)="gotoEditLesson(lesson)" >Edit</a>

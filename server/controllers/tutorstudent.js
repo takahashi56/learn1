@@ -91,13 +91,16 @@ exports.getAllStudents = function(req, res) {
 exports.getAllCourses = function(req, res) {
     var tutor_id = req.body.tutor_id;
     var main_data = [];
-    Course.find({}, null, {
+    Course.find({draftORLive: true}, null, {
         sort: 'created_at'
     }, function(err, courses) {
         if (err) return console.error(err)
 
 
         courses.forEach(function(course) {
+          
+            course.draftORLive = true;
+            course.save();
 
             Take.find({
                 course_id: course._id,

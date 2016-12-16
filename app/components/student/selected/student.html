@@ -1,12 +1,12 @@
-<div *ngIf="currentContent.videoOrQuestion">
+<div *ngIf="currentContent.slideOrQuestion">
 	<student-video [content]="currentContent" [lessonname]="lessonname" [index]="lessonindex" [total]="lessontotal" (gotoNextContent)="gotoNextContent($event)" (gotoPreviousContent)="gotoPreviousContent($event)">
 	</student-video>
 </div>
-<div *ngIf="!currentContent.videoOrQuestion">
-	<div *ngIf="currentContent.singleOrMulti">
+<div *ngIf="!currentContent.slideOrQuestion">
+	<div *ngIf="currentContent.questionType == 1 || currentContent.questionType == 2">
 		<student-choice [content]="currentContent" [lessonname]="lessonname" [index]="lessonindex" (gotoNextContent)="gotoNextContent($event)"  (gotoPreviousContent)="gotoPreviousContent($event)"></student-choice>
 	</div>
-	<div *ngIf="!currentContent.singleOrMulti">
+	<div *ngIf="currentContent.questionType == 0">
 	<student-text [content]="currentContent" [lessonname]="lessonname" [index]="lessonindex" (gotoNextContent)="gotoNextContent($event)"  (gotoPreviousContent)="gotoPreviousContent($event)"></student-text>
 	</div>
 </div>

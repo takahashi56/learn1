@@ -1,0 +1,221 @@
+<section class="m-t-20 m-b-30">
+    <div class="container">
+        <h3 class="text-page m-b-30">
+            <strong>{{getCourseName()}}</strong>
+        </h3>
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="text-page m-l-15 m-t-15 m-b-0">
+                    <strong>{{getLessonName()}}</strong>
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <div class=" form">
+                    <form class="cmxform form-horizontal tasi-form" [ngFormModel]="questionForm" (submit)="SubmitQuestion(questionForm.value)" novalidate="novalidate">
+                        <div class="container-fluid">
+
+                            <div class="form-group" [ngClass]="{ 'has-error' : !questionName.valid && submitAttempt }">
+                                <div class="col-lg-2">
+                                    <div class="m-l-10 m-r-10">
+                                        <label for="lname" class="control-label text-left text-page">Question Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-10">
+                                    <div class="m-l-10 m-r-10">
+                                        <input class="text-page form-control lessonName" id="lname" name="name" type="text" ngControl="questionName" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="single">
+                            <hr class="m-t-20 m-b-25">
+                            <div class="container-fluid">
+                                <div class="m-l-10 m-r-10 q-choose">
+                                    <div class="form-group m-t-10">
+                                        <div class="col-sm-4 col-md-3 col-lg-2">
+                                            <label class="text-left text-page">Question Type</label>
+                                        </div>
+                                        <div class="col-sm-4 col-md-3 col-lg-3">
+                                            <label class="cr-styled text-page">
+                                                <strong class="m-r-5">Multiple Choice</strong>
+                                                <input type="radio" name="multiChoice" value="1" class="r-question multipleChoice" (click)="choiceChange(1)" [checked]="questionType == 1">
+                                                <i class="fa"></i>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-4 col-md-3 col-lg-3">
+                                            <label class="cr-styled text-page">
+                                                <strong class="m-r-5">Text Response</strong>
+                                                <input type="radio" name="multiChoice" value="0" (click)="choiceChange(0)" [checked]="questionType == 0" class="r-question textResponce">
+                                                <i class="fa"></i>
+                                            </label>
+                                        </div>
+
+                                        <div class="col-sm-5 col-md-4 col-lg-3">
+                                            <label class="cr-styled text-page">
+                                                <strong class="m-r-5">Image Question</strong>
+                                                <input type="radio" name="imageChoice" value="2" (click)="choiceChange(2)" [checked]="questionType == 2" class="r-question textResponce">
+                                                <i class="fa"></i>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                    <!-- form-group -->
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-2">
+                                        <div class="m-l-10 m-r-10">
+                                            <label for="q-input" class="control-label text-left text-page">Question</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10" [ngClass]="{ 'has-error' : !question.valid && submitAttempt }">
+                                        <div class="m-l-10 m-r-10">
+                                            <input class="form-control alert alert-question text-page questionText" role="alert" value="" ngControl="question">
+                                        </div>
+                                    </div>
+                                    <div *ngIf="questionType == 1 || questionType == 2">
+                                        <div class="box multipleChoiceBox">
+                                            <div class="multi-q">
+                                                <div *ngIf="questionType == 2" class="answer-div">
+                                                    <div class="col-lg-2">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <label for="q-input" class="control-label text-left text-page">Image</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-10">
+                                                        <div class="m-l-10 m-r-10 answer-section">
+                                                            <div [ngClass]="{ 'has-error' : (image == '') && submitAttempt }" style="margin-bottom: 15px;">
+
+                                                                <a class='btn btn-primary' href='javascript:;'>
+                                                                    Choose File...
+                                                                    <input
+                                                                        type="file"
+                                                                        class=""
+                                                                        style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;'
+                                                                        accept="image/*"
+                                                                        name="file_source"
+                                                                        size="40"
+                                                                        (change)="onFileChange($event,questionForm.value)">
+                                                                </a>
+                                                                &nbsp;
+                                                                <span class='label label-info' id="upload-file-info">{{image}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="answer-div">
+                                                    <div class="col-lg-2">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <label for="q-input" class="control-label text-left text-page">Answer A</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-10">
+                                                        <div class="m-l-10 m-r-10 answer-section">
+                                                            <div [ngClass]="{ 'has-error' : !answerA.valid && submitAttempt }">
+                                                                <input class="form-control alert alert-page text-page answerA" role="alert" ngControl="answerA" value="">
+                                                            </div>
+                                                            <label class="cr-styled">
+                                                                <input type="radio" required name="choosenAnswer" class="multipleChoiceAnswer" value="1" (click)="choiceAnswer(1)" [checked]="trueNumber == 1" >
+                                                                <i class="fa"></i>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="answer-div">
+                                                    <div class="col-lg-2">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <label for="q-input" class="control-label text-left text-page">Answer B</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-10">
+                                                        <div class="m-l-10 m-r-10 answer-section" [ngClass]="{ 'has-error' : !answerB.valid && submitAttempt }">
+                                                            <div >
+                                                                <input class="form-control alert alert-page text-page answerB" role="alert" value="" ngControl="answerB">
+                                                            </div>
+                                                            <label class="cr-styled">
+                                                                <input type="radio" required name="choosenAnswer" class="multipleChoiceAnswer" value="2" (click)="choiceAnswer(2)" [checked]="trueNumber == 2" >
+                                                                <i class="fa"></i>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="answer-div">
+                                                    <div class="col-lg-2">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <label for="q-input" class="control-label text-left text-page">Answer C</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-10">
+                                                        <div class="m-l-10 m-r-10 answer-section">
+                                                            <div [ngClass]="{ 'has-error' : !answerC.valid && submitAttempt }">
+                                                                <input class="form-control alert alert-page text-page answerC" role="alert" value="" ngControl="answerC">
+                                                            </div>
+                                                            <label class="cr-styled">
+                                                                <input type="radio" name="choosenAnswer" class="multipleChoiceAnswer" required value="3" (click)="choiceAnswer(3)" [checked]="trueNumber == 3" >
+                                                                <i class="fa"></i>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="answer-div">
+                                                    <div class="col-lg-2">
+                                                        <div class="m-l-10 m-r-10">
+                                                            <label for="q-input" class="control-label text-left text-page">Answer D</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-10">
+                                                        <div class="m-l-10 m-r-10 answer-section">
+                                                            <div [ngClass]="{ 'has-error' : !answerD.valid && submitAttempt }">
+                                                                <input class="form-control alert alert-page text-page answerD" role="alert" value="" ngControl="answerD">
+                                                            </div>
+                                                            <label class="cr-styled">
+                                                                <input type="radio" name="choosenAnswer" class="multipleChoiceAnswer" required value="4" (click)="choiceAnswer(4)" [checked]="trueNumber == 4" >
+                                                                <i class="fa"></i>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" class="type" name="type" value="question">
+                                    <div *ngIf="questionType == 0">
+                                        <div class="col-lg-2">
+                                            <div class="m-l-10 m-r-10">
+                                                <label for="q-input" class="control-label text-left text-page">Answer</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <div class="m-l-10 m-r-10 answer-section">
+                                                <div [ngClass]="{ 'has-error' : !answerText.valid && submitAttempt }">
+                                                    <textarea class="form-control alert alert-page text-page answerC" role="alert" value="" ngControl="answerText"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr class="m-t-10 m-b-25">
+                        <div class="container-fluid">
+                            <div class="m-l-5 m-r-5">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <input type="button" name="submit-btn" value="Cancel" class="btn btn-primary m-b-10 w-sm" (click)="cancel()">
+                                    </div>
+                                    <div class="col-xs-8 text-right">
+                                        <!-- <input type="button" (click)="addNextLesson(lessonForm)" value="Add Next Lesson" class="btn btn-primary m-b-10 w-sm"> -->
+                                        <input type="submit" name="submit-btn" value="Save" class="btn btn-primary m-b-10 w-sm m-l-10"  [disabled]="disableSubmit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

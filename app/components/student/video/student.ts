@@ -19,11 +19,18 @@ export class StudentVideo {
 
 	@Output() gotoNextContent=new EventEmitter();
 	@Output() gotoPreviousContent=new EventEmitter();
+	
+	htmlString: string = '';
 
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
-
+		
 	}
 
+	ngOnInit() {
+		console.log(this.content);
+		this.htmlString = this.content.slideContent;
+	}
+	
 	gotoNext(){
 		this.gotoNextContent.emit({});
 	}

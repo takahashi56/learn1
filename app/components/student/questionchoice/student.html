@@ -50,7 +50,7 @@
 
                 </form>
             </div>
-            <div *ngIf="content.questionType" class="col-sm-6 text-center">
+            <div *ngIf="content.questionType == 2" class="col-sm-6 text-center">
                 <img [src]="getImagePath(content.image)" width ="300" height="300"/>
             </div>
             <div class="white-space m-t-30 m-b-30">
@@ -83,16 +83,21 @@
                     </div>
                 </div>
             </div>
-            <div class="m-l-5 m-r-5">
-                <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-6 text-left">
-                        <input type="button" name="submit-btn" value="< PREVIOUS" (click)="gotoPrevious()" class="btn btn-primary m-b-10 col-sm-11 p-t-10 p-b-10">
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-6 text-right">
-                        <input type="button" name="submit-btn" value="NEXT >" class="btn btn-primary m-b-10 col-sm-11 pull-right p-t-10 p-b-10" (click)="gotoNext()">
-                    </div>
-                </div>
-            </div>
         </div>
+    </div>
+    <div class="v-bottom">
+      <div class="">
+        <div class="col-md-1 col-sm-1 col-xs-1 continue"   (click)="gotoPrevious()">
+          <a class="">
+            <h5>Back</h5>
+          </a>
+        </div>
+        <div class="col-md-11 col-sm-11 col-xs-11 text-center back"   (click)="gotoNext()">
+          <h4 class="text-page pull-right"></h4>
+          <a class="">
+            <h5>Continue</h5>
+          </a>
+        </div>
+      </div>
     </div>
 </section>

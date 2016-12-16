@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
     Lesson = mongoose.model('Lesson'),
     Course = mongoose.model('Course'),
     Content = mongoose.model('Content'),
+    Part = mongoose.model('Part'),
     postmark = require('postmark'),
     encrypt = require('../utilities/encryption');
 
@@ -133,7 +134,7 @@ exports.getLessonList = function(req, res) {
             }, function(err, score) {
                 if (err) return console.log(err);
 
-                Content.count({
+                Part.count({
                     lesson_id: lesson._id,
                     videoOrQuestion: false
                 }, function(err, content_count) {
@@ -182,10 +183,10 @@ exports.getLessonList = function(req, res) {
 exports.getContentsList = function(req, res) {
     var lesson_id = req.body.lesson_id;
 
-    Content.find({
+    Part.find({
         lesson_id: lesson_id
     }, null, {
-        sort: 'created_at'
+        sort: 'order'
     }, function(err, contents) {
         if (err) return console.error(err);
 
@@ -354,6 +355,7 @@ var scoreUpdate = function(student_id) {
 
     var courseScore = 0;
     Course.find({
+        draftOrLive: true,
         student_id: student_id
     }, null, {
         sort: 'created_at'

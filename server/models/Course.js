@@ -5,8 +5,9 @@ module.exports = function() {
 	var courseSchema = mongoose.Schema({
 		name: {type: String,required: true},
 		description: String,	
+		draftORLive: Boolean,
 		created_at: Date,
-    	updated_at: Date,
+  	updated_at: Date,
 	});
 
 	
@@ -16,7 +17,7 @@ module.exports = function() {
 
 		// change the updated_at field to current date
 		this.updated_at = currentDate;
-
+		
 		// if created_at doesn't exist, add to that field
 		if (!this.created_at)
 			this.created_at = currentDate;

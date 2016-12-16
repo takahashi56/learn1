@@ -1610,7 +1610,7 @@ input.alert-page {
     border-color: #d9edf7;
 }
 .padd-min {
-    height: 540px;
+    height: 440px;
 }
 @media(max-width:767px) {
     .padd-min {
@@ -1761,4 +1761,44 @@ div#loading img {
     width: 904px;    
     padding: 7px;
   }
+}
+
+.tiny.has-error .form-group{
+  border: 1px solid;
+      border-color: #a94442;
+}
+
+.view-content{
+  width: 896px;
+  height: 440px;
+}
+
+.v-bottom{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.v-bottom .continue{
+  background: #0e4f6b;height: 45px;
+}
+
+.v-bottom .continue:hover{
+  background: #6a0e6b;  
+}
+
+
+.v-bottom .back{
+  height: 45px;
+  background: #eca400;
+}
+
+.v-bottom .back:hover{
+  background: #ec8500;
+}
+
+.v-bottom h5{
+  margin-top: 15px;
+  color: white;
+  text-align: center;
 }

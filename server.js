@@ -60,6 +60,8 @@ require('./server/models/Take')();
 
 require('./server/models/Tutor')();
 
+require('./server/models/Part')();
+
 
 
 require('./server/routes/routes')(app);

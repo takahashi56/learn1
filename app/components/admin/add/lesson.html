@@ -36,10 +36,50 @@
                                 </div>
                             </div>
                         </div>   
-                         
-                        <lesson-content *ngFor="let con of contents"
-                            [content]="con" (manageContent)="manageContent($event)" >
-                        </lesson-content>
+                        
+                        <hr class="m-t-10 m-b-25">
+                        <div class="m-l-5 m-r-5">
+                            <div class="row">
+                                <div class="col-xs-12 text-right">
+                                  <a  class="btn btn-primary w-sm" (click)="beforeRemoveContent()" data-toggle="modal" data-target="#show_remove_content">Remove</a>
+                                  <div class="btn-group">
+                                      <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Position <span class="caret"></span></button>
+                                      <ul class="dropdown-menu" role="menu">
+                                          <li><a class="" (click)="changePosition(pos)" data-toggle="modal" data-target="#show_warning" *ngFor="let pos of range(position)">{{pos}}</a></li>                                          
+                                      </ul>
+                                  </div>
+                                  <a  class="btn btn-primary w-sm" (click)="addSlide()">Add Slide</a>
+                                  <a  class="btn btn-primary w-sm" (click)="addQuestion()">Add Question</a>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="table-responsive">
+                            <table class="table text-page">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  <!-- <tr *ngFor="let lesson of lessonData"> -->
+                                  <tr *ngFor="let content of contents">
+                                    <td>
+                                      <label class="cr-styled">
+                                        <input type="checkbox"  (change)="checkContent($event, content)">
+                                        <i class="fa"></i>
+                                      </label>
+                                    </td>
+                                    <td>
+                                      {{content.label}}
+                                    </td>                                    
+                                    <td class="text-right">
+                                      <a  class="btn w-sm btn-md btn-primary" (click)="gotoEditContent(content)" >Edit</a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <hr class="m-t-10 m-b-25">
                         <div class="container-fluid">
                             <div class="m-l-5 m-r-5">
@@ -61,3 +101,53 @@
     </div>
         
 </section>
+
+<div *ngIf="show_remove_content" id="show_remove_content" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Remove Content</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p> Are you sure to remove this content? </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeContent()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="show_warning" id="show_warning" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Warning!</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p> You cannot choose more than 2 contents. Please choose only 1 kindly to change order. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Ok</button>                
+            </div>
+        </div>
+    </div>
+</div>

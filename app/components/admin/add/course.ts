@@ -29,6 +29,7 @@ export class AddCourse {
     show_remove_lesson: boolean = false;
     selectLesson: any = [];
     showText: string = '';
+    draftORLive: boolean = false;
 
     constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
         if (this._session.getCurrentId() == null) {
@@ -40,7 +41,7 @@ export class AddCourse {
             this.lessonData = this.courseData.lesson;
             this.show_remove_lesson = false;
             this.titles = JSON.parse(this._session.getItem('titles'));
-
+            this.draftORLive = this.courseData.draftORLive;
             this.courseForm = builder.group({
                 coursetitle: this.coursetitle,
                 coursedescription: this.coursedescription,
@@ -79,22 +80,6 @@ export class AddCourse {
 
     gotoEditLesson(lesson) {
         this._session.setItem('Lesson_new', JSON.stringify(lesson));
-        var data = {
-            _content_id: (Date.now()).toString(),
-            videoOrQuestion: true,
-            questionType: false,
-            videoLabel: '',
-            videoEmbedCode: '',
-            singleOrMulti: false,
-            question: '',
-            answerA: '',
-            answerB: '',
-            answerC: '',
-            answerD: '',
-            image: '',
-            trueNumber: '',
-        };
-        lesson.content.push(data);
         this._session.setItem('Content', JSON.stringify(lesson.content));
         this._router.navigate(['AdminAddLesson']);
     }
@@ -107,21 +92,7 @@ export class AddCourse {
             lesson: this.courseData.lesson,
         }
 
-        var data = [{
-            _content_id: (Date.now()).toString(),
-            videoOrQuestion: true,
-            questionType: false,
-            videoLabel: '',
-            videoEmbedCode: '',
-            singleOrMulti: false,
-            question: '',
-            answerA: '',
-            answerB: '',
-            answerC: '',
-            answerD: '',
-            image: '',
-            trueNumber: '',
-        }];
+        var data = [];
 
         var data1 = {
             lesson_id: (Date.now()).toString(),
@@ -147,8 +118,10 @@ export class AddCourse {
 
             data.coursetitle = form.coursetitle;
             data.coursedescription = form.coursedescription;
+            data['draftORLive'] = this.draftORLive || false;
             // if(data.lesson.length == 0) return false;
-
+            console.log(data);
+            
             this._adminService.addCourse(data, editORadd.flag)
                 .subscribe((res) => {
                     if (res.success) {
@@ -216,7 +189,12 @@ export class AddCourse {
     }
 
     validTitle(course_title) {
+        if(course_title == this.courseData.coursetitle) return false;
         if(course_title == '') return true;
         return this.titles.includes(course_title) == true;
+    }
+
+    choiceChange(flag: boolean){
+      this.draftORLive = flag;
     }
 }

@@ -102,14 +102,14 @@ export class Main implements OnInit, AfterViewInit {
         var lessons = [];
         this._adminService.getEditCourses(course.course_id).subscribe((res) => {
             this._session.setItem('editORadd', JSON.stringify({ flag: true }));
-            console.log('abc')
-            console.log(JSON.parse(this._session.getItem('Course')));
             var course = JSON.parse(this._session.getItem('Course'));
-            console.log('dbd')
+            console.log(res)
             if(course == null){
               this._session.setItem('Course', JSON.stringify(res));
             }else if(course.course_id == res.course_id){
               this._session.setItem('Course', JSON.stringify(course));
+            }else{
+              this._session.setItem('Course', JSON.stringify(res));
             }
             this._router.navigate(['AdminAddCourse']);
         })
@@ -134,6 +134,7 @@ export class Main implements OnInit, AfterViewInit {
             course_id: Date.now(),
             coursetitle: '',
             coursedescription: '',
+            draftORLive: false,
             lesson: [],
         }
         this._session.setItem('editORadd', JSON.stringify({ flag: false }));

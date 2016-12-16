@@ -23,6 +23,10 @@ export class AddLesson {
     lessonData: any = [];
     contents: any = [];
     created_at: Date;
+    position: number = 0;
+    selectContent: any = [];
+    show_remove_content: boolean = false;
+    show_warning: boolean = false;
 
     constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
         if (this._session.getCurrentId() == null) {
@@ -58,20 +62,20 @@ export class AddLesson {
 
             this.handleData(form);
 
-            let data = [{
-                _content_id: (Date.now()).toString(),
-                videoOrQuestion: true,
-                questionType: false,
-                videoLabel: '',
-                videoEmbedCode: '',
-                singleOrMulti: false,
+            var data = [{
+                _id: (Date.now()).toString(),
+                slideOrQuestion: true,
+                questionType: 1,
+                label: '',
                 question: '',
                 answerA: '',
                 answerB: '',
                 answerC: '',
                 answerD: '',
+                answerText: '',
                 image: '',
                 trueNumber: '',
+                order: null
             }];
 
             let data1 = {
@@ -89,37 +93,11 @@ export class AddLesson {
 
     private handleData(form: any): void {
         let contentData = JSON.parse(this._session.getItem('Content'));
-        contentData = contentData.filter(function(obj) {
-            let updated = true;
-            if (obj.videoOrQuestion) {
-                if (obj.videoLabel != "" && obj.videoEmbedCode != "") updated = false;
-            } else {
-                if (obj.questionType == false) {
-                    switch (obj.singleOrMulti) {
-                        case false:
-                            if (obj.question != "") updated = false;
-                            break;
-                        case true:
-                            if (obj.question == "" || obj.answerA == "" || obj.answerB == "" || obj.answerC == "" || obj.answerD == "" || obj.trueNumber == 0) {
-                                updated = true;
-                            } else {
-                                updated = false;
-                            }
-                            break;
-                        default:
-                            updated = true;
-                            break;
-                    }
-                } else {
-                    if (obj.question == "" || obj.answerA == "" || obj.answerB == "" || obj.answerC == "" || obj.answerD == "" || obj.trueNumber == 0 || obj.image == '') {
-                        updated = true;
-                    } else {
-                        updated = false;
-                    }
-                }
-            }
-            if (!updated) return obj;
-        })
+        
+        contentData.forEach((content, index, array) => {
+          content.order = index;
+        });
+        
         let lesson = {
             lesson_id: this.lesson_id,
             lessonname: this.lessonForm.controls['lessonname'].value,
@@ -144,13 +122,15 @@ export class AddLesson {
         }
         course.lesson = lessons_copy;
         this._session.setItem('Course', JSON.stringify(course));
+        
     }
 
     private newInit(flag: boolean): void {
         this.lessonData = JSON.parse(this._session.getItem('Lesson_new'));
         this.created_at = this.lessonData.created_at;
         this.lesson_id = this.lessonData.lesson_id;
-        this.contents = JSON.parse(this._session.getItem('Content')); //this.lessonData.content;
+        this.contents = JSON.parse(this._session.getItem('Content')) || []; //this.lessonData.content;
+        this.position = this.contents.length;
         if (!flag) {
             this.lessonname = new Control(this.lessonData.lessonname, Validators.required);
             this.lessondescription = new Control(this.lessonData.lessondescription, Validators.required);
@@ -181,4 +161,130 @@ export class AddLesson {
             return this.lessonData.lessonname;
         }
     }
+
+    addSlide() {
+        let data = {
+            _id: (Date.now()).toString(),
+            slideOrQuestion: true,
+            label: '',
+            slideContent: '',
+            questionType: 1,
+            question: '',
+            answerA: '',
+            answerB: '',
+            answerC: '',
+            answerD: '',
+            answerText: '',
+            image: '',
+            trueNumber: '',
+            order: null
+        };
+        this._session.setItem('editAdd', false);
+        this._session.setItem('slide', JSON.stringify(data));
+        this._router.navigate(['AdminAddSlide']);
+    }
+
+    addQuestion() {
+        let data = {
+            _id: (Date.now()).toString(),
+            slideOrQuestion: false,
+            label: '',
+            slideContent: '',
+            questionType: 1,
+            question: '',
+            answerA: '',
+            answerB: '',
+            answerC: '',
+            answerD: '',
+            answerText: '',
+            image: '',
+            trueNumber: 0,
+            order: null
+        };
+        this._session.setItem('editAdd', false);
+        this._session.setItem('question', JSON.stringify(data));
+        this._router.navigate(['AdminAddQuestion']);
+    }
+
+    gotoEditContent(content) {
+        this._session.setItem('editAdd', true);
+        if (content.slideOrQuestion == true) {
+            this._session.setItem('slide', JSON.stringify(content));
+            this._router.navigate(['AdminAddSlide']);
+        } else {
+            this._session.setItem('question', JSON.stringify(content));
+            this._router.navigate(['AdminAddQuestion']);
+        }
+    }
+    
+    beforeRemoveContent() {
+        if (this.selectContent.length == 0) {
+            this.show_remove_content = false;
+            return false;
+        }
+        this.show_remove_content = true;
+    }
+
+    removeContent() {
+        if (this.selectContent.length == 0) return false;
+        this.show_remove_content = false;
+
+        this.selectContent.map((id) => {
+            this.contents = this.contents.filter((content) => {
+                return content._id != id;
+            })
+        });
+        this.selectContent = [];
+        this._session.setItem('Content', JSON.stringify(this.contents));
+    }
+
+    checkContent(event, object) {
+        if (event.currentTarget.checked) {
+            this.selectContent.push(object._id);
+        } else {
+            this.selectContent = this.selectContent.filter((o) => {
+                return o != object._id;
+            });            
+        }
+    }
+
+    changePosition(num) {
+        this.show_warning = false;
+        if (this.selectContent.length == 0) return;
+
+        if (this.selectContent.length != 1) {
+          this.show_warning = true;
+          return;
+        }
+        console.log(this.selectContent);
+        let value = this.contents.filter((content) => {
+            return content._id == this.selectContent[0];
+        });
+        console.log(value);
+        console.log(num);
+        console.log(this.contents.indexOf(value[0]));
+        this.contents = this.moveElementInArray(this.contents, value[0], num - 1);
+        this._session.setItem('Content', JSON.stringify(this.contents));
+    }
+
+    private range(num) {
+        let a = [];
+        for (let i = 0; i < num; ++i) {
+            a.push(i + 1);
+        }
+        return a;
+    }
+
+    private moveElementInArray(array, value, positionChange) {
+        let oldIndex = array.indexOf(value);
+        return this.move(array, oldIndex, positionChange);
+    }
+
+    private move(array, from, to) {
+        console.log('from ' + from);
+        console.log('to ' + to);
+        array.splice(to, 0, array.splice(from, 1)[0]);
+        return array;
+    };
 }
+

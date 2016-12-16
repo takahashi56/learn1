@@ -86,17 +86,22 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="m-l-5 m-r-5">
-                <div class="row">
-                    <div class="col-xs-6 text-left">
-                        <input type="button" (click)="showResult()" value="YOUR RESULTS" class="btn btn-primary m-b-10 col-sm-11 p-t-10 p-b-10">
-                </div>
-                <div class="col-xs-6 text-right">
-                    <input type="button" (click)="gotoFinish()" value="FINISH" class="btn btn-primary m-b-10 col-sm-11 pull-right p-t-10 p-b-10">
-                    </div>
-                </div>
-            </div>
+            </div>            
         </div>
     </div>   
+    <div class="v-bottom">
+        <div class="">
+            <div class="col-md-1 col-sm-1 col-xs-1 continue"  (click)="showResult()">
+                <a class="" >
+                    <h5>Your Result</h5>
+                </a>
+            </div>
+            <div class="col-md-11 col-sm-11 col-xs-11 text-center back"  (click)="gotoFinish()">
+                <h4 class="text-page pull-right"></h4>
+                <a class="" >
+                    <h5>Finish</h5>
+                </a>
+            </div>
+        </div>
+    </div>
 </section>
