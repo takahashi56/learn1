@@ -292,7 +292,7 @@ exports.setStudentByCourse = function(req, res) {
                     if (confirm.length > 0) {
                         if (confirm[0]['isCompleted'] == true) {
                             confirm[0]['already'] = true;
-                            confirm[0].save();
+                            confirm[0].remove();
                         } else {
                             not_assign++;
                         }
