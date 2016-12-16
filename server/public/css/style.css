@@ -1610,7 +1610,7 @@ input.alert-page {
     border-color: #d9edf7;
 }
 .padd-min {
-    height: 440px;
+    height: 540px;
 }
 @media(max-width:767px) {
     .padd-min {
@@ -1758,7 +1758,7 @@ div#loading img {
 
 @media (min-width: 768px){
   .v-container.container, .container.v-button {
-    width: 904px;    
+    width: 990px;    
     padding: 7px;
   }
 }
