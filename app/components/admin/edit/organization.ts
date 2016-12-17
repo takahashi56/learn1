@@ -31,12 +31,12 @@ export class EditOrganization {
         } else {
 
             this.org = JSON.parse(this._session.getItem('org'));
-
+            console.log(this.org);
             this.firstName = new Control(this.org.firstName, Validators.required);
             this.lastName = new Control(this.org.lastName, Validators.required);
             this.organization = new Control(this.org.organization, Validators.required);
             this.email = new Control(this.org.email, Validators.required);
-            this.password = new Control(this.org.password, Validators.compose([Validators.required, Validators.minLength(6)]))
+            this.password = new Control('', Validators.compose([Validators.required, Validators.minLength(6)]))
             this.phone = new Control(this.org.phone);
             this.notes = new Control(this.org.notes);
             this.department = new Control(this.org.department);
@@ -56,6 +56,12 @@ export class EditOrganization {
     cancel() {
         this._router.navigate(['AdminMain']);
     }
+    
+    isValidPassword(password: string) {
+      if(password == '') return true;
+      if(password.length > 5) return true;
+      return false;
+    }
 
     isNumberKey(evt) {
         evt = (evt) ? evt : window.event;
@@ -67,8 +73,8 @@ export class EditOrganization {
     }
 
     update(form: any) {
-        // this.submitAttempt = true;
-        if (form.firstName != this.org.firstName || form.lastName != this.org.lastName || form.password != this.org.password || form.email != this.org.email || form.organization != this.org.organization || form.phone != this.org.phone || form.department != this.org.department || form.notes != this.org.notes) {
+        this.submitAttempt = true;
+        if (form.firstName != this.org.firstName || form.lastName != this.org.lastName || this.isValidPassword(form.password) || form.email != this.org.email || form.organization != this.org.organization || form.phone != this.org.phone || form.department != this.org.department || form.notes != this.org.notes) {
             var data = {
                 _id: this.org.id,
                 firstName: form.firstName,

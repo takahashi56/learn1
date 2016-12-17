@@ -12,8 +12,13 @@
                       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                       This email was already used. Can you use another email?
                   </div>
+                  
                    <form class="cmxform form-horizontal tasi-form" [ngFormModel]="AdminForm" (submit)="update(AdminForm.value)">
                         <div class="container-fluid">
+                          <div class="alert alert-danger alert-dismissable" *ngIf="!isValidPassword(password.value) && submitAttempt">
+                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                              The password must be at least 6 characters. Please type password again.
+                          </div>                  
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group" >
@@ -64,7 +69,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="password" name="name" type="password"   placeholder=""  ngControl="password">
+                                        <input class=" form-control" id="password" name="name" type="password"   placeholder="The password must be at least 6 characters"  ngControl="password">
                                     </div>
                                 </div>
                             </div>

@@ -434,7 +434,7 @@ export class TutorMain implements OnInit {
         } else if (this.validatenewconfirm == true && newpassword.length < 6) {
             this.showAlert = true;
             this.changeSuccess = false;
-            this.failure = 'New Password Must Be At least 6 characters!';
+            this.failure = 'Password must be at least 6 characters!';
             return true;
         }
         this.showAlert = false;

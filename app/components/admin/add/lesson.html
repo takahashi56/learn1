@@ -45,11 +45,12 @@
                                   <div class="btn-group">
                                       <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Position <span class="caret"></span></button>
                                       <ul class="dropdown-menu" role="menu">
-                                          <li><a class="" (click)="changePosition(pos)" data-toggle="modal" data-target="#show_warning" *ngFor="let pos of range(position)">{{pos}}</a></li>                                          
+                                          <li *ngIf="!isValidPosition()"> <a disabled><em>No position</em></a> </li>
+                                          <li *ngIf="!isValidPosition()"><a class="" (click)="changePosition(pos)" data-toggle="modal" data-target="#show_warning" *ngFor="let pos of range(position)">{{pos}}</a></li>                                          
                                       </ul>
                                   </div>
-                                  <a  class="btn btn-primary w-sm" (click)="addSlide()">Add Slide</a>
-                                  <a  class="btn btn-primary w-sm" (click)="addQuestion()">Add Question</a>
+                                  <a  class="btn btn-primary w-sm" (click)="addSlide(lessonForm.value)">Add Slide</a>
+                                  <a  class="btn btn-primary w-sm" (click)="addQuestion(lessonForm.value)">Add Question</a>
                                 </div>
                             </div>
                         </div> 
@@ -74,7 +75,7 @@
                                       {{content.label}}
                                     </td>                                    
                                     <td class="text-right">
-                                      <a  class="btn w-sm btn-md btn-primary" (click)="gotoEditContent(content)" >Edit</a>
+                                      <a  class="btn w-sm btn-md btn-primary" (click)="gotoEditContent(content, lessonForm.value)" >Edit</a>
                                     </td>
                                   </tr>
                                 </tbody>

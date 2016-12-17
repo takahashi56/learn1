@@ -44,11 +44,17 @@ export class EditAdmin {
     cancel() {
         this._router.navigate(['AdminMain']);
     }
+    
+    isValidPassword(password: string) {
+      if(password == '') return true;
+      if(password.length > 5) return true;
+      return false;
+    }
 
     update(form: any) {
         this.submitAttempt = true;
         this.showNotSave = false;
-        if (form.firstName != this.admin.firstName || form.lastName != this.admin.lastName || form.email != this.admin.email || form.password != '') {
+        if (form.firstName != this.admin.firstName || form.lastName != this.admin.lastName || form.email != this.admin.email || this.isValidPassword(form.password)) {
             var data = {
                 _id: this.admin._id,
                 firstName: form.firstName,

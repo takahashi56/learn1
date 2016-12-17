@@ -162,7 +162,7 @@ export class AddLesson {
         }
     }
 
-    addSlide() {
+    addSlide(form: any) {
         let data = {
             _id: (Date.now()).toString(),
             slideOrQuestion: true,
@@ -179,12 +179,13 @@ export class AddLesson {
             trueNumber: '',
             order: null
         };
+        this.setTitleAndDesc(form);
         this._session.setItem('editAdd', false);
         this._session.setItem('slide', JSON.stringify(data));
         this._router.navigate(['AdminAddSlide']);
     }
 
-    addQuestion() {
+    addQuestion(form: any) {
         let data = {
             _id: (Date.now()).toString(),
             slideOrQuestion: false,
@@ -201,13 +202,22 @@ export class AddLesson {
             trueNumber: 0,
             order: null
         };
+        this.setTitleAndDesc(form);
         this._session.setItem('editAdd', false);
         this._session.setItem('question', JSON.stringify(data));
         this._router.navigate(['AdminAddQuestion']);
     }
+    
+    setTitleAndDesc(form:any) {
+      let lessonData = JSON.parse(this._session.getItem('Lesson_new'));
+      lessonData.lessonname = form.lessonname;
+      lessonData.lessondescription = form.lessondescription;
+      this._session.setItem('Lesson_new', JSON.stringify(lessonData));
+    }
 
-    gotoEditContent(content) {
+    gotoEditContent(content, form) {
         this._session.setItem('editAdd', true);
+        this.setTitleAndDesc(form);
         if (content.slideOrQuestion == true) {
             this._session.setItem('slide', JSON.stringify(content));
             this._router.navigate(['AdminAddSlide']);
@@ -265,6 +275,11 @@ export class AddLesson {
         console.log(this.contents.indexOf(value[0]));
         this.contents = this.moveElementInArray(this.contents, value[0], num - 1);
         this._session.setItem('Content', JSON.stringify(this.contents));
+    }
+    
+    isValidPosition(){
+      if(this.position == 0) return false;
+      return true;
     }
 
     private range(num) {

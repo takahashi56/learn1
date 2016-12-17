@@ -40,7 +40,7 @@ export class Question {
         this.answerC = new Control(this.data.answerC, Validators.required);
         this.answerD = new Control(this.data.answerD, Validators.required);
         this.answerText = new Control(this.data.answerText, Validators.required);
-        this.trueNumber = 0;
+        this.trueNumber = this.data.trueNumber;
 
         this.questionForm = this.builder.group({
             questionName: this.questionName,
