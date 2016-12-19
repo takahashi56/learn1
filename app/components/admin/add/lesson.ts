@@ -27,6 +27,7 @@ export class AddLesson {
     selectContent: any = [];
     show_remove_content: boolean = false;
     show_warning: boolean = false;
+    show_not_save: boolean = false;
 
     constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
         if (this._session.getCurrentId() == null) {
@@ -45,6 +46,22 @@ export class AddLesson {
         this._session.setItem('Lesson_new', {});
         this._session.setItem('Content', []);
         this._router.navigate(['AdminAddCourse']);
+    }
+
+    beforeCancel() {
+      this.show_not_save = false;
+      let contents = JSON.parse(this._session.getItem('Content')), result = false;
+      contents.forEach((content) => {
+        if(content._id.length < 15) {
+          result = true;
+        }
+      });
+      if(result) {
+        this.show_not_save = true;
+      } else {
+        this.show_not_save = false;
+        this.cancel();
+      }
     }
 
     SubmitLesson(form: any) {

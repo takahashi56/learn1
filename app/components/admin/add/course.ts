@@ -30,6 +30,7 @@ export class AddCourse {
     selectLesson: any = [];
     showText: string = '';
     draftORLive: boolean = false;
+    show_not_save: boolean = false;
 
     constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
         if (this._session.getCurrentId() == null) {
@@ -52,6 +53,24 @@ export class AddCourse {
     cancel() {
         this._session.setItem('Course', null);
         this._router.navigate(['AdminMain']);
+    }
+    
+    beforeCancel() {
+      this.show_not_save = false;
+      let lessons = this.lessonData, result = false;
+      lessons.forEach((lesson) => {
+        lesson.content.forEach((content) => {
+          if(content._id.length < 15) {
+            result = true;
+          }
+        });
+      });
+      if(result) {
+        this.show_not_save = true;
+      } else {
+        this.show_not_save = false;
+        this.cancel();
+      }
     }
 
     showBack(form: any) {

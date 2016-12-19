@@ -112,7 +112,7 @@
                                         <a  class="btn btn-primary w-sm" (click)="showBack(courseForm.value)" data-toggle="modal" data-target="#show_back">Back</a>
                                     </div>
                                     <div class="col-xs-8 text-right">
-                                        <input type="button" (click)="cancel()" value="Cancel" class="btn btn-primary m-b-10 w-sm">
+                                        <input type="button" (click)="beforeCancel()" value="Cancel" class="btn btn-primary m-b-10 w-sm" data-toggle="modal" data-target="#show_not_save">
                                         <input type="submit" value="Save" class="btn btn-primary m-b-10 w-sm m-l-10">
                                     </div>
                                 </div>
@@ -175,6 +175,32 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeLesson()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="show_not_save" id="show_not_save" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Warning!</h4>
+            </div>
+            <div class="modal-body assign-text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p> Are you sure you want to leave this page? You have not saved this course. </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancel()">Yes</button>
             </div>
         </div>
     </div>
