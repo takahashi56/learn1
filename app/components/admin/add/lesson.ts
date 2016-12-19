@@ -43,8 +43,8 @@ export class AddLesson {
     }
 
     cancel() {
-        this._session.setItem('Lesson_new', {});
-        this._session.setItem('Content', []);
+        this._session.setItem('Lesson_new', null);
+        this._session.setItem('Content', null);
         this._router.navigate(['AdminAddCourse']);
     }
 
