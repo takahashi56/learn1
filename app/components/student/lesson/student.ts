@@ -68,20 +68,20 @@ export class StudentLesson {
         var score = lesson.score;
         if (Number(score) == -1 && lesson.lock == false) {
             return `
-				<div class="col-sm-7 text-right">
+				<div class="col-sm-3 text-right">
 	                <div> Locked </div>
 	            </div>
 			`;
         }
 
         if (lesson.lock == true) {
-            return `<div class="col-sm-7 text-right">
+            return `<div class="col-sm-3 text-right">
 	                <div> Ready </div>
 	            	</div>
 	            `;
         } else if (lesson.score >= 0) {
             return `
-				<div class="col-sm-7 text-right">
+				<div class="col-sm-3 text-right">
 	                <div> <i class="ion-checkmark-round m-r-5"></i> Completed ${lesson.completedAt.toString().slice(0, 10)} </div>
 	            </div>
 			`;

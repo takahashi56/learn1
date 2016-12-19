@@ -6,7 +6,7 @@
             <li *ngFor="let lesson of lessonList; let i = index">
                 <a class="block-btn color-white" (click)="gotoLessonVideo(lesson,i)" >
                     <div class="row">
-                        <div class="col-sm-5">
+                        <div class="col-sm-9">
                             {{getLessonName(lesson)}}<br>
                             <p style="font-size: 15px;margin: 0;">{{lesson.lessondescription}}</p>
                         </div>

@@ -67,9 +67,14 @@ export class TinyEditor implements OnInit {
     }
     tinyMCESetup(ed) {
         ed.on('keyup', this.tinyMCEOnKeyup.bind(this));
+        ed.on('click', this.tinyMCEOnKeyup.bind(this));
+        ed.on('NodeChange', this.tinyMCEOnKeyup.bind(this));
+        ed.on('change', this.tinyMCEOnKeyup.bind(this));
     }
 
     tinyMCEOnKeyup(e) {
+        if(tinymce.get(this.elementID) == null) return;
+        console.log(tinymce.get(this.elementID).getContent());
         this.valueChange.emit(tinymce.get(this.elementID).getContent());
     }
 

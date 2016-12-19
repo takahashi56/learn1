@@ -5,7 +5,7 @@
             <div class="panel-heading m-b-30">
                 <h3 class="text-page m-l-15 m-t-15"><strong>Question</strong></h3>
             </div>
-            <div class="col-sm-6">
+            <div [class]="questionType != 2 ? 'col-sm-12' : 'col-sm-7'">
                 <form class="text-page text-left m-l-15 m-r-15">
                     <h4 class="m-b-30 m-t-30">
                         <strong>{{content.question}}</strong>
@@ -50,7 +50,7 @@
 
                 </form>
             </div>
-            <div *ngIf="content.questionType == 2" class="col-sm-6 text-center">
+            <div *ngIf="content.questionType == 2" class="col-sm-5 text-center">
                 <img [src]="getImagePath(content.image)" width ="300" height="300"/>
             </div>
             <div class="white-space m-t-30 m-b-30">
