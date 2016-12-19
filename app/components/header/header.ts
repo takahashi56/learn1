@@ -59,7 +59,7 @@ export class Header {
     beforeLogout() {
         this.show_not_save = false;
         let flag = false, result = false;
-        console.log(JSON.parse(this._session.getItem('Course')) == null);
+        console.log(JSON.parse(this._session.getItem('Course')));
         if (JSON.parse(this._session.getItem('Course')) == null || JSON.parse(this._session.getItem('Course')) == [] || JSON.parse(this._session.getItem('Course')) == "" || JSON.parse(this._session.getItem('Course')) == undefined) {
             this.doLogout();
             return;
