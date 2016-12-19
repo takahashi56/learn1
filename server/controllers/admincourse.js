@@ -104,9 +104,9 @@ exports.getAllCourse = function(req, res) {
                     var video_count = 0,
                         i = 0;
                     lessons.forEach(function(lesson) {
-                        Content.count({
+                        Part.count({
                             lesson_id: lesson._id,
-                            videoOrQuestion: true
+                            slideOrQuestion: true
                         }, function(err, content_count) {
                             if (err) return console.error(err);
                             i++;
