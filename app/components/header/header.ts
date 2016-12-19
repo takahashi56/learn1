@@ -64,7 +64,7 @@ export class Header {
             this.doLogout();
             return;
         } else {
-						console.log(this._session.getItem('Content'))
+						console.log(typeof this._session.getItem('Content'))
 						console.log(JSON.parse(this._session.getItem('Content')))
             if (JSON.parse(this._session.getItem('Content')) == null || this._session.getItem('Content') == "" || this._session.getItem('Content') == undefined) {
                 flag = true;
