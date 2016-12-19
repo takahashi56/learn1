@@ -59,12 +59,12 @@ export class Header {
     beforeLogout() {
         this.show_not_save = false;
         let flag = false, result = false;
-
-        if (this._session.getItem('Course') == null || this._session.getItem('Course') == "" || this._session.getItem('Course') == undefined) {
+        console.log(JSON.parse(this._session.getItem('Course')) == null);
+        if (JSON.parse(this._session.getItem('Course')) == null || JSON.parse(this._session.getItem('Course')) == [] || JSON.parse(this._session.getItem('Course')) == "" || JSON.parse(this._session.getItem('Course')) == undefined) {
             this.doLogout();
             return;
         } else {
-            if (this._session.getItem('Content') == null || this._session.getItem('Content') == "" || this._session.getItem('Content') == undefined) {
+            if (JSON.parse(this._session.getItem('Content')) == null || this._session.getItem('Content') == "" || this._session.getItem('Content') == undefined) {
                 flag = true;
             } else {
                 flag = false;
