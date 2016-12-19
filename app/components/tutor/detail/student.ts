@@ -44,12 +44,9 @@ export class DetailTutorStudent implements AfterViewInit {
             this.student = JSON.parse(this._session.getItem('TutorStudent'));
             this.allStudentData = JSON.parse(this._session.getItem('TutorAllStudent'));
             var id = this.student.student_id;
-            console.log(this.student);
             this._tutorService.getCoursesByStudentId(id, this._session.getCurrentId()).subscribe((res) => {
                 this.totalCourseList = res;
-                console.log(res);
                 this.courseList = this.totalCourseList.slice(0, 30);
-                console.log(this.courseList);
             })
 
             this.firstName = new Control(this.student.firstName, Validators.required);
@@ -253,16 +250,13 @@ export class DetailTutorStudent implements AfterViewInit {
     }
 
     getNumber(num:number, str: string='') {
-        if(num == 1){ console.log("true");return true;}
-        console.log("false");
+        if(num == 1){ return true;}
         return false;
         // return Number(str) == num;
     }
 
     beforeGotoBack(form: any) {
         var dob = `${form.dob_day.length == 2 ? form.dob_day : '0' + form.dob_day}/${form.dob_month.length == 2 ? form.dob_month : '0' + form.dob_month}/${form.dob_year}`;
-        console.log(form);
-        console.log(this.student)
         if (form.firstName != this.student.firstName || form.lastName != this.student.lastName || form.username != this.student.username || form.phone != this.student.phone || form.password != this.student.hashed_pwd || dob != this.student.DOB) {
             this.show_un_save = true;
         } else {

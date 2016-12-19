@@ -45,11 +45,9 @@ export class Resetpwd {
     var password = form.password,
 			verifiedpassword = form.verfiedPassword;
 		if(password == verifiedpassword){
-      console.log('true');
       this.matched = true;
 			return true;
 		}else{
-      console.log('false');
       this.matched = false;
 			return false;
 		}
@@ -73,9 +71,7 @@ export class Resetpwd {
 		}
 
 		if(this.ResetpwdForm.valid && this.matched){
-      console.log('valid');
       var email = this._session.getItem('forget_user');
-      console.log(email);
 			this._adminService.resetpwd({password: form.password, email: email}).subscribe((res) => {
 				if(res.success){
 					localStorage.clear();

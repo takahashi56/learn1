@@ -130,6 +130,8 @@ export class AddLesson {
         this.created_at = this.lessonData.created_at;
         this.lesson_id = this.lessonData.lesson_id;
         this.contents = JSON.parse(this._session.getItem('Content')) || []; //this.lessonData.content;
+        console.log(this.contents)
+        console.log(this.contents.length)
         this.position = this.contents.length;
         if (!flag) {
             this.lessonname = new Control(this.lessonData.lessonname, Validators.required);
@@ -266,13 +268,9 @@ export class AddLesson {
           this.show_warning = true;
           return;
         }
-        console.log(this.selectContent);
         let value = this.contents.filter((content) => {
             return content._id == this.selectContent[0];
         });
-        console.log(value);
-        console.log(num);
-        console.log(this.contents.indexOf(value[0]));
         this.contents = this.moveElementInArray(this.contents, value[0], num - 1);
         this._session.setItem('Content', JSON.stringify(this.contents));
     }
@@ -296,8 +294,6 @@ export class AddLesson {
     }
 
     private move(array, from, to) {
-        console.log('from ' + from);
-        console.log('to ' + to);
         array.splice(to, 0, array.splice(from, 1)[0]);
         return array;
     };

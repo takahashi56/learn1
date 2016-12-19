@@ -309,7 +309,6 @@ export class TutorMain implements OnInit {
                 return o != object.student_id;
             })
         }
-        console.log(this.selectStudents);
     }
 
     archiveStudent() {
@@ -372,7 +371,7 @@ export class TutorMain implements OnInit {
         } else if (verifiedpassword != '' && password != verifiedpassword && this.validatenewconfirm == true) {
             this.showAlert = true;
             this.changeSuccess = false;
-            this.failure = 'The Password Must Be Matched';
+            this.failure = 'The Password must be matched';
             this.matchedTrue = false;
             return false;
         } else if (password != '' && password.length > 5 && verifiedpassword == '' && this.validatenewconfirm == true) {
@@ -392,7 +391,6 @@ export class TutorMain implements OnInit {
         this.validatenewconfirm = true;
 
         if (this.validateNewPwd(form.newpwd)) return;
-        console.log(this.matchedTrue)
         if (!this.matchedTrue) {
             // this.showAlert = true;
             // this.changeSuccess = false;
@@ -506,7 +504,6 @@ export class TutorMain implements OnInit {
     }
 
     downloadSampleFile() {
-        console.log('dfafds')
         window.location.href = '/csv/SampleEmployeeImport.csv';
     }
 

@@ -23,8 +23,6 @@ export class Slide {
 
     constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
         this.data = JSON.parse(this._session.getItem('slide'));
-        console.log('slide');
-        console.log(this.data)
         this.slideName = new Control(this.data.label, Validators.required);
         this.slideForm = this.builder.group({
             slideName: this.slideName,

@@ -35,8 +35,6 @@ export class Header {
 			this.updateCreditCount()
 		}, 1000);
 		// this._tutorService.event_emitter.subscribe((decrease)=>{
-		// 	console.log("decrease credit");
-		// 	console.log(decrease);
 		// 	this.creditcount = Number(this._session.getItem('creditcount'));
 		// })
 	}

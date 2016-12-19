@@ -26,6 +26,9 @@ export class Main implements OnInit, AfterViewInit {
     showRemoveOrg: boolean = false;
     showRemoveCourse: boolean = false;
     showRemoveAdmin: boolean = false;
+    stringRemoveOrg: string = '';
+    stringRemoveCourse: string = '';
+    stringRemoveAdmin: string = '';
     admin_id: string;
 
     SettingForm: ControlGroup;
@@ -103,7 +106,6 @@ export class Main implements OnInit, AfterViewInit {
         this._adminService.getEditCourses(course.course_id).subscribe((res) => {
             this._session.setItem('editORadd', JSON.stringify({ flag: true }));
             var course = JSON.parse(this._session.getItem('Course'));
-            console.log(res)
             if(course == null){
               this._session.setItem('Course', JSON.stringify(res));
             }else if(course.course_id == res.course_id){
@@ -225,13 +227,24 @@ export class Main implements OnInit, AfterViewInit {
             this.showRemoveOrg = false;
             return false;
         }
+        if (this.selectOrg.length == 1){
+          this.stringRemoveOrg = "Are you sure to remove this organization?"
+        }else{
+          this.stringRemoveOrg = "Are you sure to remove these organizations?"
+        }
         this.showRemoveOrg = true;
+        
     }
 
     beforeRemoveAdmin() {
         if (this.selectAdmin.length == 0) {
             this.showRemoveAdmin = false;
             return false;
+        }
+        if (this.selectAdmin.length == 1){
+          this.stringRemoveAdmin = "Are you sure to remove this administrator?"
+        }else{
+          this.stringRemoveAdmin = "Are you sure to remove these administrators?"
         }
         this.showRemoveAdmin = true;
     }
@@ -240,6 +253,11 @@ export class Main implements OnInit, AfterViewInit {
         if (this.selectCourse.length == 0) {
             this.showRemoveCourse = false;
             return false;
+        }
+        if (this.selectAdmin.length == 1){
+          this.stringRemoveCourse = "Are you sure to remove this course?"
+        }else{
+          this.stringRemoveCourse = "Are you sure to remove these courses?"
         }
         this.showRemoveCourse = true;
     }

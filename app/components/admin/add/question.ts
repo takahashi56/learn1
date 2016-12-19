@@ -27,12 +27,14 @@ export class Question {
     trueNumber: number = 0;
     disableSubmit: boolean = false;
     submitAttempt: boolean = false;
+    showTrueNumber: boolean = false;
     data: any;
 
 
     constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
         this.data = JSON.parse(this._session.getItem('question'));
         this.image = "";
+        this.showTrueNumber = false;
         this.questionName = new Control(this.data.label, Validators.required);
         this.question = new Control(this.data.question, Validators.required);
         this.answerA = new Control(this.data.answerA, Validators.required);
@@ -41,6 +43,7 @@ export class Question {
         this.answerD = new Control(this.data.answerD, Validators.required);
         this.answerText = new Control(this.data.answerText, Validators.required);
         this.trueNumber = this.data.trueNumber;
+        this.questionType = this.data.questionType;
 
         this.questionForm = this.builder.group({
             questionName: this.questionName,
@@ -93,9 +96,15 @@ export class Question {
     SubmitQuestion(form: any) {
         this.submitAttempt = true;
         this.disableSubmit = true;
+        this.showTrueNumber = false;
         
-        if (this.questionType != 0 && this.trueNumber == 0) {this.disableSubmit = false; return;}
-        if (this.questionType == 0 && form.answerText == '') {this.disableSubmit = false; return;}
+        if (this.questionType != 0 && this.trueNumber == 0) {
+          this.disableSubmit = false;
+          if(form.questionName == '') return;
+          this.showTrueNumber = true;
+          return;
+        }
+        if (this.questionType == 0 && (form.answerText == ''  || form.questionName == '')) {this.disableSubmit = false; return;}
         if (this.questionType == 1 && (form.question == '' || form.questionName == '' || form.answerA == '' || form.answerB == '' || form.answerC == '' || form.answerD == '')) {this.disableSubmit = false; return;}
         if (this.questionType == 2 && (form.question == '' || form.questionName == '' || form.answerA == '' || form.answerB == '' || form.answerC == '' || form.answerD == '' || this.image == '')) {this.disableSubmit = false; return;}
 
@@ -107,6 +116,7 @@ export class Question {
         this.data.answerD = form.answerD;
         this.data.answerText = form.answerText;
         this.data.image = this.image;
+        this.data.questionType = this.questionType;
         this.data.trueNumber = this.trueNumber;
 
         let contents = JSON.parse(this._session.getItem('Content')),

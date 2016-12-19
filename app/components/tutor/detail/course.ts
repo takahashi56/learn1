@@ -91,7 +91,6 @@ export class DetailTutorCourse {
   				return o != object.student_id;
   			})
   		}
-  		console.log(this.selectStudents);
   	}
 
     unassign(){

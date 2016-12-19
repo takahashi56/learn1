@@ -43,8 +43,6 @@ export class SelectedContent implements OnInit {
             this.currentLesson = JSON.parse(this._session.getItem('SelectedLessonById'));
 
             this.currentContent = this.contents[0];
-            console.log('abc');
-            console.log(this.currentContent);
             this.index = 0;
             this.lessonindex = Number(this._session.getItem('SelectedLessonIndex'));
             this.lessontotal = Number(this._session.getItem('TotalLesson'));

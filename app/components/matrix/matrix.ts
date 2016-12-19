@@ -26,13 +26,11 @@ export class Matrix  implements AfterViewInit {
 		if(this._session.getCurrentId() == null || this._session.getCurrentUser() == null){
 			this._router.navigate(['Login']);
 		}else{
-			console.log('in the constructor');
 			this.organization = this._session.getItem('organization')
 			this.courseList = JSON.parse(this._session.getItem('courseList'));
 			var tutor_id = this._session.getCurrentId();
 			this.studentList = JSON.parse(this._session.getItem('studentList'))
 
-			console.log(this.studentList)
 		}
 	}
 
@@ -50,7 +48,6 @@ export class Matrix  implements AfterViewInit {
 					onrendered: function (canvas) {
 							var ctx = canvas.getContext("2d");
 							var data = canvas.toDataURL("image/png", 1.5);
-							console.log(data)
 							var docDefinition = {
 									content: [{
 											image: data,
@@ -66,9 +63,9 @@ export class Matrix  implements AfterViewInit {
 							para.appendChild(image);
 							// self.makeHighResScreenshot(image, image1, 200);
 							// para1.appendChild(image);
-							// self._tutorService.makePdf({data:para.innerHTML, direction: false}).subscribe((res) => {
-							// 	 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
-							// })
+							self._tutorService.makePdf({data:para.innerHTML, direction: false}).subscribe((res) => {
+								 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+							})
 					}
 			});
 	}
@@ -85,12 +82,10 @@ export class Matrix  implements AfterViewInit {
   }
 
   getCompleteDate(date){
-		console.log(date);
 
 		if(date == null || date == '1970.1.1') return '';
 		var d = new Date(date),
 		datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
-		console.log(datestring);
 		return datestring;
 	}
 }

@@ -18,8 +18,6 @@ export class GoCardlessPaymentSuccess implements OnInit{
 			this.tutor_id = this._session.getCurrentId();
 			this._session.setItem('success_subscription', true);
 			this._tutorService.updateTutorInfo({tutor_id: this.tutor_id}).subscribe((res) => {
-					console.log(res);
-
 	        this._session.setItem('employeecount', res.employeecount);
 
 	        setTimeout(()=>{

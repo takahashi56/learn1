@@ -57,7 +57,6 @@ export class PastTutorStudent implements AfterViewInit {
                 return o != object._id;
             })
         }
-        console.log(this.selectStudents);
     }
 
     cancel() {

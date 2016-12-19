@@ -46,7 +46,7 @@
                                       <button type="button" class="btn btn-primary w-sm m-r-5 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Position <span class="caret"></span></button>
                                       <ul class="dropdown-menu" role="menu">
                                           <li *ngIf="!isValidPosition()"> <a disabled><em>No position</em></a> </li>
-                                          <li *ngIf="!isValidPosition()"><a class="" (click)="changePosition(pos)" data-toggle="modal" data-target="#show_warning" *ngFor="let pos of range(position)">{{pos}}</a></li>                                          
+                                          <li *ngIf="isValidPosition()"  *ngFor="let pos of range(position)"><a class="" (click)="changePosition(pos)" data-toggle="modal" data-target="#show_warning">{{pos}}</a></li>                                          
                                       </ul>
                                   </div>
                                   <a  class="btn btn-primary w-sm" (click)="addSlide(lessonForm.value)">Add Slide</a>

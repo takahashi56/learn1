@@ -80,13 +80,10 @@ export class StripePayment {
     isCreditNumber(event, form: any) {
         event = (event) ? event : window.event;
         var charCode = (event.which) ? event.which : event.keyCode;
-        console.log(charCode);
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }
-        console.log('fds')
         var val = form.card_number;
-        console.log(val.length);
 
         if (val.length >= 19 && charCode != 8) return false;
         var newval = '';

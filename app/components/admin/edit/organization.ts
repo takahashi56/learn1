@@ -31,7 +31,6 @@ export class EditOrganization {
         } else {
 
             this.org = JSON.parse(this._session.getItem('org'));
-            console.log(this.org);
             this.firstName = new Control(this.org.firstName, Validators.required);
             this.lastName = new Control(this.org.lastName, Validators.required);
             this.organization = new Control(this.org.organization, Validators.required);

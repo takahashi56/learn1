@@ -56,7 +56,6 @@ export class AddCourse {
 
     showBack(form: any) {
         var data = JSON.parse(this._session.getItem('Course')), flag: boolean = false;
-        console.log(data);
         data.lesson.forEach((lesson) => {
             if (lesson.lesson_id.length < 14) {
                 flag = true;
@@ -109,19 +108,15 @@ export class AddCourse {
     }
 
     SubmitCourse(form: any) {
-        console.log('fdsa')
         this.submitAttempt = true;
         var editORadd = JSON.parse(this._session.getItem('editORadd'));
         if (this.courseForm.valid && !this.validTitle(form.coursetitle)) {
-            console.log(this.courseForm.valid)
             var data = JSON.parse(this._session.getItem('Course'));
 
             data.coursetitle = form.coursetitle;
             data.coursedescription = form.coursedescription;
             data['draftORLive'] = this.draftORLive || false;
             // if(data.lesson.length == 0) return false;
-            console.log(data);
-            
             this._adminService.addCourse(data, editORadd.flag)
                 .subscribe((res) => {
                     if (res.success) {
@@ -189,7 +184,7 @@ export class AddCourse {
     }
 
     validTitle(course_title) {
-        if(course_title == this.courseData.coursetitle) return false;
+        if(course_title == this.courseData.coursetitle && course_title != '') return false;
         if(course_title == '') return true;
         return this.titles.includes(course_title) == true;
     }

@@ -174,7 +174,6 @@ export class AddTutorStudent implements AfterViewInit {
                 })
         }
 
-        console.log('cancel')
     }
     onKey(event: any) {
         var value = event.target.value;

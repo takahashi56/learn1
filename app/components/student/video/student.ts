@@ -27,7 +27,6 @@ export class StudentVideo implements AfterViewInit {
     }
 
     ngOnInit() {
-        console.log(this.content);
         setInterval(() => {
             if (this.htmlString != this.content.slideContent) {
                 this.writeContent();
@@ -36,7 +35,6 @@ export class StudentVideo implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        console.log(document.getElementById('iframe_id'));
     }
 
     writeContent() {
@@ -50,9 +48,7 @@ export class StudentVideo implements AfterViewInit {
 				document.getElementById('iframe_id')['contentWindow'].document.close();
     }
     gotoNext() {
-        console.log(this.content)
         this.gotoNextContent.emit({});
-        console.log(this.content)
     }
     gotoPrevious() {
         this.gotoPreviousContent.emit({});
