@@ -150,7 +150,7 @@ export class AddCourse {
         } else {
             this.showMessage = true;
             if (!this.courseForm.valid) { this.showText = "This fields are required!"; return; }
-            if (this.validTitle(form.coursetitle)) { this.showText = "This field is already in use."; return; }
+            if (this.validTitle(form.coursetitle)) { this.showText = "This course name was already used. Please provide another name."; return; }
         }
     }
 
