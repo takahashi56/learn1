@@ -33,7 +33,6 @@ export class Question {
 
     constructor(private _session: Session, private _adminService: AdminService, private builder: FormBuilder, private _router: Router) {
         this.data = JSON.parse(this._session.getItem('question'));
-        this.image = "";
         this.showTrueNumber = false;
         this.questionName = new Control(this.data.label, Validators.required);
         this.question = new Control(this.data.question, Validators.required);
@@ -43,6 +42,7 @@ export class Question {
         this.answerD = new Control(this.data.answerD, Validators.required);
         this.answerText = new Control(this.data.answerText, Validators.required);
         this.trueNumber = this.data.trueNumber;
+        this.image = this.data.image;
         this.questionType = this.data.questionType;
 
         this.questionForm = this.builder.group({
@@ -141,6 +141,8 @@ export class Question {
                 array[i].answerD = data.answerD;
                 array[i].answerText = data.answerText;
                 array[i].trueNumber = data.trueNumber;
+                array[i].questionType = data.questionType;
+                array[i].image = data.image;
                 break; //Stop this loop, we found it!
             }
         }

@@ -264,6 +264,7 @@ export class AddLesson {
             })
         });
         this.selectContent = [];
+        this.position = this.contents.length;
         this._session.setItem('Content', JSON.stringify(this.contents));
     }
 

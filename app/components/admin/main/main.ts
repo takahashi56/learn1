@@ -254,7 +254,7 @@ export class Main implements OnInit, AfterViewInit {
             this.showRemoveCourse = false;
             return false;
         }
-        if (this.selectAdmin.length == 1){
+        if (this.selectCourse.length == 1){
           this.stringRemoveCourse = "Are you sure to remove this course?"
         }else{
           this.stringRemoveCourse = "Are you sure to remove these courses?"

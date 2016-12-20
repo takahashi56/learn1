@@ -15,6 +15,15 @@
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="OrganizeForm" (submit)="AddOrgs(OrganizeForm.value)">
                         <div class="container-fluid">
                             <div class="row">
+                              <div class="alert alert-danger alert-dismissable" *ngIf="!OrganizeForm.valid && submitAttempt">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <div *ngIf="!firstName.valid">This first name is required.</div>
+                                  <div *ngIf="!lastName.valid">This last name is required.</div>
+                                  <div *ngIf="!email.valid">This email is required.</div>
+                                  <div *ngIf="!organization.valid">This organization is required.</div>
+                                  <div *ngIf="password.hasError('required')">This password is required.</div>
+                                  <div *ngIf="password.hasError('minlength')">This password must be at least 6 characters.</div>
+                              </div>
                                 <div class="col-xs-12">
                                     <div class="form-group" >
                                         <div class=""  [ngClass]="{ 'has-error' : !firstName.valid && submitAttempt }">
