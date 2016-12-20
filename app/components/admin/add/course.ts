@@ -27,6 +27,7 @@ export class AddCourse {
     showClass: string = "alert alert-danger alert-dismissable";
 
     show_remove_lesson: boolean = false;
+    stringRemoveLesson: string = '';
     selectLesson: any = [];
     showText: string = '';
     draftORLive: boolean = false;
@@ -166,6 +167,11 @@ export class AddCourse {
         if (this.selectLesson.length == 0) {
             this.show_remove_lesson = false;
             return false;
+        }
+        if (this.selectLesson.length == 1){
+          this.stringRemoveLesson = "Are you sure to remove this lesson?"
+        }else{
+          this.stringRemoveLesson = "Are you sure to remove these lessons?"
         }
         this.show_remove_lesson = true;
     }

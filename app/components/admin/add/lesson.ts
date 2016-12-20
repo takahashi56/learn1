@@ -26,6 +26,7 @@ export class AddLesson {
     position: number = 0;
     selectContent: any = [];
     show_remove_content: boolean = false;
+    stringRemoveContent: string = '';
     show_warning: boolean = false;
     show_not_save: boolean = false;
 
@@ -250,6 +251,11 @@ export class AddLesson {
         if (this.selectContent.length == 0) {
             this.show_remove_content = false;
             return false;
+        }
+        if (this.selectContent.length == 1){
+          this.stringRemoveContent = "Are you sure to remove this content?"
+        }else{
+          this.stringRemoveContent = "Are you sure to remove these contents?"
         }
         this.show_remove_content = true;
     }
