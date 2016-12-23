@@ -26,11 +26,12 @@ export class QuestionChoice implements OnInit {
 	@Output() gotoPreviousContent=new EventEmitter();
 
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
-
 	}
+	
 
 	ngOnInit(){
 		this.checkedStatus = '<i class="fa"></i>';
+		console.log(this.content);
 	}
 
 	chooseAnswer(n: number){
