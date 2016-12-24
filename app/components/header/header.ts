@@ -47,6 +47,7 @@ export class Header {
     }
 
     doLogout() {
+        console.log('fdsa');
         localStorage.clear();
         this.router.navigate(['Login'])
     }
@@ -61,6 +62,7 @@ export class Header {
         let flag = false, result = false;
         console.log(JSON.parse(this._session.getItem('Course')));
         if (JSON.parse(this._session.getItem('Course')) == null || JSON.parse(this._session.getItem('Course')) == [] || JSON.parse(this._session.getItem('Course')) == "" || JSON.parse(this._session.getItem('Course')) == undefined) {
+            console.log('a');
             this.doLogout();
             return;
         } else {
@@ -73,6 +75,7 @@ export class Header {
 
 
         if (flag == false) {
+            console.log('b');
             let contents = JSON.parse(this._session.getItem('Content'));
             contents.forEach((content) => {
                 if (content._id.length < 15) {
@@ -80,6 +83,7 @@ export class Header {
                 }
             });
         } else {
+            console.log('c');
             let courseData = JSON.parse(this._session.getItem('Course')),
                 lessons = courseData.lesson;
 
@@ -91,7 +95,8 @@ export class Header {
                 });
             });
         }
-
+        
+        console.log('d');
         if (result) {
             this.show_not_save = true;
         } else {

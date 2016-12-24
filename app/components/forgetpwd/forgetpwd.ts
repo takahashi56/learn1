@@ -50,10 +50,10 @@ export class Forgetpwd {
                     // this._session.setUser(form.email, null, "");
                     this._session.setItem('forget_user', form.email);
                     this.button_name = 'Sent';
-                } else if (res.success == false) {
+                } else if (res.success == false && res.status != 500) {
                     this.showClass = "alert alert-danger alert-dismissable";
                     this.sentStatus = "This email was not sent. Please type the email correctly!";
-                } else if (res.status == 500) {
+                } else if (res.status == 500 && res.success == false) {
                     this.showClass = "alert alert-danger alert-dismissable";
                     this.sentStatus = "You tried to send to a recipient that has been marked as inactive. Please type the email correctly!";
                 }

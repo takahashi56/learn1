@@ -1551,12 +1551,12 @@ ul.p-social-link li a {
 }
 .custom-header {
     background-color: #084f70;
-    min-height: 80px;
+    min-height: 55px;
     padding: 0 15px;
     box-shadow: 0 0 10px #888;
 }
 .custom-header .top-right-menu>li {
-    line-height: 80px;
+    line-height: 55px;
 }
 .custom-header .top-right-menu>li>a {
     color: #fff;
@@ -1694,7 +1694,7 @@ input.alert-page {
     padding: 4px;
 }
 .logoPadding {
-    height: 80px;
+    height: 55px;
 }
 .matrix-container {
     background-color: #fff;

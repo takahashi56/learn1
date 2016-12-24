@@ -56,7 +56,7 @@ export class AddCourse {
         this._router.navigate(['AdminMain']);
     }
     
-    beforeCancel() {
+    beforeCancel(form:any) {
       this.show_not_save = false;
       let lessons = this.lessonData, result = false;
       lessons.forEach((lesson) => {
@@ -66,7 +66,7 @@ export class AddCourse {
           }
         });
       });
-      if(result) {
+      if(result || form.coursetitle != this.courseData.coursetitle || form.coursedescription != this.courseData.coursedescription ) {
         this.show_not_save = true;
       } else {
         this.show_not_save = false;

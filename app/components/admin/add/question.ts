@@ -104,9 +104,8 @@ export class Question {
           this.showTrueNumber = true;
           return;
         }
-        if (this.questionType == 0 && (form.answerText == ''  || form.questionName == '')) {this.disableSubmit = false; return;}
-        if (this.questionType == 1 && (form.question == '' || form.questionName == '' || form.answerA == '' || form.answerB == '' || form.answerC == '' || form.answerD == '')) {this.disableSubmit = false; return;}
-        if (this.questionType == 2 && (form.question == '' || form.questionName == '' || form.answerA == '' || form.answerB == '' || form.answerC == '' || form.answerD == '' || this.image == '')) {this.disableSubmit = false; return;}
+        
+        if(!this.validQuestinForm(form)) return;
 
         this.data.label = form.questionName;
         this.data.question = form.question;
@@ -147,5 +146,13 @@ export class Question {
             }
         }
         return array;
+    }
+    
+    validQuestinForm(form: any) {
+      if (this.questionType == 0 && (form.answerText == ''  || form.questionName == '')) { return false;}
+      if (this.questionType == 1 && (form.question == '' || form.questionName == '' || form.answerA == '' || form.answerB == '' || form.answerC == '' || form.answerD == '')) {return false;}
+      if (this.questionType == 2 && (form.question == '' || form.questionName == '' || form.answerA == '' || form.answerB == '' || form.answerC == '' || form.answerD == '' || this.image == '')) {return false;}
+      
+      return true;
     }
 }

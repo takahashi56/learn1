@@ -62,7 +62,7 @@
                                 <th>Last Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
-                                <th>Students</th>
+                                <th>Employees</th>
                                 <th>Last Logon</th>
                                 <th></th>
                             </tr>
@@ -195,7 +195,7 @@
                                   <i class="fa"></i>
                               </label>
                           </td>
-                          <td><strong>{{admin.firstName}}</strong></td>
+                          <td><strong>{{admin .firstName}}</strong></td>
                           <td><strong>{{admin.lastName}}</strong></td>
                           <td><strong>{{admin.email}}</strong></td>
                           <td><strong>{{getCompleteDate(admin.logon_date)}}</strong></td>

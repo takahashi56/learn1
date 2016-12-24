@@ -16,7 +16,8 @@ exports.getAllTutors = function(req, res) {
     }, function(err, results) {
         results.forEach(function(tutor) {
             Student.count({
-                tutor_id: tutor._id
+                tutor_id: tutor._id,
+                archOrReal: true
             }, function(err, count) {
                 i += 1;
                 temp = {
@@ -120,7 +121,6 @@ exports.deleteTutor = function(req, res) {
         }, function(err, removed) {
             if (err)
                 console.error(err);
-
             }
         )
     })

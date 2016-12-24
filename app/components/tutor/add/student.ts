@@ -140,7 +140,7 @@ export class AddTutorStudent implements AfterViewInit {
     AddStudent(form: any) {
         this.submitAttempt = true;
         this.showNotSave = false;
-        if (this.StudentForm.valid && this.matchedPassword(form) && this.validDob(form)) {
+        if (this.StudentForm.valid && this.matchedPassword(form) && this.validDob(form) && this.checkIfEmailInString(form.username) ) {
             var dob = "";
             if (form.dob_day == '' || Number(form.dob_day) == 0 || Number(form.dob_year) == 0 || Number(form.dob_month) == 0 || form.dob_month == '' || form.dob_year == '') {
                 dob = ''
@@ -168,8 +168,8 @@ export class AddTutorStudent implements AfterViewInit {
                     this.saving = false;
                     if (res.success) {
                         this._router.navigate(['TutorMain']);
-                    }else{
-                      this.showNotSave = true;
+                    } else {
+                        this.showNotSave = true;
                     }
                 })
         }
@@ -240,4 +240,8 @@ export class AddTutorStudent implements AfterViewInit {
         return result;
     }
 
+    private checkIfEmailInString(text) {
+        var re = /(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+        return re.test(text);
+    }
 }

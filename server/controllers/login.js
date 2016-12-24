@@ -117,7 +117,7 @@ var sendEmail = function(req, res){
 	}, function(error, success) {
 			if(error) {
 					console.error("Unable to send via postmark: " + error.message);
-					res.send({success: false}).end()
+					res.send({success: false, status: 300}).end()
 					return;
 			}else{
 				res.status(200).send({success: true}).end()
@@ -134,7 +134,7 @@ exports.forgetpwd = function(req, res){
 
 			Admin.findOne({email: email}, function(err, admin){
 				if(err || admin == null){
-					data = {success: true};
+					data = {success: false, status: 500};
 					res.send(data);
 					return console.error(err);
 				}else{

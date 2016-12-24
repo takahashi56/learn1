@@ -112,7 +112,7 @@
                                         <a  class="btn btn-primary w-sm" (click)="showBack(courseForm.value)" data-toggle="modal" data-target="#show_back">Back</a>
                                     </div>
                                     <div class="col-xs-8 text-right">
-                                        <input type="button" (click)="beforeCancel()" value="Cancel" class="btn btn-primary m-b-10 w-sm" data-toggle="modal" data-target="#show_not_save">
+                                        <input type="button" (click)="beforeCancel(courseForm.value)" value="Cancel" class="btn btn-primary m-b-10 w-sm" data-toggle="modal" data-target="#show_not_save_course">
                                         <input type="submit" value="Save" class="btn btn-primary m-b-10 w-sm m-l-10">
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@
     </div>
 </div>
 
-<div *ngIf="show_not_save" id="show_not_save" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div *ngIf="show_not_save" id="show_not_save_course" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

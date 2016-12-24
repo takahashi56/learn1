@@ -44,6 +44,7 @@ export class AddLesson {
     }
 
     cancel() {
+        console.log('e');
         this._session.setItem('Lesson_new', null);
         this._session.setItem('Content', null);
         this._router.navigate(['AdminAddCourse']);

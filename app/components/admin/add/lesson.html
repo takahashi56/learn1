@@ -12,7 +12,7 @@
                         <div class="container-fluid">
                           <div class="alert alert-danger alert-dismissable" *ngIf="!lessonForm.valid && submitAttempt">
                               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                              <div *ngIf="!lessonName.valid">This lesson name is required.</div>
+                              <div *ngIf="!lessonname.valid">This lesson name is required.</div>
                               <div *ngIf="!lessondescription.valid">This description is required.</div>
                           </div>
                             <div class="form-group" [ngClass]="{ 'has-error' : !lessonname.valid && submitAttempt }">
@@ -90,7 +90,7 @@
                             <div class="m-l-5 m-r-5">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <input type="button" name="submit-btn" value="Cancel" class="btn btn-primary m-b-10 w-sm" data-toggle="modal" data-target="#show_not_save" (click)="beforeCancel()">
+                                        <input type="button" name="submit-btn" value="Cancel" class="btn btn-primary m-b-10 w-sm" data-toggle="modal" data-target="#show_not_save_lesson" (click)="beforeCancel()">
                                     </div>
                                     <div class="col-xs-8 text-right">
                                         <input type="button" (click)="addNextLesson(lessonForm)" value="Add Next Lesson" class="btn btn-primary m-b-10 w-sm">
@@ -157,7 +157,7 @@
     </div>
 </div>
 
-<div *ngIf="show_not_save" id="show_not_save" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div *ngIf="show_not_save" id="show_not_save_lesson" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
