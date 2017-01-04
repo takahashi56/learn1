@@ -90,7 +90,8 @@ export class AddTutorStudent implements AfterViewInit {
 
     getValue(form: any) {
         if (form.firstName == "" || form.lastName == "") return '';
-
+        if (form.username != '')  return '';
+        
         var firstName = form.firstName,
             lastName = form.lastName,
             username = firstName.charAt(0).toLowerCase() + lastName.toLowerCase(),
@@ -114,7 +115,7 @@ export class AddTutorStudent implements AfterViewInit {
             if (student.username.includes(username)) i++;
         })
         if (i != 0) username = username + i;
-
+        
         (<Control>this.StudentForm.controls['username']).updateValue(username);
     }
 

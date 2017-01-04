@@ -95,7 +95,7 @@ export class Question {
 
     SubmitQuestion(form: any) {
         this.submitAttempt = true;
-        this.disableSubmit = true;
+        // this.disableSubmit = true;
         this.showTrueNumber = false;
         
         if (this.questionType != 0 && this.trueNumber == 0) {

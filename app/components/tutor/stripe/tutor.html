@@ -14,11 +14,11 @@
             <div class="m-l-5 m-r-5  m-t-30">
               <div class=" form">
                 <div [class]="showClass" *ngIf="sentShow">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    
                     {{sentStatus}}
                 </div>
                 <div [class]="showClass" *ngIf="sentSuccessShow">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    
                     {{sentStatus}}
                 </div>
                   <form class="cmxform form-horizontal tasi-form" [ngFormModel]="stripe_form" (submit)="getPaid(stripe_form.value)">

@@ -9,14 +9,13 @@
             <div class="panel-body">
                 <div class=" form">
                   <div class="alert alert-danger alert-dismissable" *ngIf="showNotSave">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                       This email was already used. Can you use another email?
                   </div>
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="AdminForm" (submit)="AddAdmin(AdminForm.value)">
                         <div class="container-fluid">
                             <div class="row">
                               <div class="alert alert-danger alert-dismissable" *ngIf="!AdminForm.valid && submitAttempt">
-                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  
                                   <div *ngIf="!firstname.valid">This first name is required.</div>
                                   <div *ngIf="!lastname.valid">This last name is required.</div>
                                   <div *ngIf="!email.valid">This email is required.</div>

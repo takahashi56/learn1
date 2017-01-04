@@ -9,8 +9,7 @@
             <div class="panel-body">
                 <div class=" form">
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="courseForm" (submit)="SubmitCourse(courseForm.value)">
-                      <div [class]="showClass" *ngIf="showMessage">
-                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      <div [class]="showClass" *ngIf="showMessage">                          
                           {{showText}}
                       </div>
                         <div class="container-fluid">

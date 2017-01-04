@@ -131,7 +131,7 @@ export class StripePayment {
             this.sentShow = true;
 
             this.showClass = "alert alert-danger alert-dismissable";
-            this.sentStatus = "Expire Information Must be Correct. Please type expire month and year again";
+            this.sentStatus = "Incorrect expiration date, please review the expiration date on your credit card";
             return true;
 
         }

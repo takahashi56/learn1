@@ -150,7 +150,15 @@ export class AddCourse {
                 })
         } else {
             this.showMessage = true;
-            if (!this.courseForm.valid) { this.showText = "This fields are required!"; return; }
+            if (!this.courseForm.valid) { 
+                if(form.coursetitle == '' && form.coursedescription == ''){
+                    this.showText = "These fields are required!"; 
+                } else if(form.coursetitle == '' || form.coursedescription == ''){
+                    this.showText = "This field is required!"; 
+                }
+                
+                return; 
+            }
             if (this.validTitle(form.coursetitle)) { this.showText = "This course name was already used. Please provide another name."; return; }
         }
     }
@@ -209,9 +217,9 @@ export class AddCourse {
     }
 
     validTitle(course_title) {
-        if(course_title == this.courseData.coursetitle && course_title != '') return false;
+        if(course_title.trim() == this.courseData.coursetitle && course_title != '') return false;
         if(course_title == '') return true;
-        return this.titles.includes(course_title) == true;
+        return this.titles.includes(course_title.trim()) == true;
     }
 
     choiceChange(flag: boolean){

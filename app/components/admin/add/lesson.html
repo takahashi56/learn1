@@ -11,7 +11,7 @@
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="lessonForm" (submit)="SubmitLesson(lessonForm.value)" novalidate="novalidate">
                         <div class="container-fluid">
                           <div class="alert alert-danger alert-dismissable" *ngIf="!lessonForm.valid && submitAttempt">
-                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                              
                               <div *ngIf="!lessonname.valid">This lesson name is required.</div>
                               <div *ngIf="!lessondescription.valid">This description is required.</div>
                           </div>

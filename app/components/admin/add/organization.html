@@ -8,7 +8,7 @@
 
             <div class="panel-body">
               <div class="alert alert-danger alert-dismissable" *ngIf="showNotSave">
-                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  
                   This email was already used. Can you use another email?
               </div>
                 <div class=" form">
@@ -16,7 +16,7 @@
                         <div class="container-fluid">
                             <div class="row">
                               <div class="alert alert-danger alert-dismissable" *ngIf="!OrganizeForm.valid && submitAttempt">
-                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  
                                   <div *ngIf="!firstName.valid">This first name is required.</div>
                                   <div *ngIf="!lastName.valid">This last name is required.</div>
                                   <div *ngIf="!email.valid">This email is required.</div>

@@ -9,14 +9,14 @@
             <div class="panel-body">
                 <div class=" form">
                   <div class="alert alert-danger alert-dismissable" *ngIf="showNotSave">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      
                       This email was already used. Can you use another email?
                   </div>
                   
                    <form class="cmxform form-horizontal tasi-form" [ngFormModel]="AdminForm" (submit)="update(AdminForm.value)">
                         <div class="container-fluid">
                           <div class="alert alert-danger alert-dismissable" *ngIf="!isValidPassword(password.value) && submitAttempt">
-                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                              
                               The password must be at least 6 characters. Please type password again.
                           </div>                  
                             <div class="row">
