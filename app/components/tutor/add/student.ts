@@ -151,7 +151,7 @@ export class AddTutorStudent implements AfterViewInit {
             var data = {
                 firstName: form.firstName,
                 lastName: form.lastName,
-                username: form.username,
+                username: form.username.toLowerCase(),
                 DOB: dob,
                 hashed_pwd: form.password,
                 phone: form.phone,
