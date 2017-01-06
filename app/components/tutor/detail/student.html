@@ -18,6 +18,9 @@
                 <div class=" form">
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="StudentDetailForm">
                         <div class="container-fluid">
+                            <div class="alert alert-danger alert-dismissable" *ngIf="showNotSave">
+                                This username is already in use, please choose another.
+                            </div>
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
@@ -121,7 +124,8 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="m-l-10 m-r-10">
-                                        <input class=" form-control" id="dob" name="name" type="text" ngControl="phone" maxlength="20" size="20" placeholder="Telephone Number (optional)" (keyup)="onKey($event)">
+                                        <input class=" form-control" id="dob" name="name" type="text" ngControl="phone" maxlength="20" size="20" placeholder="Telephone Number (optional)"
+                                            (keyup)="onKey($event)">
                                     </div>
                                 </div>
                             </div>
@@ -183,7 +187,6 @@
                             <!-- <td class="text-center"><strong>{{course.completedAt == null ? '' : getCompleteDate(course.completedAt) | date: 'h:mm  dd/MM/yyyy'}}</strong></td> -->
                             <td class="text-center"><strong>{{getCompleteDate(course)}}</strong></td>
                             <td class="text-center"><a href="javascript:void(0)" target="_blank" (click)="gotoCertificate(course)"><strong class="text-page">{{course.isCompleted ? 'View' : ''}}</strong></a></td>
-
                         </tr>
                     </table>
                 </div>
@@ -204,10 +207,9 @@
             </div>
         </div>
     </div>
-
 </section>
-
-<div *ngIf="show_un_save" id="show_un_save" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div *ngIf="show_un_save" id="show_un_save" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -222,13 +224,11 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancel()">Yes</button>
             </div>
         </div>
     </div>
-</div>
+    </div>

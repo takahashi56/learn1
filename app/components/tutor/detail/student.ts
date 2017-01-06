@@ -33,6 +33,7 @@ export class DetailTutorStudent implements AfterViewInit {
     selectedMonth: boolean = false;
     selectedObject: number = 0;
     show_un_save: boolean = false;
+    showNotSave: boolean = false;
 
     months: any = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -167,7 +168,7 @@ export class DetailTutorStudent implements AfterViewInit {
 
     AddStudent(form: any) {
         this.submitAttempt = true;
-
+        this.showNotSave = false;
         if (this.StudentDetailForm.valid && this.matchedPassword(form) && this.validDob(form)) {
             var dob = "";
 
@@ -195,6 +196,8 @@ export class DetailTutorStudent implements AfterViewInit {
                 .subscribe((res) => {
                     if (res.success) {
                         this._router.navigate(['TutorMain']);
+                    } else {
+                        this.showNotSave = true;
                     }
                 })
         }else{

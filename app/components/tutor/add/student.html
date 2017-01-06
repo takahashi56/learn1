@@ -9,7 +9,6 @@
             <div class="panel-body">
                 <div class=" form">
                   <div class="alert alert-danger alert-dismissable" *ngIf="showNotSave">
-                      
                       This username is already in use, please choose another.
                   </div>
                     <form class="cmxform form-horizontal tasi-form" [ngFormModel]="StudentForm" (submit)="AddStudent(StudentForm.value)">

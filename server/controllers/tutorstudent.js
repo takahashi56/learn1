@@ -30,7 +30,7 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
     },
     goCardless = new GoCardless(gc_config);
 
-exports.getAllStudents = function(req, res) {
+exports.getAllStudents = function (req, res) {
     var data = req.body,
         tutor_id = data.tutor_id,
         total = 0,
@@ -41,16 +41,16 @@ exports.getAllStudents = function(req, res) {
         archOrReal: true
     }, null, {
         sort: 'created_at'
-    }, function(err, students) {
+    }, function (err, students) {
         if (err) return console.error(err)
         var students_copy = [];
 
-        students.forEach(function(student) {
+        students.forEach(function (student) {
 
             Take.find({
                 student_id: student._id,
                 already: false
-            }).lean().exec(function(err, takes) {
+            }).lean().exec(function (err, takes) {
                 complete = 0;
                 total = takes.length;
                 for (var i = 0, len = takes.length; i !== len; i++) {
@@ -77,7 +77,7 @@ exports.getAllStudents = function(req, res) {
 
                 students_copy.push(s);
                 if (students.length == students_copy.length) {
-                    students_copy.sort(function(a, b) {
+                    students_copy.sort(function (a, b) {
                         return a.firstName.localeCompare(b.firstName);
                     })
                     res.send(students_copy);
@@ -88,24 +88,26 @@ exports.getAllStudents = function(req, res) {
     })
 }
 
-exports.getAllCourses = function(req, res) {
+exports.getAllCourses = function (req, res) {
     var tutor_id = req.body.tutor_id;
     var main_data = [];
-    Course.find({draftORLive: true}, null, {
+    Course.find({
+        draftORLive: true
+    }, null, {
         sort: 'created_at'
-    }, function(err, courses) {
+    }, function (err, courses) {
         if (err) return console.error(err)
 
 
-        courses.forEach(function(course) {
-          
+        courses.forEach(function (course) {
+
             course.draftORLive = true;
             course.save();
 
             Take.find({
                 course_id: course._id,
                 already: false
-            }, function(err, takes) {
+            }, function (err, takes) {
                 if (err) return console.error(err)
 
                 var count = 0,
@@ -127,12 +129,12 @@ exports.getAllCourses = function(req, res) {
                         return false;
                     }
                 } else {
-                    takes.forEach(function(take) {
+                    takes.forEach(function (take) {
                         Student.findOne({
                             _id: take.student_id,
                             tutor_id: tutor_id,
                             archOrReal: true
-                        }, function(err, student) {
+                        }, function (err, student) {
                             if (err) return console.error(err);
 
                             i++;
@@ -149,7 +151,7 @@ exports.getAllCourses = function(req, res) {
                                 }
                                 main_data.push(data);
                                 if (main_data.length == courses.length) {
-                                    main_data.sort(function(a, b) {
+                                    main_data.sort(function (a, b) {
                                         return a.coursetitle.localeCompare(b.coursetitle);
                                     })
                                     res.send(main_data);
@@ -166,13 +168,13 @@ exports.getAllCourses = function(req, res) {
     })
 }
 
-exports.addStudent = function(req, res) {
+exports.addStudent = function (req, res) {
     var student = req.body;
 
     student["created_at"] = new Date();
     student["archOrReal"] = true;
 
-    Student.create(student, function(err, student) {
+    Student.create(student, function (err, student) {
         if (err) {
             console.log(err);
             res.send({
@@ -187,19 +189,19 @@ exports.addStudent = function(req, res) {
     })
 }
 
-exports.addStudentCSV = function(req, res) {
+exports.addStudentCSV = function (req, res) {
     var students = req.body.result,
         tutor_id = req.body.tutor_id,
         count = false,
         ii = 0,
         flag = true;
 
-    students.forEach(function(studentcsv) {
+    students.forEach(function (studentcsv) {
         ii++;
         csv.fromString(studentcsv[0], {
                 header: true
             })
-            .on("data", function(data) {
+            .on("data", function (data) {
                 var student = {
                     firstName: data[0],
                     lastName: data[1],
@@ -213,15 +215,15 @@ exports.addStudentCSV = function(req, res) {
 
                 Student.find({
                     archOrReal: true
-                }, function(err, sCollection) {
+                }, function (err, sCollection) {
                     if (err) throw err;
 
                     i = 0;
-                    sCollection.forEach(function(s) {
+                    sCollection.forEach(function (s) {
                         if (s.username.includes(data[4])) i++;
                     });
                     if (i != 0) student.username = data[4] + i;
-                    Student.create(student, function(err, std) {
+                    Student.create(student, function (err, std) {
                         if (err) return console.log(err);
                         count = true;
 
@@ -241,26 +243,33 @@ exports.addStudentCSV = function(req, res) {
     return false;
 }
 
-exports.editStudent = function(req, res) {
+exports.editStudent = function (req, res) {
     var student = req.body;
     Student.update({
         _id: student._id
-    }, student, function(err, student) {
-        if (err) return console.error(err);
-        console.log(err);
-        res.send({
-            success: true
-        });
+    }, student, function (err, student) {
+        console.log("++++++++++++++++++++")
+        if (err) {
+            // console.log(err);
+            res.send({
+                sucess: false,
+                code: err.code
+            });
+        } else {
+            res.send({
+                success: true
+            });
+        }
     })
 }
 
-exports.deleteStudent = function(req, res) {
+exports.deleteStudent = function (req, res) {
     res.send({
         data: "add Tutor"
     });
 }
 
-exports.setStudentByCourse = function(req, res) {
+exports.setStudentByCourse = function (req, res) {
     var course_id = req.body.course_id,
         students_ids = req.body.ids,
         tutor_id = req.body.tutor_id,
@@ -269,7 +278,7 @@ exports.setStudentByCourse = function(req, res) {
 
     Tutor.findOne({
         _id: tutor_id
-    }, function(err, tutor) {
+    }, function (err, tutor) {
         if (tutor.creditcount == 0 && tutor.subscribing == false) {
             res.send({
                 error: "you cannot assign the course to students!"
@@ -277,14 +286,14 @@ exports.setStudentByCourse = function(req, res) {
         } else {
             var creditcount = tutor.creditcount,
                 i = 0;
-            students_ids.map(function(id) {
+            students_ids.map(function (id) {
                 Take.find({
                     student_id: id,
                     already: false
-                }, function(err, takes) {
+                }, function (err, takes) {
                     if (err) return console.log(err);
 
-                    var confirm = takes.filter(function(x) {
+                    var confirm = takes.filter(function (x) {
                         return x.course_id == course_id
                     });
 
@@ -329,20 +338,20 @@ exports.setStudentByCourse = function(req, res) {
                                 completedAt: '',
                                 certificate: ''
                             }
-                            Take.create(data, function(err, take) {
+                            Take.create(data, function (err, take) {
                                 if (err) return console.log(err);
                             });
                             Lesson.find({
                                 course_id: course_id
-                            }, function(err, lessons) {
-                                lessons.forEach(function(lesson) {
+                            }, function (err, lessons) {
+                                lessons.forEach(function (lesson) {
                                     Score.findOne({
                                         lesson_id: lesson._id,
                                         student_id: id
-                                    }, function(err, score) {
+                                    }, function (err, score) {
                                         if (err) return console.log(err);
-                                        if (_.isEmpty(score)) return ;
-                                        if(score.length != 0 ) score.remove();
+                                        if (_.isEmpty(score)) return;
+                                        if (score.length != 0) score.remove();
                                     });
                                 });
                             })
@@ -366,7 +375,7 @@ exports.setStudentByCourse = function(req, res) {
 
 
 
-exports.getCoursesByStudentId = function(req, res) {
+exports.getCoursesByStudentId = function (req, res) {
     var id = req.body.student_id,
         tutor_id = req.body.tutor_id;
 
@@ -375,16 +384,16 @@ exports.getCoursesByStudentId = function(req, res) {
         // already: false
     }, null, {
         sort: 'created_at'
-    }, function(err, takes) {
+    }, function (err, takes) {
         if (err) return console.log(err);
         var courses = [];
         var count = 0,
             i = 0;
 
-        takes.forEach(function(take) {
+        takes.forEach(function (take) {
             Course.findOne({
                 _id: take.course_id
-            }, function(err, course) {
+            }, function (err, course) {
                 if (err) return console.error(err);
 
                 if (course == null) {
@@ -406,7 +415,7 @@ exports.getCoursesByStudentId = function(req, res) {
                     var completeArray = [],
                         unCompleteArray = [];
 
-                    courses.forEach(function(course) {
+                    courses.forEach(function (course) {
                         if (course.isCompleted) {
                             completeArray.push(course);
                         } else {
@@ -414,10 +423,10 @@ exports.getCoursesByStudentId = function(req, res) {
                         }
                     });
 
-                    completeArray.sort(function(a, b) {
+                    completeArray.sort(function (a, b) {
                         return new Date(b.completedAt) - new Date(a.completedAt);
                     })
-                    unCompleteArray.sort(function(a, b) {
+                    unCompleteArray.sort(function (a, b) {
                         return a.coursetitle.localeCompare(b.coursetitle);
                     })
                     courses = unCompleteArray.concat(completeArray);
@@ -428,7 +437,7 @@ exports.getCoursesByStudentId = function(req, res) {
     })
 }
 
-exports.getStudentsByCourseId = function(req, res) {
+exports.getStudentsByCourseId = function (req, res) {
     var id = req.body.course_id,
         tutor_id = req.body.tutor_id;
 
@@ -465,18 +474,18 @@ exports.getStudentsByCourseId = function(req, res) {
         already: false
     }, null, {
         sort: 'created_at'
-    }, function(err, takes) {
+    }, function (err, takes) {
         if (err) return console.error(err)
         var courses = [];
 
         var count = 0,
             i = 0;
-        takes.forEach(function(take) {
+        takes.forEach(function (take) {
             Student.findOne({
                 _id: take.student_id,
                 tutor_id: tutor_id,
                 archOrReal: true
-            }, function(err, student) {
+            }, function (err, student) {
                 if (err) return console.error(err);
                 i++;
 
@@ -493,7 +502,7 @@ exports.getStudentsByCourseId = function(req, res) {
                     courses.push(data);
                 }
                 if (i == takes.length) {
-                    courses.sort(function(a, b) {
+                    courses.sort(function (a, b) {
                         return a.firstName.localeCompare(b.firstName);
                     })
                     res.send(courses);
@@ -504,20 +513,20 @@ exports.getStudentsByCourseId = function(req, res) {
 }
 
 
-exports.removeStudent = function(req, res) {
+exports.removeStudent = function (req, res) {
     var list = req.body.list,
         i = 0;
-    list.forEach(function(id, index, arr) {
+    list.forEach(function (id, index, arr) {
         Student.findOne({
             _id: id,
             archOrReal: false
-        }, function(err, student) {
+        }, function (err, student) {
             if (err) console.error(err);
             if (student._id != null) {
                 Take.find({
                     student_id: student._id
-                }, function(err, takes) {
-                    takes.forEach(function(take) {
+                }, function (err, takes) {
+                    takes.forEach(function (take) {
                         take.remove();
                     })
                     student.remove()
@@ -534,13 +543,13 @@ exports.removeStudent = function(req, res) {
 
 }
 
-exports.getLessonsNameByCourseId = function(req, res) {
+exports.getLessonsNameByCourseId = function (req, res) {
     var course_id = req.body.course_id,
         data = [],
         date;
     Course.findOne({
         _id: course_id
-    }, function(err, course) {
+    }, function (err, course) {
         if (course.created_at == null) {
             date = course.updated_at;
         } else {
@@ -551,9 +560,9 @@ exports.getLessonsNameByCourseId = function(req, res) {
             created_at: {
                 $gte: date
             }
-        }, function(err, lessons) {
+        }, function (err, lessons) {
 
-            lessons.forEach(function(lesson) {
+            lessons.forEach(function (lesson) {
                 data.push(lesson.name);
             });
 
@@ -565,7 +574,7 @@ exports.getLessonsNameByCourseId = function(req, res) {
 
 }
 
-exports.getAllMatrix = function(req, res) {
+exports.getAllMatrix = function (req, res) {
     var tutor_id = req.body.tutor_id,
         data = [];
     Student.find({
@@ -573,14 +582,14 @@ exports.getAllMatrix = function(req, res) {
         archOrReal: true
     }, null, {
         sort: 'created_at'
-    }, function(err, students) {
+    }, function (err, students) {
         if (err) return console.error(err);
 
-        students.forEach(function(student) {
+        students.forEach(function (student) {
             Take.find({
                 student_id: student._id,
                 // already: false,
-            }, function(err, takes) {
+            }, function (err, takes) {
                 if (err) return console.error(err);
 
                 data.push({
@@ -589,7 +598,7 @@ exports.getAllMatrix = function(req, res) {
                 })
 
                 if (data.length == students.length) {
-                    data.sort(function(a, b) {
+                    data.sort(function (a, b) {
                         return a.student_name.localeCompare(b.student_name);
                     })
                     res.send(data);
@@ -599,7 +608,7 @@ exports.getAllMatrix = function(req, res) {
     })
 }
 
-exports.getAllUnCompleted = function(req, res) {
+exports.getAllUnCompleted = function (req, res) {
     var tutor_id = req.body.tutor_id,
         data = [];
 
@@ -608,14 +617,14 @@ exports.getAllUnCompleted = function(req, res) {
         archOrReal: true
     }, null, {
         sort: 'created_at'
-    }, function(err, students) {
+    }, function (err, students) {
         if (err) return console.error(err);
 
-        students.forEach(function(student) {
+        students.forEach(function (student) {
             Take.find({
                 student_id: student._id,
                 already: false
-            }, function(err, takes) {
+            }, function (err, takes) {
                 if (err) return console.error(err);
 
                 data.push({
@@ -624,7 +633,7 @@ exports.getAllUnCompleted = function(req, res) {
                 })
 
                 if (data.length == students.length) {
-                    data.sort(function(a, b) {
+                    data.sort(function (a, b) {
                         return a.student_name.localeCompare(b.student_name);
                     })
                     res.send(data);
@@ -634,7 +643,7 @@ exports.getAllUnCompleted = function(req, res) {
     })
 }
 
-exports.makePdf = function(req, res) {
+exports.makePdf = function (req, res) {
     var url = req.body.data,
         direction = req.body.direction,
         randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26)),
@@ -659,13 +668,13 @@ exports.makePdf = function(req, res) {
     });
 }
 
-exports.changePassword = function(req, res) {
+exports.changePassword = function (req, res) {
     var tutor_id = req.body.tutor_id,
         pwd = req.body.pwd;
 
     Tutor.findOne({
         _id: tutor_id
-    }, function(err, tutor) {
+    }, function (err, tutor) {
 
         if (err) {
             res.send({
@@ -682,13 +691,13 @@ exports.changePassword = function(req, res) {
     })
 }
 
-exports.isValidOldPwd = function(req, res) {
+exports.isValidOldPwd = function (req, res) {
     var tutor_id = req.body.tutor_id,
         pwd = req.body.pwd;
 
     Tutor.findOne({
         _id: tutor_id
-    }, function(err, tutor) {
+    }, function (err, tutor) {
         if (err) res.send({
             success: false
         }).end();
@@ -705,7 +714,7 @@ exports.isValidOldPwd = function(req, res) {
 }
 
 
-exports.performPayment = function(req, res) {
+exports.performPayment = function (req, res) {
     var tutor_id = req.body.tutor_id,
         token_id = req.body.id,
         email = req.body.form.email,
@@ -725,7 +734,7 @@ exports.performPayment = function(req, res) {
             "cvc": cvv,
             "name": email
         }
-    }, function(err, token) {
+    }, function (err, token) {
         if (err) {
             console.log(err.raw);
             res.send({
@@ -738,7 +747,7 @@ exports.performPayment = function(req, res) {
             amount: amount * 100 * 4,
             currency: 'gbp',
             source: token.id
-        }, function(err, charge) {
+        }, function (err, charge) {
             if (err && err.type === 'StripeCardError') {
                 // card decline
                 console.log(err);
@@ -764,7 +773,7 @@ exports.performPayment = function(req, res) {
 
                     Tutor.findOne({
                         _id: tutor_id
-                    }, function(err, tutor) {
+                    }, function (err, tutor) {
                         tutor.creditcount = credits;
                         tutor.save();
 
@@ -782,7 +791,7 @@ exports.performPayment = function(req, res) {
     });
 }
 
-exports.getGoCardlessRedirectUrl = function(req, res) {
+exports.getGoCardlessRedirectUrl = function (req, res) {
     var tutor_id = req.body.tutor_id,
         description = '',
         sessionToken = tutor_id,
@@ -797,12 +806,12 @@ exports.getGoCardlessRedirectUrl = function(req, res) {
     });
 }
 
-exports.getGoCardlessCompleteUrl = function(req, response) {
+exports.getGoCardlessCompleteUrl = function (req, response) {
     var redirect_flow_id = req.query.redirect_flow_id;
 
     Tutor.findOne({
         _id: subscribe_data.session_id
-    }, function(err, tutor) {
+    }, function (err, tutor) {
         tutor.subscribing = true;
         tutor.employeecount = subscribe_data.count;
         tutor.save();
@@ -837,42 +846,42 @@ exports.getGoCardlessCompleteUrl = function(req, response) {
     //     })
 }
 
-exports.getStripeHistory = function(req, res) {
+exports.getStripeHistory = function (req, res) {
     var tutor_id = req.body.tutor_id;
 
     StripeTransaction.find({
         tutor_id: tutor_id
-    }, function(err, trans) {
-        trans.sort(function(a, b) {
+    }, function (err, trans) {
+        trans.sort(function (a, b) {
             return new Date(b.created_at) - new Date(a.created_at);
         })
         res.status(200).send(trans).end();
     })
 }
 
-exports.getTutorInfo = function(req, res) {
+exports.getTutorInfo = function (req, res) {
     var tutor_id = req.body.tutor_id;
 
     Tutor.findOne({
         _id: tutor_id
-    }, function(err, tutor) {
+    }, function (err, tutor) {
         res.send(tutor).end();
     })
 }
 
 
-exports.unassign = function(req, res) {
+exports.unassign = function (req, res) {
     var course_id = req.body.course_id,
         student_ids = req.body.student_ids,
         tutor_id = req.body.tutor_id,
         creditcount = req.body.creditcount;
 
-    student_ids.forEach(function(id) {
+    student_ids.forEach(function (id) {
         Take.findOne({
             course_id: course_id,
             student_id: id,
             already: false
-        }, function(err, take) {
+        }, function (err, take) {
             if (err) return console.log(err);
 
             take.remove();
@@ -881,7 +890,7 @@ exports.unassign = function(req, res) {
 
     Tutor.findOne({
         _id: tutor_id
-    }, function(err, tutor) {
+    }, function (err, tutor) {
         if (tutor.subscribing == true) {
             tutor.creditcount = Number(creditcount)
         } else {
@@ -898,26 +907,26 @@ exports.unassign = function(req, res) {
 }
 
 
-exports.getArchivedStudents = function(req, res) {
+exports.getArchivedStudents = function (req, res) {
     var tutor_id = req.body.tutor_id;
 
     Student.find({
         tutor_id: tutor_id,
         archOrReal: false
-    }, function(err, students) {
+    }, function (err, students) {
         if (err) return console.error(err)
         res.send(students).end();
         return false;
     })
 }
 
-exports.setArchivedStudents = function(req, res) {
+exports.setArchivedStudents = function (req, res) {
     var list = req.body.list,
         i = 0;
-    list.forEach(function(id, index, arr) {
+    list.forEach(function (id, index, arr) {
         Student.findOne({
             _id: id,
-        }, function(err, student) {
+        }, function (err, student) {
             if (err) console.error(err);
             if (student._id != null) {
                 student['archOrReal'] = false;
@@ -933,13 +942,13 @@ exports.setArchivedStudents = function(req, res) {
     })
 }
 
-exports.restoreStudentById = function(req, res) {
+exports.restoreStudentById = function (req, res) {
     var list = req.body.list,
         i = 0;
-    list.forEach(function(id, index, arr) {
+    list.forEach(function (id, index, arr) {
         Student.findOne({
             _id: id,
-        }, function(err, student) {
+        }, function (err, student) {
             if (err) console.error(err);
             if (student._id != null) {
                 student['archOrReal'] = true;

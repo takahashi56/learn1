@@ -74,7 +74,7 @@ exports.login = function(req, res) {
 }
 
 exports.studentLogin = function(req, res) {
-	var userid = req.body.username.toLowerCase(),
+	var userid = req.body.username,
 		pwd = req.body.password,
 		data = {action: "not-found", text: "This id is not valid. Please try again.", role: NaN, success: false, _id: "", count: 0};
 
