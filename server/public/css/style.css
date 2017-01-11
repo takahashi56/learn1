@@ -1802,3 +1802,11 @@ div#loading img {
   color: white;
   text-align: center;
 }
+
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    cursor: pointer;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
