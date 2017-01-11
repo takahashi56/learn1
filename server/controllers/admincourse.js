@@ -15,7 +15,7 @@ const path = require('path');
 
 Promise.promisifyAll(mongoose);
 
-exports.getAllCourse = function(req, res) {
+exports.getAllCourse = function (req, res) {
     // var courses = [], lessons = [], takes = [], contents = [], main_data = [];
     //
     // Promise.props({
@@ -63,24 +63,24 @@ exports.getAllCourse = function(req, res) {
 
     Course.find({}, null, {
         sort: 'created_at'
-    }, function(err, collection) {
+    }, function (err, collection) {
         if (err) {
             return console.error(err);
         }
         var main_data = [];
 
-        collection.forEach(function(course) {
+        collection.forEach(function (course) {
 
             Lesson.find({
                 course_id: course._id
             }, null, {
                 sort: 'created_at'
-            }, function(err, lessons) {
+            }, function (err, lessons) {
                 if (err) return console.error(err);
 
                 Take.count({
                     course_id: course._id
-                }, function(err, student_count) {
+                }, function (err, student_count) {
                     if (err) return console.error(err);
 
                     if (lessons.length == 0) {
@@ -94,7 +94,7 @@ exports.getAllCourse = function(req, res) {
                         }
                         main_data.push(data);
                         if (main_data.length == collection.length) {
-                            main_data.sort(function(a, b) {
+                            main_data.sort(function (a, b) {
                                 return a.title.localeCompare(b.title);
                             })
                             res.send(main_data).end();
@@ -103,11 +103,11 @@ exports.getAllCourse = function(req, res) {
 
                     var video_count = 0,
                         i = 0;
-                    lessons.forEach(function(lesson) {
+                    lessons.forEach(function (lesson) {
                         Part.count({
                             lesson_id: lesson._id,
                             slideOrQuestion: true
-                        }, function(err, content_count) {
+                        }, function (err, content_count) {
                             if (err) return console.error(err);
                             i++;
                             video_count += content_count;
@@ -124,7 +124,7 @@ exports.getAllCourse = function(req, res) {
                                 main_data.push(data);
                             }
                             if (main_data.length == collection.length) {
-                                main_data.sort(function(a, b) {
+                                main_data.sort(function (a, b) {
                                     return a.title.localeCompare(b.title);
                                 })
                                 res.send(main_data);
@@ -138,12 +138,12 @@ exports.getAllCourse = function(req, res) {
 }
 
 
-exports.getEditCourses = function(req, res) {
+exports.getEditCourses = function (req, res) {
     var id = req.body.id;
 
     Course.findOne({
         _id: id
-    }, function(err, course) {
+    }, function (err, course) {
         if (err) return console.error(err);
 
         var data = {
@@ -157,7 +157,7 @@ exports.getEditCourses = function(req, res) {
             course_id: course._id
         }, null, {
             sort: 'created_at'
-        }, function(err, lessons) {
+        }, function (err, lessons) {
             if (err) return console.error(err);
 
             if (lessons.length == 0) {
@@ -166,12 +166,12 @@ exports.getEditCourses = function(req, res) {
             }
 
             var lessonData = {};
-            lessons.forEach(function(lesson) {
+            lessons.forEach(function (lesson) {
                 Part.find({
                     lesson_id: lesson._id
                 }, null, {
                     sort: 'order'
-                }, function(err, contents) {
+                }, function (err, contents) {
                     if (err) return console.error(err);
 
                     lessonData = {
@@ -184,7 +184,7 @@ exports.getEditCourses = function(req, res) {
 
                     data.lesson.push(lessonData);
                     if (lessons.length == data.lesson.length) {
-                        data.lesson.sort(function(a, b) {
+                        data.lesson.sort(function (a, b) {
                             return new Date(a.created_at) - new Date(b.created_at);
                         })
                         res.send(data);
@@ -197,21 +197,21 @@ exports.getEditCourses = function(req, res) {
 
 
 
-exports.getAllContent = function(req, res) {
+exports.getAllContent = function (req, res) {
     Part.find({}, null, {
         sort: 'created_at'
-    }, function(err, collection) {
+    }, function (err, collection) {
         if (err) {
             return console.error(err);
         }
-        collection.sort(function(a, b) {
+        collection.sort(function (a, b) {
             return new Date(a.created_at) - new Date(b.created_at);
         })
         res.send(collection);
     })
 }
 
-exports.addCourse = function(req, res) {
+exports.addCourse = function (req, res) {
     var data = req.body,
         courseData = {
             name: data.coursetitle,
@@ -220,21 +220,21 @@ exports.addCourse = function(req, res) {
         },
         lessonList = data.lesson;
     console.log(data);
-    Course.create(courseData, function(err, course) {
+    Course.create(courseData, function (err, course) {
         if (err) return console.error(err);
 
         if (lessonList.length == 0) return;
 
-        lessonList.forEach(function(lesson) {
+        lessonList.forEach(function (lesson) {
             var lessonData = {
                 name: lesson.lessonname,
                 description: lesson.lessondescription,
                 course_id: course._id
             }
-            Lesson.create(lessonData, function(err, less) {
+            Lesson.create(lessonData, function (err, less) {
                 if (err) return console.error(err);
 
-                lesson.content.forEach(function(content) {
+                lesson.content.forEach(function (content) {
                     var contentData = {
                         slideOrQuestion: content.slideOrQuestion,
                         slideContent: content.slideContent,
@@ -249,9 +249,9 @@ exports.addCourse = function(req, res) {
                         lesson_id: less._id,
                         questionType: content.questionType,
                         image: content.image,
-												order: content.order
+                        order: content.order
                     }
-                    Part.create(contentData, function(err, cont) {
+                    Part.create(contentData, function (err, cont) {
                         if (err) return console.error(err);
                     })
                 })
@@ -265,7 +265,7 @@ exports.addCourse = function(req, res) {
 
 
 
-exports.updateCourse = function(req, res) {
+exports.updateCourse = function (req, res) {
     var data = req.body,
         courseData = {
             _id: data.course_id,
@@ -277,15 +277,15 @@ exports.updateCourse = function(req, res) {
 
     Course.update({
         _id: courseData._id
-    }, courseData, function(err, course) {
+    }, courseData, function (err, course) {
         if (err) return console.error(err);
 
         Lesson.remove({
             course_id: courseData._id
-        }, function(err) {
+        }, function (err) {
             if (err) throw err;
 
-            lessonList.forEach(function(lesson) {
+            lessonList.forEach(function (lesson) {
                 var lessonData = {
                     name: lesson.lessonname,
                     description: lesson.lessondescription,
@@ -297,7 +297,7 @@ exports.updateCourse = function(req, res) {
                     lessonData["_id"] = lesson.lesson_id;
                 }
 
-                Lesson.create(lessonData, function(err, less) {
+                Lesson.create(lessonData, function (err, less) {
                     if (err) return console.error(err);
 
                     Part.remove({
@@ -305,7 +305,7 @@ exports.updateCourse = function(req, res) {
                     }).exec();
 
 
-                    lesson.content.forEach(function(content) {
+                    lesson.content.forEach(function (content) {
                         var contentData = {
                             slideOrQuestion: content.slideOrQuestion,
                             slideContent: content.slideContent,
@@ -320,13 +320,13 @@ exports.updateCourse = function(req, res) {
                             lesson_id: less._id,
                             questionType: content.questionType,
                             image: content.image,
-														order: content.order
+                            order: content.order
                         }
 
-                        if (content._id.length >  14) {
+                        if (content._id.length > 14) {
                             contentData["_id"] = content._id;
                         }
-                        Part.create(contentData, function(err, cont) {
+                        Part.create(contentData, function (err, cont) {
                             if (err) return console.error(err);
                         })
                     })
@@ -431,48 +431,48 @@ exports.updateCourse = function(req, res) {
     })
 }
 
-exports.deleteCourse = function(req, res) {
+exports.deleteCourse = function (req, res) {
     var list = req.body.list;
 
-    list.forEach(function(l) {
+    list.forEach(function (l) {
         Course.findOneAndRemove({
             _id: mongoose.Types.ObjectId(l)
-        }, function(err, removed) {
+        }, function (err, removed) {
             if (err) console.error(err);
 
             Lesson.find({
                 course_id: l
-            }, function(err, lessons) {
+            }, function (err, lessons) {
                 if (err) console.error(err);
 
-                lessons.forEach(function(lesson) {
+                lessons.forEach(function (lesson) {
                     Part.find({
                         lesson_id: lesson._id
-                    }, function(err, contents) {
-                        contents.forEach(function(content) {
+                    }, function (err, contents) {
+                        contents.forEach(function (content) {
                             content.remove();
                         });
                     });
                     Score.find({
                         lesson_id: lesson._id
-                    }, function(err, scores) {
-                        scores.forEach(function(score) {
+                    }, function (err, scores) {
+                        scores.forEach(function (score) {
                             score.remove();
                         })
                     })
                 })
 
-                lessons.forEach(function(lesson) {
+                lessons.forEach(function (lesson) {
                     lesson.remove();
                 });
             })
 
             Take.find({
                 course_id: l
-            }, function(err, takes) {
+            }, function (err, takes) {
                 if (err) console.error(err);
 
-                takes.forEach(function(take) {
+                takes.forEach(function (take) {
                     take.remove();
                 });
             })
@@ -485,7 +485,7 @@ exports.deleteCourse = function(req, res) {
 }
 
 
-exports.upload = function(req, res) {
+exports.upload = function (req, res) {
     var sampleFile,
         filename = (new Date % 9e6).toString(36);
 
@@ -500,7 +500,7 @@ exports.upload = function(req, res) {
 
     var filePath = path.join(__dirname, '../public/images/upload/', filename);
 
-    sampleFile.mv(filePath, function(err) {
+    sampleFile.mv(filePath, function (err) {
         if (err) {
             res.status(500).send(err);
         } else {

@@ -103,6 +103,7 @@ export class StripePayment {
     getPaid(form: any) {
         this.sentSuccessShow = false;
         this.submit_validate = true;
+        console.log(this.isValidateEmail(form.email))
         if (this.stripe_form.valid && !this.validateExpireDate(form) && !this.validateCardNumber(form.card_number) && this.isValidateEmail(form.email)) {
             this.getToken(form);
         }

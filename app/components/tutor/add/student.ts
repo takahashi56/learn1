@@ -141,7 +141,12 @@ export class AddTutorStudent implements AfterViewInit {
     AddStudent(form: any) {
         this.submitAttempt = true;
         this.showNotSave = false;
-        if (this.StudentForm.valid && this.matchedPassword(form) && this.validDob(form) && this.checkIfEmailInString(form.username) ) {
+        console.log(this.StudentForm.valid)
+        console.log(this.matchedPassword(form));
+        console.log(this.validDob(form))
+        console.log(this.checkIfEmailInString(form.username))
+
+        if (this.StudentForm.valid && this.matchedPassword(form) && this.validDob(form)) {
             var dob = "";
             if (form.dob_day == '' || Number(form.dob_day) == 0 || Number(form.dob_year) == 0 || Number(form.dob_month) == 0 || form.dob_month == '' || form.dob_year == '') {
                 dob = ''

@@ -1,9 +1,26 @@
-import {Component} from 'angular2/core';
-import {Session} from '../../../services/session';
-import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
-import {CanActivate} from 'angular2/router';
-import {AdminService} from '../../../services/admin';
-import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
+import {
+    Component
+} from 'angular2/core';
+import {
+    Session
+} from '../../../services/session';
+import {
+    ROUTER_DIRECTIVES,
+    Router
+} from 'angular2/router';
+import {
+    CanActivate
+} from 'angular2/router';
+import {
+    AdminService
+} from '../../../services/admin';
+import {
+    FORM_DIRECTIVES,
+    FormBuilder,
+    Control,
+    ControlGroup,
+    Validators
+} from 'angular2/common';
 
 @Component({
     selector: 'admin-add-question',
@@ -97,15 +114,15 @@ export class Question {
         this.submitAttempt = true;
         // this.disableSubmit = true;
         this.showTrueNumber = false;
-        
+
         if (this.questionType != 0 && this.trueNumber == 0) {
-          this.disableSubmit = false;
-          if(form.questionName == '') return;
-          this.showTrueNumber = true;
-          return;
+            this.disableSubmit = false;
+            if (form.questionName == '') return;
+            this.showTrueNumber = true;
+            return;
         }
-        
-        if(!this.validQuestinForm(form)) return;
+
+        if (!this.validQuestinForm(form)) return;
 
         this.data.label = form.questionName;
         this.data.question = form.question;
@@ -125,7 +142,7 @@ export class Question {
         } else {
             contents.push(this.data);
         }
-        this._session.setItem('Content', JSON.stringify(contents));        
+        this._session.setItem('Content', JSON.stringify(contents));
         this._router.navigate(['AdminAddLesson']);
     }
 
@@ -147,12 +164,18 @@ export class Question {
         }
         return array;
     }
-    
+
     validQuestinForm(form: any) {
-      if (this.questionType == 0 && (form.answerText == ''  || form.questionName == '')) { return false;}
-      if (this.questionType == 1 && (form.question == '' || form.questionName == '' || form.answerA == '' || form.answerB == '' || form.answerC == '' || form.answerD == '')) {return false;}
-      if (this.questionType == 2 && (form.question == '' || form.questionName == '' || form.answerA == '' || form.answerB == '' || form.answerC == '' || form.answerD == '' || this.image == '')) {return false;}
-      
-      return true;
+        if (this.questionType == 0 && (form.answerText == '' || form.questionName == '')) {
+            return false;
+        }
+        if (this.questionType == 1 && (form.question == '' || form.questionName == '' || form.answerA == '' || form.answerB == '' || form.answerC == '' || form.answerD == '')) {
+            return false;
+        }
+        if (this.questionType == 2 && (form.question == '' || form.questionName == '' || form.answerA == '' || form.answerB == '' || form.answerC == '' || form.answerD == '' || this.image == '')) {
+            return false;
+        }
+
+        return true;
     }
 }
