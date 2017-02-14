@@ -40,10 +40,11 @@ export class StudentVideo implements AfterViewInit {
     writeContent() {
         //this.htmlString = this.content.slideContent;
         //document.getElementById("content_id").innerHTML = this.htmlString;
-        var parser = new DOMParser()
-          , doc = parser.parseFromString(this.content.slideContent, "text/xml")
-          , element = doc.getElementById('mybackground');
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(this.content.slideContent, "text/xml");
+        var element = doc.getElementById('mybackground');
         var bgColor = "#fff";
+        console.log(element);
         if (element != undefined) {
             bgColor = element.getAttribute('style');
             bgColor = bgColor.replace("background-color: ", "");

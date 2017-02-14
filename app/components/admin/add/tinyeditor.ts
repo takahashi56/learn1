@@ -65,7 +65,7 @@ export class TinyEditor implements OnInit {
             });
             
             tinymce.get(this.elementID).setContent(this.value);
-            console.log(tinymce.activeEditor.dom.getStyle('mybackground', 'background-color'));
+
             if (tinymce.activeEditor.dom.getStyle('mybackground', 'background-color') != undefined)
                 tinymce.activeEditor.contentDocument.body.style.backgroundColor = tinymce.activeEditor.dom.getStyle('mybackground', 'background-color');
     }
@@ -85,6 +85,10 @@ export class TinyEditor implements OnInit {
             onclick: function() {
                 tinymce.activeEditor.dom.remove('mybackground');
                 ed.insertContent("<b id='mybackground' style='background-color:#f0f0f0'></b>");
+                
+                //tinymce.activeEditor.dom.remove(tinymce.activeEditor.dom.select('style'));
+                //ed.insertContent("<style>background-color:#f0f0f0;</style>");
+                
                 tinymce.activeEditor.contentDocument.body.style.backgroundColor = '#f0f0f0';
             }
           }, {
@@ -93,6 +97,10 @@ export class TinyEditor implements OnInit {
             onclick: function() {
                 tinymce.activeEditor.dom.remove('mybackground');
                 ed.insertContent("<b id='mybackground' style='background-color:#00f0f0'></b>");
+                
+                //tinymce.activeEditor.dom.remove(tinymce.activeEditor.dom.select('style'));
+                //ed.insertContent("<style>background-color:#f0f0f0;</style>");
+                
                 tinymce.activeEditor.contentDocument.body.style.backgroundColor = '#00f0f0';
             }
           }]
@@ -101,13 +109,11 @@ export class TinyEditor implements OnInit {
 
     tinyMCEOnKeyup(e) {
         if(tinymce.get(this.elementID) == null) return;
-        //console.log(tinymce.get(this.elementID).getContent());
         this.valueChange.emit(tinymce.get(this.elementID).getContent());
     }
 
     onChanges(changes) {
         if (tinymce.activeEditor)
             tinymce.activeEditor.setContent(this.value);
-        alert('here');
     }
 }
