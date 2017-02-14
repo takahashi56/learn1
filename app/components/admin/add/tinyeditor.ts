@@ -29,6 +29,7 @@ export class TinyEditor implements OnInit {
     }
 
     ngOnInit() {
+        //this.value = "<body style='background-color: #00f0f0;'>" + this.value + "</div>";
         this.htmlContent = this.value;
         var that = this;
         var baseTextArea = this.elementRef.nativeElement.querySelector("#baseTextArea");
@@ -49,7 +50,7 @@ export class TinyEditor implements OnInit {
                     'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
                 ],
                 toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+                toolbar2: 'print preview media | forecolor backcolor emoticons mybutton | codesample',
                 image_advtab: true,
                 templates: [
                     { title: 'Test template 1', content: 'Test 1' },
@@ -64,22 +65,49 @@ export class TinyEditor implements OnInit {
             });
             
             tinymce.get(this.elementID).setContent(this.value);
+            console.log(tinymce.activeEditor.dom.getStyle('mybackground', 'background-color'));
+            if (tinymce.activeEditor.dom.getStyle('mybackground', 'background-color') != undefined)
+                tinymce.activeEditor.contentDocument.body.style.backgroundColor = tinymce.activeEditor.dom.getStyle('mybackground', 'background-color');
     }
     tinyMCESetup(ed) {
         ed.on('keyup', this.tinyMCEOnKeyup.bind(this));
         ed.on('click', this.tinyMCEOnKeyup.bind(this));
         ed.on('NodeChange', this.tinyMCEOnKeyup.bind(this));
         ed.on('change', this.tinyMCEOnKeyup.bind(this));
+
+        ed.addButton('mybutton', {
+          type: 'menubutton',
+          text: 'Background',
+          icon: false,
+          menu: [{
+            text: 'Light Grey #ff0000',
+            tooltip: '#ff0000',
+            onclick: function() {
+                tinymce.activeEditor.dom.remove('mybackground');
+                ed.insertContent("<b id='mybackground' style='background-color:#f0f0f0'></b>");
+                tinymce.activeEditor.contentDocument.body.style.backgroundColor = '#f0f0f0';
+            }
+          }, {
+            text: 'Light Blue #00f0f0',
+            tooltip: '#0000ff',
+            onclick: function() {
+                tinymce.activeEditor.dom.remove('mybackground');
+                ed.insertContent("<b id='mybackground' style='background-color:#00f0f0'></b>");
+                tinymce.activeEditor.contentDocument.body.style.backgroundColor = '#00f0f0';
+            }
+          }]
+        });
     }
 
     tinyMCEOnKeyup(e) {
         if(tinymce.get(this.elementID) == null) return;
-        console.log(tinymce.get(this.elementID).getContent());
+        //console.log(tinymce.get(this.elementID).getContent());
         this.valueChange.emit(tinymce.get(this.elementID).getContent());
     }
 
     onChanges(changes) {
         if (tinymce.activeEditor)
             tinymce.activeEditor.setContent(this.value);
+        alert('here');
     }
 }

@@ -31,6 +31,8 @@ export class QuestionChoice implements OnInit {
 
 	ngOnInit(){
 		this.checkedStatus = '<i class="fa"></i>';
+		var h = window.innerHeight;
+        document.getElementById('section_id').setAttribute("style","height:" + (h - 56) + "px");
 		console.log(this.content);
 	}
 

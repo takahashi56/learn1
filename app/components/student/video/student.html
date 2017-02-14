@@ -1,25 +1,29 @@
-<section class="m-t-10 m-b-30">
-    <div class="text-center">
-        <div class="v-container container m-b-10" style="line-height: 1px;    text-align: center;padding: 0;">
+<section id="section_id" style="position: relative;">
+    <div class="text-center" style="height: 100% !important;">
+        <div class="col-md-12" style="line-height: 1px;    text-align: center;padding: 0;height: 100% !important;">
             <!-- <iframe src="{{getEmbedUrl()}}" width="896" height="504" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen autoplay></iframe> -->
-            <iframe width="990" height="540" frameborder=0 id="iframe_id">
+            <!--<iframe width="990" height="540" frameborder=0 id="iframe_id">
+              html
+            </iframe>-->
+            <iframe width="100%" height="100%" frameborder=0 id="iframe_id">
               html
             </iframe>
             <!-- <div class="view-content mce-content-body " [innerHTML]="htmlString"></div> -->
         </div>
     </div>
         
-    <div class="v-bottom">
-      <div class="">
+    <div class="v-bottom" style="position: absolute; height: 100%;">
+      <div style="height: 100%;">
         <div class="col-md-2 col-sm-2 col-xs-2 continue"   (click)="gotoPrevious()">
-          <a class="">
-            <h5>Back</h5>
+          <a  style="height: 100%; display: block;">
+            <div style="height: 49%;"></div>
+            <h5><</h5>
           </a>
         </div>
         <div class="col-md-10 col-sm-10 col-xs-10 text-center back"   (click)="gotoNext()">
-          <h4 class="text-page pull-right"></h4>
-          <a class="">
-            <h5>Continue</h5>
+          <a style="height: 100%; display: block;">
+            <div style="height: 49%;"></div>
+            <h5>></h5>
           </a>
         </div>
       </div>

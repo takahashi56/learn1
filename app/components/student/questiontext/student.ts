@@ -29,7 +29,8 @@ export class QuestionText implements OnInit {
 	}
 
 	ngOnInit(){
-
+		var h = window.innerHeight;
+        document.getElementById('section_id').setAttribute("style","height:" + (h - 56) + "px");
 	}	
 
 	gotoNext(){
