@@ -1,0 +1,448 @@
+/*!
+Author: Petro Polishchuk <dev24601@gmail.com>
+!*/
+
+/*html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%
+}
+body {
+    margin: 0
+}*/
+.section_div article,
+.section_div aside,
+.section_div details,
+.section_div figcaption,
+.section_div figure,
+.section_div footer,
+.section_div header,
+.section_div hgroup,
+.section_div main,
+.section_div menu,
+.section_div nav,
+.section_div section,
+.section_div summary {
+    display: block
+}
+.section_div audio,
+.section_div canvas,
+.section_div progress,
+.section_div video {
+    display: inline-block;
+    vertical-align: baseline
+}
+.section_div audio:not([controls]) {
+    display: none;
+    height: 0
+}
+[hidden],
+.section_div template {
+    display: none
+}
+.section_div a {
+    background-color: transparent
+}
+.section_div a:active,
+.section_div a:hover {
+    outline: 0
+}
+.section_div abbr[title] {
+    border-bottom: 1px dotted
+}
+.section_div b,
+.section_div strong {
+    font-weight: bold
+}
+.section_div dfn {
+    font-style: italic
+}
+.section_div h1 {
+    font-size: 2em;
+    margin: 0.67em 0
+}
+.section_div mark {
+    background: #ff0;
+    color: #000
+}
+.section_div small {
+    font-size: 80%
+}
+.section_div sub,
+.section_div sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline
+}
+.section_div sup {
+    top: -0.5em
+}
+.section_div sub {
+    bottom: -0.25em
+}
+.section_div img {
+    border: 0
+}
+.section_div svg:not(:root) {
+    overflow: hidden
+}
+.section_div figure {
+    margin: 1em 40px
+}
+.section_div hr {
+    box-sizing: content-box;
+    height: 0
+}
+.section_div pre {
+    overflow: auto
+}
+.section_div code,
+.section_div kbd,
+.section_div pre,
+.section_div samp {
+    font-family: monospace, monospace;
+    font-size: 1em
+}
+.section_div button,
+.section_div input,
+.section_div optgroup,
+.section_div select,
+.section_div textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0
+}
+.section_div button {
+    overflow: visible
+}
+.section_div button,
+.section_div select {
+    text-transform: none
+}
+.section_div button,
+.section_div html input[type="button"],
+.section_div input[type="reset"],
+.section_div input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer
+}
+.section_div button[disabled],
+.section_div html input[disabled] {
+    cursor: default
+}
+.section_div button::-moz-focus-inner,
+.section_div input::-moz-focus-inner {
+    border: 0;
+    padding: 0
+}
+.section_div input {
+    line-height: normal
+}
+.section_div input[type="checkbox"],
+.section_div input[type="radio"] {
+    box-sizing: border-box;
+    padding: 0
+}
+.section_div input[type="number"]::-webkit-inner-spin-button,
+.section_div input[type="number"]::-webkit-outer-spin-button {
+    height: auto
+}
+.section_div input[type="search"]::-webkit-search-cancel-button,
+.section_div input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none
+}
+.section_div fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em
+}
+.section_div legend {
+    border: 0;
+    padding: 0
+}
+.section_div textarea {
+    overflow: auto
+}
+.section_div optgroup {
+    font-weight: bold
+}
+.section_div table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+.section_div td,
+.section_div th {
+    padding: 0
+}
+.section_div * {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box
+}
+.group:after {
+    content: "";
+    display: table;
+    clear: both
+}
+.section_div a {
+    cursor: pointer
+}
+.section_div * {
+    outline: 0;
+    box-sizing: border-box;
+    line-height: 1.2
+}
+.section_div html {
+    font-family: "Calibri", sans-serif;
+    font-size: 16px;
+    background-color: #fff;
+    color: #000;
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+    overflow-y: auto
+}
+.section_div body {
+    font-family: inherit;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    color: #000
+}
+.section_div .container {
+    width: 1100px;
+    margin: 0 auto
+}
+.section_div .clearfix:after {
+    content: "";
+    display: table;
+    clear: both
+}
+.section_div .float-left {
+    float: left
+}
+.section_div .float-right {
+    float: right
+}
+.section_div .text-left {
+    text-align: left
+}
+.section_div .text-right {
+    text-align: right
+}
+.section_div .text-center {
+    text-align: center
+}
+.section_div relative {
+    position: relative
+}
+.section_div .inline-block {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 1.5rem 1.5rem 0
+}
+::-moz-selection {
+    color: #fff;
+    background: #2a657f
+}
+::selection {
+    color: #fff;
+    background: #2a657f
+}
+.section_div a {
+    text-decoration: none;
+    outline: 0;
+    -webkit-transition: all 200ms linear;
+    transition: all 200ms linear
+}
+.section_div a:focus {
+    text-decoration: none;
+    outline: 0
+}
+.section_div a:hover {
+    text-decoration: none;
+    outline: 0
+}
+.section_div a:active {
+    text-decoration: none;
+    outline: 0
+}
+.section_div .iframe-wrap {
+    color: #fff;
+    height: 100%;
+}
+.section_div .iframe-inner {
+    width: 100%;
+    margin: 0 auto 0 auto;
+    position: relative;
+    height: 100%;
+}
+.section_div .iframe-header {
+    background-color: #24566c;
+    height: 60px
+}
+.section_div .logo-wrap {
+    float: left;
+    margin: -15px 0 8px 60px
+}
+.section_div .logo {
+    display: block;
+    float: left;
+    width: 190px;
+    height: 44px
+}
+.section_div .iframe-close_wrap {
+    float: right;
+    text-align: right
+}
+.section_div .iframe-container-wrap {
+    position: relative;
+    height: 100%;
+}
+.section_div .iframe-container-inner {
+    background-color: #eee;
+    height: 100%;
+    widows: 100%;
+}
+.section_div .iframe-container-inner iframe {
+    height: 75vh;
+    width: 100% !important;
+    display: block
+}
+.section_div .iframe-controls_prev,
+.section_div .iframe-controls_next {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 5px;
+    width: 60px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.1)
+}
+.section_div .iframe-controls_prev svg,
+.section_div .iframe-controls_next svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -20px
+}
+.section_div .iframe-controls_prev:focus,
+.section_div .iframe-controls_next:focus {
+    background-color: rgba(0, 0, 0, 0.25)
+}
+.section_div .iframe-controls_prev:hover,
+.section_div .iframe-controls_next:hover {
+    background-color: rgba(0, 0, 0, 0.3)
+}
+.section_div .iframe-controls_prev:active,
+.section_div .iframe-controls_next:active {
+    background-color: rgba(0, 0, 0, 0.5)
+}
+.section_div .iframe-controls_prev {
+    left: 0
+}
+.section_div .iframe-controls_next {
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.2)
+}
+.section_div .iframe-close_hint {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: all 200ms ease;
+    transition: all 200ms ease;
+    float: right;
+    font-size: 21px;
+    font-weight: normal;
+    margin-right: 15px;
+    line-height: 60px
+}
+.section_div .iframe-close_control {
+    float: right;
+    height: 60px;
+    width: 60px;
+    line-height: 60px;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.1);
+    text-align: center
+}
+.section_div .iframe-close_control svg {
+    display: inline-block;
+    vertical-align: middle
+}
+.section_div .iframe-close_control:focus {
+    background-color: rgba(0, 0, 0, 0.25)
+}
+.section_div .iframe-close_control:focus+.iframe-close_hint {
+    visibility: visible;
+    opacity: 1
+}
+.section_div .iframe-close_control:hover {
+    background-color: rgba(0, 0, 0, 0.3)
+}
+.section_div .iframe-close_control:hover+.iframe-close_hint {
+    visibility: visible;
+    opacity: 1
+}
+.section_div .iframe-close_control:active {
+    background-color: rgba(0, 0, 0, 0.5)
+}
+.section_div .iframe-progress {
+    display: block;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-color: rgba(0, 0, 0, 0.5)
+}
+.section_div .iframe-progress span {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    height: 5px;
+    left: 0;
+    background-color: #eca400;
+    width: 20%
+}
+@media (max-width: 768px) {
+    .section_div .iframe-close_hint {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        height: 60px;
+        background-color: rgba(0, 0, 0, 0.9);
+        padding-left: 25px;
+        padding-right: 25px;
+        float: none;
+        display: block;
+        z-index: 2;
+        margin: 0
+    }
+    .section_div .iframe-header {
+        position: relative
+    }
+}
+@media (max-width: 480px) {
+    .section_div .iframe-controls_prev,
+    .section_div .iframe-controls_next {
+        width: 40px
+    }
+    .section_div .iframe-close_control {
+        width: 40px;
+        height: 60px;
+        line-height: 60px
+    }
+    .section_div .logo-wrap {
+        margin-left: 40px
+    }
+    .section_div .iframe-close_hint {
+        padding: 15px 20px;
+        height: auto;
+        line-height: 1.2;
+        font-size: 18px
+    }
+}
