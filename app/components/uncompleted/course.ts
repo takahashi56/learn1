@@ -33,7 +33,7 @@ export class UnCompletedCourse implements AfterViewInit {
 	}
 
   ngAfterViewInit() {
-			this.downloadpdf();
+			//this.downloadpdf();
   }
 
 	downloadpdf(){

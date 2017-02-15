@@ -1704,12 +1704,13 @@ input.alert-page {
     border-bottom: 9px solid #1eb0bd;
 }
 #gridbasic th, #gridbasic td {
-    font-size: 10px;
+    font-size: 20px;
     min-width: 20px;
     padding: 5px 0;
 }
 #gridbasic th[data-column-id="name"] {
     min-width: 100px;
+    font-size: 25px;
 }
 #table-head-name {
     min-width: 100px;

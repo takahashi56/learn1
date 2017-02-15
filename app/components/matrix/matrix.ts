@@ -51,7 +51,7 @@ export class Matrix  implements AfterViewInit {
 							var docDefinition = {
 									content: [{
 											image: data,
-											width: 520,
+											width: 2480,
 									}]
 							};
 

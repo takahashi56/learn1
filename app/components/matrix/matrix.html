@@ -5,7 +5,7 @@
     <div>
       <div class="title-bar">
       </div>
-      <div class="matrix-container" style="width: 2480px; height: 3508px;"  id="pdffromHtml">
+      <div class="matrix-container" style="position: absolute; top: 0px; width: 2480px; height: 3508px;"  id="pdffromHtml">
           <div class="text-center">
               <h1>{{organization}} Training Matrix</h1>
           </div>
@@ -13,14 +13,14 @@
               <table id="gridbasic" #gridbasic class="table text-page">
                   <thead>
                       <tr>
-                          <th data-column-id="id" data-column-id="name" style="font-size: 25px;">Name</th>
-                          <th *ngFor="let head of courseList" attr.data-column-id="{{head.course_id}}" style="font-size: 25px;">{{head.coursetitle}}</th>
+                          <th data-column-id="id" data-column-id="name">Name</th>
+                          <th *ngFor="let head of courseList" attr.data-column-id="{{head.course_id}}">{{head.coursetitle}}</th>
                       </tr>
                   </thead>
                   <tbody>
                       <tr *ngFor="let student of studentList">
-                          <td style="font-size: 20px;">{{student.student_name}}</td>
-                          <td *ngFor="let head of courseList" style="font-size: 20px;">
+                          <td>{{student.student_name}}</td>
+                          <td *ngFor="let head of courseList">
                             {{getCompleteDatefromCourse(head, student.course)}}
                           </td>
                       </tr>
