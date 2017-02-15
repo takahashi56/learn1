@@ -37,7 +37,8 @@ export class QuestionChoice implements OnInit {
 	ngOnInit(){
 		this.checkedStatus = '<i class="fa"></i>';
 		var h = window.innerHeight;
-        document.getElementById('section_id').setAttribute("style","height:" + h + "px");
+        document.getElementById('section_id').setAttribute("style","height:" + (h - 30) + "px");
+        document.getElementById('iframe_div_id').setAttribute("style", "height: " + (h - 30) + "px");
 
 		this.currentStep = this.tempSession.getItem('currentStep');
         this.totalCount = this.tempSession.getItem('totalCount');

@@ -168,7 +168,7 @@ aside:not(.collapsed).navigation ul li.active ul {
 header {
     background-color: #fff;
     border-bottom: 1px solid #084f70;
-    padding-top: 4px;
+    padding-top: 0px;
     padding-bottom: 4px;
 }
 .navbar-toggle {

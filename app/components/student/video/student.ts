@@ -43,6 +43,7 @@ export class StudentVideo implements AfterViewInit {
     writeContent() {
         var parser = new DOMParser();
         var doc = parser.parseFromString(this.content.slideContent, "text/xml");
+        console.log(doc);
         var element = doc.getElementById('mybackground');
         var bgColor = "#fff";
         console.log(element);
@@ -50,6 +51,13 @@ export class StudentVideo implements AfterViewInit {
             bgColor = element.getAttribute('style');
             bgColor = bgColor.replace("background-color: ", "");
             bgColor = bgColor.replace(";", "");        
+        }
+
+        if (element == null) {
+            var temp = this.content.slideContent.split('id="mybackground"');
+            if (temp.length > 1) {
+                bgColor = temp[1].substr(26, 7);
+            }
         }
 
         document.getElementById('iframe_container_id').style.backgroundColor = bgColor;
