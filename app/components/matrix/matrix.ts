@@ -51,7 +51,7 @@ export class Matrix  implements AfterViewInit {
 							var docDefinition = {
 									content: [{
 											image: data,
-											width: 2480,
+											width: 520,
 									}]
 							};
 
@@ -63,7 +63,7 @@ export class Matrix  implements AfterViewInit {
 							para.appendChild(image);
 							// self.makeHighResScreenshot(image, image1, 200);
 							// para1.appendChild(image);
-							self._tutorService.makePdf({data:para.innerHTML, direction: false}).subscribe((res) => {
+							self._tutorService.makePdf({data:document.getElementById('pdffromHtml').innerHTML, direction: false}).subscribe((res) => {
 								 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
 							})
 					}

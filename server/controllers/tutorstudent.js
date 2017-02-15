@@ -651,7 +651,7 @@ exports.makePdf = function (req, res) {
         file_name = uniqid + '.pdf',
         pdf_path = path.join(__dirname, '..', 'public', 'pdf', file_name);
 
-    var client = new pdf.Pdfcrowd('ChrisBrownApple', '788e02237e2e8a610a77c3a8544248fc');
+    /*var client = new pdf.Pdfcrowd('ChrisBrownApple', '788e02237e2e8a610a77c3a8544248fc');
     if (direction == true) {
         client.convertHtml(url, pdf.saveToFile(pdf_path));
     } else {
@@ -661,11 +661,20 @@ exports.makePdf = function (req, res) {
             vmargin: ".2in",
             footer_html: ''
         });
-    }
+    }*/
+    var pdf = require('html-pdf');
+    var html = url;
+    var options = { format: 'Letter' };
 
-    res.send({
-        url: file_name
+    pdf.create(html, options).toFile(pdf_path, function(err, res1) {
+      if (err) return console.log(err);
+
+      res.send({
+            url: file_name
+        });
     });
+
+    
 }
 
 exports.changePassword = function (req, res) {

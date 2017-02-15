@@ -5,27 +5,27 @@
     <div>
       <div class="title-bar">
       </div>
-      <div class="container" style="background: white; width: 2480px; height: 3508px;" id="pdffromHtml">
+      <div class="container" id="pdffromHtml">
           <div class="text-center">
               <h1>{{organization}} Uncompleted Courses</h1>
           </div>
-          <div class="table-responsive" style="padding-left: 100px;padding-right: 100px;padding-top: 50px;">
+          <div class="table-responsive">
             <table class="table text-page">
               <thead>
                   <tr>
-                      <th style="white-space: nowrap;" style="font-size:25px">Employee Name</th>
-                      <th style="font-size:25px">Uncompleted Courses</th>
+                      <th>Employee Name</th>
+                      <th>Uncompleted Courses</th>
                   </tr>
               </thead>
               <tr *ngFor="let student of studentList">
-                  <td style="cursor: pointer; white-space: nowrap;" style="font-size:20px"><strong>{{student.student_name}}</strong></td>
-                  <td style="cursor: pointer;" style="font-size:20px"><strong>{{getCourseName(student.course)}}</strong></td>
+                  <td><strong>{{student.student_name}}</strong></td>
+                  <td><strong>{{getCourseName(student.course)}}</strong></td>
               </tr>
             </table>
           </div>
 
           <div class="text-center">
-              <img src="/images/logo1.png" style="width: 430px;" />
+              <img src="/images/logo1.png" />
           </div>
       </div>
   </div>
