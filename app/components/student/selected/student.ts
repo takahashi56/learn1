@@ -48,6 +48,9 @@ export class SelectedContent implements OnInit {
             this.lessontotal = Number(this._session.getItem('TotalLesson'));
             this.lessonname = this.currentLesson.lessonname;
             this._session.setItem('LessonName', this.lessonname);
+
+            this._session.setItem('currentStep', 1);
+            this._session.setItem('totalCount', this.contents.length);
         }
 
     }
@@ -63,6 +66,7 @@ export class SelectedContent implements OnInit {
         } else {
             this.index += 1;
             this.currentContent = this.contents[this.index];
+            this._session.setItem('currentStep', this.index + 1);
         }
     }
 
@@ -74,10 +78,10 @@ export class SelectedContent implements OnInit {
 
         this.index -= 1;
         this.currentContent = this.contents[this.index];
+        this._session.setItem('currentStep', this.index + 1);
     }
 
     gotoResultPage() {
-
         var totalCount = Number(this._session.getItem('questionCount')),
             rightCount = Number(this._session.getItem('rightQuestionCount')),
             score = Math.floor(rightCount / totalCount * 100),

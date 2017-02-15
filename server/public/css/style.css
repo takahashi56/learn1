@@ -1773,6 +1773,7 @@ div#loading img {
   height: 440px;
 }
 
+
 .v-bottom{
   position: fixed;
   bottom: 0;
@@ -1780,36 +1781,21 @@ div#loading img {
 }
 
 .v-bottom .continue{
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    height: 100%;
-    width: 50px;
-    margin-top: 56px;
-    background: #000;
-    opacity: 0.5;
-    height: 100%;
+  background: #0e4f6b;height: 45px;
 }
 
 .v-bottom .continue:hover{
-  opacity: 0.7;  
+  background: #6a0e6b;  
 }
 
 
 .v-bottom .back{
-  margin-top: 56px;
-  background: #000;
-  opacity: 0.5;
-  height: 100%; 
-  position: absolute; 
-  top: 0px; 
-  right: 0px; 
-  width: 50px;
+  height: 45px;
+  background: #eca400;
 }
 
 .v-bottom .back:hover{
-  background: #000;
-  opacity: 0.7;
+  background: #ec8500;
 }
 
 .v-bottom h5{

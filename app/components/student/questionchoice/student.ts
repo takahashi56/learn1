@@ -22,18 +22,31 @@ export class QuestionChoice implements OnInit {
 	@Input() lessonname: string;
 	@Input() index: number;
 
-	@Output() gotoNextContent=new EventEmitter();
-	@Output() gotoPreviousContent=new EventEmitter();
+	@Output() gotoNextContent = new EventEmitter();
+	@Output() gotoPreviousContent = new EventEmitter();
+
+	currentStep: number = 1;
+    totalCount: number = 1;
+    tempSession: any;
 
 	constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
+		this.tempSession = _session;
 	}
 	
 
 	ngOnInit(){
 		this.checkedStatus = '<i class="fa"></i>';
 		var h = window.innerHeight;
-        document.getElementById('section_id').setAttribute("style","height:" + (h - 56) + "px");
-		console.log(this.content);
+        document.getElementById('section_id').setAttribute("style","height:" + h + "px");
+
+		this.currentStep = this.tempSession.getItem('currentStep');
+        this.totalCount = this.tempSession.getItem('totalCount');
+
+        $(".section_div .iframe-progress span").css("width", this.currentStep/this.totalCount*100+"%");
+
+        if (this.currentStep == 1) {
+            $(".section_div .iframe-controls_prev").fadeOut(200);
+        }
 	}
 
 	chooseAnswer(n: number){
@@ -61,13 +74,45 @@ export class QuestionChoice implements OnInit {
 
 			this._session.setItem('rightQuestionCount', count);
 		}
-		this.gotoNextContent.emit({});
+
+		var self = this;
+        
+        this.currentStep++;
+        if (this.currentStep == 1) {
+            $(".section_div .iframe-controls_prev").fadeOut(50);
+        }
+
+        $(".section_div .iframe-container-wrap").fadeOut(150, function(){
+            self.gotoNextContent.emit({});
+            $(".section_div .iframe-container-wrap").fadeIn(300);
+        });
+
+        $(".section_div .iframe-controls_prev").fadeIn(200);
+
+        $(".section_div .iframe-progress span").css("width", this.currentStep/this.totalCount*100+"%");
 	}
 
 	gotoPrevious(){
-		// this.changeChecked(null);
 		this.checkedRadio = 'fifth';
-		this.gotoPreviousContent.emit({});
+		//var self = this;
+
+		//self.gotoPreviousContent.emit({});
+
+		var self = this;
+        
+        this.currentStep--;
+        if (this.currentStep == 1) {
+            $(".section_div .iframe-controls_prev").fadeOut(50);
+        }
+        
+        $(".section_div .iframe-container-wrap").fadeOut(150, function(){
+            self.gotoPreviousContent.emit({});
+            $(".section_div .iframe-container-wrap").fadeIn(300);
+        });
+
+        $(".section_div .iframe-controls_next").fadeIn(200);
+
+        $(".section_div .iframe-progress span").css("width", this.currentStep/this.totalCount*100+"%");
 	}
 
 	getImagePath(image: string) : string{

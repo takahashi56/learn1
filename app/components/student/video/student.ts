@@ -21,9 +21,12 @@ export class StudentVideo implements AfterViewInit {
     @Output() gotoPreviousContent = new EventEmitter();
 
     htmlString: string = '';
+    currentStep: number = 1;
+    totalCount: number = 1;
+    tempSession: any;
 
     constructor(private _session: Session, private _studentService: StudentService, private _router: Router) {
-
+        this.tempSession = _session;
     }
 
     ngOnInit() {
@@ -38,8 +41,6 @@ export class StudentVideo implements AfterViewInit {
     }
 
     writeContent() {
-        //this.htmlString = this.content.slideContent;
-        //document.getElementById("content_id").innerHTML = this.htmlString;
         var parser = new DOMParser();
         var doc = parser.parseFromString(this.content.slideContent, "text/xml");
         var element = doc.getElementById('mybackground');
@@ -51,8 +52,11 @@ export class StudentVideo implements AfterViewInit {
             bgColor = bgColor.replace(";", "");        
         }
 
+        document.getElementById('iframe_container_id').style.backgroundColor = bgColor;
+        document.getElementById('header_id').style.display = "none";
+
         var h = window.innerHeight;
-        document.getElementById('section_id').setAttribute("style","height:" + (h - 56) + "px");
+        document.getElementById('section_id').setAttribute("style","height:" + h + "px");
 
         this.htmlString = this.content.slideContent;
 				document.getElementById('iframe_id')['contentWindow'].document.open();
@@ -62,12 +66,52 @@ export class StudentVideo implements AfterViewInit {
 .mce-content-body .mce-offscreen-selection {position: absolute;left: -9999999999px;max-width: 1000000px;}.mce-content-body *[contentEditable=false] {cursor: default;}.mce-content-body *[contentEditable=true] {cursor: text;}
 </style><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link type="text/css" rel="stylesheet" href="https://cdn.tinymce.com/4/skins/lightgray/content.min.css"><link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300i,400,400i"><link type="text/css" rel="stylesheet" href="//www.tinymce.com/css/codepen.min.css"><link rel="stylesheet" data-mce-href="https://cdn.tinymce.com/4/plugins/codesample/css/prism.css" href="https://cdn.tinymce.com/4/plugins/codesample/css/prism.css"></head><body id="tinymce" class="mce-content-body " data-id="tinymceN1481899178641" style="background-color: ${bgColor};margin-left: 100px;margin-right: 100px;" spellcheck="false">${this.htmlString}</body></html>`);
 				document.getElementById('iframe_id')['contentWindow'].document.close();
+
+        this.currentStep = this.tempSession.getItem('currentStep');
+        this.totalCount = this.tempSession.getItem('totalCount');
+
+        $(".section_div .iframe-progress span").css("width", this.currentStep/this.totalCount*100+"%");
+
+        if (this.currentStep == 1) {
+            $(".section_div .iframe-controls_prev").fadeOut(200);
+        }
     }
     gotoNext() {
-        this.gotoNextContent.emit({});
+        var self = this;
+        
+        this.currentStep++;
+        if (this.currentStep == 1) {
+            $(".section_div .iframe-controls_prev").fadeOut(50);
+        }
+        //if (this.currentStep == this.total) {
+        //    $(".section_div .iframe-controls_next").fadeOut(50);
+        //}
+
+        $(".section_div .iframe-container-inner iframe").fadeOut(150, function(){
+            self.gotoNextContent.emit({});
+            $(".section_div .iframe-container-inner iframe").fadeIn(300);
+        });
+
+        $(".section_div .iframe-controls_prev").fadeIn(200);
+
+        $(".section_div .iframe-progress span").css("width", this.currentStep/this.totalCount*100+"%");
     }
     gotoPrevious() {
-        this.gotoPreviousContent.emit({});
+        var self = this;
+        
+        this.currentStep--;
+        if (this.currentStep == 1) {
+            $(".section_div .iframe-controls_prev").fadeOut(50);
+        }
+        
+        $(".section_div .iframe-container-inner iframe").fadeOut(150, function(){
+            self.gotoPreviousContent.emit({});
+            $(".section_div .iframe-container-inner iframe").fadeIn(300);
+        });
+
+        $(".section_div .iframe-controls_next").fadeIn(200);
+
+        $(".section_div .iframe-progress span").css("width", this.currentStep/this.totalCount*100+"%");
     }
     getEmbedUrl() {
         let videoNumber = this.content.videoEmbedCode.replace(/\D/g, '');
