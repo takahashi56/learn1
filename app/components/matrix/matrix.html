@@ -5,22 +5,22 @@
     <div>
       <div class="title-bar">
       </div>
-      <div class="matrix-container"  id="pdffromHtml">
+      <div class="matrix-container" style="width: 2480px; height: 3508px;"  id="pdffromHtml">
           <div class="text-center">
-              <h2>{{organization}} Training Matrix</h2>
+              <h1>{{organization}} Training Matrix</h1>
           </div>
-          <div class="table-responsive">
+          <div class="table-responsive" style="padding-left: 100px;padding-right: 100px;padding-top: 50px;">
               <table id="gridbasic" #gridbasic class="table text-page">
                   <thead>
                       <tr>
-                          <th data-column-id="id" data-column-id="name">Name</th>
-                          <th *ngFor="let head of courseList" attr.data-column-id="{{head.course_id}}">{{head.coursetitle}}</th>
+                          <th data-column-id="id" data-column-id="name" style="font-size: 25px;">Name</th>
+                          <th *ngFor="let head of courseList" attr.data-column-id="{{head.course_id}}" style="font-size: 25px;">{{head.coursetitle}}</th>
                       </tr>
                   </thead>
                   <tbody>
                       <tr *ngFor="let student of studentList">
-                          <td>{{student.student_name}}</td>
-                          <td *ngFor="let head of courseList">
+                          <td style="font-size: 20px;">{{student.student_name}}</td>
+                          <td *ngFor="let head of courseList" style="font-size: 20px;">
                             {{getCompleteDatefromCourse(head, student.course)}}
                           </td>
                       </tr>
@@ -29,7 +29,7 @@
           </div>
 
           <div class="text-center">
-              <img src="/images/logo1.png" />
+              <img src="/images/logo1.png" style="width:430px;" />
           </div>
       </div>
   </div>

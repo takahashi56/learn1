@@ -5,27 +5,27 @@
     <div>
       <div class="title-bar">
       </div>
-      <div class="container" style="background: white" id="pdffromHtml">
+      <div class="container" style="background: white; width: 2480px; height: 3508px;" id="pdffromHtml">
           <div class="text-center">
-              <h2>{{organization}} Uncompleted Courses</h2>
+              <h1>{{organization}} Uncompleted Courses</h1>
           </div>
-          <div class="table-responsive">
+          <div class="table-responsive" style="padding-left: 100px;padding-right: 100px;padding-top: 50px;">
             <table class="table text-page">
               <thead>
                   <tr>
-                      <th style="white-space: nowrap;">Employee Name</th>
-                      <th>Uncompleted Courses</th>
+                      <th style="white-space: nowrap;" style="font-size:25px">Employee Name</th>
+                      <th style="font-size:25px">Uncompleted Courses</th>
                   </tr>
               </thead>
               <tr *ngFor="let student of studentList">
-                  <td style="cursor: pointer; white-space: nowrap;" ><strong>{{student.student_name}}</strong></td>
-                  <td style="cursor: pointer;" ><strong>{{getCourseName(student.course)}}</strong></td>
+                  <td style="cursor: pointer; white-space: nowrap;" style="font-size:20px"><strong>{{student.student_name}}</strong></td>
+                  <td style="cursor: pointer;" style="font-size:20px"><strong>{{getCourseName(student.course)}}</strong></td>
               </tr>
             </table>
           </div>
 
           <div class="text-center">
-              <img src="/images/logo1.png" />
+              <img src="/images/logo1.png" style="width: 430px;" />
           </div>
       </div>
   </div>
