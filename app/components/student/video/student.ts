@@ -62,7 +62,14 @@ export class StudentVideo implements AfterViewInit {
         document.getElementById('header_id').style.display = "none";
 
         var h = window.innerHeight;
+        var w = window.innerWidth;
         document.getElementById('section_id').setAttribute("style","height:" + h + "px");
+
+        if (w <= 550) {
+            document.getElementById('section_id').setAttribute("style","height:" + (h * 3) + "px");
+            //document.getElementById('a_prev_id').setAttribute("style","height:" + (h - 40) + "px");
+            //document.getElementById('a_next_id').setAttribute("style","height:" + (h - 40) + "px");
+        }
 
         this.htmlString = this.content.slideContent;
 				document.getElementById('iframe_id')['contentWindow'].document.open();

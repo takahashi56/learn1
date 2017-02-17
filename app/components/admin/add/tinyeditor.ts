@@ -86,6 +86,9 @@ export class TinyEditor implements OnInit {
                 tinymce.activeEditor.dom.remove('mybackground');
                 ed.insertContent("<b id='mybackground' style='background-color:#f0f0f0'></b>");
                 
+                //tinymce.activeEditor.dom.remove(tinymce.activeEditor.dom.select('pre'));
+                //ed.insertContent("<pre name='mybackground' style='background-color:#f0f0f0'></pre>");
+
                 tinymce.activeEditor.contentDocument.body.style.backgroundColor = '#f0f0f0';
             }
           }, {

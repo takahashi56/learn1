@@ -37,7 +37,10 @@ export class UnCompletedCourse implements AfterViewInit {
   }
 
 	downloadpdf(){
-			let self = this;
+		this._tutorService.makePdf({data:document.getElementById('pdffromHtml').innerHTML, direction: true}).subscribe((res) => {
+			 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+		})
+			/*let self = this;
 			html2canvas(document.getElementById('pdffromHtml'), {
 					onrendered: function (canvas) {
 							var ctx = canvas.getContext("2d");
@@ -57,11 +60,11 @@ export class UnCompletedCourse implements AfterViewInit {
 							para.appendChild(image);
 							// self.makeHighResScreenshot(image, image1, 200);
 							// para1.appendChild(image);
-							self._tutorService.makePdf({data:para.innerHTML, direction: true}).subscribe((res) => {
+							self._tutorService.makePdf({data:document.getElementById('pdffromHtml').innerHTML, direction: true}).subscribe((res) => {
 								 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
 							})
 					}
-			});
+			});*/
 	}
   getCourseName(student_course: any){
     var course_names:string = "";
