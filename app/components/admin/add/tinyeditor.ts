@@ -64,6 +64,9 @@ export class TinyEditor implements OnInit {
                 setup: this.tinyMCESetup.bind(this)
             });
             
+            if (this.value == "") 
+                this.value = "<p></p>";
+                
             tinymce.get(this.elementID).setContent(this.value);
 
             if (tinymce.activeEditor.dom.getStyle('mybackground', 'background-color') != undefined)
@@ -80,24 +83,21 @@ export class TinyEditor implements OnInit {
           text: 'Background',
           icon: false,
           menu: [{
-            text: '#f0f0f0',
-            tooltip: '#f0f0f0',
+            text: '#F0F0F0',
+            tooltip: '#F0F0F0',
             onclick: function() {
                 tinymce.activeEditor.dom.remove('mybackground');
                 ed.insertContent("<b id='mybackground' style='background-color:#f0f0f0'></b>");
                 
-                //tinymce.activeEditor.dom.remove(tinymce.activeEditor.dom.select('pre'));
-                //ed.insertContent("<pre name='mybackground' style='background-color:#f0f0f0'></pre>");
-
                 tinymce.activeEditor.contentDocument.body.style.backgroundColor = '#f0f0f0';
             }
           }, {
-            text: '#00f0f0',
-            tooltip: '#00f0f0',
+            text: '#00F0F0',
+            tooltip: '#00F0F0',
             onclick: function() {
                 tinymce.activeEditor.dom.remove('mybackground');
                 ed.insertContent("<b id='mybackground' style='background-color:#00f0f0'></b>");
-                
+
                 tinymce.activeEditor.contentDocument.body.style.backgroundColor = '#00f0f0';
             }
           }, {

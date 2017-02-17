@@ -664,7 +664,7 @@ exports.makePdf = function (req, res) {
     }*/
     var pdf = require('html-pdf');
     var html = url;
-    var options = { format: 'Letter' };
+    var options = { format: 'A4' };
 
     pdf.create(html, options).toFile(pdf_path, function(err, res1) {
       if (err) return console.log(err);
