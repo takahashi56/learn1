@@ -8,19 +8,19 @@
       <div style="text-align: center;" id="pdffromHtml">
           <br/>
           <div width="100%" style="text-align: center;">
-              <h2>{{organization}} Uncompleted Courses</h2>
+              <h3>{{organization}} Uncompleted Courses</h3>
           </div>
           <div style="text-align: center;" width="100%">
             <table width="90%" style="text-align: center; margin: 0 auto;">
               <thead>
                   <tr>
-                      <th>Employee Name</th>
-                      <th>Uncompleted Courses</th>
+                      <th style="font-size: 10px;">Employee Name</th>
+                      <th style="font-size: 10px;">Uncompleted Courses</th>
                   </tr>
               </thead>
               <tr *ngFor="let student of studentList">
-                  <td><strong>{{student.student_name}}</strong></td>
-                  <td><strong>{{getCourseName(student.course)}}</strong></td>
+                  <td style="font-size: 10px;"><strong>{{student.student_name}}</strong></td>
+                  <td style="font-size: 10px;"><strong>{{getCourseName(student.course)}}</strong></td>
               </tr>
             </table>
           </div>

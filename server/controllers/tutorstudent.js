@@ -677,6 +677,40 @@ exports.makePdf = function (req, res) {
     
 }
 
+exports.makePdfLandscape = function (req, res) {
+    var url = req.body.data,
+        direction = req.body.direction,
+        randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26)),
+        uniqid = randLetter + Date.now(),
+        file_name = uniqid + '.pdf',
+        pdf_path = path.join(__dirname, '..', 'public', 'pdf', file_name);
+
+    /*var client = new pdf.Pdfcrowd('ChrisBrownApple', '788e02237e2e8a610a77c3a8544248fc');
+    if (direction == true) {
+        client.convertHtml(url, pdf.saveToFile(pdf_path));
+    } else {
+        client.convertHtml(url, pdf.saveToFile(pdf_path), {
+            width: "13.692in",
+            height: "7.267in",
+            vmargin: ".2in",
+            footer_html: ''
+        });
+    }*/
+    var pdf = require('html-pdf');
+    var html = url;
+    var options = { format: 'A4', orientation: "landscape" };
+
+    pdf.create(html, options).toFile(pdf_path, function(err, res1) {
+      if (err) return console.log(err);
+
+      res.send({
+            url: file_name
+        });
+    });
+
+    
+}
+
 exports.changePassword = function (req, res) {
     var tutor_id = req.body.tutor_id,
         pwd = req.body.pwd;

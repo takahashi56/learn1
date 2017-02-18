@@ -54,6 +54,10 @@ module.exports = function(app) {
 		tutorstudent.makePdf(req, res);
 	});
 
+	app.post('/api/tutor/makepdflandscape', function(req, res) {
+		tutorstudent.makePdfLandscape(req, res);
+	});
+
 	app.post('/api/tutor/isvalidoldpwd', function(req, res) {
 		tutorstudent.isValidOldPwd(req, res);
 	});

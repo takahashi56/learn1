@@ -37,7 +37,7 @@ export class UnCompletedCourse implements AfterViewInit {
   }
 
 	downloadpdf(){
-		this._tutorService.makePdf({data:document.getElementById('pdffromHtml').innerHTML, direction: true}).subscribe((res) => {
+		this._tutorService.makePdfLandscape({data:document.getElementById('pdffromHtml').innerHTML, direction: true}).subscribe((res) => {
 			 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
 		})
 			/*let self = this;

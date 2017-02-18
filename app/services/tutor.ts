@@ -172,6 +172,12 @@ export class TutorService {
         })
     }
 
+    makePdfLandscape(data) {
+        return this._http.post(this.baseUrl + 'makepdflandscape', JSON.stringify(data), HEADER).map((res) => {
+            return res.json();
+        })
+    }
+
     getCSVFile() {
         var headers = new Headers();
         headers.append('responseType', 'arraybuffer');
