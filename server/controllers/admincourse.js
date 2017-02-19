@@ -219,7 +219,7 @@ exports.addCourse = function (req, res) {
             draftORLive: data.draftORLive
         },
         lessonList = data.lesson;
-    console.log(data);
+
     Course.create(courseData, function (err, course) {
         if (err) return console.error(err);
 
@@ -302,35 +302,36 @@ exports.updateCourse = function (req, res) {
 
                     Part.remove({
                         lesson_id: lesson.lesson_id
-                    }).exec();
+                    }, function(err1) {
+                        if (err1) return console.error(err1);
 
+                        lesson.content.forEach(function (content) {
+                            var contentData = {
+                                slideOrQuestion: content.slideOrQuestion,
+                                slideContent: content.slideContent,
+                                label: content.label,
+                                question: content.question,
+                                answerA: content.answerA,
+                                answerB: content.answerB,
+                                answerC: content.answerC,
+                                answerD: content.answerD,
+                                trueNumber: content.trueNumber,
+                                answerText: content.answerText,
+                                lesson_id: less._id,
+                                questionType: content.questionType,
+                                image: content.image,
+                                order: content.order
+                            }
 
-                    lesson.content.forEach(function (content) {
-                        var contentData = {
-                            slideOrQuestion: content.slideOrQuestion,
-                            slideContent: content.slideContent,
-                            label: content.label,
-                            question: content.question,
-                            answerA: content.answerA,
-                            answerB: content.answerB,
-                            answerC: content.answerC,
-                            answerD: content.answerD,
-                            trueNumber: content.trueNumber,
-                            answerText: content.answerText,
-                            lesson_id: less._id,
-                            questionType: content.questionType,
-                            image: content.image,
-                            order: content.order
-                        }
+                            if (content._id.length > 14) {
+                                contentData["_id"] = content._id;
+                            }
 
-                        if (content._id.length > 14) {
-                            contentData["_id"] = content._id;
-                        }
-                        Part.create(contentData, function (err, cont) {
-                            if (err) return console.error(err);
+                            Part.create(contentData, function (err, cont) {
+                                if (err) return console.error(err);
+                            })
                         })
                     })
-
                 })
             })
         })

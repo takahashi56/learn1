@@ -71,7 +71,7 @@ export class CertificateView implements OnInit{
                 para.appendChild(image);
                 // self.makeHighResScreenshot(image, image1, 200);
                 // para1.appendChild(image);
-                self._tutorService.makePdf({data:para.innerHTML, direction: true}).subscribe((res) => {
+                self._tutorService.makePdf({data:document.getElementById('pdffromHtml').innerHTML, direction: true}).subscribe((res) => {
                    window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
                 })
             }

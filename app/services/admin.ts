@@ -92,7 +92,7 @@ export class AdminService {
 				.map((res) => {
 				return res.json();
 			})
-		}else{
+		} else {
 
 			return this._http.put(this.baseUrl + "course", JSON.stringify(data), HEADER)
 				.map((res) => {

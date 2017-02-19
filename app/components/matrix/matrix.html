@@ -5,31 +5,33 @@
     <div>
       <div class="title-bar">
       </div>
-      <div class="matrix-container"  id="pdffromHtml">
-          <div class="text-center">
-              <h2>{{organization}} Training Matrix</h2>
+      <div id="pdffromHtml" style="text-align: center;">
+          <br/>
+          <div width="100%" style="text-align: center;">
+              <h3>{{organization}} Training Matrix</h3>
           </div>
-          <div class="table-responsive">
-              <table id="gridbasic" #gridbasic class="table text-page">
+          <div style="text-align: center;" width="100%" >
+              <!--<table id="gridbasic" #gridbasic width="90%" style="text-align: center; margin: 0 auto;">-->
+              <table id="gridbasic" width="90%" style="text-align: center; margin: 0 auto;">
                   <thead>
                       <tr>
-                          <th data-column-id="id" data-column-id="name">Name</th>
-                          <th *ngFor="let head of courseList" attr.data-column-id="{{head.course_id}}">{{head.coursetitle}}</th>
+                          <th style="font-size: 10px;" data-column-id="id" data-column-id="name">Name</th>
+                          <th style="font-size: 10px;" *ngFor="let head of courseList" attr.data-column-id="{{head.course_id}}">{{head.coursetitle}}</th>
                       </tr>
                   </thead>
                   <tbody>
                       <tr *ngFor="let student of studentList">
-                          <td>{{student.student_name}}</td>
-                          <td *ngFor="let head of courseList">
+                          <td style="font-size: 10px;">{{student.student_name}}</td>
+                          <td style="font-size: 10px;" *ngFor="let head of courseList">
                             {{getCompleteDatefromCourse(head, student.course)}}
                           </td>
                       </tr>
                   </tbody>
               </table>
           </div>
-
-          <div class="text-center">
-              <img src="/images/logo1.png" />
+          <br/><br/>
+          <div width="100%" style="text-align: center;">
+              <img src="http://app.correctcare.co.uk/images/logo1.png" />
           </div>
       </div>
   </div>

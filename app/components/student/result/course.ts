@@ -25,6 +25,8 @@ export class CourseResult {
         if (this._session.getCurrentId() == null) {
             this.router.navigateByUrl('/login');
         } else {
+            document.getElementById('header_id').style.display = "block";
+
             this.showLessonResult = [];
             this.username = _session.getCurrentUsername();
 

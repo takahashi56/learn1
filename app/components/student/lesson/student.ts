@@ -39,6 +39,8 @@ export class StudentLesson {
             })
         }
 
+        document.getElementById('header_id').style.display = "block";
+
         // this._studentService.getScoreListByCourse({course_id: this.course.course_id, student_id: this.student_id}).subscribe((res)=>{
         // 	res.forEach(function(score){
         // 		self._session.setItem(score.lesson_id, score.score);

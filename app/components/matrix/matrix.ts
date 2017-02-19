@@ -35,15 +35,18 @@ export class Matrix  implements AfterViewInit {
 	}
 
   ngAfterViewInit() {
-      $(this.el.nativeElement).bootgrid({
+      /*$(this.el.nativeElement).bootgrid({
         navigation: 0,
 				rowCount: -1
-      });
+      });*/
 			this.downloadpdf();
   }
 
 	downloadpdf(){
-			let self = this;
+		this._tutorService.makePdfLandscape({data:document.getElementById('pdffromHtml').innerHTML, direction: false}).subscribe((res) => {
+			 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
+		})
+			/*let self = this;
 			html2canvas(document.getElementById('pdffromHtml'), {
 					onrendered: function (canvas) {
 							var ctx = canvas.getContext("2d");
@@ -63,11 +66,11 @@ export class Matrix  implements AfterViewInit {
 							para.appendChild(image);
 							// self.makeHighResScreenshot(image, image1, 200);
 							// para1.appendChild(image);
-							self._tutorService.makePdf({data:para.innerHTML, direction: false}).subscribe((res) => {
+							self._tutorService.makePdf({data:document.getElementById('pdffromHtml').innerHTML, direction: false}).subscribe((res) => {
 								 window.location.href = '/pdf-viewer/web/viewer.html?file=/pdf/' + res.url;
 							})
 					}
-			});
+			});*/
 	}
 
   getCompleteDatefromCourse(course, student_course){
